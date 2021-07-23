@@ -1,9 +1,8 @@
-﻿
 namespace TinyFinder
 {
-    class Wild  //Normal, Fishing and Friend Safari
+    class Wild
     {
-
+        //Normal, Fishing and Friend Safari
         private TinyMT tinywild = new TinyMT();
         private SlotData data = new SlotData();
         private uint[] temp = new uint[4];
@@ -21,24 +20,16 @@ namespace TinyFinder
                 tinywild.nextState(temp);
 
             else if (!oras)
-            {
-                if (ES == 2) { tinywild.nextState(temp); }
-                if (ES == 3) { tinywild.nextState(temp); tinywild.nextState(temp); }
-                if (ES == 4) { tinywild.nextState(temp); tinywild.nextState(temp); tinywild.nextState(temp); }
-            }
-
-
+                for (byte i = 1; i < ES; i++)
+                    tinywild.nextState(temp);
 
             Sync = tinywild.Rand(temp, 100) < 50;
 
             tinywild.nextState(temp);
             encounter = tinywild.Rand(temp, 100);
 
-
             if (ES != 0)
                 tinywild.nextState(temp);
-
-
 
             tinywild.nextState(temp);
             slot = data.getSlot(tinywild.Rand(temp, 100), slotLine);
@@ -67,7 +58,5 @@ namespace TinyFinder
                 item = 1;
             else item = 0;
         }
-
     }
-
 }
