@@ -325,7 +325,7 @@ namespace TinyFinder
             this.t3.Text = "00000000";
             this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.t3.Value = ((uint)(0u));
-            this.t3.MaskInputRejected += new System.Windows.Forms.MaskInputRejectedEventHandler(this.t3_MaskInputRejected);
+            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
             // 
             // t2
             // 
@@ -338,6 +338,7 @@ namespace TinyFinder
             this.t2.Text = "00000000";
             this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.t2.Value = ((uint)(0u));
+            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
             // 
             // t1
             // 
@@ -350,6 +351,7 @@ namespace TinyFinder
             this.t1.Text = "00000000";
             this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.t1.Value = ((uint)(0u));
+            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
             // 
             // t0
             // 
@@ -362,6 +364,7 @@ namespace TinyFinder
             this.t0.Text = "00000000";
             this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.t0.Value = ((uint)(0u));
+            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
             // 
             // button1
             // 

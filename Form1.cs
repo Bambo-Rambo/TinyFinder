@@ -29,10 +29,12 @@ namespace TinyFinder
             Fields(0);
         }
 
+        //Events
         private void xyRadio_CheckedChanged(object sender, EventArgs e) { Fields(0); }
         private void orasRadio_CheckedChanged(object sender, EventArgs e) { Fields(0); }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
+            sync.Enabled = true; slots.Enabled = true; s.Enabled = true;
             cave.Checked = false; sync.Checked = false;
             switch (Methods.SelectedIndex)
             {
@@ -40,7 +42,6 @@ namespace TinyFinder
                     Fields((byte)Methods.SelectedIndex);
                     slots.Items.Clear();
                     break;
-
                 case 1:     //Normal Wild
                     if (xyRadio.Checked)
                         location.SelectedIndex = 0;
@@ -104,8 +105,6 @@ namespace TinyFinder
             }
         }
 
-        private void t3_MaskInputRejected(object sender, MaskInputRejectedEventArgs e) { Calibrated = false; button1.Text = "Calibrate and Search"; }
-
         private void cave_CheckedChanged(object sender, EventArgs e)
         {
             if (cave.Checked) { location.Enabled = false; ratio.Value = 7; }
@@ -127,8 +126,16 @@ namespace TinyFinder
                 button1.Text = "Generate"; find.Enabled = false;
             }
         }
+        private void t3_TextChanged(object sender, EventArgs e)
+        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        private void t2_TextChanged(object sender, EventArgs e)
+        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        private void t1_TextChanged(object sender, EventArgs e)
+        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        private void t0_TextChanged(object sender, EventArgs e)
+        { Calibrated = false; button1.Text = "Calibrate and Search"; }
 
-
+        //Main Event (Click Button)
         private void button1_Click(object sender, EventArgs e)
         {
             dataGridView1.Columns["EnctrCol"].Visible = false; dataGridView1.Columns["SyncCol"].Visible = false; dataGridView1.Columns["SlotCol"].Visible = false;
@@ -221,7 +228,7 @@ namespace TinyFinder
                 case 6:     //Friend Safari
 
                     if (orasRadio.Checked && Methods.SelectedIndex == 6)
-                    { MessageBox.Show("Friend Safari does not exist in ORAS games", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);  break; }
+                    { MessageBox.Show("Friend Safari does not exist in ORAS games", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); break; }
 
                     byte SlotLimit = 4, SlotCase = 0;
                     if (Methods.SelectedIndex == 1) { SlotLimit = 13; }
@@ -269,7 +276,7 @@ namespace TinyFinder
                                 }
                                 else
                                     if ((sync.Checked && wild.Sync) || !sync.Checked)
-                                        ShowWild(wild, calc.secondsToDate(seconds, Year), store_seed, j, false);
+                                    ShowWild(wild, calc.secondsToDate(seconds, Year), store_seed, j, false);
                             }
                         }
                         if (SearchGen.SelectedIndex == 1)
@@ -322,7 +329,7 @@ namespace TinyFinder
                                 }
                                 else
                                     if ((sync.Checked && smash.Sync) || !sync.Checked)
-                                        ShowSmash(smash, calc.secondsToDate(seconds, Year), store_seed, j, false);
+                                    ShowSmash(smash, calc.secondsToDate(seconds, Year), store_seed, j, false);
                             }
                         }
                         if (SearchGen.SelectedIndex == 1)
@@ -378,7 +385,7 @@ namespace TinyFinder
 
                                     ((sync.Checked && horde.sync)
                                     || !sync.Checked))
-                                        ShowHorde(horde, calc.secondsToDate(seconds, Year), store_seed, j, orasRadio.Checked);
+                                    ShowHorde(horde, calc.secondsToDate(seconds, Year), store_seed, j, orasRadio.Checked);
                         }
                         if (SearchGen.SelectedIndex == 1)
                             break;
@@ -429,7 +436,8 @@ namespace TinyFinder
                                 dataGridView1.Update();
                             i += 1000;
                         }
-                    } else
+                    }
+                    else
                     {
                         dataGridView1.Update();
                         while (dataGridView1.Rows.Count < found)
@@ -460,12 +468,13 @@ namespace TinyFinder
             }
         }
 
+        //Show Results
         private void ShowWild(Wild wild, string date, uint[] store_seed, uint index, bool isORAS)
         {
             if (SearchGen.SelectedIndex == 1) { date = null; dataGridView1.Columns["DateCol"].Visible = false; }
 
             if (isORAS)
-                dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0') , store_seed[2].ToString("X").PadLeft(8, '0'),
+                dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
                 store_seed[1].ToString("X").PadLeft(8, '0'), store_seed[0].ToString("X").PadLeft(8, '0'), index,
                 wild.encounter, wild.Sync, wild.slot, wild.flute, wild.item + "%", null, null, wild.randInt);
             else
@@ -488,7 +497,6 @@ namespace TinyFinder
                 smash.encounter, smash.Sync, smash.slot, null, smash.item + "%", null, null, smash.randInt);
         }
 
-
         private void ShowHorde(Horde horde, string date, uint[] store_seed, uint index, bool isORAS)
         {
             if (SearchGen.SelectedIndex == 1) { date = null; dataGridView1.Columns["DateCol"].Visible = false; }
@@ -504,11 +512,12 @@ namespace TinyFinder
                 if (count == 5)
                     dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
                     store_seed[1].ToString("X").PadLeft(8, '0'), store_seed[0].ToString("X").PadLeft(8, '0'), index, null, horde.sync, horde.slot,
-                    horde.flutes[0] + ", " + horde.flutes[1] + ", " + horde.flutes[2] + ", " + horde.flutes[3] + ", " + horde.flutes[4], 
+                    horde.flutes[0] + ", " + horde.flutes[1] + ", " + horde.flutes[2] + ", " + horde.flutes[3] + ", " + horde.flutes[4],
                     horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " + horde.items[3] + "%, " + horde.items[4] + "%",
                         horde.HA, null, horde.randInt);
 
-            } else
+            }
+            else
             {
                 dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
                 store_seed[1].ToString("X").PadLeft(8, '0'), store_seed[0].ToString("X").PadLeft(8, '0'), index, null, horde.sync,
@@ -526,7 +535,8 @@ namespace TinyFinder
                 dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
                 store_seed[1].ToString("X").PadLeft(8, '0'), store_seed[0].ToString("X").PadLeft(8, '0'), index,
                 null, radar.sync, radar.slot, null, radar.item + "%", null, radar.Music, radar.randInt);
-            } else
+            }
+            else
             {
                 dataGridView1.DefaultCellStyle.BackColor = Color.LightCyan;
                 dataGridView1.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
@@ -535,15 +545,14 @@ namespace TinyFinder
             }
         }
 
-
-
+        //Manage Controls
         private void Fields(byte method)
         {
             min.Value = min.Minimum = 35;
             Methods.SelectedIndex = method;
-            label3.Visible = false; label4.Visible = false; tid.Visible = false; sid.Visible = false; slots.Visible = false; s.Visible = false; 
-            hidden.Visible = false; h.Visible = false; flute.Visible = false; flute1.Visible = false; label11.Visible = false; flute2.Visible = false; 
-            label12.Visible = false; flute3.Visible = false; label13.Visible = false; flute4.Visible = false; label14.Visible = false; flute5.Visible = false; 
+            label3.Visible = false; label4.Visible = false; tid.Visible = false; sid.Visible = false; slots.Visible = false; s.Visible = false;
+            hidden.Visible = false; h.Visible = false; flute.Visible = false; flute1.Visible = false; label11.Visible = false; flute2.Visible = false;
+            label12.Visible = false; flute3.Visible = false; label13.Visible = false; flute4.Visible = false; label14.Visible = false; flute5.Visible = false;
             sync.Visible = false; cave.Visible = false; boost.Visible = false; p.Visible = false; party.Visible = false; r.Visible = false; ratio.Visible = false;
             ratio.Minimum = 1; ratio.Maximum = 100; label10.Visible = false; location.Visible = false;
             if (method == 0)
@@ -558,7 +567,7 @@ namespace TinyFinder
                 max.Value = 200;
                 slots.Visible = true; s.Visible = true; sync.Visible = true;
 
-                if (method == 1 || method == 2 || method == 3  || method == 6)
+                if (method == 1 || method == 2 || method == 3 || method == 6)
                 {
                     if (!orasRadio.Checked && method == 1) { label10.Visible = true; location.Visible = true; cave.Visible = true; }
                     r.Text = "Ratio";
@@ -574,7 +583,7 @@ namespace TinyFinder
                     hidden.Visible = true; h.Visible = true; cave.Visible = true; p.Visible = true; party.Visible = true;
                     if (orasRadio.Checked)
                     {
-                        flute.Visible = true; flute1.Visible = true; label11.Visible = true; flute2.Visible = true; label12.Visible = true; 
+                        flute.Visible = true; flute1.Visible = true; label11.Visible = true; flute2.Visible = true; label12.Visible = true;
                         flute3.Visible = true; label13.Visible = true; flute4.Visible = true; label14.Visible = true; flute5.Visible = true;
                     }
                 }
@@ -587,3 +596,4 @@ namespace TinyFinder
         }
     }
 }
+

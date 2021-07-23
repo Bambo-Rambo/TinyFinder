@@ -1,4 +1,4 @@
-namespace TinyFinder
+﻿namespace TinyFinder
 {
     class Wild
     {
