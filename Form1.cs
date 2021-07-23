@@ -27,7 +27,6 @@ namespace TinyFinder
             year.Value = DateTime.Now.Year; month.SelectedIndex = (DateTime.Now.Month - 1);
             DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             Fields(0);
-
         }
 
         private void xyRadio_CheckedChanged(object sender, EventArgs e) { Fields(0); }
@@ -88,7 +87,6 @@ namespace TinyFinder
                         slots.Items.AddRange(new object[] { add.ToString() });
                     break;
             }
-
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
@@ -152,16 +150,6 @@ namespace TinyFinder
             array[1] = t1.Value;
             array[0] = t0.Value;
 
-            /*array[3] = 0xB8D9712B;      //
-            array[2] = 0xE3C81679;      // ORAS ALL EXCEPT ID
-            array[1] = 0x366387BD;      //
-            array[0] = 0x81EE062B;      //                              // 01:00
-
-            /*array[3] = 0x8DC46311;
-            array[2] = 0x68F99EB7;
-            array[1] = 0x8D2145F9;      //XY ID
-            array[0] = 0x38D643EC;*/
-
             byte extra = 1;
             if (SearchGen.SelectedIndex == 0)
             {
@@ -183,6 +171,7 @@ namespace TinyFinder
             switch (Methods.SelectedIndex)
             {
                 case 0:     //ID
+                    string date;
                     dataGridView1.Columns["TIDCol"].Visible = true; dataGridView1.Columns["SIDCol"].Visible = true; dataGridView1.Columns["TSVCol"].Visible = true;
                     dataGridView1.Columns["TRVCol"].Visible = true; dataGridView1.Columns["RandHexCol"].Visible = true;
                     dataGridView1.Update();
@@ -202,15 +191,10 @@ namespace TinyFinder
                             tiny.nextState(array);
                             if (randID == tiny.temper(array))
                             {
-                                /*MessageBox.Show("\n"+calc.secondsToDate(seconds, Year) + "\n" + store_seed[3].ToString("X").PadLeft(8, '0') + ", " +
-                                 "\n" + store_seed[2].ToString("X").PadLeft(8, '0') + ", " +
-                                 "\n" + store_seed[1].ToString("X").PadLeft(8, '0') + ", " +
-                                 "\n" + store_seed[0].ToString("X").PadLeft(8, '0') + j +
-                                 "\n" + id.trainerID.ToString().PadLeft(5, '0') +
-                                 "\n" + id.secretID.ToString().PadLeft(5, '0') +
-                                 "\n" + id.TSV.ToString().PadLeft(4, '0') +
-                                 "\n" + id.TRV+ id.randhex.ToString("X").PadLeft(8, '0'), "", MessageBoxButtons.OK, MessageBoxIcon.Information);*/
-                                dataGridView1.Rows.Add(calc.secondsToDate(seconds, Year),
+                                if (SearchGen.SelectedIndex == 1) { dataGridView1.Columns["DateCol"].Visible = false; date = null; }
+                                else date = calc.secondsToDate(seconds, Year);
+
+                                dataGridView1.Rows.Add(date,
                                  store_seed[3].ToString("X").PadLeft(8, '0'),
                                  store_seed[2].ToString("X").PadLeft(8, '0'),
                                  store_seed[1].ToString("X").PadLeft(8, '0'),
@@ -286,7 +270,6 @@ namespace TinyFinder
                                 else
                                     if ((sync.Checked && wild.Sync) || !sync.Checked)
                                         ShowWild(wild, calc.secondsToDate(seconds, Year), store_seed, j, false);
-
                             }
                         }
                         if (SearchGen.SelectedIndex == 1)
@@ -551,7 +534,6 @@ namespace TinyFinder
                 null, null, null, null, null, null, radar.Music, radar.randInt);
             }
         }
-
 
 
 

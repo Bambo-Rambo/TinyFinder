@@ -21,7 +21,7 @@ namespace TinyFinder
 
         public string secondsToDate(uint sec, int year)
         {
-            DateTime date1 = new DateTime(year, 1, 1, 1, 0, 0);
+            DateTime date1 = new DateTime(year, 1, 1, 13, 0, 0);
             DateTime date2 = date1.AddSeconds(sec);
 
             if (TimeZoneInfo.Local.IsDaylightSavingTime(date2))
