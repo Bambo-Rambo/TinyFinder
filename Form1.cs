@@ -26,12 +26,12 @@ namespace TinyFinder
             xyRadio.Checked = true;
             year.Value = DateTime.Now.Year; month.SelectedIndex = (DateTime.Now.Month - 1);
             DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-            Fields(0);
+            ManageControls(0);
         }
 
         //Events
-        private void xyRadio_CheckedChanged(object sender, EventArgs e) { Fields(0); }
-        private void orasRadio_CheckedChanged(object sender, EventArgs e) { Fields(0); }
+        private void xyRadio_CheckedChanged(object sender, EventArgs e) { ManageControls(0); }
+        private void orasRadio_CheckedChanged(object sender, EventArgs e) { ManageControls(0); }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
             sync.Enabled = true; slots.Enabled = true; s.Enabled = true;
@@ -39,27 +39,27 @@ namespace TinyFinder
             switch (Methods.SelectedIndex)
             {
                 case 0:     //ID
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.Items.Clear();
                     break;
                 case 1:     //Normal Wild
                     if (xyRadio.Checked)
                         location.SelectedIndex = 0;
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 310;
                     slots.Items.Clear();
                     for (byte add = 1; add < 13; add++)
                         slots.Items.AddRange(new object[] { add.ToString() });
                     break;
                 case 2:     //Fishing
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 90;
                     slots.Items.Clear();
                     for (byte add = 1; add < 4; add++)
                         slots.Items.AddRange(new object[] { add.ToString() });
                     break;
                 case 3:     //Rock Smash
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 140;
                     slots.Items.Clear();
                     for (byte add = 1; add < 6; add++)
@@ -67,21 +67,21 @@ namespace TinyFinder
                     break;
                 case 4:     //Horde
                     hidden.SelectedIndex = 1;
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 90;
                     slots.Items.Clear();
                     for (byte add = 1; add < 4; add++)
                         slots.Items.AddRange(new object[] { add.ToString() });
                     break;
                 case 5:     //Poke Radar
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 310;
                     slots.Items.Clear();
                     for (byte add = 1; add < 13; add++)
                         slots.Items.AddRange(new object[] { add.ToString() });
                     break;
                 case 6:     //Friend Safari
-                    Fields((byte)Methods.SelectedIndex);
+                    ManageControls((byte)Methods.SelectedIndex);
                     slots.DropDownHeight = 90;
                     slots.Items.Clear();
                     for (byte add = 1; add < 4; add++)
@@ -545,8 +545,7 @@ namespace TinyFinder
             }
         }
 
-        //Manage Controls
-        private void Fields(byte method)
+        private void ManageControls(byte method)
         {
             min.Value = min.Minimum = 35;
             Methods.SelectedIndex = method;
