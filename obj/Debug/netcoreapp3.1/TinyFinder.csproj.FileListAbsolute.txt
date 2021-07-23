@@ -1,0 +1,33 @@
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.exe
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.deps.json
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.runtimeconfig.json
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.runtimeconfig.dev.json
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.dll
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\bin\Debug\netcoreapp3.1\TinyFinder.pdb
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.csprojAssemblyReference.cache
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.Form1.resources
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.csproj.GenerateResource.cache
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.AssemblyInfoInputs.cache
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.AssemblyInfo.cs
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.csproj.CoreCompileInputs.cache
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.dll
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.pdb
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.genruntimeconfig.cache
+C:\Users\Χαράλαμπος\source\repos\TinyFinder\obj\Debug\netcoreapp3.1\TinyFinder.Controls.CheckBoxComboBoxListControlContainer.resources
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.exe
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.deps.json
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.runtimeconfig.json
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.runtimeconfig.dev.json
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.dll
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\bin\Debug\netcoreapp3.1\TinyFinder.pdb
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.csprojAssemblyReference.cache
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.Controls.CheckBoxComboBoxListControlContainer.resources
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.Form1.resources
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.csproj.GenerateResource.cache
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.AssemblyInfoInputs.cache
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.AssemblyInfo.cs
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.csproj.CoreCompileInputs.cache
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.dll
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.pdb
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.genruntimeconfig.cache
+C:\Users\Χαράλαμπος\Desktop\Tiny Finder Month Support\obj\Debug\netcoreapp3.1\TinyFinder.Properties.Resources.resources
