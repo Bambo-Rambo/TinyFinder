@@ -27,6 +27,7 @@ namespace TinyFinder
             year.Value = DateTime.Now.Year; month.SelectedIndex = (DateTime.Now.Month - 1);
             DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             ManageControls(0);
+
         }
 
         //Events
@@ -34,6 +35,7 @@ namespace TinyFinder
         private void orasRadio_CheckedChanged(object sender, EventArgs e) { ManageControls(0); }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
+            dataGridView1.Rows.Clear();
             sync.Enabled = true; slots.Enabled = true; s.Enabled = true;
             cave.Checked = false; sync.Checked = false;
             switch (Methods.SelectedIndex)
@@ -100,8 +102,10 @@ namespace TinyFinder
         {
             if (Methods.SelectedIndex == 5)
             {
-                if (ratio.Value == 0) { boost.Enabled = false; sync.Enabled = true; slots.Enabled = true; s.Enabled = true; }
-                else { boost.Enabled = true; sync.Enabled = false; slots.Enabled = false; s.Enabled = false; }
+                if (ratio.Value == 0) { boost.Enabled = false; sync.Enabled = true; slots.Enabled = true; s.Enabled = true; 
+                    dataGridView1.Columns["SlotCol"].Visible = true; dataGridView1.Columns["SyncCol"].Visible = true; }
+                else { boost.Enabled = true; sync.Enabled = false; slots.Enabled = false; s.Enabled = false;
+                    dataGridView1.Columns["SlotCol"].Visible = false; dataGridView1.Columns["SyncCol"].Visible = false; }
             }
         }
 
@@ -119,31 +123,31 @@ namespace TinyFinder
             {
                 year.Enabled = true; DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
                 DateLabel.Location = new Point(1, 71); month.Enabled = true; button1.Text = "Calibrate and Search"; find.Enabled = true;
+                dataGridView1.Columns["DateCol"].Visible = true;
             }
             else
             {
                 year.Enabled = false; DateLabel.Text = "Current State"; DateLabel.Location = new Point(98, 71); month.Enabled = false;
-                button1.Text = "Generate"; find.Enabled = false;
+                button1.Text = "Generate"; find.Enabled = false; dataGridView1.Columns["DateCol"].Visible = false;
             }
         }
         private void t3_TextChanged(object sender, EventArgs e)
-        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        { if (SearchGen.SelectedIndex == 0) 
+            { Calibrated = false; button1.Text = "Calibrate and Search"; } }
         private void t2_TextChanged(object sender, EventArgs e)
-        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        { if (SearchGen.SelectedIndex == 0)
+            { Calibrated = false; button1.Text = "Calibrate and Search"; } }
         private void t1_TextChanged(object sender, EventArgs e)
-        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        { if (SearchGen.SelectedIndex == 0)
+            { Calibrated = false; button1.Text = "Calibrate and Search"; } }
         private void t0_TextChanged(object sender, EventArgs e)
-        { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        { if (SearchGen.SelectedIndex == 0)
+            { Calibrated = false; button1.Text = "Calibrate and Search"; } }
 
         //Main Event (Click Button)
         private void button1_Click(object sender, EventArgs e)
         {
-            dataGridView1.Columns["EnctrCol"].Visible = false; dataGridView1.Columns["SyncCol"].Visible = false; dataGridView1.Columns["SlotCol"].Visible = false;
-            dataGridView1.Columns["FluteCol"].Visible = false; dataGridView1.Columns["ItemCol"].Visible = false; dataGridView1.Columns["HACol"].Visible = false;
-            dataGridView1.Columns["MusicCol"].Visible = false; dataGridView1.Columns["Rand100Col"].Visible = false; dataGridView1.Columns["TIDCol"].Visible = false;
-            dataGridView1.Columns["SIDCol"].Visible = false; dataGridView1.Columns["TSVCol"].Visible = false; dataGridView1.Columns["TRVCol"].Visible = false;
-            dataGridView1.Columns["RandHexCol"].Visible = false; dataGridView1.Columns["DateCol"].Visible = true;
-            dataGridView1.Rows.Clear(); dataGridView1.Update();
+            dataGridView1.Rows.Clear();
             dataGridView1.DefaultCellStyle.BackColor = Color.White;
             int Year = (int)year.Value;
             uint Min = (uint)min.Value;
@@ -179,14 +183,11 @@ namespace TinyFinder
             {
                 case 0:     //ID
                     string date;
-                    dataGridView1.Columns["TIDCol"].Visible = true; dataGridView1.Columns["SIDCol"].Visible = true; dataGridView1.Columns["TSVCol"].Visible = true;
-                    dataGridView1.Columns["TRVCol"].Visible = true; dataGridView1.Columns["RandHexCol"].Visible = true;
-                    dataGridView1.Update();
                     ID id = new ID(TID, SID);
                     uint randID = id.randhex;
                     while (dataGridView1.Rows.Count < 1)    //Search only for 1 for now
                     {
-                        //dataGridView1.Update();
+                        dataGridView1.Update();
                         if (SearchGen.SelectedIndex == 0)
                             array = tiny.init(i, 2);
                         array.CopyTo(store_seed, 0);
@@ -206,11 +207,10 @@ namespace TinyFinder
                                  store_seed[2].ToString("X").PadLeft(8, '0'),
                                  store_seed[1].ToString("X").PadLeft(8, '0'),
                                  store_seed[0].ToString("X").PadLeft(8, '0'), j,
-                                 null, null, null, null, null, null, null, null,
                                  id.trainerID.ToString().PadLeft(5, '0'),
                                  id.secretID.ToString().PadLeft(5, '0'),
                                  id.TSV.ToString().PadLeft(4, '0'),
-                                 id.TRV, id.randhex.ToString("X").PadLeft(8, '0'));
+                                 id.TRV, null, null, null, id.randhex.ToString("X").PadLeft(8, '0'));
                                 dataGridView1.Update();
                             }
                         }
@@ -235,12 +235,6 @@ namespace TinyFinder
                     if (Methods.SelectedIndex == 2) { SlotCase = 2; }
                     if (Methods.SelectedIndex == 6) { SlotCase = 1; }
 
-                    dataGridView1.Columns["EnctrCol"].Visible = true;
-                    dataGridView1.Columns["SyncCol"].Visible = true; dataGridView1.Columns["SlotCol"].Visible = true;
-                    dataGridView1.Columns["ItemCol"].Visible = true; dataGridView1.Columns["Rand100Col"].Visible = true;
-                    if (orasRadio.Checked)
-                        dataGridView1.Columns["FluteCol"].Visible = true;
-                    dataGridView1.Update();
                     Slots = new HashSet<byte>();
                     for (byte s = 1; s < SlotLimit; s++)
                         if (slots.CheckBoxItems[s - 1].Checked)
@@ -291,11 +285,6 @@ namespace TinyFinder
 
 
                 case 3:     //Rock Smash
-                    dataGridView1.Columns["EnctrCol"].Visible = true; dataGridView1.Columns["SyncCol"].Visible = true; dataGridView1.Columns["SlotCol"].Visible = true;
-                    dataGridView1.Columns["ItemCol"].Visible = true; dataGridView1.Columns["Rand100Col"].Visible = true;
-                    if (orasRadio.Checked)
-                        dataGridView1.Columns["FluteCol"].Visible = true;
-                    dataGridView1.Update();
                     Slots = new HashSet<byte>();
                     for (byte s = 1; s < 6; s++)
                     {
@@ -345,8 +334,6 @@ namespace TinyFinder
 
                 case 4:     //Horde
                     Slots = new HashSet<byte>();
-                    dataGridView1.Columns["SyncCol"].Visible = true; dataGridView1.Columns["SlotCol"].Visible = true;
-                    dataGridView1.Columns["ItemCol"].Visible = true; dataGridView1.Columns["HACol"].Visible = true; dataGridView1.Columns["Rand100Col"].Visible = true;
                     if (orasRadio.Checked)
                     {
                         dataGridView1.Columns["FluteCol"].Visible = true;
@@ -402,12 +389,9 @@ namespace TinyFinder
                     if (orasRadio.Checked)
                     { MessageBox.Show("Poke Radar does not exist in ORAS games", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); break; }
 
-                    dataGridView1.Columns["Rand100Col"].Visible = true; dataGridView1.Columns["MusicCol"].Visible = true;
                     Radar radar;
                     if (ratio.Value == 0)
                     {
-                        dataGridView1.Columns["SyncCol"].Visible = true; dataGridView1.Columns["SlotCol"].Visible = true;
-                        dataGridView1.Columns["ItemCol"].Visible = true; dataGridView1.Update();
                         Slots = new HashSet<byte>();
                         for (byte s = 1; s < 13; s++)
                             if (slots.CheckBoxItems[s - 1].Checked)
@@ -553,9 +537,15 @@ namespace TinyFinder
             hidden.Visible = false; h.Visible = false; flute.Visible = false; flute1.Visible = false; label11.Visible = false; flute2.Visible = false;
             label12.Visible = false; flute3.Visible = false; label13.Visible = false; flute4.Visible = false; label14.Visible = false; flute5.Visible = false;
             sync.Visible = false; cave.Visible = false; boost.Visible = false; p.Visible = false; party.Visible = false; r.Visible = false; ratio.Visible = false;
-            ratio.Minimum = 1; ratio.Maximum = 100; label10.Visible = false; location.Visible = false;
+            ratio.Minimum = 1; ratio.Maximum = 100; label10.Visible = false; location.Visible = false; dataGridView1.Columns["FluteCol"].Visible = false;
+            dataGridView1.Columns["EnctrCol"].Visible = false; dataGridView1.Columns["SlotCol"].Visible = true; dataGridView1.Columns["SyncCol"].Visible = true;
+            dataGridView1.Columns["ItemCol"].Visible = true; dataGridView1.Columns["HACol"].Visible = false;
             if (method == 0)
             {
+                dataGridView1.Columns["EnctrCol"].HeaderText = "TID"; dataGridView1.Columns["SyncCol"].HeaderText = "SID";
+                dataGridView1.Columns["SlotCol"].HeaderText = "TSV"; dataGridView1.Columns["FluteCol"].HeaderText = "TRV";
+                dataGridView1.Columns["RandHexCol"].HeaderText = "Rand#"; dataGridView1.Columns["ItemCol"].Visible = false;
+                dataGridView1.Columns["HACol"].Visible = false; dataGridView1.Columns["MusicCol"].Visible = false;
                 if (orasRadio.Checked) { min.Value = min.Minimum = 11; }
                 max.Value = 150;
                 label3.Visible = true; label4.Visible = true; tid.Visible = true; sid.Visible = true;
@@ -565,13 +555,18 @@ namespace TinyFinder
                 if (orasRadio.Checked) { min.Value = min.Minimum = 25; }
                 max.Value = 200;
                 slots.Visible = true; s.Visible = true; sync.Visible = true;
+                dataGridView1.Columns["EnctrCol"].HeaderText = "Enctr?"; dataGridView1.Columns["SyncCol"].HeaderText = "Sync?";
+                dataGridView1.Columns["SlotCol"].HeaderText = "Slot"; dataGridView1.Columns["FluteCol"].HeaderText = "Flute";
+                dataGridView1.Columns["RandHexCol"].HeaderText = "Rand(100)";
 
                 if (method == 1 || method == 2 || method == 3 || method == 6)
                 {
-                    if (!orasRadio.Checked && method == 1) { label10.Visible = true; location.Visible = true; cave.Visible = true; }
+                    dataGridView1.Columns["EnctrCol"].Visible = true;
+                    if (!orasRadio.Checked && method == 1)
+                    { label10.Visible = true; location.Visible = true; cave.Visible = true; }
                     r.Text = "Ratio";
                     if (method != 3) { r.Visible = true; ratio.Visible = true; }
-                    if (orasRadio.Checked) { flute.Visible = true; flute1.Visible = true; }
+                    if (orasRadio.Checked) { flute.Visible = true; flute1.Visible = true; dataGridView1.Columns["FluteCol"].Visible = true; }
                     if (method == 2)
                         ratio.Value = 49;
                     else
@@ -579,7 +574,8 @@ namespace TinyFinder
                 }
                 else if (method == 4)
                 {
-                    hidden.Visible = true; h.Visible = true; cave.Visible = true; p.Visible = true; party.Visible = true;
+                    hidden.Visible = true; h.Visible = true; cave.Visible = true; p.Visible = true; 
+                    party.Visible = true; dataGridView1.Columns["HACol"].Visible = true;
                     if (orasRadio.Checked)
                     {
                         flute.Visible = true; flute1.Visible = true; label11.Visible = true; flute2.Visible = true; label12.Visible = true;
@@ -589,7 +585,7 @@ namespace TinyFinder
                 else
                 {
                     r.Text = "Chain"; r.Visible = true; ratio.Visible = true; ratio.Minimum = 0; ratio.Maximum = 60; ratio.Value = 0;
-                    p.Visible = true; party.Visible = true; boost.Visible = true;
+                    p.Visible = true; party.Visible = true; boost.Visible = true; dataGridView1.Columns["ItemCol"].Visible = false;
                 }
             }
         }
