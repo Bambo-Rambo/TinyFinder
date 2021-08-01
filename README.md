@@ -40,7 +40,7 @@ For the first option, fill in the filters and the tool will search for indexes t
 
 To get the slot, sync and item probability, you need to **step** inside the patch during the index.
 
-To trigger the anxious music, you need to **activate** the radar during the index. Stay in front of the patch and RNG for the desired slot then defeat the Pokemon. If you didn’t break your chain, the music will activate.
+~~To trigger the anxious music, you need to **activate** the radar during the index. Stay in front of the patch and RNG for the desired slot then defeat the Pokemon. If you didn’t break your chain, the music will activate.~~
 
 The second option, will search for guaranteed shiny patches. Remember that shininess depends on TinyMT when chain is higher than 0. Simply activate the radar during the index when the chain is 1 or higher and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check 3DS RNG Tool to see which the shiny one is. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it afterwards as well.
 
