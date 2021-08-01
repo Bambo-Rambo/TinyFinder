@@ -32,6 +32,20 @@ namespace TinyFinder
             TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiny3Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiny2Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiny1Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tiny0Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IndexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EnctrCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SyncCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SlotCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FluteCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ItemCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HACol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.MusicCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.RandHexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.t3 = new TinyFinder.HexBox();
             this.t2 = new TinyFinder.HexBox();
             this.t1 = new TinyFinder.HexBox();
@@ -90,20 +104,6 @@ namespace TinyFinder
             this.SearchGen = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny3Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny2Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny1Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny0Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IndexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EnctrCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SyncCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SlotCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FluteCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HACol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MusicCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RandHexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
@@ -157,6 +157,106 @@ namespace TinyFinder
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.dataGridView1.Size = new System.Drawing.Size(990, 348);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            this.DateCol.Width = 120;
+            // 
+            // tiny3Col
+            // 
+            this.tiny3Col.HeaderText = "Tiny [3]";
+            this.tiny3Col.Name = "tiny3Col";
+            this.tiny3Col.ReadOnly = true;
+            this.tiny3Col.Width = 75;
+            // 
+            // tiny2Col
+            // 
+            this.tiny2Col.HeaderText = "Tiny [2]";
+            this.tiny2Col.Name = "tiny2Col";
+            this.tiny2Col.ReadOnly = true;
+            this.tiny2Col.Width = 75;
+            // 
+            // tiny1Col
+            // 
+            this.tiny1Col.HeaderText = "Tiny [1]";
+            this.tiny1Col.Name = "tiny1Col";
+            this.tiny1Col.ReadOnly = true;
+            this.tiny1Col.Width = 75;
+            // 
+            // tiny0Col
+            // 
+            this.tiny0Col.HeaderText = "Tiny [0]";
+            this.tiny0Col.Name = "tiny0Col";
+            this.tiny0Col.ReadOnly = true;
+            this.tiny0Col.Width = 75;
+            // 
+            // IndexCol
+            // 
+            this.IndexCol.HeaderText = "Index";
+            this.IndexCol.Name = "IndexCol";
+            this.IndexCol.ReadOnly = true;
+            this.IndexCol.Width = 60;
+            // 
+            // EnctrCol
+            // 
+            this.EnctrCol.HeaderText = "Enctr?";
+            this.EnctrCol.Name = "EnctrCol";
+            this.EnctrCol.ReadOnly = true;
+            this.EnctrCol.Visible = false;
+            this.EnctrCol.Width = 50;
+            // 
+            // SyncCol
+            // 
+            this.SyncCol.HeaderText = "Sync?";
+            this.SyncCol.Name = "SyncCol";
+            this.SyncCol.ReadOnly = true;
+            this.SyncCol.Width = 50;
+            // 
+            // SlotCol
+            // 
+            this.SlotCol.HeaderText = "Slot";
+            this.SlotCol.Name = "SlotCol";
+            this.SlotCol.ReadOnly = true;
+            this.SlotCol.Width = 50;
+            // 
+            // FluteCol
+            // 
+            this.FluteCol.HeaderText = "Flute";
+            this.FluteCol.Name = "FluteCol";
+            this.FluteCol.ReadOnly = true;
+            this.FluteCol.Visible = false;
+            this.FluteCol.Width = 70;
+            // 
+            // ItemCol
+            // 
+            this.ItemCol.HeaderText = "Item";
+            this.ItemCol.Name = "ItemCol";
+            this.ItemCol.ReadOnly = true;
+            this.ItemCol.Width = 150;
+            // 
+            // HACol
+            // 
+            this.HACol.HeaderText = "HA";
+            this.HACol.Name = "HACol";
+            this.HACol.ReadOnly = true;
+            this.HACol.Width = 40;
+            // 
+            // MusicCol
+            // 
+            this.MusicCol.HeaderText = "Music";
+            this.MusicCol.Name = "MusicCol";
+            this.MusicCol.ReadOnly = true;
+            this.MusicCol.Width = 50;
+            // 
+            // RandHexCol
+            // 
+            this.RandHexCol.HeaderText = "Rand#";
+            this.RandHexCol.Name = "RandHexCol";
+            this.RandHexCol.ReadOnly = true;
+            this.RandHexCol.Width = 80;
             // 
             // t3
             // 
@@ -212,6 +312,7 @@ namespace TinyFinder
             // 
             // button1
             // 
+            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.button1.Location = new System.Drawing.Point(205, 194);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(171, 44);
@@ -519,7 +620,7 @@ namespace TinyFinder
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(263, 89);
+            this.label14.Location = new System.Drawing.Point(264, 89);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(56, 14);
             this.label14.TabIndex = 38;
@@ -529,7 +630,7 @@ namespace TinyFinder
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(264, 146);
+            this.label13.Location = new System.Drawing.Point(264, 147);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 14);
             this.label13.TabIndex = 42;
@@ -609,7 +710,7 @@ namespace TinyFinder
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(264, 117);
+            this.label12.Location = new System.Drawing.Point(264, 118);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(56, 14);
             this.label12.TabIndex = 40;
@@ -928,106 +1029,6 @@ namespace TinyFinder
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Generator";
             this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            this.DateCol.Width = 120;
-            // 
-            // tiny3Col
-            // 
-            this.tiny3Col.HeaderText = "Tiny [3]";
-            this.tiny3Col.Name = "tiny3Col";
-            this.tiny3Col.ReadOnly = true;
-            this.tiny3Col.Width = 75;
-            // 
-            // tiny2Col
-            // 
-            this.tiny2Col.HeaderText = "Tiny [2]";
-            this.tiny2Col.Name = "tiny2Col";
-            this.tiny2Col.ReadOnly = true;
-            this.tiny2Col.Width = 75;
-            // 
-            // tiny1Col
-            // 
-            this.tiny1Col.HeaderText = "Tiny [1]";
-            this.tiny1Col.Name = "tiny1Col";
-            this.tiny1Col.ReadOnly = true;
-            this.tiny1Col.Width = 75;
-            // 
-            // tiny0Col
-            // 
-            this.tiny0Col.HeaderText = "Tiny [0]";
-            this.tiny0Col.Name = "tiny0Col";
-            this.tiny0Col.ReadOnly = true;
-            this.tiny0Col.Width = 75;
-            // 
-            // IndexCol
-            // 
-            this.IndexCol.HeaderText = "Index";
-            this.IndexCol.Name = "IndexCol";
-            this.IndexCol.ReadOnly = true;
-            this.IndexCol.Width = 60;
-            // 
-            // EnctrCol
-            // 
-            this.EnctrCol.HeaderText = "Enctr?";
-            this.EnctrCol.Name = "EnctrCol";
-            this.EnctrCol.ReadOnly = true;
-            this.EnctrCol.Visible = false;
-            this.EnctrCol.Width = 50;
-            // 
-            // SyncCol
-            // 
-            this.SyncCol.HeaderText = "Sync?";
-            this.SyncCol.Name = "SyncCol";
-            this.SyncCol.ReadOnly = true;
-            this.SyncCol.Width = 50;
-            // 
-            // SlotCol
-            // 
-            this.SlotCol.HeaderText = "Slot";
-            this.SlotCol.Name = "SlotCol";
-            this.SlotCol.ReadOnly = true;
-            this.SlotCol.Width = 50;
-            // 
-            // FluteCol
-            // 
-            this.FluteCol.HeaderText = "Flute";
-            this.FluteCol.Name = "FluteCol";
-            this.FluteCol.ReadOnly = true;
-            this.FluteCol.Visible = false;
-            this.FluteCol.Width = 70;
-            // 
-            // ItemCol
-            // 
-            this.ItemCol.HeaderText = "Item";
-            this.ItemCol.Name = "ItemCol";
-            this.ItemCol.ReadOnly = true;
-            this.ItemCol.Width = 150;
-            // 
-            // HACol
-            // 
-            this.HACol.HeaderText = "HA";
-            this.HACol.Name = "HACol";
-            this.HACol.ReadOnly = true;
-            this.HACol.Width = 40;
-            // 
-            // MusicCol
-            // 
-            this.MusicCol.HeaderText = "Music";
-            this.MusicCol.Name = "MusicCol";
-            this.MusicCol.ReadOnly = true;
-            this.MusicCol.Width = 50;
-            // 
-            // RandHexCol
-            // 
-            this.RandHexCol.HeaderText = "Rand#";
-            this.RandHexCol.Name = "RandHexCol";
-            this.RandHexCol.ReadOnly = true;
-            this.RandHexCol.Width = 80;
             // 
             // Form1
             // 

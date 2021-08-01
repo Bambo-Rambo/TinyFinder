@@ -13,11 +13,9 @@ namespace TinyFinder
         Calculate calc = new Calculate();
         TinyMT tiny = new TinyMT();
         SlotData LocationData = new SlotData();
-        uint seconds;
-        byte count;
+        uint seconds, initial = 0;
+        byte count, searchMonth;
         bool Calibrated = false;
-        uint initial = 0;
-        byte searchMonth;
 
         public Form1()
         {
@@ -27,7 +25,6 @@ namespace TinyFinder
             year.Value = DateTime.Now.Year; month.SelectedIndex = (DateTime.Now.Month - 1);
             DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             ManageControls(0);
-
         }
 
         //Events
@@ -102,9 +99,12 @@ namespace TinyFinder
         {
             if (Methods.SelectedIndex == 5)
             {
-                if (ratio.Value == 0) { boost.Enabled = false; sync.Enabled = true; slots.Enabled = true; s.Enabled = true; 
-                    dataGridView1.Columns["SlotCol"].Visible = true; dataGridView1.Columns["SyncCol"].Visible = true; }
-                else { boost.Enabled = true; sync.Enabled = false; slots.Enabled = false; s.Enabled = false;
+                if (ratio.Value == 0) { boost.Enabled = false; sync.Enabled = true; slots.Enabled = true; 
+                    s.Enabled = true; dataGridView1.Columns["SlotCol"].Visible = true; 
+                    dataGridView1.Columns["SyncCol"].Visible = true; dataGridView1.Columns["ItemCol"].Visible = true;
+                }
+                else { boost.Enabled = true; sync.Enabled = false; slots.Enabled = false; 
+                    s.Enabled = false; dataGridView1.Columns["ItemCol"].Visible = false;
                     dataGridView1.Columns["SlotCol"].Visible = false; dataGridView1.Columns["SyncCol"].Visible = false; }
             }
         }
@@ -173,9 +173,10 @@ namespace TinyFinder
                         if (tiny.init(c, extra)[3] == array[3] && tiny.init(c, extra)[2] == array[2]) //Comparing [3] and [2] should be enough
                         { initial = c; break; }
                     Calibrated = true;
-                    button1.Text = "Search";
+                    
                 }
             }
+            button1.Text = "Search";
             searchMonth = (byte)(month.SelectedIndex + 1); seconds = calc.findSeconds(searchMonth, Year); uint i = calc.findSeed(initial, seconds);
 
             ushort TID = (ushort)tid.Value; ushort SID = (ushort)sid.Value;
@@ -255,7 +256,7 @@ namespace TinyFinder
                             tiny.nextState(array);
                         for (uint j = Min; j <= Max; j++)
                         {
-                            wild = new Wild(array, orasRadio.Checked, cave.Checked || location.SelectedIndex == 7, SlotCase, EnctSync); // location.SelectedIndex == 7 -> Route 7
+                            wild = new Wild(array, orasRadio.Checked, cave.Checked || location.SelectedIndex == 7, SlotCase, EnctSync); // -> Route 7
                             tiny.nextState(array);
                             if (wild.encounter < (byte)ratio.Value && Slots.Contains(wild.slot))
                             {
@@ -277,7 +278,7 @@ namespace TinyFinder
                             break;
 
                         seconds++;
-                        if (seconds % 3000 == 0)
+                        if (seconds % 5000 == 0)
                             dataGridView1.Update();
                         i += 1000;
                     }
@@ -325,7 +326,7 @@ namespace TinyFinder
                             break;
 
                         seconds++;
-                        if (seconds % 3000 == 0)
+                        if (seconds % 5000 == 0)
                             dataGridView1.Update();
                         i += 1000;
                     }
@@ -409,17 +410,16 @@ namespace TinyFinder
                             {
                                 radar = new Radar(array, 0, (byte)party.Value, false); //Set the Boost Music to be false for now
                                 tiny.nextState(array);
-                                if (Slots.Contains(radar.slot) && radar.Music == 'A' && ((sync.Checked && radar.sync) || (!sync.Checked)))
+                                if (Slots.Contains(radar.slot) && ((sync.Checked && radar.sync) || (!sync.Checked)))
                                     ShowRadar(radar, calc.secondsToDate(seconds, Year), store_seed, j, 0);
                             }
                             if (SearchGen.SelectedIndex == 1)
                                 break;
 
                             seconds++;
-                            if (seconds % 1000 == 0)
-                                dataGridView1.Update();
                             i += 1000;
                         }
+                        dataGridView1.Update();
                     }
                     else
                     {
@@ -443,7 +443,7 @@ namespace TinyFinder
                                 break;
 
                             seconds++;
-                            if (seconds % 100 == 0)
+                            if (seconds % 1000 == 0)
                                 dataGridView1.Update();
                             i += 1000;
                         }
@@ -585,7 +585,7 @@ namespace TinyFinder
                 else
                 {
                     r.Text = "Chain"; r.Visible = true; ratio.Visible = true; ratio.Minimum = 0; ratio.Maximum = 60; ratio.Value = 0;
-                    p.Visible = true; party.Visible = true; boost.Visible = true; dataGridView1.Columns["ItemCol"].Visible = false;
+                    p.Visible = true; party.Visible = true; boost.Visible = true;
                 }
             }
         }
