@@ -31,21 +31,21 @@ namespace TinyFinder
         {
             TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny3Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny2Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny1Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.tiny0Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IndexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EnctrCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SyncCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SlotCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FluteCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ItemCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HACol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.MusicCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.RandHexCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Searcher = new System.Windows.Forms.DataGridView();
+            this.s_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Tiny3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Enctr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Sync = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Slot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_HA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Music = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.s_Rand = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.t3 = new TinyFinder.HexBox();
             this.t2 = new TinyFinder.HexBox();
             this.t1 = new TinyFinder.HexBox();
@@ -67,26 +67,26 @@ namespace TinyFinder
             this.label10 = new System.Windows.Forms.Label();
             this.month = new System.Windows.Forms.ComboBox();
             this.mo = new System.Windows.Forms.Label();
+            this.r = new System.Windows.Forms.Label();
+            this.boost = new System.Windows.Forms.CheckBox();
+            this.ratio = new System.Windows.Forms.NumericUpDown();
+            this.cave = new System.Windows.Forms.CheckBox();
+            this.p = new System.Windows.Forms.Label();
+            this.party = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
             this.find = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.flute = new System.Windows.Forms.Label();
-            this.r = new System.Windows.Forms.Label();
+            this.flutelabel = new System.Windows.Forms.Label();
             this.sync = new System.Windows.Forms.CheckBox();
             this.flute5 = new System.Windows.Forms.NumericUpDown();
             this.flute1 = new System.Windows.Forms.NumericUpDown();
             this.flute3 = new System.Windows.Forms.NumericUpDown();
             this.label12 = new System.Windows.Forms.Label();
-            this.ratio = new System.Windows.Forms.NumericUpDown();
             this.flute4 = new System.Windows.Forms.NumericUpDown();
-            this.p = new System.Windows.Forms.Label();
-            this.party = new System.Windows.Forms.NumericUpDown();
-            this.boost = new System.Windows.Forms.CheckBox();
             this.h = new System.Windows.Forms.Label();
             this.flute2 = new System.Windows.Forms.NumericUpDown();
-            this.cave = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.hidden = new System.Windows.Forms.ComboBox();
             this.s = new System.Windows.Forms.Label();
@@ -102,161 +102,176 @@ namespace TinyFinder
             this.label5 = new System.Windows.Forms.Label();
             this.DateLabel = new System.Windows.Forms.Label();
             this.SearchGen = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.Srch = new System.Windows.Forms.TabPage();
+            this.Gen = new System.Windows.Forms.TabPage();
+            this.Generator = new System.Windows.Forms.DataGridView();
+            this.g_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Enctr = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Sync = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Slot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_HA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Music = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Rand = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Tiny3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.g_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.Searcher)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.find)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).BeginInit();
             this.groupBox3.SuspendLayout();
             this.SearchGen.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Generator)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // Searcher
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.AllowUserToResizeRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.Searcher.AllowUserToAddRows = false;
+            this.Searcher.AllowUserToDeleteRows = false;
+            this.Searcher.AllowUserToResizeRows = false;
+            this.Searcher.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DateCol,
-            this.tiny3Col,
-            this.tiny2Col,
-            this.tiny1Col,
-            this.tiny0Col,
-            this.IndexCol,
-            this.EnctrCol,
-            this.SyncCol,
-            this.SlotCol,
-            this.FluteCol,
-            this.ItemCol,
-            this.HACol,
-            this.MusicCol,
-            this.RandHexCol});
-            this.dataGridView1.GridColor = System.Drawing.SystemColors.AppWorkspace;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 301);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.RowHeadersVisible = false;
-            this.dataGridView1.RowTemplate.Height = 25;
-            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(990, 348);
-            this.dataGridView1.TabIndex = 0;
+            this.Searcher.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Searcher.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.s_Date,
+            this.s_Tiny3,
+            this.s_Tiny2,
+            this.s_Tiny1,
+            this.s_Tiny0,
+            this.s_Index,
+            this.s_Enctr,
+            this.s_Sync,
+            this.s_Slot,
+            this.s_Flute,
+            this.s_Item,
+            this.s_HA,
+            this.s_Music,
+            this.s_Rand});
+            this.Searcher.GridColor = System.Drawing.SystemColors.AppWorkspace;
+            this.Searcher.Location = new System.Drawing.Point(12, 301);
+            this.Searcher.Name = "Searcher";
+            this.Searcher.ReadOnly = true;
+            this.Searcher.RowHeadersVisible = false;
+            this.Searcher.RowTemplate.Height = 25;
+            this.Searcher.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this.Searcher.Size = new System.Drawing.Size(990, 348);
+            this.Searcher.TabIndex = 0;
             // 
-            // DateCol
+            // s_Date
             // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            this.DateCol.Width = 120;
+            this.s_Date.HeaderText = "Date";
+            this.s_Date.Name = "s_Date";
+            this.s_Date.ReadOnly = true;
+            this.s_Date.Width = 120;
             // 
-            // tiny3Col
+            // s_Tiny3
             // 
-            this.tiny3Col.HeaderText = "Tiny [3]";
-            this.tiny3Col.Name = "tiny3Col";
-            this.tiny3Col.ReadOnly = true;
-            this.tiny3Col.Width = 75;
+            this.s_Tiny3.HeaderText = "Tiny [3]";
+            this.s_Tiny3.Name = "s_Tiny3";
+            this.s_Tiny3.ReadOnly = true;
+            this.s_Tiny3.Width = 75;
             // 
-            // tiny2Col
+            // s_Tiny2
             // 
-            this.tiny2Col.HeaderText = "Tiny [2]";
-            this.tiny2Col.Name = "tiny2Col";
-            this.tiny2Col.ReadOnly = true;
-            this.tiny2Col.Width = 75;
+            this.s_Tiny2.HeaderText = "Tiny [2]";
+            this.s_Tiny2.Name = "s_Tiny2";
+            this.s_Tiny2.ReadOnly = true;
+            this.s_Tiny2.Width = 75;
             // 
-            // tiny1Col
+            // s_Tiny1
             // 
-            this.tiny1Col.HeaderText = "Tiny [1]";
-            this.tiny1Col.Name = "tiny1Col";
-            this.tiny1Col.ReadOnly = true;
-            this.tiny1Col.Width = 75;
+            this.s_Tiny1.HeaderText = "Tiny [1]";
+            this.s_Tiny1.Name = "s_Tiny1";
+            this.s_Tiny1.ReadOnly = true;
+            this.s_Tiny1.Width = 75;
             // 
-            // tiny0Col
+            // s_Tiny0
             // 
-            this.tiny0Col.HeaderText = "Tiny [0]";
-            this.tiny0Col.Name = "tiny0Col";
-            this.tiny0Col.ReadOnly = true;
-            this.tiny0Col.Width = 75;
+            this.s_Tiny0.HeaderText = "Tiny [0]";
+            this.s_Tiny0.Name = "s_Tiny0";
+            this.s_Tiny0.ReadOnly = true;
+            this.s_Tiny0.Width = 75;
             // 
-            // IndexCol
+            // s_Index
             // 
-            this.IndexCol.HeaderText = "Index";
-            this.IndexCol.Name = "IndexCol";
-            this.IndexCol.ReadOnly = true;
-            this.IndexCol.Width = 60;
+            this.s_Index.HeaderText = "Index";
+            this.s_Index.Name = "s_Index";
+            this.s_Index.ReadOnly = true;
+            this.s_Index.Width = 60;
             // 
-            // EnctrCol
+            // s_Enctr
             // 
-            this.EnctrCol.HeaderText = "Enctr?";
-            this.EnctrCol.Name = "EnctrCol";
-            this.EnctrCol.ReadOnly = true;
-            this.EnctrCol.Visible = false;
-            this.EnctrCol.Width = 50;
+            this.s_Enctr.HeaderText = "Enctr?";
+            this.s_Enctr.Name = "s_Enctr";
+            this.s_Enctr.ReadOnly = true;
+            this.s_Enctr.Visible = false;
+            this.s_Enctr.Width = 50;
             // 
-            // SyncCol
+            // s_Sync
             // 
-            this.SyncCol.HeaderText = "Sync?";
-            this.SyncCol.Name = "SyncCol";
-            this.SyncCol.ReadOnly = true;
-            this.SyncCol.Width = 50;
+            this.s_Sync.HeaderText = "Sync?";
+            this.s_Sync.Name = "s_Sync";
+            this.s_Sync.ReadOnly = true;
+            this.s_Sync.Width = 50;
             // 
-            // SlotCol
+            // s_Slot
             // 
-            this.SlotCol.HeaderText = "Slot";
-            this.SlotCol.Name = "SlotCol";
-            this.SlotCol.ReadOnly = true;
-            this.SlotCol.Width = 50;
+            this.s_Slot.HeaderText = "Slot";
+            this.s_Slot.Name = "s_Slot";
+            this.s_Slot.ReadOnly = true;
+            this.s_Slot.Width = 50;
             // 
-            // FluteCol
+            // s_Flute
             // 
-            this.FluteCol.HeaderText = "Flute";
-            this.FluteCol.Name = "FluteCol";
-            this.FluteCol.ReadOnly = true;
-            this.FluteCol.Visible = false;
-            this.FluteCol.Width = 70;
+            this.s_Flute.HeaderText = "Flute";
+            this.s_Flute.Name = "s_Flute";
+            this.s_Flute.ReadOnly = true;
+            this.s_Flute.Visible = false;
+            this.s_Flute.Width = 70;
             // 
-            // ItemCol
+            // s_Item
             // 
-            this.ItemCol.HeaderText = "Item";
-            this.ItemCol.Name = "ItemCol";
-            this.ItemCol.ReadOnly = true;
-            this.ItemCol.Width = 150;
+            this.s_Item.HeaderText = "Item";
+            this.s_Item.Name = "s_Item";
+            this.s_Item.ReadOnly = true;
+            this.s_Item.Width = 150;
             // 
-            // HACol
+            // s_HA
             // 
-            this.HACol.HeaderText = "HA";
-            this.HACol.Name = "HACol";
-            this.HACol.ReadOnly = true;
-            this.HACol.Width = 40;
+            this.s_HA.HeaderText = "HA";
+            this.s_HA.Name = "s_HA";
+            this.s_HA.ReadOnly = true;
+            this.s_HA.Width = 40;
             // 
-            // MusicCol
+            // s_Music
             // 
-            this.MusicCol.HeaderText = "Music";
-            this.MusicCol.Name = "MusicCol";
-            this.MusicCol.ReadOnly = true;
-            this.MusicCol.Width = 50;
+            this.s_Music.HeaderText = "Music";
+            this.s_Music.Name = "s_Music";
+            this.s_Music.ReadOnly = true;
+            this.s_Music.Width = 50;
             // 
-            // RandHexCol
+            // s_Rand
             // 
-            this.RandHexCol.HeaderText = "Rand#";
-            this.RandHexCol.Name = "RandHexCol";
-            this.RandHexCol.ReadOnly = true;
-            this.RandHexCol.Width = 80;
+            this.s_Rand.HeaderText = "Rand#";
+            this.s_Rand.Name = "s_Rand";
+            this.s_Rand.ReadOnly = true;
+            this.s_Rand.Width = 80;
             // 
             // t3
             // 
@@ -312,8 +327,8 @@ namespace TinyFinder
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(205, 194);
+            this.button1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.button1.Location = new System.Drawing.Point(177, 190);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(171, 44);
             this.button1.TabIndex = 5;
@@ -324,7 +339,7 @@ namespace TinyFinder
             // xyRadio
             // 
             this.xyRadio.AutoSize = true;
-            this.xyRadio.Location = new System.Drawing.Point(112, 27);
+            this.xyRadio.Location = new System.Drawing.Point(97, 27);
             this.xyRadio.Name = "xyRadio";
             this.xyRadio.Size = new System.Drawing.Size(39, 18);
             this.xyRadio.TabIndex = 6;
@@ -336,7 +351,7 @@ namespace TinyFinder
             // orasRadio
             // 
             this.orasRadio.AutoSize = true;
-            this.orasRadio.Location = new System.Drawing.Point(178, 27);
+            this.orasRadio.Location = new System.Drawing.Point(163, 27);
             this.orasRadio.Name = "orasRadio";
             this.orasRadio.Size = new System.Drawing.Size(53, 18);
             this.orasRadio.TabIndex = 7;
@@ -356,7 +371,7 @@ namespace TinyFinder
             "Horde",
             "Radar",
             "Friend Safari"});
-            this.Methods.Location = new System.Drawing.Point(112, 58);
+            this.Methods.Location = new System.Drawing.Point(95, 57);
             this.Methods.Name = "Methods";
             this.Methods.Size = new System.Drawing.Size(121, 22);
             this.Methods.TabIndex = 8;
@@ -365,7 +380,7 @@ namespace TinyFinder
             // game
             // 
             this.game.AutoSize = true;
-            this.game.Location = new System.Drawing.Point(21, 29);
+            this.game.Location = new System.Drawing.Point(6, 29);
             this.game.Name = "game";
             this.game.Size = new System.Drawing.Size(35, 14);
             this.game.TabIndex = 9;
@@ -374,7 +389,7 @@ namespace TinyFinder
             // method
             // 
             this.method.AutoSize = true;
-            this.method.Location = new System.Drawing.Point(21, 61);
+            this.method.Location = new System.Drawing.Point(6, 61);
             this.method.Name = "method";
             this.method.Size = new System.Drawing.Size(49, 14);
             this.method.TabIndex = 10;
@@ -414,7 +429,7 @@ namespace TinyFinder
             // 
             // min
             // 
-            this.min.Location = new System.Drawing.Point(112, 173);
+            this.min.Location = new System.Drawing.Point(97, 173);
             this.min.Maximum = new decimal(new int[] {
             150000,
             0,
@@ -427,7 +442,7 @@ namespace TinyFinder
             // 
             // max
             // 
-            this.max.Location = new System.Drawing.Point(112, 209);
+            this.max.Location = new System.Drawing.Point(97, 209);
             this.max.Maximum = new decimal(new int[] {
             1000000,
             0,
@@ -440,7 +455,7 @@ namespace TinyFinder
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(21, 175);
+            this.label1.Location = new System.Drawing.Point(6, 175);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(70, 14);
             this.label1.TabIndex = 15;
@@ -449,7 +464,7 @@ namespace TinyFinder
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(21, 211);
+            this.label2.Location = new System.Drawing.Point(6, 211);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 14);
             this.label2.TabIndex = 16;
@@ -463,18 +478,24 @@ namespace TinyFinder
             this.groupBox1.Controls.Add(this.month);
             this.groupBox1.Controls.Add(this.mo);
             this.groupBox1.Controls.Add(this.Methods);
+            this.groupBox1.Controls.Add(this.r);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.xyRadio);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.orasRadio);
             this.groupBox1.Controls.Add(this.max);
+            this.groupBox1.Controls.Add(this.boost);
             this.groupBox1.Controls.Add(this.game);
+            this.groupBox1.Controls.Add(this.ratio);
             this.groupBox1.Controls.Add(this.min);
+            this.groupBox1.Controls.Add(this.cave);
             this.groupBox1.Controls.Add(this.method);
+            this.groupBox1.Controls.Add(this.p);
+            this.groupBox1.Controls.Add(this.party);
             this.groupBox1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.groupBox1.Location = new System.Drawing.Point(316, 40);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(267, 248);
+            this.groupBox1.Size = new System.Drawing.Size(316, 248);
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Step 2 - Settings";
@@ -503,7 +524,7 @@ namespace TinyFinder
             "Route 21",
             "Route 22",
             "Santalune Forest"});
-            this.location.Location = new System.Drawing.Point(112, 99);
+            this.location.Location = new System.Drawing.Point(95, 98);
             this.location.Name = "location";
             this.location.Size = new System.Drawing.Size(121, 22);
             this.location.TabIndex = 20;
@@ -511,7 +532,7 @@ namespace TinyFinder
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(21, 101);
+            this.label10.Location = new System.Drawing.Point(6, 101);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(63, 14);
             this.label10.TabIndex = 19;
@@ -533,7 +554,7 @@ namespace TinyFinder
             "October",
             "November",
             "December"});
-            this.month.Location = new System.Drawing.Point(112, 136);
+            this.month.Location = new System.Drawing.Point(95, 135);
             this.month.Name = "month";
             this.month.Size = new System.Drawing.Size(121, 22);
             this.month.TabIndex = 18;
@@ -541,34 +562,114 @@ namespace TinyFinder
             // mo
             // 
             this.mo.AutoSize = true;
-            this.mo.Location = new System.Drawing.Point(21, 139);
+            this.mo.Location = new System.Drawing.Point(6, 139);
             this.mo.Name = "mo";
             this.mo.Size = new System.Drawing.Size(42, 14);
             this.mo.TabIndex = 17;
             this.mo.Text = "Month";
             // 
+            // r
+            // 
+            this.r.AutoSize = true;
+            this.r.Location = new System.Drawing.Point(193, 212);
+            this.r.Name = "r";
+            this.r.Size = new System.Drawing.Size(35, 14);
+            this.r.TabIndex = 34;
+            this.r.Text = "Rate";
+            this.r.Visible = false;
+            // 
+            // boost
+            // 
+            this.boost.AutoSize = true;
+            this.boost.Location = new System.Drawing.Point(237, 57);
+            this.boost.Name = "boost";
+            this.boost.Size = new System.Drawing.Size(61, 18);
+            this.boost.TabIndex = 29;
+            this.boost.Text = "Boost";
+            this.boost.UseVisualStyleBackColor = true;
+            this.boost.Visible = false;
+            // 
+            // ratio
+            // 
+            this.ratio.Location = new System.Drawing.Point(237, 209);
+            this.ratio.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratio.Name = "ratio";
+            this.ratio.Size = new System.Drawing.Size(51, 22);
+            this.ratio.TabIndex = 32;
+            this.ratio.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ratio.Visible = false;
+            this.ratio.ValueChanged += new System.EventHandler(this.ratio_ValueChanged);
+            // 
+            // cave
+            // 
+            this.cave.AutoSize = true;
+            this.cave.Location = new System.Drawing.Point(237, 98);
+            this.cave.Name = "cave";
+            this.cave.Size = new System.Drawing.Size(54, 18);
+            this.cave.TabIndex = 28;
+            this.cave.Text = "Cave";
+            this.cave.UseVisualStyleBackColor = true;
+            this.cave.Visible = false;
+            this.cave.CheckedChanged += new System.EventHandler(this.cave_CheckedChanged);
+            // 
+            // p
+            // 
+            this.p.AutoSize = true;
+            this.p.Location = new System.Drawing.Point(193, 175);
+            this.p.Name = "p";
+            this.p.Size = new System.Drawing.Size(42, 14);
+            this.p.TabIndex = 31;
+            this.p.Text = "Party";
+            this.p.Visible = false;
+            // 
+            // party
+            // 
+            this.party.Location = new System.Drawing.Point(237, 173);
+            this.party.Maximum = new decimal(new int[] {
+            6,
+            0,
+            0,
+            0});
+            this.party.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.party.Name = "party";
+            this.party.Size = new System.Drawing.Size(51, 22);
+            this.party.TabIndex = 30;
+            this.party.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.party.Visible = false;
+            // 
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.find);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.flute);
-            this.groupBox2.Controls.Add(this.r);
+            this.groupBox2.Controls.Add(this.flutelabel);
             this.groupBox2.Controls.Add(this.sync);
             this.groupBox2.Controls.Add(this.flute5);
             this.groupBox2.Controls.Add(this.flute1);
             this.groupBox2.Controls.Add(this.flute3);
             this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.ratio);
             this.groupBox2.Controls.Add(this.flute4);
-            this.groupBox2.Controls.Add(this.p);
-            this.groupBox2.Controls.Add(this.party);
-            this.groupBox2.Controls.Add(this.boost);
             this.groupBox2.Controls.Add(this.h);
             this.groupBox2.Controls.Add(this.flute2);
-            this.groupBox2.Controls.Add(this.cave);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.hidden);
             this.groupBox2.Controls.Add(this.s);
@@ -577,11 +678,10 @@ namespace TinyFinder
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.sid);
             this.groupBox2.Controls.Add(this.tid);
-            this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.groupBox2.Location = new System.Drawing.Point(589, 40);
+            this.groupBox2.Location = new System.Drawing.Point(638, 40);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(403, 248);
+            this.groupBox2.Size = new System.Drawing.Size(354, 248);
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Step 3 - Preferences";
@@ -589,7 +689,7 @@ namespace TinyFinder
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(14, 206);
+            this.label9.Location = new System.Drawing.Point(6, 206);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(98, 14);
             this.label9.TabIndex = 44;
@@ -597,7 +697,7 @@ namespace TinyFinder
             // 
             // find
             // 
-            this.find.Location = new System.Drawing.Point(127, 203);
+            this.find.Location = new System.Drawing.Point(110, 203);
             this.find.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -620,7 +720,7 @@ namespace TinyFinder
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(264, 89);
+            this.label14.Location = new System.Drawing.Point(218, 90);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(56, 14);
             this.label14.TabIndex = 38;
@@ -630,37 +730,27 @@ namespace TinyFinder
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(264, 147);
+            this.label13.Location = new System.Drawing.Point(218, 148);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(56, 14);
             this.label13.TabIndex = 42;
             this.label13.Text = "Flute 5";
             this.label13.Visible = false;
             // 
-            // flute
+            // flutelabel
             // 
-            this.flute.AutoSize = true;
-            this.flute.Location = new System.Drawing.Point(264, 31);
-            this.flute.Name = "flute";
-            this.flute.Size = new System.Drawing.Size(42, 14);
-            this.flute.TabIndex = 36;
-            this.flute.Text = "Flute";
-            this.flute.Visible = false;
-            // 
-            // r
-            // 
-            this.r.AutoSize = true;
-            this.r.Location = new System.Drawing.Point(14, 142);
-            this.r.Name = "r";
-            this.r.Size = new System.Drawing.Size(35, 14);
-            this.r.TabIndex = 34;
-            this.r.Text = "Rate";
-            this.r.Visible = false;
+            this.flutelabel.AutoSize = true;
+            this.flutelabel.Location = new System.Drawing.Point(218, 32);
+            this.flutelabel.Name = "flutelabel";
+            this.flutelabel.Size = new System.Drawing.Size(42, 14);
+            this.flutelabel.TabIndex = 36;
+            this.flutelabel.Text = "Flute";
+            this.flutelabel.Visible = false;
             // 
             // sync
             // 
             this.sync.AutoSize = true;
-            this.sync.Location = new System.Drawing.Point(174, 105);
+            this.sync.Location = new System.Drawing.Point(158, 30);
             this.sync.Name = "sync";
             this.sync.Size = new System.Drawing.Size(54, 18);
             this.sync.TabIndex = 33;
@@ -670,7 +760,7 @@ namespace TinyFinder
             // 
             // flute5
             // 
-            this.flute5.Location = new System.Drawing.Point(325, 144);
+            this.flute5.Location = new System.Drawing.Point(286, 144);
             this.flute5.Maximum = new decimal(new int[] {
             4,
             0,
@@ -683,7 +773,7 @@ namespace TinyFinder
             // 
             // flute1
             // 
-            this.flute1.Location = new System.Drawing.Point(325, 29);
+            this.flute1.Location = new System.Drawing.Point(286, 29);
             this.flute1.Maximum = new decimal(new int[] {
             4,
             0,
@@ -696,7 +786,7 @@ namespace TinyFinder
             // 
             // flute3
             // 
-            this.flute3.Location = new System.Drawing.Point(325, 87);
+            this.flute3.Location = new System.Drawing.Point(286, 87);
             this.flute3.Maximum = new decimal(new int[] {
             4,
             0,
@@ -710,35 +800,16 @@ namespace TinyFinder
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(264, 118);
+            this.label12.Location = new System.Drawing.Point(218, 119);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(56, 14);
             this.label12.TabIndex = 40;
             this.label12.Text = "Flute 4";
             this.label12.Visible = false;
             // 
-            // ratio
-            // 
-            this.ratio.Location = new System.Drawing.Point(58, 139);
-            this.ratio.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratio.Name = "ratio";
-            this.ratio.Size = new System.Drawing.Size(51, 22);
-            this.ratio.TabIndex = 32;
-            this.ratio.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ratio.Visible = false;
-            this.ratio.ValueChanged += new System.EventHandler(this.ratio_ValueChanged);
-            // 
             // flute4
             // 
-            this.flute4.Location = new System.Drawing.Point(325, 115);
+            this.flute4.Location = new System.Drawing.Point(286, 115);
             this.flute4.Maximum = new decimal(new int[] {
             4,
             0,
@@ -749,54 +820,10 @@ namespace TinyFinder
             this.flute4.TabIndex = 39;
             this.flute4.Visible = false;
             // 
-            // p
-            // 
-            this.p.AutoSize = true;
-            this.p.Location = new System.Drawing.Point(14, 112);
-            this.p.Name = "p";
-            this.p.Size = new System.Drawing.Size(42, 14);
-            this.p.TabIndex = 31;
-            this.p.Text = "Party";
-            this.p.Visible = false;
-            // 
-            // party
-            // 
-            this.party.Location = new System.Drawing.Point(58, 110);
-            this.party.Maximum = new decimal(new int[] {
-            6,
-            0,
-            0,
-            0});
-            this.party.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.party.Name = "party";
-            this.party.Size = new System.Drawing.Size(51, 22);
-            this.party.TabIndex = 30;
-            this.party.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.party.Visible = false;
-            // 
-            // boost
-            // 
-            this.boost.AutoSize = true;
-            this.boost.Location = new System.Drawing.Point(174, 155);
-            this.boost.Name = "boost";
-            this.boost.Size = new System.Drawing.Size(61, 18);
-            this.boost.TabIndex = 29;
-            this.boost.Text = "Boost";
-            this.boost.UseVisualStyleBackColor = true;
-            this.boost.Visible = false;
-            // 
             // h
             // 
             this.h.AutoSize = true;
-            this.h.Location = new System.Drawing.Point(137, 67);
+            this.h.Location = new System.Drawing.Point(13, 147);
             this.h.Name = "h";
             this.h.Size = new System.Drawing.Size(21, 14);
             this.h.TabIndex = 27;
@@ -805,7 +832,7 @@ namespace TinyFinder
             // 
             // flute2
             // 
-            this.flute2.Location = new System.Drawing.Point(325, 58);
+            this.flute2.Location = new System.Drawing.Point(286, 58);
             this.flute2.Maximum = new decimal(new int[] {
             4,
             0,
@@ -816,22 +843,10 @@ namespace TinyFinder
             this.flute2.TabIndex = 37;
             this.flute2.Visible = false;
             // 
-            // cave
-            // 
-            this.cave.AutoSize = true;
-            this.cave.Location = new System.Drawing.Point(174, 130);
-            this.cave.Name = "cave";
-            this.cave.Size = new System.Drawing.Size(54, 18);
-            this.cave.TabIndex = 28;
-            this.cave.Text = "Cave";
-            this.cave.UseVisualStyleBackColor = true;
-            this.cave.Visible = false;
-            this.cave.CheckedChanged += new System.EventHandler(this.cave_CheckedChanged);
-            // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(264, 60);
+            this.label11.Location = new System.Drawing.Point(218, 61);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(56, 14);
             this.label11.TabIndex = 38;
@@ -849,7 +864,7 @@ namespace TinyFinder
             "3",
             "4",
             "5"});
-            this.hidden.Location = new System.Drawing.Point(175, 67);
+            this.hidden.Location = new System.Drawing.Point(54, 144);
             this.hidden.Name = "hidden";
             this.hidden.Size = new System.Drawing.Size(83, 22);
             this.hidden.TabIndex = 26;
@@ -858,7 +873,7 @@ namespace TinyFinder
             // s
             // 
             this.s.AutoSize = true;
-            this.s.Location = new System.Drawing.Point(127, 32);
+            this.s.Location = new System.Drawing.Point(6, 32);
             this.s.Name = "s";
             this.s.Size = new System.Drawing.Size(42, 14);
             this.s.TabIndex = 25;
@@ -877,7 +892,7 @@ namespace TinyFinder
             "1",
             "2",
             "3"});
-            this.slots.Location = new System.Drawing.Point(175, 29);
+            this.slots.Location = new System.Drawing.Point(54, 29);
             this.slots.Name = "slots";
             this.slots.Size = new System.Drawing.Size(83, 22);
             this.slots.TabIndex = 24;
@@ -886,7 +901,7 @@ namespace TinyFinder
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(14, 61);
+            this.label4.Location = new System.Drawing.Point(24, 101);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(28, 14);
             this.label4.TabIndex = 23;
@@ -895,7 +910,7 @@ namespace TinyFinder
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(14, 33);
+            this.label3.Location = new System.Drawing.Point(24, 73);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(28, 14);
             this.label3.TabIndex = 22;
@@ -903,7 +918,7 @@ namespace TinyFinder
             // 
             // sid
             // 
-            this.sid.Location = new System.Drawing.Point(44, 59);
+            this.sid.Location = new System.Drawing.Point(54, 99);
             this.sid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -915,7 +930,7 @@ namespace TinyFinder
             // 
             // tid
             // 
-            this.tid.Location = new System.Drawing.Point(44, 31);
+            this.tid.Location = new System.Drawing.Point(54, 71);
             this.tid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -999,8 +1014,8 @@ namespace TinyFinder
             // 
             // SearchGen
             // 
-            this.SearchGen.Controls.Add(this.tabPage1);
-            this.SearchGen.Controls.Add(this.tabPage2);
+            this.SearchGen.Controls.Add(this.Srch);
+            this.SearchGen.Controls.Add(this.Gen);
             this.SearchGen.Location = new System.Drawing.Point(12, 12);
             this.SearchGen.Name = "SearchGen";
             this.SearchGen.SelectedIndex = 0;
@@ -1008,71 +1023,181 @@ namespace TinyFinder
             this.SearchGen.TabIndex = 20;
             this.SearchGen.SelectedIndexChanged += new System.EventHandler(this.SearchGen_SelectedIndexChanged);
             // 
-            // tabPage1
+            // Srch
             // 
-            this.tabPage1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tabPage1.Location = new System.Drawing.Point(4, 24);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(986, 255);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Date Searcher";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.Srch.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Srch.Location = new System.Drawing.Point(4, 24);
+            this.Srch.Name = "Srch";
+            this.Srch.Padding = new System.Windows.Forms.Padding(3);
+            this.Srch.Size = new System.Drawing.Size(986, 255);
+            this.Srch.TabIndex = 0;
+            this.Srch.Text = "Date Searcher";
+            this.Srch.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // Gen
             // 
-            this.tabPage2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(986, 255);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Generator";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.Gen.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.Gen.Location = new System.Drawing.Point(4, 24);
+            this.Gen.Name = "Gen";
+            this.Gen.Padding = new System.Windows.Forms.Padding(3);
+            this.Gen.Size = new System.Drawing.Size(986, 255);
+            this.Gen.TabIndex = 1;
+            this.Gen.Text = "Generator";
+            this.Gen.UseVisualStyleBackColor = true;
+            // 
+            // Generator
+            // 
+            this.Generator.AllowUserToAddRows = false;
+            this.Generator.AllowUserToDeleteRows = false;
+            this.Generator.AllowUserToResizeRows = false;
+            this.Generator.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Generator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Generator.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.g_Index,
+            this.g_Enctr,
+            this.g_Sync,
+            this.g_Slot,
+            this.g_Flute,
+            this.g_Item,
+            this.g_HA,
+            this.g_Music,
+            this.g_Rand,
+            this.g_Tiny3,
+            this.g_Tiny2,
+            this.g_Tiny1,
+            this.g_Tiny0});
+            this.Generator.Location = new System.Drawing.Point(12, 301);
+            this.Generator.Name = "Generator";
+            this.Generator.RowHeadersVisible = false;
+            this.Generator.RowTemplate.Height = 25;
+            this.Generator.Size = new System.Drawing.Size(990, 348);
+            this.Generator.TabIndex = 18;
+            // 
+            // g_Index
+            // 
+            this.g_Index.HeaderText = "Index";
+            this.g_Index.Name = "g_Index";
+            this.g_Index.Width = 60;
+            // 
+            // g_Enctr
+            // 
+            this.g_Enctr.HeaderText = "Enctr?";
+            this.g_Enctr.Name = "g_Enctr";
+            this.g_Enctr.Width = 50;
+            // 
+            // g_Sync
+            // 
+            this.g_Sync.HeaderText = "Sync?";
+            this.g_Sync.Name = "g_Sync";
+            this.g_Sync.Width = 50;
+            // 
+            // g_Slot
+            // 
+            this.g_Slot.HeaderText = "Slot";
+            this.g_Slot.Name = "g_Slot";
+            this.g_Slot.Width = 50;
+            // 
+            // g_Flute
+            // 
+            this.g_Flute.HeaderText = "Flute";
+            this.g_Flute.Name = "g_Flute";
+            this.g_Flute.Width = 70;
+            // 
+            // g_Item
+            // 
+            this.g_Item.HeaderText = "Item";
+            this.g_Item.Name = "g_Item";
+            this.g_Item.Width = 150;
+            // 
+            // g_HA
+            // 
+            this.g_HA.HeaderText = "HA";
+            this.g_HA.Name = "g_HA";
+            this.g_HA.Width = 40;
+            // 
+            // g_Music
+            // 
+            this.g_Music.HeaderText = "Music";
+            this.g_Music.Name = "g_Music";
+            this.g_Music.Width = 50;
+            // 
+            // g_Rand
+            // 
+            this.g_Rand.HeaderText = "Rand(100)";
+            this.g_Rand.Name = "g_Rand";
+            this.g_Rand.Width = 80;
+            // 
+            // g_Tiny3
+            // 
+            this.g_Tiny3.HeaderText = "Tiny[3]";
+            this.g_Tiny3.Name = "g_Tiny3";
+            this.g_Tiny3.Width = 75;
+            // 
+            // g_Tiny2
+            // 
+            this.g_Tiny2.HeaderText = "Tiny[2]";
+            this.g_Tiny2.Name = "g_Tiny2";
+            this.g_Tiny2.Width = 75;
+            // 
+            // g_Tiny1
+            // 
+            this.g_Tiny1.HeaderText = "Tiny[1]";
+            this.g_Tiny1.Name = "g_Tiny1";
+            this.g_Tiny1.Width = 75;
+            // 
+            // g_Tiny0
+            // 
+            this.g_Tiny0.HeaderText = "Tiny[0]";
+            this.g_Tiny0.Name = "g_Tiny0";
+            this.g_Tiny0.Width = 75;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1017, 661);
+            this.Controls.Add(this.Generator);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.SearchGen);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.Searcher);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(1022, 700);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Tiny Finder";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            this.Text = "Tiny Finder 0.9.0";
+            ((System.ComponentModel.ISupportInitialize)(this.Searcher)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.find)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).EndInit();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.SearchGen.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Generator)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView Searcher;
         private HexBox t3;
         private HexBox t2;
         private HexBox t1;
@@ -1108,7 +1233,7 @@ namespace TinyFinder
         private System.Windows.Forms.Label s;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label flute;
+        private System.Windows.Forms.Label flutelabel;
         private System.Windows.Forms.Label r;
         private System.Windows.Forms.CheckBox sync;
         private System.Windows.Forms.NumericUpDown flute5;
@@ -1130,22 +1255,36 @@ namespace TinyFinder
         private System.Windows.Forms.ComboBox location;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabControl SearchGen;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tiny3Col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tiny2Col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tiny1Col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn tiny0Col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IndexCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn EnctrCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SyncCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SlotCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FluteCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ItemCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn HACol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn MusicCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn RandHexCol;
+        private System.Windows.Forms.TabPage Srch;
+        private System.Windows.Forms.TabPage Gen;
+        private System.Windows.Forms.DataGridView Generator;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Enctr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Sync;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Slot;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Flute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_HA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Music;
+        private System.Windows.Forms.DataGridViewTextBoxColumn s_Rand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Enctr;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Sync;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Slot;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Flute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_HA;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Music;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Rand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
     }
 }
 
