@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TinyFinder
+﻿namespace TinyFinder
 {
     class RockSmash
     {
@@ -12,7 +8,8 @@ namespace TinyFinder
         public bool Sync;
         public uint[] temp = new uint[4];
 
-        public RockSmash(uint[] current, bool oras, byte slotLine)
+        public bool oras;
+        public void results(uint[] current)
         {
             current.CopyTo(temp, 0);
 
@@ -24,7 +21,7 @@ namespace TinyFinder
             Sync = tinysmash.Rand(temp, 100) < 50;
 
             tinysmash.nextState(temp);
-            slot = data.getSlot(tinysmash.Rand(temp, 100), slotLine);
+            slot = data.getSlot(tinysmash.Rand(temp, 100), 3);
 
             if (oras)
             {
@@ -38,7 +35,6 @@ namespace TinyFinder
                 else flute = 4;
             }
 
-
             tinysmash.nextState(temp);
             tinysmash.nextState(temp);
             if (tinysmash.Rand(temp, 100) < 50)
@@ -48,8 +44,6 @@ namespace TinyFinder
             else if (tinysmash.Rand(temp, 100) < 56)
                 item = 1;
             else item = 0;
-
         }
-
     }
 }

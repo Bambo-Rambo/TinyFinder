@@ -6,22 +6,26 @@
         private TinyMT tinywild = new TinyMT();
         private SlotData data = new SlotData();
         private uint[] temp = new uint[4];
-
         public byte slot, encounter, flute, randInt, item;
         public bool Sync;
 
-        public Wild(uint[] current, bool oras, bool cave, byte slotLine, byte ES)
+        public bool oras, cave;
+        public byte slotLine, ES;
+
+        public void results(uint[] current)
         {
             current.CopyTo(temp, 0);
             tinywild.nextState(temp);
             randInt = tinywild.Rand(temp, 100);
 
-            if (!oras && cave)
-                tinywild.nextState(temp);
-
-            else if (!oras)
-                for (byte i = 1; i < ES; i++)
+            if (!oras)
+            {
+                if (cave)
                     tinywild.nextState(temp);
+                else
+                    for (byte i = 1; i < ES; i++)
+                        tinywild.nextState(temp);
+            }
 
             Sync = tinywild.Rand(temp, 100) < 50;
 
@@ -34,7 +38,6 @@
             tinywild.nextState(temp);
             slot = data.getSlot(tinywild.Rand(temp, 100), slotLine);
 
-
             if (oras)
             {
                 tinywild.nextState(temp);
@@ -46,7 +49,6 @@
                     flute = 3;
                 else flute = 4;
             }
-
 
             tinywild.nextState(temp);
             tinywild.nextState(temp);

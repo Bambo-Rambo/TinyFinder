@@ -1,31 +1,23 @@
-﻿
-
-namespace TinyFinder
+﻿namespace TinyFinder
 {
     class Horde
     {
-        public byte slot, HA, randInt, extra = 3;
+        public byte slot, HA, randInt;
         public bool sync;
         public byte[] flutes = new byte[5], items = new byte[5];
         public uint[] temp = new uint[4];
         public TinyMT tinyhorde = new TinyMT();
         public SlotData data = new SlotData();
 
-        public Horde(uint[] current, byte party, bool oras, bool cave)
-        {
+        public bool oras;
 
+        public void results(uint[] current, byte adv)
+        {
             current.CopyTo(temp, 0);
             tinyhorde.nextState(temp);
             randInt = tinyhorde.Rand(temp, 100);
 
-            if (!cave)
-            {
-                if (oras)
-                    extra = 15;
-                else extra = 27;
-            }
-
-            for (byte i = 0; i < (3 * party + extra); i++)
+            for (byte i = 0; i < adv; i++)
                 tinyhorde.nextState(temp);
 
             sync = tinyhorde.Rand(temp, 100) < 50;
@@ -39,6 +31,8 @@ namespace TinyFinder
                 tinyhorde.nextState(temp);
                 HA = (byte)(tinyhorde.Rand(temp, 5) + 1);
             }
+            else
+                HA = 0; //Necessary
 
             tinyhorde.nextState(temp);
             if (oras)
@@ -56,7 +50,6 @@ namespace TinyFinder
                 }
             }
 
-
             tinyhorde.nextState(temp);
             for (byte i = 0; i < 5; i++)
             {
@@ -69,9 +62,6 @@ namespace TinyFinder
                 else items[i] = 0;
                 tinyhorde.nextState(temp);
             }
-
         }
-
-
     }
 }
