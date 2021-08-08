@@ -1,3 +1,5 @@
+# [Download the latest commit](https://drive.google.com/uc?id=1Tk8tqpzyhJ5vZoJu5s-xMt-t09onrzxf&export=download)
+
 # TinyFinder
 
 - Search for the desired index by date (Searcher - Citra only)
@@ -19,33 +21,29 @@ You can see the calibration screens in the following images. The first 2 are for
 
 # Step 2 - Settings
 
-Fill in the boxes, depending of the situation. As explained above, the month selection is only for searching results in the desired month. If you are doing Normal Wild RNG in XY, choose the location since the results vary depending on it.
+Fill in the boxes, depending of the situation. As explained above, the month selection is only for searching results in the desired month. If you are doing Normal Wild RNG in XY, choose the location since the results vary depending on it or check the cave box if you are doing it in a cave. The encounter ratio changes depending on your choice but you can edit it regardless. For radar put the number of your party and the chain length. If 0, the tool will search for the desired slot and sync. If > 0, it will search for shiny patches since the slot is the one you have been chaining for while sync is decided when you step into the patch. (It's not possible to generate shiny patches if current chain == 0). Check the Boost box only if the radar-exclusive music currently plays in the background.
 
 
 # Step 3 - Preferences
 
-If you haven't calibrated already, the tool **will take some time** to do so once you hit the "Search" button and it will not calibrate again until you change the Initial State.
+If you haven't calibrated already, the tool **will take some time** to do so when you hit the "Search" button and it will not calibrate again until you change the Initial State.
 
-For ID RNG in any version, pick the desired TID/SID combo and ignore the "Find at least" numbox for now.
+For ID RNG, pick the desired TID/SID combo and choose how many indexes you want the program to find before stopping the search. It's suggested to make it search for only 1 because the list doesn't get updated until it has found them all.
 
-For Normal Wild RNG, choose the desired slot(s), if you want to sync the nature check the sync button to filter the results and choose how many indexes you want the program to find before stopping the search. If you are doing XY wild RNG and have the cave button checked along with a location in the "Settings" Groupbox, the tool will give priority to the cave button. If playing ORAS, choose the desired white flute level impact. Set to 0 if don't care.
+For Normal Wild RNG, choose the desired slot(s), if you want to sync the nature check the sync button to filter the results. If playing ORAS, choose the desired white flute level impact. Set to 0 if don't care.
 
 Fishing, Rock Smash, Hordes and Friend Safari work in a similar way, just fill in the filters.
 
-Poke Radar RNG is split in 2 categories:
+As said above, Poke Radar RNG is split in 2 categories:
 - Chain length -> 0 
 - Chain length -> higher than 0
 
-For the first option, fill in the filters and the tool will search for indexes that also activate the "anxious" music (yellow ones in 3DS RNG Tool). 
+When chain == 0, you search and RNG for slot and sync. Activate the radar anytime and when inside the target index, step inside the patch.
 
-To get the slot, sync and item probability, you need to **step** inside the patch during the index.
-
-~~To trigger the anxious music, you need to **activate** the radar during the index. Stay in front of the patch and RNG for the desired slot then defeat the Pokemon. If you didn’t break your chain, the music will activate.~~
-
-The second option, will search for guaranteed shiny patches. Remember that shininess depends on TinyMT when chain is higher than 0. Simply activate the radar during the index when the chain is 1 or higher and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check 3DS RNG Tool to see which the shiny one is. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it afterwards as well.
+When chain > 0, you search and RNG for guaranteed shiny patches. Remember that shininess is TinyMT dependant in that case. Simply activate the radar during the shiny (blue) index and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check their exact locations in the tool. Double click inside an index to do that. 'C' means "Character" and is always in the middle of the array. 'S' means shiny and is the one you are gonna be stepping in while the rest are "Good" (G), "Bad" (B) and "Empty" (X) which break the chain and must be avoided. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it afterwards as well.
 
 # Notes:
-For Normal Wild and Hordes, 3DS RNG Tool uses a specific pattern which does not apply the same for every place. Hordes are different when you RNG inside a cave for both versions, while Normal Wild in XY is different as well depending on the place. This tool accounts for all these so just choose the location and you will get the correct results. You can use [my fork version of 3DS RNG Tool](https://github.com/Bambo-Rambo/3DSRNGTool) that fixes Hordes in caves, but for wild just use this tool until I update 3DS RNG Tool again. Poke Radar also shows the same behavior but is more predictable and easy to deal with. It will be fixed in a later release of this tool.
+For Normal Wild and Hordes, 3DS RNG Tool uses a specific pattern which does not apply the same for every place. Hordes are different when you RNG inside a cave for both versions, while Normal Wild in XY is different as well depending on the place. This tool accounts for all these so just choose the location and you will get the correct results. You can use [my fork version of 3DS RNG Tool](https://github.com/Bambo-Rambo/3DSRNGTool) that fixes Hordes in caves, but for wild just use this tool until I update 3DS RNG Tool again. Poke Radar also shows the same behavior but is more predictable and easy to deal with. It will be fixed in a later release.
 
 Due to Blink(+1) and Blink(+2), it's somewhat hard to predict if an index is hitable consistently before checking it on 3DS RNG Tool. Just try some of them until you find one that can be hit for sure. Some indexes also last for very few main frames (usually 12-20) due to Blink(+1) so it's better to avoid those as well. This does not apply to ID and Horde RNGs since every index is hitable.
 
