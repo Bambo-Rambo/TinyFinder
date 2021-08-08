@@ -69,14 +69,13 @@ namespace TinyFinder
                 byte ring = 0;
                 for (; ring < 4; ring++)
                 {
-                    tinyradar.nextState(temp);
                     patches[ring] = new Patch
                     {
                         Ring = ring,
                         Direction = Rand(temp, 4),
                         Location = Rand(temp, ring * 2ul + 3ul),
                     };
-                    if (tinyradar.Rand(temp, 100) < GoodRate[ring])
+                    if (Rand(temp, 100) < GoodRate[ring])
                     {
                         tinyradar.nextState(temp);
                         ulong Chance = boost || length >= 40 ? 100 : (ulong)(8100 - length * 200);
