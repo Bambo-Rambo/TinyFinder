@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -558,6 +558,7 @@ namespace TinyFinder
                                         ShowRadarGen(radar, array, j, (byte)ratio.Value);
                                 }
                                 tiny.nextState(array);
+                                radar.boost = boost.Checked;
                             }
 
                             if (SearchGen.SelectedTab == Gen)
@@ -879,7 +880,6 @@ namespace TinyFinder
                     }
                 }
             }
-            
         }
         #endregion
     }
