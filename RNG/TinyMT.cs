@@ -68,7 +68,5 @@ namespace TinyFinder
             return temper(array);
         }
 
-        public int DexRand(uint[] array, ulong n) => (int)((temper(array) * n) >> 32);
-
     }
 }

@@ -74,6 +74,7 @@ namespace TinyFinder
             this.p = new System.Windows.Forms.Label();
             this.party = new System.Windows.Forms.NumericUpDown();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.patch_board = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.find = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
@@ -172,6 +173,7 @@ namespace TinyFinder
             this.Searcher.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this.Searcher.Size = new System.Drawing.Size(990, 348);
             this.Searcher.TabIndex = 0;
+            this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
             // 
             // s_Date
             // 
@@ -656,6 +658,7 @@ namespace TinyFinder
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox2.Controls.Add(this.patch_board);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label9);
             this.groupBox2.Controls.Add(this.find);
@@ -685,6 +688,17 @@ namespace TinyFinder
             this.groupBox2.TabIndex = 18;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Step 3 - Preferences";
+            // 
+            // patch_board
+            // 
+            this.patch_board.AutoSize = true;
+            this.patch_board.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.patch_board.Location = new System.Drawing.Point(234, 14);
+            this.patch_board.Name = "patch_board";
+            this.patch_board.Size = new System.Drawing.Size(80, 162);
+            this.patch_board.TabIndex = 45;
+            this.patch_board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#" +
+    "########";
             // 
             // label9
             // 
@@ -1070,87 +1084,102 @@ namespace TinyFinder
             this.g_Tiny0});
             this.Generator.Location = new System.Drawing.Point(12, 301);
             this.Generator.Name = "Generator";
+            this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
             this.Generator.Size = new System.Drawing.Size(990, 348);
             this.Generator.TabIndex = 18;
+            this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
             // 
             // g_Index
             // 
             this.g_Index.HeaderText = "Index";
             this.g_Index.Name = "g_Index";
+            this.g_Index.ReadOnly = true;
             this.g_Index.Width = 60;
             // 
             // g_Enctr
             // 
             this.g_Enctr.HeaderText = "Enctr?";
             this.g_Enctr.Name = "g_Enctr";
+            this.g_Enctr.ReadOnly = true;
             this.g_Enctr.Width = 50;
             // 
             // g_Sync
             // 
             this.g_Sync.HeaderText = "Sync?";
             this.g_Sync.Name = "g_Sync";
+            this.g_Sync.ReadOnly = true;
             this.g_Sync.Width = 50;
             // 
             // g_Slot
             // 
             this.g_Slot.HeaderText = "Slot";
             this.g_Slot.Name = "g_Slot";
+            this.g_Slot.ReadOnly = true;
             this.g_Slot.Width = 50;
             // 
             // g_Flute
             // 
             this.g_Flute.HeaderText = "Flute";
             this.g_Flute.Name = "g_Flute";
+            this.g_Flute.ReadOnly = true;
             this.g_Flute.Width = 70;
             // 
             // g_Item
             // 
             this.g_Item.HeaderText = "Item";
             this.g_Item.Name = "g_Item";
+            this.g_Item.ReadOnly = true;
             this.g_Item.Width = 150;
             // 
             // g_HA
             // 
             this.g_HA.HeaderText = "HA";
             this.g_HA.Name = "g_HA";
+            this.g_HA.ReadOnly = true;
             this.g_HA.Width = 40;
             // 
             // g_Music
             // 
             this.g_Music.HeaderText = "Music";
             this.g_Music.Name = "g_Music";
+            this.g_Music.ReadOnly = true;
             this.g_Music.Width = 50;
             // 
             // g_Rand
             // 
             this.g_Rand.HeaderText = "Rand(100)";
             this.g_Rand.Name = "g_Rand";
+            this.g_Rand.ReadOnly = true;
             this.g_Rand.Width = 80;
             // 
             // g_Tiny3
             // 
             this.g_Tiny3.HeaderText = "Tiny[3]";
             this.g_Tiny3.Name = "g_Tiny3";
+            this.g_Tiny3.ReadOnly = true;
             this.g_Tiny3.Width = 75;
             // 
             // g_Tiny2
             // 
             this.g_Tiny2.HeaderText = "Tiny[2]";
             this.g_Tiny2.Name = "g_Tiny2";
+            this.g_Tiny2.ReadOnly = true;
             this.g_Tiny2.Width = 75;
             // 
             // g_Tiny1
             // 
             this.g_Tiny1.HeaderText = "Tiny[1]";
             this.g_Tiny1.Name = "g_Tiny1";
+            this.g_Tiny1.ReadOnly = true;
             this.g_Tiny1.Width = 75;
             // 
             // g_Tiny0
             // 
             this.g_Tiny0.HeaderText = "Tiny[0]";
             this.g_Tiny0.Name = "g_Tiny0";
+            this.g_Tiny0.ReadOnly = true;
             this.g_Tiny0.Width = 75;
             // 
             // Form1
@@ -1285,6 +1314,7 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
+        private System.Windows.Forms.Label patch_board;
     }
 }
 

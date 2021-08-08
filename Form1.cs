@@ -17,6 +17,16 @@ namespace TinyFinder
         byte count, searchMonth;
         bool Calibrated = false;
 
+        struct PatchSpot
+        {
+            public uint index;
+            public string[] spots;
+        }
+        PatchSpot element = new PatchSpot();
+
+        List<PatchSpot> GPatchSpots = new List<PatchSpot>();
+        List<PatchSpot> SPatchSpots = new List<PatchSpot>();
+
         public Form1()
         {
             InitializeComponent();
@@ -30,10 +40,24 @@ namespace TinyFinder
         }
 
         #region Events
-        private void xyRadio_CheckedChanged(object sender, EventArgs e) { ManageControls(0); }
-        private void orasRadio_CheckedChanged(object sender, EventArgs e) { ManageControls(0); }
+        private void xyRadio_CheckedChanged(object sender, EventArgs e) 
+        {
+            if (Methods.Items.Count == 5)
+            {
+                Methods.Items.Add("Radar");
+                Methods.Items.Add("Friend Safari");
+            }
+            ManageControls(0); 
+        }
+        private void orasRadio_CheckedChanged(object sender, EventArgs e) 
+        {
+            Methods.Items.Remove("Radar");
+            Methods.Items.Remove("Friend Safari");
+            ManageControls(0);
+        }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             sync.Enabled = true; slots.Enabled = true; s.Enabled = true;
             switch (Methods.SelectedIndex)
             {
@@ -102,7 +126,7 @@ namespace TinyFinder
                 if (ratio.Value == 0)
                 {
                     boost.Enabled = false; sync.Enabled = true; 
-                    slots.Enabled = true; s.Enabled = true; 
+                    slots.Enabled = true; s.Enabled = true;
                 }
                 else
                 {
@@ -124,16 +148,18 @@ namespace TinyFinder
         {
             if (SearchGen.SelectedTab == Srch)
             {
+                Searcher.Visible = true; Generator.Visible = false;
                 year.Visible = true; DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
                 DateLabel.Location = new Point(1, 71); month.Visible = true; button1.Text = "Calibrate and Search"; 
-                find.Enabled = true; Searcher.Visible = true; Generator.Visible = false; y.Visible = true; mo.Visible = true;
+                find.Enabled = true; y.Visible = true; mo.Visible = true;
             }
             else
             {
+                Generator.Visible = true; Searcher.Visible = false;
                 year.Visible = false; DateLabel.Text = "Current State"; DateLabel.Location = new Point(98, 71); month.Visible = false;
-                button1.Text = "Generate"; find.Enabled = false; Generator.Visible = true; Searcher.Visible = false;
-                y.Visible = false; mo.Visible = false;
+                button1.Text = "Generate"; find.Enabled = false; y.Visible = false; mo.Visible = false; 
             }
+            ManageControls((byte)Methods.SelectedIndex);
         }
         private void t3_TextChanged(object sender, EventArgs e)
         {
@@ -154,6 +180,16 @@ namespace TinyFinder
         {
             if (SearchGen.SelectedIndex == 0)
             { Calibrated = false; button1.Text = "Calibrate and Search"; }
+        }
+        private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (Methods.SelectedIndex == 5)
+                patch_board.Text = string.Join("\n", GPatchSpots[e.RowIndex].spots);
+        }
+        private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (Methods.SelectedIndex == 5)
+                patch_board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
         }
 
         #endregion
@@ -189,7 +225,7 @@ namespace TinyFinder
             array[0] = t0.Value;
 
             byte extra = 1;
-            if (SearchGen.SelectedIndex == 0)
+            if (SearchGen.SelectedTab == Srch)
             {
                 if (Methods.SelectedIndex == 0)
                     extra = 2;
@@ -245,7 +281,7 @@ namespace TinyFinder
                                 }
                             }
                         }
-                        if (SearchGen.SelectedIndex == 1)
+                        if (SearchGen.SelectedTab == Gen)
                             break;
 
                         if (seconds % 10000 == 0)
@@ -262,8 +298,6 @@ namespace TinyFinder
                 case 2:     //Fishing
                 case 6:     //Friend Safari
 
-                    if (orasRadio.Checked && Methods.SelectedIndex == 6)
-                    { MessageBox.Show("Friend Safari does not exist in ORAS games", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); break; }
 
                     byte SlotLimit = 4, SlotCase = 0;
                     if (Methods.SelectedIndex == 1) { SlotLimit = 13; }
@@ -318,7 +352,7 @@ namespace TinyFinder
                             }
                             tiny.nextState(array);
                         }
-                        if (SearchGen.SelectedIndex == 1)
+                        if (SearchGen.SelectedTab == Gen)
                             break;
 
                         seconds++;
@@ -374,7 +408,7 @@ namespace TinyFinder
                             }
                             tiny.nextState(array);
                         }
-                        if (SearchGen.SelectedIndex == 1)
+                        if (SearchGen.SelectedTab == Gen)
                             break;
 
                         seconds++;
@@ -439,7 +473,7 @@ namespace TinyFinder
                                     ShowHorde(horde, calc.secondsToDate(seconds, Year), store_seed, j, array);
                             tiny.nextState(array);
                         }
-                        if (SearchGen.SelectedIndex == 1)
+                        if (SearchGen.SelectedTab == Gen)
                             break;
 
                         seconds++;
@@ -452,11 +486,13 @@ namespace TinyFinder
 
 
                 case 5:     //Radar
-                    if (orasRadio.Checked)
-                    { MessageBox.Show("Poke Radar does not exist in ORAS games", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error); break; }
                     Radar radar = new Radar();
                     radar.num = (byte)party.Value;
                     radar.length = (byte)ratio.Value;
+                    if (SearchGen.SelectedTab == Srch)
+                        SPatchSpots.Clear();
+                    else
+                        GPatchSpots.Clear();
 
                     if (ratio.Value == 0)
                     {
@@ -486,7 +522,8 @@ namespace TinyFinder
                                 }
                                 tiny.nextState(array);
                             }
-                            if (SearchGen.SelectedIndex == 1)
+
+                            if (SearchGen.SelectedTab == Gen)
                                 break;
 
                             seconds++;
@@ -522,7 +559,8 @@ namespace TinyFinder
                                 }
                                 tiny.nextState(array);
                             }
-                            if (SearchGen.SelectedIndex == 1)
+
+                            if (SearchGen.SelectedTab == Gen)
                                 break;
 
                             seconds++;
@@ -622,7 +660,6 @@ namespace TinyFinder
 
         private void ShowRadarSrch(Radar radar, string date, uint[] store_seed, uint index, byte chain)
         {
-
             if (chain == 0)
             {
                 Searcher.Rows.Add(date, store_seed[3].ToString("X").PadLeft(8, '0'), store_seed[2].ToString("X").PadLeft(8, '0'),
@@ -635,10 +672,12 @@ namespace TinyFinder
                 store_seed[1].ToString("X").PadLeft(8, '0'), store_seed[0].ToString("X").PadLeft(8, '0'), index,
                 null, null, null, null, null, null, radar.Music, radar.randInt);
             }
+            element.index = index;
+            element.spots = radar.Overview;
+            SPatchSpots.Add(element);
         }
         private void ShowRadarGen(Radar radar, uint[] state, uint index, byte chain)
         {
-
             if (chain == 0)
             {
                 Generator.Rows.Add(index, null, radar.sync, radar.slot, null, radar.item + "%", null, radar.Music, radar.randInt,
@@ -651,6 +690,9 @@ namespace TinyFinder
                     state[3].ToString("X").PadLeft(8, '0'), state[2].ToString("X").PadLeft(8, '0'),
                     state[1].ToString("X").PadLeft(8, '0'), state[0].ToString("X").PadLeft(8, '0'));
             }
+            element.index = index;
+            element.spots = radar.Overview;
+            GPatchSpots.Add(element);
         }
 
         #endregion
@@ -658,29 +700,37 @@ namespace TinyFinder
         #region Manage Controls and Columns
         private void ManageControls(byte method)
         {
-            min.Value = min.Minimum = 35;
             Methods.SelectedIndex = method;
             label3.Visible = false; label4.Visible = false; tid.Visible = false; sid.Visible = false; slots.Visible = false; s.Visible = false;
             hidden.Visible = false; h.Visible = false; flutelabel.Visible = false; flute1.Visible = false; label11.Visible = false; flute2.Visible = false;
             label12.Visible = false; flute3.Visible = false; label13.Visible = false; flute4.Visible = false; label14.Visible = false; flute5.Visible = false;
             sync.Visible = false; cave.Visible = false; boost.Visible = false; p.Visible = false; party.Visible = false; r.Visible = false; ratio.Visible = false;
-            ratio.Minimum = 1; ratio.Maximum = 100; label10.Visible = false; location.Visible = false; 
+            ratio.Minimum = 1; ratio.Maximum = 100; label10.Visible = false; location.Visible = false; patch_board.Visible = false;
+
+            max.Value = 150;
 
             if (method == 0)
             {
-                if (orasRadio.Checked) { min.Value = min.Minimum = 11; }
-                max.Value = 150;
+                if (orasRadio.Checked)
+                    min.Value = min.Minimum = 11;
+                else
+                    min.Value = min.Minimum = 35;
                 label3.Visible = true; label4.Visible = true; tid.Visible = true; sid.Visible = true;
             }
             else
             {
                 if (orasRadio.Checked)
                 {
-                    min.Value = min.Minimum = 25;
+                    min.Value = min.Minimum = 20;
                     flutelabel.Visible = true;
                     flute1.Visible = true;
                 }
-                max.Value = 200;
+                else
+                {
+                    min.Value = min.Minimum = 35;
+                    if (method == 5)
+                        max.Value = 1000;
+                }
                 slots.Visible = true; s.Visible = true; sync.Visible = true;
                 
                 if (method == 1 || method == 2 || method == 3 || method == 6)
@@ -711,8 +761,13 @@ namespace TinyFinder
                 else
                 {
                     r.Text = "Chain"; r.Visible = true; ratio.Visible = true; ratio.Minimum = 0; ratio.Maximum = 60; ratio.Value = 0;
-                    p.Visible = true; party.Visible = true; boost.Visible = true;
+                    p.Visible = true; party.Visible = true; boost.Visible = true; patch_board.Visible = true;
                 }
+            }
+            if (SearchGen.SelectedTab == Gen)
+            {
+                min.Value = min.Minimum = 0; 
+                max.Value = 50000;
             }
         }
 
