@@ -1,4 +1,4 @@
-# [Download the latest commit](https://drive.google.com/uc?id=1Tk8tqpzyhJ5vZoJu5s-xMt-t09onrzxf&export=download)
+# [Download the latest commit](https://drive.google.com/uc?id=1E-WxiYm0G551tEjuJOOqvnCwsZkA7IvK&export=download)
 
 # TinyFinder
 
