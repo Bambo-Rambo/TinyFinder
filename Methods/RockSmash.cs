@@ -7,9 +7,7 @@
         public byte encounter, slot, item, randInt, flute;
         public bool Sync;
         public uint[] temp = new uint[4];
-
-        public bool oras;
-        public void results(uint[] current)
+        public void results(uint[] current, bool oras)
         {
             current.CopyTo(temp, 0);
 

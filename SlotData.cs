@@ -20,7 +20,7 @@ namespace TinyFinder
             new byte[] { 10,10,10,10,10,10,10,10,10,5,4,1 },    // Wild / Radar
             new byte[] { 34,33,33 },                            // Friend Safari
             new byte[] { 60,35,5 },                             // Horde / Fishing
-            new byte[] { 50,30,15,4,1 },                        // Rock Smash
+            new byte[] { 50,30,15,4,1 },                        // Rock Smash / Surfing
         };
 
         public byte getAdvances(string loc)
@@ -44,6 +44,8 @@ namespace TinyFinder
           //new string[] { "Route 7", "All caves"},                                                     // 1 + 1
           //new string[] { "Elsewhere" },                                                               // 0 + 0
         };
+
+        public static string[] SurfLocations = { "Magma/Aqua Hideout", "Battle Resort", "Underwater"};
 
     }
 }

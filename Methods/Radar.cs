@@ -14,10 +14,6 @@ namespace TinyFinder
         public bool Shiny => patches.Any(p => p.condition == 2);
         private static byte Rand(uint[] array, ulong n) => (byte)((tinyradar.Nextuint(array) * n) >> 32);
 
-        public byte length, num;
-        public bool boost;
-
-
         public string[] Overview
         {
             get
@@ -31,7 +27,7 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current)
+        public void results(uint[] current, byte length, byte num, bool boost)
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);

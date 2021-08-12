@@ -63,6 +63,8 @@ namespace TinyFinder
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.surfLocation = new System.Windows.Forms.ComboBox();
+            this.water = new System.Windows.Forms.CheckBox();
             this.location = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.month = new System.Windows.Forms.ComboBox();
@@ -76,7 +78,7 @@ namespace TinyFinder
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.patch_board = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.find = new System.Windows.Forms.NumericUpDown();
+            this.atleast = new System.Windows.Forms.NumericUpDown();
             this.label14 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.flutelabel = new System.Windows.Forms.Label();
@@ -127,7 +129,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.find)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atleast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute3)).BeginInit();
@@ -371,6 +373,7 @@ namespace TinyFinder
             "Fishing",
             "Rock Smash",
             "Horde",
+            "Honey Wild",
             "Radar",
             "Friend Safari"});
             this.Methods.Location = new System.Drawing.Point(95, 57);
@@ -475,6 +478,8 @@ namespace TinyFinder
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.groupBox1.Controls.Add(this.surfLocation);
+            this.groupBox1.Controls.Add(this.water);
             this.groupBox1.Controls.Add(this.location);
             this.groupBox1.Controls.Add(this.label10);
             this.groupBox1.Controls.Add(this.month);
@@ -501,6 +506,30 @@ namespace TinyFinder
             this.groupBox1.TabIndex = 17;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Step 2 - Settings";
+            // 
+            // surfLocation
+            // 
+            this.surfLocation.FormattingEnabled = true;
+            this.surfLocation.Items.AddRange(new object[] {
+            "Elsewhere",
+            "Magma/Aqua Hideout",
+            "Battle Resort",
+            "Underwater"});
+            this.surfLocation.Location = new System.Drawing.Point(95, 98);
+            this.surfLocation.Name = "surfLocation";
+            this.surfLocation.Size = new System.Drawing.Size(121, 22);
+            this.surfLocation.TabIndex = 21;
+            // 
+            // water
+            // 
+            this.water.AutoSize = true;
+            this.water.Location = new System.Drawing.Point(237, 135);
+            this.water.Name = "water";
+            this.water.Size = new System.Drawing.Size(54, 18);
+            this.water.TabIndex = 35;
+            this.water.Text = "Surf";
+            this.water.UseVisualStyleBackColor = true;
+            this.water.CheckedChanged += new System.EventHandler(this.water_CheckedChanged);
             // 
             // location
             // 
@@ -661,7 +690,7 @@ namespace TinyFinder
             this.groupBox2.Controls.Add(this.patch_board);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.find);
+            this.groupBox2.Controls.Add(this.atleast);
             this.groupBox2.Controls.Add(this.label14);
             this.groupBox2.Controls.Add(this.label13);
             this.groupBox2.Controls.Add(this.flutelabel);
@@ -709,23 +738,23 @@ namespace TinyFinder
             this.label9.TabIndex = 44;
             this.label9.Text = "Find at least";
             // 
-            // find
+            // atleast
             // 
-            this.find.Location = new System.Drawing.Point(110, 203);
-            this.find.Maximum = new decimal(new int[] {
+            this.atleast.Location = new System.Drawing.Point(110, 203);
+            this.atleast.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.find.Minimum = new decimal(new int[] {
+            this.atleast.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.find.Name = "find";
-            this.find.Size = new System.Drawing.Size(51, 22);
-            this.find.TabIndex = 43;
-            this.find.Value = new decimal(new int[] {
+            this.atleast.Name = "atleast";
+            this.atleast.Size = new System.Drawing.Size(51, 22);
+            this.atleast.TabIndex = 43;
+            this.atleast.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -1208,7 +1237,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.find)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.atleast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute3)).EndInit();
@@ -1280,7 +1309,7 @@ namespace TinyFinder
         private System.Windows.Forms.ComboBox month;
         private System.Windows.Forms.Label mo;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown find;
+        private System.Windows.Forms.NumericUpDown atleast;
         private System.Windows.Forms.ComboBox location;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TabControl SearchGen;
@@ -1315,6 +1344,8 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
         private System.Windows.Forms.Label patch_board;
+        private System.Windows.Forms.CheckBox water;
+        private System.Windows.Forms.ComboBox surfLocation;
     }
 }
 

@@ -2,22 +2,29 @@
 {
     class Horde
     {
-        public byte slot, HA, randInt;
+        public byte slot, HA, randInt, advances;
         public bool sync;
         public byte[] flutes = new byte[5], items = new byte[5];
         public uint[] temp = new uint[4];
         public TinyMT tinyhorde = new TinyMT();
         public SlotData data = new SlotData();
 
-        public bool oras;
-
-        public void results(uint[] current, byte adv)
+        public void results(uint[] current, byte party, bool oras, bool cave)
         {
             current.CopyTo(temp, 0);
             tinyhorde.nextState(temp);
             randInt = tinyhorde.Rand(temp, 100);
 
-            for (byte i = 0; i < adv; i++)
+            if (cave)
+                advances = 3;
+            else
+            {
+                if (oras)
+                    advances = 15;
+                else advances = 27;
+            }
+
+            for (byte i = 0; i < advances + (3 * party); i++)
                 tinyhorde.nextState(temp);
 
             sync = tinyhorde.Rand(temp, 100) < 50;
@@ -25,14 +32,13 @@
             tinyhorde.nextState(temp);
             slot = data.getSlot(tinyhorde.Rand(temp, 100), 2);
 
+            HA = 0;
             tinyhorde.nextState(temp);
             if (tinyhorde.Rand(temp, 100) < 20)
             {
                 tinyhorde.nextState(temp);
                 HA = (byte)(tinyhorde.Rand(temp, 5) + 1);
             }
-            else
-                HA = 0; //Necessary
 
             tinyhorde.nextState(temp);
             if (oras)

@@ -9,10 +9,7 @@
         public byte slot, encounter, flute, randInt, item;
         public bool Sync;
 
-        public bool oras, cave;
-        public byte slotLine, ES;
-
-        public void results(uint[] current)
+        public void results(uint[] current, bool oras, bool cave, byte slotLine, byte ES)
         {
             current.CopyTo(temp, 0);
             tinywild.nextState(temp);
