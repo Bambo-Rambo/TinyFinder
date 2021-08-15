@@ -375,7 +375,8 @@ namespace TinyFinder
             "Horde",
             "Honey Wild",
             "Radar",
-            "Friend Safari"});
+            "Friend Safari",
+            "Swooping"});
             this.Methods.Location = new System.Drawing.Point(95, 57);
             this.Methods.Name = "Methods";
             this.Methods.Size = new System.Drawing.Size(121, 22);

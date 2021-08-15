@@ -29,7 +29,7 @@
             tinywild.nextState(temp);
             encounter = tinywild.Rand(temp, 100);
 
-            if (ES != 0)
+            if (ES != 0 && !cave)
                 tinywild.nextState(temp);
 
             tinywild.nextState(temp);

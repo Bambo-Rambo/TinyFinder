@@ -27,18 +27,22 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current, byte length, byte num, bool boost)
+        public void results(uint[] current, byte length, byte num, bool boost, byte method)
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);
             randInt = Rand(temp, 100);
             if (length == 0)
             {
+                sync = randInt < 50;
                 tinyradar.nextState(temp);
+                if (method == 8)
+                    tinyradar.nextState(temp);
                 slot = data.getSlot(tinyradar.Rand(temp, 100), 0);
 
                 tinyradar.nextState(temp);
-                sync = randInt < 50;
+                if (method == 8)
+                    sync = tinyradar.Rand(temp, 100) < 50;
 
                 tinyradar.nextState(temp);
                 if (tinyradar.Rand(temp, 100) < 50)
