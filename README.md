@@ -1,4 +1,6 @@
-# [Download the latest commit](https://drive.google.com/uc?id=1E-WxiYm0G551tEjuJOOqvnCwsZkA7IvK&export=download)
+# [Download the latest commit](https://drive.google.com/uc?id=1oIWP_QRkQUAGYEJQezFb6qeUM042lXIV&export=download) 
+# Last updated 15/8/2021
+### Also includes Honey Wild RNG and Swooping down from above encounters in Kalos Victory Road
 
 # TinyFinder
 
