@@ -35,7 +35,12 @@ namespace TinyFinder
             return 0;
         }
 
-        public static string[][] Locations = new string[][]
+        public string getLocation(byte i)
+        {
+                return SurfLocations[i];
+        }
+
+        private static string[][] Locations = new string[][]
         {
             new string[] { "Route 2", "Route 3", "Santalune Forest", "Route 22" },                      // 0 + 1
             new string[] { "Azure Bay", "Route 4", "Route 8", "Route 10", "Route 15", "Route 20" },     // 1 + 2
@@ -45,7 +50,7 @@ namespace TinyFinder
           //new string[] { "Elsewhere" },                                                               // 0 + 0
         };
 
-        public static string[] SurfLocations = { "Magma/Aqua Hideout", "Battle Resort", "Underwater"};
+        public static string[] SurfLocations = { "Magma/Aqua Hideout", "Battle Resort", "Underwater" };
 
     }
 }

@@ -46,7 +46,7 @@ namespace TinyFinder
         public uint findSeed(uint seed, uint seconds) => (seconds * 1000) + seed;
 
 
-        public byte[] days = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+        public byte[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
@@ -29,11 +29,11 @@ namespace TinyFinder.Controls
 
         internal static int HIWORD(int n) => (n >> 16) & 0xffff;
 
-        internal static int HIWORD(IntPtr n) => HIWORD(unchecked((int) (long) n));
+        internal static int HIWORD(IntPtr n) => HIWORD(unchecked((int)(long)n));
 
         internal static int LOWORD(int n) => n & 0xffff;
 
-        internal static int LOWORD(IntPtr n) => LOWORD(unchecked((int) (long) n));
+        internal static int LOWORD(IntPtr n) => LOWORD(unchecked((int)(long)n));
 
         #region Nested type: MINMAXINFO
 

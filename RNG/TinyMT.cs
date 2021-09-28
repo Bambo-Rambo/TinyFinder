@@ -17,6 +17,8 @@ namespace TinyFinder
         private const int MIN_LOOP = 8;
         private const int PRE_LOOP = 8;
 
+        public uint[] state = new uint[4];
+
         public uint temper(uint[] array)
         {
             uint t0 = array[3];
@@ -50,14 +52,18 @@ namespace TinyFinder
 
         public uint[] init(uint seed, int adv) //Takes the TinyMT initial seed and returns the (initial state + adv) (depending on the method)
         {
-            uint[] status = { seed, mat1, mat2, tmat };
+            state[0] = seed;
+            state[1] = mat1;
+            state[2] = mat2;
+            state[3] = tmat;
+
             for (int i = 1; i < MIN_LOOP; i++)
-                status[i & 3] ^= (uint)i + 1812433253U * (status[(i - 1) & 3] ^ (status[(i - 1) & 3] >> 30));
+                state[i & 3] ^= (uint)i + 1812433253U * (state[(i - 1) & 3] ^ (state[(i - 1) & 3] >> 30));
 
             for (int i = 0; i < PRE_LOOP + adv; i++)
-                nextState(status);
+                nextState(state);
 
-            return status;
+            return state;
         }
 
         public byte Rand(uint[] array, int n) => (byte)((temper(array) * (ulong)n) >> 32);
