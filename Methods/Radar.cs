@@ -27,7 +27,7 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current, byte length, byte num, bool boost, byte method)
+        public void results(uint[] current, byte length, byte num, bool boost, byte method, byte advances)
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);
@@ -60,7 +60,7 @@ namespace TinyFinder
             }
             else
             {
-                for (int i = 3 * num; i > 0; i--)
+                for (int i = 3 * num + advances; i > 0; i--)
                     tinyradar.nextState(temp);
 
                 music = tinyradar.Rand(temp, 100);
