@@ -1,6 +1,4 @@
-# Outdated - Don't read
-# Last updated 15/8/2021
-### Also includes Honey Wild RNG and Swooping down from above encounters in Kalos Victory Road
+### [Latest Commit](https://drive.google.com/uc?export=download&confirm=_P8B&id=1YM70LKOh8XLdlOEcnvayKMpZju-kup1-)
 
 # TinyFinder
 
@@ -43,11 +41,6 @@ As said above, Poke Radar RNG is split in 2 categories:
 When chain == 0, you search and RNG for slot and sync. Activate the radar anytime and when inside the target index, step inside the patch.
 
 When chain > 0, you search and RNG for guaranteed shiny patches. Remember that shininess is TinyMT dependant in that case. Simply activate the radar during the shiny (blue) index and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check their exact locations in the tool. Double click inside an index to do that. 'C' means "Character" and is always in the middle of the array. 'S' means shiny and is the one you are gonna be stepping in while the rest are "Good" (G), "Bad" (B) and "Empty" (X) which break the chain and must be avoided. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it afterwards as well.
-
-# Notes:
-For Normal Wild and Hordes, 3DS RNG Tool uses a specific pattern which does not apply the same for every place. Hordes are different when you RNG inside a cave for both versions, while Normal Wild in XY is different as well depending on the place. This tool accounts for all these so just choose the location and you will get the correct results. You can use [my fork version of 3DS RNG Tool](https://github.com/Bambo-Rambo/3DSRNGTool) that fixes Hordes in caves, but for wild just use this tool until I update 3DS RNG Tool again. Poke Radar also shows the same behavior but is more predictable and easy to deal with. It will be fixed in a later release.
-
-Due to Blink(+1) and Blink(+2), it's somewhat hard to predict if an index is hitable consistently before checking it on 3DS RNG Tool. Just try some of them until you find one that can be hit for sure. Some indexes also last for very few main frames (usually 12-20) due to Blink(+1) so it's better to avoid those as well. This does not apply to ID and Horde RNGs since every index is hitable.
 
 # Credits
 wwwwwwzx for 3DS RNG Tool
