@@ -170,7 +170,7 @@ namespace TinyFinder
                             tiny.nextState(array);
                         for (uint j = Min; j <= Max; j++)
                         {
-                            wild.results(array, orasRadio.Checked, cave.Checked || location.SelectedIndex == 7, SlotCase, EnctSyncExtra);
+                            wild.results(array, orasRadio.Checked, cave.Checked, SlotCase, EnctSyncExtra);
                             if (!ignoreFilters.Checked)
                             {
                                 if (wild.encounter < (byte)ratio.Value && Slots.Contains(wild.slot) && ((sync.Checked && wild.Sync) || !sync.Checked))

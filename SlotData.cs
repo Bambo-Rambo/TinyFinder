@@ -25,7 +25,7 @@ namespace TinyFinder
 
         public byte getAdvances(string loc)
         {
-            if (loc.Equals("Route 7") || loc.Equals("Elsewhere"))
+            if (loc.Equals("Elsewhere"))
                 return 10; //***Temporary solution
             else
                 for (byte i = 0; i < 5; i++)
@@ -41,13 +41,13 @@ namespace TinyFinder
         }
 
         private static string[][] Locations = new string[][]
-        {
-            new string[] { "Route 2", "Route 3", "Santalune Forest", "Route 22" },                      // 0 + 1
-            new string[] { "Azure Bay", "Route 4", "Route 8", "Route 10", "Route 15", "Route 20" },     // 1 + 2
-            new string[] { "Route 5", "Route 11", "Route 12", "Route 14", "Route 21" },                 // 2 + 3
-            new string[] { "Route 18", "Route 19", "Pokemon Village" },                                 // 3 + 4
-          //new string[] { "Route 7", "All caves"},                                                     // 1 + 1
-          //new string[] { "Elsewhere" },                                                               // 0 + 0
+        {                                                                                                       //Enctr/Sync       Slot
+            new string[] { "Route 2", "Route 3", "Santalune Forest", "Route 22" },                              //  +0 (0)        +1 (1)
+            new string[] { "Azure Bay", "Route 4", "Route 7", "Route 8", "Route 10", "Route 15", "Route 20" },  //  +1 (1)        +1 (2)
+            new string[] { "Route 5", "Route 11", "Route 12", "Route 14", "Route 21" },                         //  +2 (2)        +1 (3)
+            new string[] { "Route 18", "Route 19", "Pokemon Village" },                                         //  +3 (3)        +1 (4)
+          //new string[] { "Caves/Creepy Places"},                                                              //  +1 (1)        +0 (1)
+          //new string[] { "Elsewhere" },                                                                       //  +0 (0)        +0 (0)
         };
 
         public static string[] SurfLocations = { "Magma/Aqua Hideout", "Battle Resort", "Underwater" };

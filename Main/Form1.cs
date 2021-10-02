@@ -338,9 +338,7 @@ namespace TinyFinder
                         patch_board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
                     }
                     catch
-                    {
-                        MessageBox.Show("An Error occurred", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    { }
                 }
                 else
                 {
@@ -351,17 +349,20 @@ namespace TinyFinder
                         int two = Convert.ToInt32(Generator.Rows[e.RowIndex].Cells[2].Value.ToString());
                     }
                     catch
-                    {
-                        MessageBox.Show("An Error occurred", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    { }
                 }
             }
         }
         private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //Search doesn't work with getIndex() because multiple indexes have the same number. Possibly use the Rand(100) as well
+            //Searcher doesn't work with getIndex() because multiple indexes have the same number. Possibly use the Rand(100) as well
             //Currently doesn't work when sort the rows. To do
-            patch_board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+            try
+            {
+                patch_board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+            }
+            catch
+            { }
         }
 
         private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
