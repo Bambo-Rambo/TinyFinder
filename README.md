@@ -43,4 +43,4 @@ When chain == 0, you search and RNG for slot and sync. Activate the radar anytim
 When chain > 0, you search and RNG for guaranteed shiny patches. Remember that shininess is TinyMT dependant in that case. Simply activate the radar during the shiny (blue) index and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check their exact locations in the tool. Double click inside an index to do that. 'C' means "Character" and is always in the middle of the array. 'S' means shiny and is the one you are gonna be stepping in while the rest are "Good" (G), "Bad" (B) and "Empty" (X) which break the chain and must be avoided. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it afterwards as well.
 
 # Credits
-wwwwwwzx for 3DS RNG Tool
+wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
