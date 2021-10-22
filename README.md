@@ -1,4 +1,4 @@
-### [Latest Commit](https://drive.google.com/uc?id=1cL8uwdcl-Bs34QZTpYAXNalwq-5_708-&export=download)
+### [Latest Build](https://drive.google.com/uc?id=1cL8uwdcl-Bs34QZTpYAXNalwq-5_708-&export=download) - 22/10/2021
 
 # TinyFinder
 
