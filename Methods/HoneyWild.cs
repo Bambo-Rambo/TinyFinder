@@ -27,23 +27,7 @@
                     if (!water)
                         advances = 15;
                     else
-                    {
-                        switch (location)
-                        {
-                            case 0:
-                                advances = 15;
-                                break;
-                            case 1:
-                                advances = 6;
-                                break;
-                            case 2:
-                                advances = 16;
-                                break;
-                            case 3:
-                                advances = 3;
-                                break;
-                        }
-                    }
+                        advances = (byte)(location == 1 ? 6 : location == 3 ? 3 : 15);
                 }
             }
 
