@@ -22,7 +22,7 @@ namespace TinyFinder
         Manager manager;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit;
-        bool Calibrated = false;
+        bool Calibrated = false, DateSearcher;
         string MethodUsed;
 
         struct PatchSpot
@@ -35,21 +35,21 @@ namespace TinyFinder
         List<PatchSpot> GPatchSpots = new List<PatchSpot>();
         List<PatchSpot> SPatchSpots = new List<PatchSpot>();
 
+        private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
+        private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
+
         public Form1()
         {
             InitializeComponent();
 
             Generator.Visible = false;
-            xyRadio.Checked = true;
-            year.Value = DateTime.Now.Year; month.SelectedIndex = DateTime.Now.Month - 1;
-            DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            XY_Button.Checked = true;
+            year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
+            Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             ManageControls(0);
         }
 
-        private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
-        private bool isRadar1() => xyRadio.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
-
-        #region Events
+        #region GUI Events
         private void xyRadio_CheckedChanged(object sender, EventArgs e)
         {
             Methods.Items[6] = "Radar";
@@ -69,97 +69,23 @@ namespace TinyFinder
         }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
-            slots.Text = "";
-            surfLocation.Items.Clear();
-            surfLocation.Items.Add("Elsewhere");
-            surfLocation.SelectedIndex = 0;
-            sync.Enabled = true; slots.Enabled = true; s.Enabled = true;
-            switch (Methods.SelectedIndex)
-            {
-                case 0:     //ID
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.Items.Clear();
-                    break;
-                case 1:     //Normal Wild
-                    if (xyRadio.Checked)
-                        location.SelectedIndex = 0;
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 310;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 13; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 2:     //Fishing
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 90;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 4; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 3:     //Rock Smash
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 140;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 6; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 4:     //Horde
-                    hidden.SelectedIndex = 1;
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 90;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 4; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 5:     //Honey Wild
-                    water.Checked = false;
-                    for (byte i = 0; i < 3; i++)
-                        surfLocation.Items.Add(LocationData.getLocation(i));
-                    if (orasRadio.Checked)
-                        surfLocation.SelectedIndex = 0;
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 310;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 13; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 6:     //Poke Radar
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 310;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 13; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 7:     //Friend Safari
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 90;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 4; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-                case 8:     //Swooping
-                    ManageControls((byte)Methods.SelectedIndex);
-                    slots.DropDownHeight = 310;
-                    slots.Items.Clear();
-                    for (byte add = 1; add < 13; add++)
-                        slots.Items.AddRange(new object[] { add.ToString() });
-                    break;
-            }
+            ManageControls((byte)Methods.SelectedIndex);
+            ManageSurfButton();
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
-            DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             Calibrated = false; 
             button1.Text = "Calibrate and Search";
         }
 
         private void ratio_ValueChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 6 && xyRadio.Checked)
+            if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
-                sync.Enabled = slots.Enabled = s.Enabled = ratio.Value == 0 ? true : false;
-                boost.Enabled = water.Enabled = !sync.Enabled;
+                SyncBox.Enabled = slots.Enabled = Slots_Label.Enabled = ratio.Value == 0 ? true : false;
+                BoostBox.Enabled = SurfBox.Enabled = isRadar1();
             }
         }
 
@@ -167,122 +93,72 @@ namespace TinyFinder
         {
             if (Methods.SelectedItem.ToString() != "DexNav")
             {
-                label10.Enabled = location.Enabled = surfLocation.Enabled = cave.Checked ? false : true;
-                ratio.Value = cave.Checked ? 7 : 13;
+                Location_Label.Enabled = XY_Locations.Enabled = ORAS_Locations.Enabled = SurfLocations.Enabled = CaveBox.Checked ? false : true;
+                ManageRatio();
             }
+            ManageSurfButton();
         }
 
         private void water_CheckedChanged(object sender, EventArgs e)
         {
+            Location_Label.Visible = Methods.SelectedIndex == 1 || (Methods.SelectedIndex == 5 && SurfBox.Checked && ORAS_Button.Checked);
+            SurfLocations.Visible = Methods.SelectedIndex == 5 && SurfBox.Checked && ORAS_Button.Checked;
             if (!isRadar1())
-            {
-                slots.Items.Clear();
-                slots.Text = "";
-            }
-            if (Methods.SelectedIndex == 5)
-            {
-                if (water.Checked)
-                {
-                    if (orasRadio.Checked)
-                        label10.Visible = surfLocation.Visible = true;
-                    slots.DropDownHeight = 140;
-                    SlotLimit = 6;
-                }
-                else
-                {
-                    label10.Visible = surfLocation.Visible = false;
-                    slots.DropDownHeight = 310;
-                    SlotLimit = 13;
-                }
-            }
-            if (Methods.SelectedIndex == 6 && orasRadio.Checked)
-            {
-                slots.DropDownHeight = 310;
-                SlotLimit = 13;
-                if (NavType.SelectedIndex == 1)
-                {
-                    slots.DropDownHeight = 90;
-                    SlotLimit = 4;
-                }
-                else if (water.Checked)
-                {
-                    slots.DropDownHeight = 140;
-                    SlotLimit = 6;
-                }
-            }
-
-            if (!isRadar1())
-                for (byte add = 1; add < SlotLimit; add++)
-                    slots.Items.AddRange(new object[] { add.ToString() });
+                ManageSlots((byte)Methods.SelectedIndex);
         }
 
         private void dexnavpokes_CheckedChanged(object sender, EventArgs e)
         {
-            if (dexnavpokes.Checked)
-                NavType.Enabled = true;
-            else
-            {
+            NavType.Enabled = ExclusiveBox.Checked ? true : false;
+            if (!ExclusiveBox.Checked)
                 NavType.SelectedIndex = 0;
-                NavType.Enabled = false;
-            }
+        }
+
+        private void location_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageRatio();
+        }
+        private void ORAS_Locations_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageRatio();
+            ManageSurfButton();
         }
 
         private void NavType_SelectedIndexChanged(object sender, EventArgs e)
         {
-            slots.Items.Clear();
-            slots.Text = "";
-            if (NavType.SelectedIndex == 0)
-            {
-                if (!water.Checked)
-                {
-                    slots.DropDownHeight = 310;
-                    SlotLimit = 13;
-                }
-                else
-                {
-                    slots.DropDownHeight = 140;
-                    SlotLimit = 6;
-                }
-            }
-            else
-            {
-                slots.DropDownHeight = 90;
-                SlotLimit = 4;
-            }
-            for (byte add = 1; add < SlotLimit; add++)
-                slots.Items.AddRange(new object[] { add.ToString() });
+            ManageSlots(6);
         }
 
         private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
 
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SearchGen.SelectedTab == Srch)
+            if (SearchGen.SelectedIndex == 0)
             {
-                DateLabel.Location = new Point(1, 71);
-                DateLabel.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+                Date_Label.Location = new Point(1, 71);
+                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
                 button1.Text = Calibrated ? "Search" : "Calibrate and Search";
-                label9.Enabled = atleast.Enabled = mo.Visible = month.Visible = true;
-                y.Visible = year.Visible = true;
-                StepLabel.Visible = ChainLabel.Visible = false;
-                ignoreFilters.Checked = ignoreFilters.Enabled = false;
+                FindNum_Label.Enabled = atleast.Enabled = Month_Label.Visible = Months.Visible = true;
+                Year_Label.Visible = year.Visible = true;
+                Step_Label.Visible = Chain_Label.Visible = false;
+                ΙgnoreFilters.Checked = ΙgnoreFilters.Enabled = false;
                 Generator.Visible = ntr.Enabled = updateBTN.Visible = false;
                 Searcher.Visible = true;
-                min.Value = min.Minimum = xyRadio.Checked ? 35 :
-                                          (orasRadio.Checked && Methods.SelectedIndex == 0) ? 11 :
-                                          (orasRadio.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
-                max.Value = (xyRadio.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
+                min.Value = min.Minimum = XY_Button.Checked ? 35 :
+                                          (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
+                                          (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
+                max.Value = (XY_Button.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
 
             }
             else
             {
-                DateLabel.Location = new Point(98, 71);
-                DateLabel.Text = "Current State";
+                Date_Label.Location = new Point(98, 71);
+                Date_Label.Text = "Current State";
                 button1.Text = "Generate";
-                label9.Enabled = atleast.Enabled = mo.Visible = month.Visible = false;
+                FindNum_Label.Enabled = atleast.Enabled = Month_Label.Visible = Months.Visible = false;
                 ntr.Enabled = updateBTN.Visible = true;
-                ignoreFilters.Enabled = true;
-                Searcher.Visible = year.Visible = y.Visible = false;
+                ΙgnoreFilters.Enabled = true;
+                Searcher.Visible = year.Visible = Year_Label.Visible = false;
                 Generator.Visible = true;
                 min.Minimum = 0; min.Value = 0;
                 max.Value = 50000;
@@ -291,7 +167,7 @@ namespace TinyFinder
 
         private void TinyChanged()
         {
-            if (SearchGen.SelectedTab == Srch)
+            if (SearchGen.SelectedIndex == 0)
             {
                 Calibrated = false;
                 button1.Text = "Calibrate and Search";
@@ -331,11 +207,11 @@ namespace TinyFinder
         {
             if (Methods.SelectedIndex == 6)
             {
-                if (xyRadio.Checked)
+                if (XY_Button.Checked)
                 {
                     try
                     {
-                        patch_board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
+                        Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
                     }
                     catch
                     { }
@@ -359,7 +235,7 @@ namespace TinyFinder
             //Currently doesn't work when sort the rows. To do
             try
             {
-                patch_board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+                Patches_Board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
             }
             catch
             { }
@@ -384,7 +260,7 @@ namespace TinyFinder
                 NTRHelper.ntrclient.ReadTiny("TTT");
                 if (Methods.SelectedIndex == 6)
                 {
-                    if (orasRadio.Checked)
+                    if (ORAS_Button.Checked)
                     {
                         NTRHelper.ntrclient.ReadTiny("Step");
                         NTRHelper.ntrclient.ReadTiny("DexNavChain");
@@ -420,27 +296,24 @@ namespace TinyFinder
                     return;
                 case "Step":
                     var steps = (uint[])state;
-                    StepLabel.Visible = true;
-                    if (steps[0] == 19)
-                        StepLabel.ForeColor = Color.Red;
-                    else
-                        StepLabel.ForeColor = Color.Black;
-                    StepLabel.Location = new Point(25, 100);
-                    StepLabel.Text = "Step Counter   =   " + steps[0].ToString();
+                    Step_Label.Visible = true;
+                    Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
+                    Step_Label.Location = new Point(25, 100);
+                    Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
                     break;
                 case "DexNavChain":
                     var chain = (uint[])state;
                     ratio.Value = chain[0];
-                    ChainLabel.Visible = true;
-                    ChainLabel.Location = new Point(25, 140);
-                    ChainLabel.Text = "Chain Length   =   " + chain[0].ToString();
+                    Chain_Label.Visible = true;
+                    Chain_Label.Location = new Point(25, 140);
+                    Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
                     break;
                 case "RadarChain":
                     var chainRadar = (uint[])state;
                     //ratio.Value = chainRadar[0];
-                    ChainLabel.Visible = true;
-                    ChainLabel.Location = new Point(25, 118);
-                    ChainLabel.Text = "Chain Length   =   " + chainRadar[0].ToString();
+                    Chain_Label.Visible = true;
+                    Chain_Label.Location = new Point(25, 118);
+                    Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
                     break;
             }
         }
@@ -468,28 +341,27 @@ namespace TinyFinder
             manager.Show();
             manager.Focus();
         }
-
         #endregion
 
-        #region Manage Controls
+        #region Manage Buttons and Slots
         private void ManageControls(byte method)
         {
             Methods.SelectedIndex = method;
-            label3.Visible = label4.Visible = tid.Visible = sid.Visible = slots.Visible = s.Visible = hidden.Visible = h.Visible =
-            flutelabel.Visible = flute1.Visible = label11.Visible = flute2.Visible = label12.Visible = flute3.Visible =
-            label13.Visible = flute4.Visible = label14.Visible = flute5.Visible = sync.Visible = cave.Visible = boost.Visible =
-            p.Visible = party.Visible = r.Visible = ratio.Visible = label10.Visible = location.Visible = patch_board.Visible =
-            water.Visible = surfLocation.Visible = navFilters.Visible = NavType.Visible = label15.Visible = label16.Visible =
-            label17.Visible = potential.Visible = dexnavpokes.Visible = StepLabel.Visible = ChainLabel.Visible = false;
-            cave.Checked = false;
-            water.Text = "Surf";
+            TID_Label.Visible = SID_Label.Visible = tid.Visible = sid.Visible = slots.Visible = Slots_Label.Visible = HASlot.Visible = 
+            HA_Label.Visible = Flute1_Label.Visible = flute1.Visible = Flute2_Label.Visible = flute2.Visible = Flute4_Label.Visible = 
+            flute3.Visible = Flute5_Label.Visible = flute4.Visible = Flute3_Label.Visible = flute5.Visible = SyncBox.Visible = CaveBox.Visible = 
+            BoostBox.Visible = Party_Label.Visible = party.Visible = Rate_Label.Visible = ratio.Visible = Location_Label.Visible = XY_Locations.Visible = 
+            ORAS_Locations.Visible = Patches_Board.Visible = SurfBox.Visible = SurfLocations.Visible = navFilters.Visible = NavType.Visible = NavType_Label.Visible = 
+            NavFilters_Label.Visible = Potential_Label.Visible = potential.Visible = ExclusiveBox.Visible = Step_Label.Visible = Chain_Label.Visible = false;
+            CaveBox.Checked = SurfBox.Checked = false;
+            SurfBox.Text = "Surf";
             ratio.Minimum = 1; ratio.Maximum = 100;
             if (SearchGen.SelectedIndex == 0)
             {
-                min.Value = min.Minimum = xyRadio.Checked ? 35 :
-                                          (orasRadio.Checked && Methods.SelectedIndex == 0) ? 11 :
-                                          (orasRadio.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
-                max.Value = (xyRadio.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
+                min.Value = min.Minimum = XY_Button.Checked ? 35 :
+                                          (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
+                                          (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
+                max.Value = (XY_Button.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
             }
             else
             {
@@ -499,112 +371,213 @@ namespace TinyFinder
 
             if (method == 0)
             {
-                label3.Location = new Point(109, 79);
+                TID_Label.Location = new Point(109, 79);
                 tid.Location = new Point(139, 77);
-                label4.Location = new Point(109, 118);
+                SID_Label.Location = new Point(109, 118);
                 sid.Location = new Point(139, 116);
-                label3.Visible = label4.Visible = tid.Visible = sid.Visible = true;
+                TID_Label.Visible = SID_Label.Visible = tid.Visible = sid.Visible = true;
             }
             else
             {
-                s.Location = new Point(13, 46);
+                ManageSlots((byte)Methods.SelectedIndex);
+                Slots_Label.Location = new Point(13, 46);
                 slots.Location = new Point(75, 42);
-                flutelabel.Location = new Point(16, 98);
+                Flute1_Label.Location = new Point(16, 98);
                 flute1.Location = new Point(75, 94);
-                sync.Location = new Point(53, 148);
-                flutelabel.Text = "Flute";
-                p.Location = new Point(230, 193);
-                p.Text = "Party";
-                cave.Text = "Cave";
+                SyncBox.Location = new Point(53, 148);
+                Flute1_Label.Text = "Flute";
+                Party_Label.Location = new Point(230, 193);
+                Party_Label.Text = "Party";
+                CaveBox.Text = "Cave";
                 party.Maximum = 6;
-                if (orasRadio.Checked)
-                    flutelabel.Visible = flute1.Visible = true;
-                s.Text = "Slots";
-                slots.Visible = s.Visible = sync.Visible = true;
+                Slots_Label.Enabled = slots.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
+                if (ORAS_Button.Checked)
+                    Flute1_Label.Visible = flute1.Visible = true;
+                Slots_Label.Text = "Slots";
+                slots.Visible = Slots_Label.Visible = SyncBox.Visible = true;
 
-                if (method == 1 || method == 2 || method == 3 || method == 7 || method == 8)
+                if (method == 1 || method == 2 || method == 7)
                 {
-                    if (!orasRadio.Checked && method == 1)
-                        label10.Visible = location.Visible = true;
-
-                    r.Text = "Ratio";
                     if (method == 1)
-                        cave.Visible = true;
-
-                    if (method != 3)
-                        r.Visible = ratio.Visible = true;
-
-                    if (method == 2)
-                        ratio.Value = 49;
-                    else if (!cave.Checked || method == 7)
-                        ratio.Value = 13;
-                    if (method == 8)
-                        r.Visible = ratio.Visible = false;
+                    {
+                        CaveBox.Visible = Location_Label.Visible = true;
+                        XY_Locations.Visible = XY_Button.Checked;
+                        XY_Locations.SelectedIndex = 0;
+                        ORAS_Locations.Visible = ORAS_Button.Checked;
+                        ORAS_Locations.SelectedIndex = 0;
+                        if (ORAS_Button.Checked)
+                        {
+                            SurfBox.Visible = true;
+                            SurfBox.Text = "Long Grass";
+                        }
+                    }
+                    Rate_Label.Visible = ratio.Visible = true;
+                    Rate_Label.Text = "Ratio";
+                    ManageRatio();
                 }
 
                 else if (method == 4)
                 {
-                    flutelabel.Text = "Flute 1";
-                    h.Location = new Point(16, 98);
-                    hidden.Location = new Point(75, 94);
-                    flutelabel.Location = new Point(266, 55);
+                    Flute1_Label.Text = "Flute 1";
+                    HA_Label.Location = new Point(16, 98);
+                    HASlot.Location = new Point(75, 94);
+                    Flute1_Label.Location = new Point(266, 55);
                     flute1.Location = new Point(334, 52);
-                    hidden.Visible = h.Visible = cave.Visible = p.Visible = party.Visible = true;
-                    if (orasRadio.Checked)
-                        flutelabel.Visible = flute1.Visible = label11.Visible = flute2.Visible = label12.Visible = flute3.Visible =
-                            label13.Visible = flute4.Visible = label14.Visible = flute5.Visible = true;
+                    HASlot.Visible = HA_Label.Visible = CaveBox.Visible = Party_Label.Visible = party.Visible = true;
+                    HASlot.SelectedIndex = 1;
+                    Flute1_Label.Visible = flute1.Visible = Flute2_Label.Visible = flute2.Visible = Flute4_Label.Visible = flute3.Visible =
+                        Flute5_Label.Visible = flute4.Visible = Flute3_Label.Visible = flute5.Visible = ORAS_Button.Checked;
                 }
 
                 else if (method == 5)
                 {
-                    p.Visible = party.Visible = cave.Visible = water.Visible = true;
-                    if (orasRadio.Checked && water.Checked)
+                    Party_Label.Visible = party.Visible = CaveBox.Visible = SurfBox.Visible = true;
+                    if (ORAS_Button.Checked && SurfBox.Checked)
                     {
-                        label10.Visible = surfLocation.Visible = true;
-                        if (cave.Checked)
-                            surfLocation.Enabled = false;
-                        else
-                            surfLocation.Enabled = true;
+                        Location_Label.Visible = SurfLocations.Visible = true;
+                        SurfLocations.Enabled = CaveBox.Checked ? false : true;
                     }
                 }
 
                 else if (method == 6)
                 {
-                    r.Text = "Chain";
+                    Rate_Label.Text = "Chain";
                     ratio.Minimum = 0;
-                    if (xyRadio.Checked)
+                    if (XY_Button.Checked)
                     {
-                        r.Visible = ratio.Visible = p.Visible = party.Visible = boost.Visible = patch_board.Visible = water.Visible = true;
-                        water.Text = "Use from bag";
-                        s.Enabled = slots.Enabled = sync.Enabled = false;
-                        ratio.Value = 1;
+                        Rate_Label.Visible = ratio.Visible = Party_Label.Visible = party.Visible = BoostBox.Visible = Patches_Board.Visible = SurfBox.Visible = true;
+                        BoostBox.Enabled = true;
+                        SurfBox.Text = "Use from bag";
+                        Slots_Label.Enabled = slots.Enabled = SyncBox.Enabled = false;
+                        ratio.Value = 1;    //Chain
                         ratio.Maximum = 60;
-                        patch_board.Location = new Point(205, 26);
-                        patch_board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
+                        Patches_Board.Location = new Point(205, 26);
+                        Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
                     }
                     else
                     {
                         NavType.SelectedIndex = 0;
-                        ratio.Value = 0;
-                        cave.Text = "Shiny Charm";
+                        ratio.Value = 0;    //Chain
+                        CaveBox.Text = "Shiny Charm";
                         party.Maximum = 999;
                         party.Value = 999;
-                        p.Location = new Point(185, 194);
-                        p.Text = "Search Level";
-                        sync.Visible = false;
-                        NavType.Visible = navFilters.Visible = party.Visible = ratio.Visible = p.Visible = r.Visible = cave.Visible =
-                        label15.Visible = label16.Visible = label17.Visible = potential.Visible = dexnavpokes.Visible = water.Visible = true;
-                        label15.Location = new Point(9, 45);
-                        s.Location = new Point(9, 93);
-                        label16.Location = new Point(9, 140);
+                        Party_Label.Location = new Point(185, 194);
+                        Party_Label.Text = "Search Level";
+                        SyncBox.Visible = false;
+                        NavType.Visible = navFilters.Visible = party.Visible = ratio.Visible = Party_Label.Visible = Rate_Label.Visible = CaveBox.Visible =
+                        NavType_Label.Visible = NavFilters_Label.Visible = Potential_Label.Visible = potential.Visible = ExclusiveBox.Visible = SurfBox.Visible = true;
+                        NavType_Label.Location = new Point(9, 45);
+                        Slots_Label.Location = new Point(9, 93);
+                        NavFilters_Label.Location = new Point(9, 140);
                         NavType.Location = new Point(71, 41);
                         slots.Location = new Point(71, 89);
                         navFilters.Location = new Point(71, 137);
-                        label17.Location = new Point(254, 93);
+                        Potential_Label.Location = new Point(254, 93);
                         potential.Location = new Point(341, 89);
-                        flutelabel.Location = new Point(254, 140);
+                        Flute1_Label.Location = new Point(254, 140);
                         flute1.Location = new Point(341, 137);
                     }
+                }
+            }
+        }
+
+        private void ManageSlots(byte method)
+        {
+            //Default values for most methods
+            byte SlotsCount = 13;
+            ushort ComboBoxHeight = 310;
+
+            switch (method)
+            {
+                case 3:     //Rock Smash
+                    SlotsCount = 6;
+                    ComboBoxHeight = 140;
+                    break;
+
+                case 5:     //Honey Wild
+                    SlotsCount = (byte)(SurfBox.Checked ? 6 : 13);
+                    ComboBoxHeight = (ushort)(SurfBox.Checked ? 140 : 310);
+                    break;
+
+                case 6:     //DexNav
+                    if (ORAS_Button.Checked)
+                    {
+                        if (NavType.SelectedIndex == 1)
+                        {
+                            SlotsCount = 4;
+                            ComboBoxHeight = 90;
+                        }
+                        else
+                        {
+                            if (SurfBox.Checked)
+                            {
+                                SlotsCount = 6;
+                                ComboBoxHeight = 140;
+                            }
+                        }
+                    }
+                    break;
+
+                case 2:     //Fishing
+                case 4:     //Horde
+                case 7:     //Friend Safari
+                    SlotsCount = 4;
+                    ComboBoxHeight = 90;
+                    break;
+            }
+            slots.Text = "";
+            slots.Items.Clear();
+            slots.DropDownHeight = ComboBoxHeight;
+            for (byte add = 1; add < SlotsCount; add++)
+                slots.Items.AddRange(new object[] { add });
+        }
+
+        private void ManageRatio()
+        {
+            if (Methods.SelectedIndex == 1)
+            {
+                if (CaveBox.Checked)
+                    ratio.Value = 7;
+                else
+                {
+                    if (XY_Button.Checked)
+                    {
+                        if (XY_Locations.SelectedIndex == 2)
+                            ratio.Value = 1;
+                        else if (XY_Locations.SelectedIndex == 10 || XY_Locations.SelectedIndex == 16)
+                            ratio.Value = 7;
+                        else
+                            ratio.Value = 13;
+                    }
+                    else
+                        ratio.Value = ORAS_Locations.SelectedIndex > 0 && ORAS_Locations.SelectedIndex < 5 ? 7 : 13;
+                }
+            }
+            else if (Methods.SelectedIndex == 2)
+                ratio.Value = 49;
+            else if (Methods.SelectedIndex == 7)
+                ratio.Value = 13;
+        }
+
+        private void ManageSurfButton()
+        {
+            if (Methods.SelectedIndex == 1)
+            {
+                SurfBox.Enabled = !CaveBox.Checked && ORAS_Button.Checked;
+                if (!CaveBox.Checked)
+                {
+                    if (ORAS_Locations.SelectedIndex > 5)
+                    {
+                        SurfBox.Enabled = true;
+                        SurfBox.Checked = false;
+                        if (ORAS_Locations.SelectedIndex > 6 && ORAS_Locations.SelectedIndex < 10)
+                        {
+                            SurfBox.Checked = true;
+                            SurfBox.Enabled = false;
+                        }
+                    }
+                    else
+                        SurfBox.Checked = SurfBox.Enabled = false;
                 }
             }
         }
@@ -629,7 +602,7 @@ namespace TinyFinder
             {
                 if (method == 1 || method == 2 || method == 3 || method == 7)
                 {
-                    table.Columns.Add("Enctr", typeof(byte));
+                    table.Columns.Add("Ratio", typeof(byte));
                     table.Columns.Add("Sync", typeof(string));
                     table.Columns.Add("Slot", typeof(byte));
                 }
@@ -638,7 +611,8 @@ namespace TinyFinder
                     table.Columns.Add("Sync", typeof(string));
                     table.Columns.Add("Slot", typeof(byte));
                     table.Columns.Add("HA", typeof(byte));
-                    table.Columns.Add("Flute", typeof(string));
+                    if (ORAS_Button.Checked)
+                        table.Columns.Add("Flute", typeof(string));
                 }
                 else if (method == 5 || method == 8)
                 {
@@ -647,7 +621,7 @@ namespace TinyFinder
                 }
                 else if (method == 6)
                 {
-                    if (xyRadio.Checked)
+                    if (XY_Button.Checked)
                     {
                         if (ratio.Value == 0)
                         {
@@ -677,13 +651,13 @@ namespace TinyFinder
                     }
                 }
                 if (method != 4)
-                    if (orasRadio.Checked)
+                    if (ORAS_Button.Checked)
                         table.Columns.Add("Flute", typeof(byte));
 
-                if (method != 6 || (method == 6 && !orasRadio.Checked))
+                if (method != 6 || (method == 6 && !ORAS_Button.Checked))
                     table.Columns.Add("Item", typeof(string));
 
-                if (method == 6 && xyRadio.Checked && ratio.Value > 0)
+                if (method == 6 && XY_Button.Checked && ratio.Value > 0)
                     table.Columns.Remove("Item");
 
                 table.Columns.Add("Rand(100)", typeof(byte));
@@ -706,22 +680,22 @@ namespace TinyFinder
             }
             else if (Equals(method, "Wild") || Equals(method, "Rock Smash"))
             {
-                Generator.Columns["Enctr"].Width = Generator.Columns["Sync"].Width = 
+                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = 
                     Generator.Columns["Slot"].Width = Generator.Columns["Item"].Width = 50;
-                if (orasRadio.Checked)
+                if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
             else if (Equals(method, "Horde")) 
             {
                 Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
                 Generator.Columns["Item"].Width = 150;
-                if (orasRadio.Checked)
+                if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 75;
             }
             else if (Equals(method, "Honey"))
             {
                 Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Item"].Width = 50;
-                if (orasRadio.Checked)
+                if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
             else if (Equals(method, "Radar0"))
@@ -773,7 +747,7 @@ namespace TinyFinder
             {
                 if (method == 1 || method == 2 || method == 3 || method == 7)
                 {
-                    Searcher.Columns.Add("enctr", "Enctr?"); Searcher.Columns["enctr"].Width = 50;
+                    Searcher.Columns.Add("ratio", "Ratio"); Searcher.Columns["ratio"].Width = 50;
                     Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
                     Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
                 }
@@ -790,7 +764,7 @@ namespace TinyFinder
                 }
                 else if (method == 6)
                 {
-                    if (xyRadio.Checked)
+                    if (XY_Button.Checked)
                     {
                         if (ratio.Value == 0)
                         {
@@ -820,14 +794,14 @@ namespace TinyFinder
                     }
                 }
                 Searcher.Columns.Add("flute", "Flute"); Searcher.Columns["flute"].Width = 70;
-                if (xyRadio.Checked)
+                if (XY_Button.Checked)
                     Searcher.Columns["flute"].Visible = false;
 
-                if (method != 6 || (method == 6 && !orasRadio.Checked))
+                if (method != 6 || (method == 6 && !ORAS_Button.Checked))
                     Searcher.Columns.Add("item", "Item");
                 if (method != 4)
                 {
-                    if (method != 6 || (method == 6 && !orasRadio.Checked))
+                    if (method != 6 || (method == 6 && !ORAS_Button.Checked))
                         Searcher.Columns["item"].Width = 50;
                     Searcher.Columns["flute"].Width = 50;
                 }
@@ -837,7 +811,7 @@ namespace TinyFinder
                     Searcher.Columns["item"].Width = 150;
                 }
 
-                if (method == 6 && xyRadio.Checked && ratio.Value > 0)
+                if (method == 6 && XY_Button.Checked && ratio.Value > 0)
                     Searcher.Columns["item"].Visible = false;
 
                 Searcher.Columns.Add("rand", "Rand (100)"); Searcher.Columns["rand"].Width = 90;

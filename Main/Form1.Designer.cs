@@ -49,70 +49,71 @@ namespace TinyFinder
             this.t1 = new TinyFinder.HexBox();
             this.t0 = new TinyFinder.HexBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.xyRadio = new System.Windows.Forms.RadioButton();
-            this.orasRadio = new System.Windows.Forms.RadioButton();
+            this.XY_Button = new System.Windows.Forms.RadioButton();
+            this.ORAS_Button = new System.Windows.Forms.RadioButton();
             this.Methods = new System.Windows.Forms.ComboBox();
-            this.game = new System.Windows.Forms.Label();
-            this.method = new System.Windows.Forms.Label();
+            this.Game_Label = new System.Windows.Forms.Label();
+            this.Method_Label = new System.Windows.Forms.Label();
             this.year = new System.Windows.Forms.NumericUpDown();
-            this.y = new System.Windows.Forms.Label();
+            this.Year_Label = new System.Windows.Forms.Label();
             this.min = new System.Windows.Forms.NumericUpDown();
             this.max = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.ChainLabel = new System.Windows.Forms.Label();
-            this.StepLabel = new System.Windows.Forms.Label();
-            this.dexnavpokes = new System.Windows.Forms.CheckBox();
-            this.surfLocation = new System.Windows.Forms.ComboBox();
-            this.water = new System.Windows.Forms.CheckBox();
-            this.location = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.month = new System.Windows.Forms.ComboBox();
-            this.mo = new System.Windows.Forms.Label();
-            this.r = new System.Windows.Forms.Label();
-            this.boost = new System.Windows.Forms.CheckBox();
+            this.Min_Label = new System.Windows.Forms.Label();
+            this.Max_Label = new System.Windows.Forms.Label();
+            this.Settings_Box = new System.Windows.Forms.GroupBox();
+            this.ORAS_Locations = new System.Windows.Forms.ComboBox();
+            this.Chain_Label = new System.Windows.Forms.Label();
+            this.Step_Label = new System.Windows.Forms.Label();
+            this.ExclusiveBox = new System.Windows.Forms.CheckBox();
+            this.SurfLocations = new System.Windows.Forms.ComboBox();
+            this.SurfBox = new System.Windows.Forms.CheckBox();
+            this.XY_Locations = new System.Windows.Forms.ComboBox();
+            this.Location_Label = new System.Windows.Forms.Label();
+            this.Months = new System.Windows.Forms.ComboBox();
+            this.Month_Label = new System.Windows.Forms.Label();
+            this.Rate_Label = new System.Windows.Forms.Label();
+            this.BoostBox = new System.Windows.Forms.CheckBox();
             this.ratio = new System.Windows.Forms.NumericUpDown();
-            this.cave = new System.Windows.Forms.CheckBox();
-            this.p = new System.Windows.Forms.Label();
+            this.CaveBox = new System.Windows.Forms.CheckBox();
+            this.Party_Label = new System.Windows.Forms.Label();
             this.party = new System.Windows.Forms.NumericUpDown();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.ignoreFilters = new System.Windows.Forms.CheckBox();
-            this.label17 = new System.Windows.Forms.Label();
+            this.Filters_Box = new System.Windows.Forms.GroupBox();
+            this.ΙgnoreFilters = new System.Windows.Forms.CheckBox();
+            this.Potential_Label = new System.Windows.Forms.Label();
             this.potential = new System.Windows.Forms.NumericUpDown();
-            this.label16 = new System.Windows.Forms.Label();
+            this.NavFilters_Label = new System.Windows.Forms.Label();
             this.NavType = new System.Windows.Forms.ComboBox();
-            this.label15 = new System.Windows.Forms.Label();
+            this.NavType_Label = new System.Windows.Forms.Label();
             this.navFilters = new TinyFinder.Controls.CheckBoxComboBox();
-            this.patch_board = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.Patches_Board = new System.Windows.Forms.Label();
+            this.FindNum_Label = new System.Windows.Forms.Label();
             this.atleast = new System.Windows.Forms.NumericUpDown();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.flutelabel = new System.Windows.Forms.Label();
-            this.sync = new System.Windows.Forms.CheckBox();
+            this.Flute3_Label = new System.Windows.Forms.Label();
+            this.Flute5_Label = new System.Windows.Forms.Label();
+            this.Flute1_Label = new System.Windows.Forms.Label();
+            this.SyncBox = new System.Windows.Forms.CheckBox();
             this.flute5 = new System.Windows.Forms.NumericUpDown();
             this.flute1 = new System.Windows.Forms.NumericUpDown();
             this.flute3 = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
+            this.Flute4_Label = new System.Windows.Forms.Label();
             this.flute4 = new System.Windows.Forms.NumericUpDown();
-            this.h = new System.Windows.Forms.Label();
+            this.HA_Label = new System.Windows.Forms.Label();
             this.flute2 = new System.Windows.Forms.NumericUpDown();
-            this.label11 = new System.Windows.Forms.Label();
-            this.hidden = new System.Windows.Forms.ComboBox();
-            this.s = new System.Windows.Forms.Label();
+            this.Flute2_Label = new System.Windows.Forms.Label();
+            this.HASlot = new System.Windows.Forms.ComboBox();
+            this.Slots_Label = new System.Windows.Forms.Label();
             this.slots = new TinyFinder.Controls.CheckBoxComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
+            this.SID_Label = new System.Windows.Forms.Label();
+            this.TID_Label = new System.Windows.Forms.Label();
             this.sid = new System.Windows.Forms.NumericUpDown();
             this.tid = new System.Windows.Forms.NumericUpDown();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.Calibr_Box = new System.Windows.Forms.GroupBox();
             this.updateBTN = new System.Windows.Forms.Button();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.DateLabel = new System.Windows.Forms.Label();
+            this.Tiny0_Label = new System.Windows.Forms.Label();
+            this.Tiny1_Label = new System.Windows.Forms.Label();
+            this.Tiny2_Label = new System.Windows.Forms.Label();
+            this.Tiny3_Label = new System.Windows.Forms.Label();
+            this.Date_Label = new System.Windows.Forms.Label();
             this.SearchGen = new System.Windows.Forms.TabControl();
             this.Srch = new System.Windows.Forms.TabPage();
             this.Gen = new System.Windows.Forms.TabPage();
@@ -136,10 +137,10 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.Settings_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
-            this.groupBox2.SuspendLayout();
+            this.Filters_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.potential)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.atleast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).BeginInit();
@@ -149,7 +150,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.flute2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).BeginInit();
-            this.groupBox3.SuspendLayout();
+            this.Calibr_Box.SuspendLayout();
             this.SearchGen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).BeginInit();
             this.Tools.SuspendLayout();
@@ -235,24 +236,28 @@ namespace TinyFinder
             this.dataGridViewTextBoxColumn1.HeaderText = "TID";
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
             this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Width = 50;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.HeaderText = "SID";
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Width = 50;
             // 
             // Column3
             // 
             this.Column3.HeaderText = "TSV";
             this.Column3.Name = "Column3";
             this.Column3.ReadOnly = true;
+            this.Column3.Width = 50;
             // 
             // Column4
             // 
             this.Column4.HeaderText = "TRV";
             this.Column4.Name = "Column4";
             this.Column4.ReadOnly = true;
+            this.Column4.Width = 35;
             // 
             // s_Rand
             // 
@@ -324,29 +329,29 @@ namespace TinyFinder
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // xyRadio
+            // XY_Button
             // 
-            this.xyRadio.AutoSize = true;
-            this.xyRadio.Checked = true;
-            this.xyRadio.Location = new System.Drawing.Point(97, 27);
-            this.xyRadio.Name = "xyRadio";
-            this.xyRadio.Size = new System.Drawing.Size(39, 18);
-            this.xyRadio.TabIndex = 6;
-            this.xyRadio.TabStop = true;
-            this.xyRadio.Text = "XY";
-            this.xyRadio.UseVisualStyleBackColor = true;
-            this.xyRadio.CheckedChanged += new System.EventHandler(this.xyRadio_CheckedChanged);
+            this.XY_Button.AutoSize = true;
+            this.XY_Button.Checked = true;
+            this.XY_Button.Location = new System.Drawing.Point(97, 27);
+            this.XY_Button.Name = "XY_Button";
+            this.XY_Button.Size = new System.Drawing.Size(39, 18);
+            this.XY_Button.TabIndex = 6;
+            this.XY_Button.TabStop = true;
+            this.XY_Button.Text = "XY";
+            this.XY_Button.UseVisualStyleBackColor = true;
+            this.XY_Button.CheckedChanged += new System.EventHandler(this.xyRadio_CheckedChanged);
             // 
-            // orasRadio
+            // ORAS_Button
             // 
-            this.orasRadio.AutoSize = true;
-            this.orasRadio.Location = new System.Drawing.Point(163, 27);
-            this.orasRadio.Name = "orasRadio";
-            this.orasRadio.Size = new System.Drawing.Size(53, 18);
-            this.orasRadio.TabIndex = 7;
-            this.orasRadio.Text = "ORAS";
-            this.orasRadio.UseVisualStyleBackColor = true;
-            this.orasRadio.CheckedChanged += new System.EventHandler(this.orasRadio_CheckedChanged);
+            this.ORAS_Button.AutoSize = true;
+            this.ORAS_Button.Location = new System.Drawing.Point(163, 27);
+            this.ORAS_Button.Name = "ORAS_Button";
+            this.ORAS_Button.Size = new System.Drawing.Size(53, 18);
+            this.ORAS_Button.TabIndex = 7;
+            this.ORAS_Button.Text = "ORAS";
+            this.ORAS_Button.UseVisualStyleBackColor = true;
+            this.ORAS_Button.CheckedChanged += new System.EventHandler(this.orasRadio_CheckedChanged);
             // 
             // Methods
             // 
@@ -367,23 +372,23 @@ namespace TinyFinder
             this.Methods.TabIndex = 8;
             this.Methods.SelectedIndexChanged += new System.EventHandler(this.Methods_SelectedIndexChanged);
             // 
-            // game
+            // Game_Label
             // 
-            this.game.AutoSize = true;
-            this.game.Location = new System.Drawing.Point(6, 29);
-            this.game.Name = "game";
-            this.game.Size = new System.Drawing.Size(35, 14);
-            this.game.TabIndex = 9;
-            this.game.Text = "Game";
+            this.Game_Label.AutoSize = true;
+            this.Game_Label.Location = new System.Drawing.Point(6, 29);
+            this.Game_Label.Name = "Game_Label";
+            this.Game_Label.Size = new System.Drawing.Size(35, 14);
+            this.Game_Label.TabIndex = 9;
+            this.Game_Label.Text = "Game";
             // 
-            // method
+            // Method_Label
             // 
-            this.method.AutoSize = true;
-            this.method.Location = new System.Drawing.Point(6, 61);
-            this.method.Name = "method";
-            this.method.Size = new System.Drawing.Size(49, 14);
-            this.method.TabIndex = 10;
-            this.method.Text = "Method";
+            this.Method_Label.AutoSize = true;
+            this.Method_Label.Location = new System.Drawing.Point(6, 61);
+            this.Method_Label.Name = "Method_Label";
+            this.Method_Label.Size = new System.Drawing.Size(49, 14);
+            this.Method_Label.TabIndex = 10;
+            this.Method_Label.Text = "Method";
             // 
             // year
             // 
@@ -408,20 +413,20 @@ namespace TinyFinder
             0});
             this.year.ValueChanged += new System.EventHandler(this.year_ValueChanged);
             // 
-            // y
+            // Year_Label
             // 
-            this.y.AutoSize = true;
-            this.y.Location = new System.Drawing.Point(72, 31);
-            this.y.Name = "y";
-            this.y.Size = new System.Drawing.Size(35, 15);
-            this.y.TabIndex = 12;
-            this.y.Text = "Year";
+            this.Year_Label.AutoSize = true;
+            this.Year_Label.Location = new System.Drawing.Point(72, 31);
+            this.Year_Label.Name = "Year_Label";
+            this.Year_Label.Size = new System.Drawing.Size(35, 15);
+            this.Year_Label.TabIndex = 12;
+            this.Year_Label.Text = "Year";
             // 
             // min
             // 
             this.min.Location = new System.Drawing.Point(97, 192);
             this.min.Maximum = new decimal(new int[] {
-            150000,
+            250000,
             0,
             0,
             0});
@@ -442,117 +447,146 @@ namespace TinyFinder
             this.max.Size = new System.Drawing.Size(65, 22);
             this.max.TabIndex = 14;
             // 
-            // label1
+            // Min_Label
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 193);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 14);
-            this.label1.TabIndex = 15;
-            this.label1.Text = "Min Index";
+            this.Min_Label.AutoSize = true;
+            this.Min_Label.Location = new System.Drawing.Point(6, 193);
+            this.Min_Label.Name = "Min_Label";
+            this.Min_Label.Size = new System.Drawing.Size(70, 14);
+            this.Min_Label.TabIndex = 15;
+            this.Min_Label.Text = "Min Index";
             // 
-            // label2
+            // Max_Label
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 228);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 14);
-            this.label2.TabIndex = 16;
-            this.label2.Text = "Max Index";
+            this.Max_Label.AutoSize = true;
+            this.Max_Label.Location = new System.Drawing.Point(6, 228);
+            this.Max_Label.Name = "Max_Label";
+            this.Max_Label.Size = new System.Drawing.Size(70, 14);
+            this.Max_Label.TabIndex = 16;
+            this.Max_Label.Text = "Max Index";
             // 
-            // groupBox1
+            // Settings_Box
             // 
-            this.groupBox1.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox1.Controls.Add(this.ChainLabel);
-            this.groupBox1.Controls.Add(this.StepLabel);
-            this.groupBox1.Controls.Add(this.dexnavpokes);
-            this.groupBox1.Controls.Add(this.surfLocation);
-            this.groupBox1.Controls.Add(this.water);
-            this.groupBox1.Controls.Add(this.location);
-            this.groupBox1.Controls.Add(this.label10);
-            this.groupBox1.Controls.Add(this.month);
-            this.groupBox1.Controls.Add(this.mo);
-            this.groupBox1.Controls.Add(this.Methods);
-            this.groupBox1.Controls.Add(this.r);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.xyRadio);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Controls.Add(this.orasRadio);
-            this.groupBox1.Controls.Add(this.max);
-            this.groupBox1.Controls.Add(this.boost);
-            this.groupBox1.Controls.Add(this.game);
-            this.groupBox1.Controls.Add(this.ratio);
-            this.groupBox1.Controls.Add(this.min);
-            this.groupBox1.Controls.Add(this.cave);
-            this.groupBox1.Controls.Add(this.method);
-            this.groupBox1.Controls.Add(this.p);
-            this.groupBox1.Controls.Add(this.party);
-            this.groupBox1.Font = new System.Drawing.Font("Consolas", 9F);
-            this.groupBox1.Location = new System.Drawing.Point(316, 63);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(381, 267);
-            this.groupBox1.TabIndex = 17;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Step 2 - Settings";
+            this.Settings_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Settings_Box.Controls.Add(this.ORAS_Locations);
+            this.Settings_Box.Controls.Add(this.Chain_Label);
+            this.Settings_Box.Controls.Add(this.Step_Label);
+            this.Settings_Box.Controls.Add(this.ExclusiveBox);
+            this.Settings_Box.Controls.Add(this.SurfLocations);
+            this.Settings_Box.Controls.Add(this.SurfBox);
+            this.Settings_Box.Controls.Add(this.XY_Locations);
+            this.Settings_Box.Controls.Add(this.Location_Label);
+            this.Settings_Box.Controls.Add(this.Months);
+            this.Settings_Box.Controls.Add(this.Month_Label);
+            this.Settings_Box.Controls.Add(this.Methods);
+            this.Settings_Box.Controls.Add(this.Rate_Label);
+            this.Settings_Box.Controls.Add(this.Max_Label);
+            this.Settings_Box.Controls.Add(this.XY_Button);
+            this.Settings_Box.Controls.Add(this.Min_Label);
+            this.Settings_Box.Controls.Add(this.ORAS_Button);
+            this.Settings_Box.Controls.Add(this.max);
+            this.Settings_Box.Controls.Add(this.BoostBox);
+            this.Settings_Box.Controls.Add(this.Game_Label);
+            this.Settings_Box.Controls.Add(this.ratio);
+            this.Settings_Box.Controls.Add(this.min);
+            this.Settings_Box.Controls.Add(this.CaveBox);
+            this.Settings_Box.Controls.Add(this.Method_Label);
+            this.Settings_Box.Controls.Add(this.Party_Label);
+            this.Settings_Box.Controls.Add(this.party);
+            this.Settings_Box.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Settings_Box.Location = new System.Drawing.Point(316, 63);
+            this.Settings_Box.Name = "Settings_Box";
+            this.Settings_Box.Size = new System.Drawing.Size(381, 267);
+            this.Settings_Box.TabIndex = 17;
+            this.Settings_Box.TabStop = false;
+            this.Settings_Box.Text = "Step 2 - Settings";
             // 
-            // ChainLabel
+            // ORAS_Locations
             // 
-            this.ChainLabel.AutoSize = true;
-            this.ChainLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.ChainLabel.Location = new System.Drawing.Point(54, 167);
-            this.ChainLabel.Name = "ChainLabel";
-            this.ChainLabel.Size = new System.Drawing.Size(16, 25);
-            this.ChainLabel.TabIndex = 38;
-            this.ChainLabel.Text = ".";
-            this.ChainLabel.Visible = false;
+            this.ORAS_Locations.FormattingEnabled = true;
+            this.ORAS_Locations.Items.AddRange(new object[] {
+            "Elsewhere",
+            "Mt Pyre Inside",
+            "New Mauville",
+            "Sky Pillar",
+            "Route 111 Desert",
+            "Route 117",
+            "Route 118",
+            "Route 119",
+            "Route 120",
+            "Route 123",
+            "Safari Zone"});
+            this.ORAS_Locations.Location = new System.Drawing.Point(94, 96);
+            this.ORAS_Locations.Name = "ORAS_Locations";
+            this.ORAS_Locations.Size = new System.Drawing.Size(121, 22);
+            this.ORAS_Locations.TabIndex = 22;
+            this.ORAS_Locations.Visible = false;
+            this.ORAS_Locations.SelectedIndexChanged += new System.EventHandler(this.ORAS_Locations_SelectedIndexChanged);
             // 
-            // StepLabel
+            // Chain_Label
             // 
-            this.StepLabel.AutoSize = true;
-            this.StepLabel.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.StepLabel.Location = new System.Drawing.Point(34, 167);
-            this.StepLabel.Name = "StepLabel";
-            this.StepLabel.Size = new System.Drawing.Size(16, 25);
-            this.StepLabel.TabIndex = 37;
-            this.StepLabel.Text = ".";
-            this.StepLabel.Visible = false;
+            this.Chain_Label.AutoSize = true;
+            this.Chain_Label.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Chain_Label.Location = new System.Drawing.Point(54, 167);
+            this.Chain_Label.Name = "Chain_Label";
+            this.Chain_Label.Size = new System.Drawing.Size(16, 25);
+            this.Chain_Label.TabIndex = 38;
+            this.Chain_Label.Text = ".";
+            this.Chain_Label.Visible = false;
             // 
-            // dexnavpokes
+            // Step_Label
             // 
-            this.dexnavpokes.AutoSize = true;
-            this.dexnavpokes.Location = new System.Drawing.Point(237, 130);
-            this.dexnavpokes.Name = "dexnavpokes";
-            this.dexnavpokes.Size = new System.Drawing.Size(96, 18);
-            this.dexnavpokes.TabIndex = 36;
-            this.dexnavpokes.Text = "Exclusives";
-            this.dexnavpokes.UseVisualStyleBackColor = true;
-            this.dexnavpokes.CheckedChanged += new System.EventHandler(this.dexnavpokes_CheckedChanged);
+            this.Step_Label.AutoSize = true;
+            this.Step_Label.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Step_Label.Location = new System.Drawing.Point(34, 167);
+            this.Step_Label.Name = "Step_Label";
+            this.Step_Label.Size = new System.Drawing.Size(16, 25);
+            this.Step_Label.TabIndex = 37;
+            this.Step_Label.Text = ".";
+            this.Step_Label.Visible = false;
             // 
-            // surfLocation
+            // ExclusiveBox
             // 
-            this.surfLocation.FormattingEnabled = true;
-            this.surfLocation.Location = new System.Drawing.Point(94, 98);
-            this.surfLocation.Name = "surfLocation";
-            this.surfLocation.Size = new System.Drawing.Size(121, 22);
-            this.surfLocation.TabIndex = 21;
+            this.ExclusiveBox.AutoSize = true;
+            this.ExclusiveBox.Location = new System.Drawing.Point(237, 130);
+            this.ExclusiveBox.Name = "ExclusiveBox";
+            this.ExclusiveBox.Size = new System.Drawing.Size(96, 18);
+            this.ExclusiveBox.TabIndex = 36;
+            this.ExclusiveBox.Text = "Exclusives";
+            this.ExclusiveBox.UseVisualStyleBackColor = true;
+            this.ExclusiveBox.CheckedChanged += new System.EventHandler(this.dexnavpokes_CheckedChanged);
             // 
-            // water
+            // SurfLocations
             // 
-            this.water.AutoSize = true;
-            this.water.Location = new System.Drawing.Point(237, 63);
-            this.water.Name = "water";
-            this.water.Size = new System.Drawing.Size(54, 18);
-            this.water.TabIndex = 35;
-            this.water.Text = "Surf";
-            this.water.UseVisualStyleBackColor = true;
-            this.water.CheckedChanged += new System.EventHandler(this.water_CheckedChanged);
+            this.SurfLocations.FormattingEnabled = true;
+            this.SurfLocations.Items.AddRange(new object[] {
+            "Elsewhere",
+            "Magma/Aqua Hideout",
+            "Battle Resort",
+            "Underwater"});
+            this.SurfLocations.Location = new System.Drawing.Point(94, 96);
+            this.SurfLocations.Name = "SurfLocations";
+            this.SurfLocations.Size = new System.Drawing.Size(121, 22);
+            this.SurfLocations.TabIndex = 21;
             // 
-            // location
+            // SurfBox
             // 
-            this.location.FormattingEnabled = true;
-            this.location.Items.AddRange(new object[] {
+            this.SurfBox.AutoSize = true;
+            this.SurfBox.Location = new System.Drawing.Point(237, 63);
+            this.SurfBox.Name = "SurfBox";
+            this.SurfBox.Size = new System.Drawing.Size(54, 18);
+            this.SurfBox.TabIndex = 35;
+            this.SurfBox.Text = "Surf";
+            this.SurfBox.UseVisualStyleBackColor = true;
+            this.SurfBox.CheckedChanged += new System.EventHandler(this.water_CheckedChanged);
+            // 
+            // XY_Locations
+            // 
+            this.XY_Locations.FormattingEnabled = true;
+            this.XY_Locations.Items.AddRange(new object[] {
             "Elsewhere",
             "Azure Bay",
+            "Lost Hotel",
             "Pokemon Village",
             "Route 2",
             "Route 3",
@@ -560,35 +594,38 @@ namespace TinyFinder
             "Route 5",
             "Route 7",
             "Route 8",
+            "Route 9",
             "Route 10",
             "Route 11",
             "Route 12",
             "Route 14",
             "Route 15",
+            "Route 17",
             "Route 18",
             "Route 19",
             "Route 20",
             "Route 21",
             "Route 22",
             "Santalune Forest"});
-            this.location.Location = new System.Drawing.Point(94, 98);
-            this.location.Name = "location";
-            this.location.Size = new System.Drawing.Size(121, 22);
-            this.location.TabIndex = 20;
+            this.XY_Locations.Location = new System.Drawing.Point(94, 96);
+            this.XY_Locations.Name = "XY_Locations";
+            this.XY_Locations.Size = new System.Drawing.Size(121, 22);
+            this.XY_Locations.TabIndex = 20;
+            this.XY_Locations.SelectedIndexChanged += new System.EventHandler(this.location_SelectedIndexChanged);
             // 
-            // label10
+            // Location_Label
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(6, 102);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(63, 14);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "Location";
+            this.Location_Label.AutoSize = true;
+            this.Location_Label.Location = new System.Drawing.Point(6, 100);
+            this.Location_Label.Name = "Location_Label";
+            this.Location_Label.Size = new System.Drawing.Size(63, 14);
+            this.Location_Label.TabIndex = 19;
+            this.Location_Label.Text = "Location";
             // 
-            // month
+            // Months
             // 
-            this.month.FormattingEnabled = true;
-            this.month.Items.AddRange(new object[] {
+            this.Months.FormattingEnabled = true;
+            this.Months.Items.AddRange(new object[] {
             "January",
             "February",
             "March",
@@ -601,40 +638,40 @@ namespace TinyFinder
             "October",
             "November",
             "December"});
-            this.month.Location = new System.Drawing.Point(94, 135);
-            this.month.Name = "month";
-            this.month.Size = new System.Drawing.Size(121, 22);
-            this.month.TabIndex = 18;
+            this.Months.Location = new System.Drawing.Point(94, 135);
+            this.Months.Name = "Months";
+            this.Months.Size = new System.Drawing.Size(121, 22);
+            this.Months.TabIndex = 18;
             // 
-            // mo
+            // Month_Label
             // 
-            this.mo.AutoSize = true;
-            this.mo.Location = new System.Drawing.Point(6, 138);
-            this.mo.Name = "mo";
-            this.mo.Size = new System.Drawing.Size(42, 14);
-            this.mo.TabIndex = 17;
-            this.mo.Text = "Month";
+            this.Month_Label.AutoSize = true;
+            this.Month_Label.Location = new System.Drawing.Point(6, 138);
+            this.Month_Label.Name = "Month_Label";
+            this.Month_Label.Size = new System.Drawing.Size(42, 14);
+            this.Month_Label.TabIndex = 17;
+            this.Month_Label.Text = "Month";
             // 
-            // r
+            // Rate_Label
             // 
-            this.r.AutoSize = true;
-            this.r.Location = new System.Drawing.Point(230, 228);
-            this.r.Name = "r";
-            this.r.Size = new System.Drawing.Size(35, 14);
-            this.r.TabIndex = 34;
-            this.r.Text = "Rate";
-            this.r.Visible = false;
+            this.Rate_Label.AutoSize = true;
+            this.Rate_Label.Location = new System.Drawing.Point(230, 228);
+            this.Rate_Label.Name = "Rate_Label";
+            this.Rate_Label.Size = new System.Drawing.Size(35, 14);
+            this.Rate_Label.TabIndex = 34;
+            this.Rate_Label.Text = "Rate";
+            this.Rate_Label.Visible = false;
             // 
-            // boost
+            // BoostBox
             // 
-            this.boost.AutoSize = true;
-            this.boost.Location = new System.Drawing.Point(237, 35);
-            this.boost.Name = "boost";
-            this.boost.Size = new System.Drawing.Size(103, 18);
-            this.boost.TabIndex = 29;
-            this.boost.Text = "Boost Music";
-            this.boost.UseVisualStyleBackColor = true;
-            this.boost.Visible = false;
+            this.BoostBox.AutoSize = true;
+            this.BoostBox.Location = new System.Drawing.Point(237, 35);
+            this.BoostBox.Name = "BoostBox";
+            this.BoostBox.Size = new System.Drawing.Size(103, 18);
+            this.BoostBox.TabIndex = 29;
+            this.BoostBox.Text = "Boost Music";
+            this.BoostBox.UseVisualStyleBackColor = true;
+            this.BoostBox.Visible = false;
             // 
             // ratio
             // 
@@ -655,27 +692,27 @@ namespace TinyFinder
             this.ratio.Visible = false;
             this.ratio.ValueChanged += new System.EventHandler(this.ratio_ValueChanged);
             // 
-            // cave
+            // CaveBox
             // 
-            this.cave.AutoSize = true;
-            this.cave.Location = new System.Drawing.Point(237, 96);
-            this.cave.Name = "cave";
-            this.cave.Size = new System.Drawing.Size(54, 18);
-            this.cave.TabIndex = 28;
-            this.cave.Text = "Cave";
-            this.cave.UseVisualStyleBackColor = true;
-            this.cave.Visible = false;
-            this.cave.CheckedChanged += new System.EventHandler(this.cave_CheckedChanged);
+            this.CaveBox.AutoSize = true;
+            this.CaveBox.Location = new System.Drawing.Point(237, 96);
+            this.CaveBox.Name = "CaveBox";
+            this.CaveBox.Size = new System.Drawing.Size(54, 18);
+            this.CaveBox.TabIndex = 28;
+            this.CaveBox.Text = "Cave";
+            this.CaveBox.UseVisualStyleBackColor = true;
+            this.CaveBox.Visible = false;
+            this.CaveBox.CheckedChanged += new System.EventHandler(this.cave_CheckedChanged);
             // 
-            // p
+            // Party_Label
             // 
-            this.p.AutoSize = true;
-            this.p.Location = new System.Drawing.Point(230, 193);
-            this.p.Name = "p";
-            this.p.Size = new System.Drawing.Size(42, 14);
-            this.p.TabIndex = 31;
-            this.p.Text = "Party";
-            this.p.Visible = false;
+            this.Party_Label.AutoSize = true;
+            this.Party_Label.Location = new System.Drawing.Point(230, 193);
+            this.Party_Label.Name = "Party_Label";
+            this.Party_Label.Size = new System.Drawing.Size(42, 14);
+            this.Party_Label.TabIndex = 31;
+            this.Party_Label.Text = "Party";
+            this.Party_Label.Visible = false;
             // 
             // party
             // 
@@ -700,66 +737,66 @@ namespace TinyFinder
             0});
             this.party.Visible = false;
             // 
-            // groupBox2
+            // Filters_Box
             // 
-            this.groupBox2.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox2.Controls.Add(this.ignoreFilters);
-            this.groupBox2.Controls.Add(this.label17);
-            this.groupBox2.Controls.Add(this.potential);
-            this.groupBox2.Controls.Add(this.label16);
-            this.groupBox2.Controls.Add(this.NavType);
-            this.groupBox2.Controls.Add(this.label15);
-            this.groupBox2.Controls.Add(this.navFilters);
-            this.groupBox2.Controls.Add(this.patch_board);
-            this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.label9);
-            this.groupBox2.Controls.Add(this.atleast);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.flutelabel);
-            this.groupBox2.Controls.Add(this.sync);
-            this.groupBox2.Controls.Add(this.flute5);
-            this.groupBox2.Controls.Add(this.flute1);
-            this.groupBox2.Controls.Add(this.flute3);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.flute4);
-            this.groupBox2.Controls.Add(this.h);
-            this.groupBox2.Controls.Add(this.flute2);
-            this.groupBox2.Controls.Add(this.label11);
-            this.groupBox2.Controls.Add(this.hidden);
-            this.groupBox2.Controls.Add(this.s);
-            this.groupBox2.Controls.Add(this.slots);
-            this.groupBox2.Controls.Add(this.label4);
-            this.groupBox2.Controls.Add(this.label3);
-            this.groupBox2.Controls.Add(this.sid);
-            this.groupBox2.Controls.Add(this.tid);
-            this.groupBox2.Font = new System.Drawing.Font("Consolas", 9F);
-            this.groupBox2.Location = new System.Drawing.Point(703, 63);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(425, 267);
-            this.groupBox2.TabIndex = 18;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Step 3 - Preferences";
+            this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Filters_Box.Controls.Add(this.ΙgnoreFilters);
+            this.Filters_Box.Controls.Add(this.Potential_Label);
+            this.Filters_Box.Controls.Add(this.potential);
+            this.Filters_Box.Controls.Add(this.NavFilters_Label);
+            this.Filters_Box.Controls.Add(this.NavType);
+            this.Filters_Box.Controls.Add(this.NavType_Label);
+            this.Filters_Box.Controls.Add(this.navFilters);
+            this.Filters_Box.Controls.Add(this.Patches_Board);
+            this.Filters_Box.Controls.Add(this.button1);
+            this.Filters_Box.Controls.Add(this.FindNum_Label);
+            this.Filters_Box.Controls.Add(this.atleast);
+            this.Filters_Box.Controls.Add(this.Flute3_Label);
+            this.Filters_Box.Controls.Add(this.Flute5_Label);
+            this.Filters_Box.Controls.Add(this.Flute1_Label);
+            this.Filters_Box.Controls.Add(this.SyncBox);
+            this.Filters_Box.Controls.Add(this.flute5);
+            this.Filters_Box.Controls.Add(this.flute1);
+            this.Filters_Box.Controls.Add(this.flute3);
+            this.Filters_Box.Controls.Add(this.Flute4_Label);
+            this.Filters_Box.Controls.Add(this.flute4);
+            this.Filters_Box.Controls.Add(this.HA_Label);
+            this.Filters_Box.Controls.Add(this.flute2);
+            this.Filters_Box.Controls.Add(this.Flute2_Label);
+            this.Filters_Box.Controls.Add(this.HASlot);
+            this.Filters_Box.Controls.Add(this.Slots_Label);
+            this.Filters_Box.Controls.Add(this.slots);
+            this.Filters_Box.Controls.Add(this.SID_Label);
+            this.Filters_Box.Controls.Add(this.TID_Label);
+            this.Filters_Box.Controls.Add(this.sid);
+            this.Filters_Box.Controls.Add(this.tid);
+            this.Filters_Box.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Filters_Box.Location = new System.Drawing.Point(703, 63);
+            this.Filters_Box.Name = "Filters_Box";
+            this.Filters_Box.Size = new System.Drawing.Size(425, 267);
+            this.Filters_Box.TabIndex = 18;
+            this.Filters_Box.TabStop = false;
+            this.Filters_Box.Text = "Step 3 - Preferences";
             // 
-            // ignoreFilters
+            // ΙgnoreFilters
             // 
-            this.ignoreFilters.AutoSize = true;
-            this.ignoreFilters.Enabled = false;
-            this.ignoreFilters.Location = new System.Drawing.Point(300, 10);
-            this.ignoreFilters.Name = "ignoreFilters";
-            this.ignoreFilters.Size = new System.Drawing.Size(124, 18);
-            this.ignoreFilters.TabIndex = 51;
-            this.ignoreFilters.Text = "Ignore Filters";
-            this.ignoreFilters.UseVisualStyleBackColor = true;
+            this.ΙgnoreFilters.AutoSize = true;
+            this.ΙgnoreFilters.Enabled = false;
+            this.ΙgnoreFilters.Location = new System.Drawing.Point(300, 10);
+            this.ΙgnoreFilters.Name = "ΙgnoreFilters";
+            this.ΙgnoreFilters.Size = new System.Drawing.Size(124, 18);
+            this.ΙgnoreFilters.TabIndex = 51;
+            this.ΙgnoreFilters.Text = "Ignore Filters";
+            this.ΙgnoreFilters.UseVisualStyleBackColor = true;
             // 
-            // label17
+            // Potential_Label
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(129, 55);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(70, 14);
-            this.label17.TabIndex = 50;
-            this.label17.Text = "Potential";
+            this.Potential_Label.AutoSize = true;
+            this.Potential_Label.Location = new System.Drawing.Point(129, 55);
+            this.Potential_Label.Name = "Potential_Label";
+            this.Potential_Label.Size = new System.Drawing.Size(70, 14);
+            this.Potential_Label.TabIndex = 50;
+            this.Potential_Label.Text = "Potential";
             // 
             // potential
             // 
@@ -773,14 +810,14 @@ namespace TinyFinder
             this.potential.Size = new System.Drawing.Size(51, 22);
             this.potential.TabIndex = 49;
             // 
-            // label16
+            // NavFilters_Label
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(9, 168);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(56, 14);
-            this.label16.TabIndex = 48;
-            this.label16.Text = "Filters";
+            this.NavFilters_Label.AutoSize = true;
+            this.NavFilters_Label.Location = new System.Drawing.Point(9, 168);
+            this.NavFilters_Label.Name = "NavFilters_Label";
+            this.NavFilters_Label.Size = new System.Drawing.Size(56, 14);
+            this.NavFilters_Label.TabIndex = 48;
+            this.NavFilters_Label.Text = "Filters";
             // 
             // NavType
             // 
@@ -794,14 +831,14 @@ namespace TinyFinder
             this.NavType.TabIndex = 47;
             this.NavType.SelectedIndexChanged += new System.EventHandler(this.NavType_SelectedIndexChanged);
             // 
-            // label15
+            // NavType_Label
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(9, 95);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(35, 14);
-            this.label15.TabIndex = 46;
-            this.label15.Text = "Type";
+            this.NavType_Label.AutoSize = true;
+            this.NavType_Label.Location = new System.Drawing.Point(9, 95);
+            this.NavType_Label.Name = "NavType_Label";
+            this.NavType_Label.Size = new System.Drawing.Size(35, 14);
+            this.NavType_Label.TabIndex = 46;
+            this.NavType_Label.Text = "Type";
             // 
             // navFilters
             // 
@@ -824,24 +861,24 @@ namespace TinyFinder
             this.navFilters.TabIndex = 25;
             this.navFilters.Visible = false;
             // 
-            // patch_board
+            // Patches_Board
             // 
-            this.patch_board.AutoSize = true;
-            this.patch_board.Font = new System.Drawing.Font("Consolas", 11.25F);
-            this.patch_board.Location = new System.Drawing.Point(256, 18);
-            this.patch_board.Name = "patch_board";
-            this.patch_board.Size = new System.Drawing.Size(16, 18);
-            this.patch_board.TabIndex = 45;
-            this.patch_board.Text = ".";
+            this.Patches_Board.AutoSize = true;
+            this.Patches_Board.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.Patches_Board.Location = new System.Drawing.Point(256, 18);
+            this.Patches_Board.Name = "Patches_Board";
+            this.Patches_Board.Size = new System.Drawing.Size(16, 18);
+            this.Patches_Board.TabIndex = 45;
+            this.Patches_Board.Text = ".";
             // 
-            // label9
+            // FindNum_Label
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 220);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(98, 14);
-            this.label9.TabIndex = 44;
-            this.label9.Text = "Find at least";
+            this.FindNum_Label.AutoSize = true;
+            this.FindNum_Label.Location = new System.Drawing.Point(9, 220);
+            this.FindNum_Label.Name = "FindNum_Label";
+            this.FindNum_Label.Size = new System.Drawing.Size(98, 14);
+            this.FindNum_Label.TabIndex = 44;
+            this.FindNum_Label.Text = "Find at least";
             // 
             // atleast
             // 
@@ -865,46 +902,46 @@ namespace TinyFinder
             0,
             0});
             // 
-            // label14
+            // Flute3_Label
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(266, 112);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(56, 14);
-            this.label14.TabIndex = 38;
-            this.label14.Text = "Flute 3";
-            this.label14.Visible = false;
+            this.Flute3_Label.AutoSize = true;
+            this.Flute3_Label.Location = new System.Drawing.Point(266, 112);
+            this.Flute3_Label.Name = "Flute3_Label";
+            this.Flute3_Label.Size = new System.Drawing.Size(56, 14);
+            this.Flute3_Label.TabIndex = 38;
+            this.Flute3_Label.Text = "Flute 3";
+            this.Flute3_Label.Visible = false;
             // 
-            // label13
+            // Flute5_Label
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(266, 171);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(56, 14);
-            this.label13.TabIndex = 42;
-            this.label13.Text = "Flute 5";
-            this.label13.Visible = false;
+            this.Flute5_Label.AutoSize = true;
+            this.Flute5_Label.Location = new System.Drawing.Point(266, 171);
+            this.Flute5_Label.Name = "Flute5_Label";
+            this.Flute5_Label.Size = new System.Drawing.Size(56, 14);
+            this.Flute5_Label.TabIndex = 42;
+            this.Flute5_Label.Text = "Flute 5";
+            this.Flute5_Label.Visible = false;
             // 
-            // flutelabel
+            // Flute1_Label
             // 
-            this.flutelabel.AutoSize = true;
-            this.flutelabel.Location = new System.Drawing.Point(266, 55);
-            this.flutelabel.Name = "flutelabel";
-            this.flutelabel.Size = new System.Drawing.Size(42, 14);
-            this.flutelabel.TabIndex = 36;
-            this.flutelabel.Text = "Flute";
-            this.flutelabel.Visible = false;
+            this.Flute1_Label.AutoSize = true;
+            this.Flute1_Label.Location = new System.Drawing.Point(266, 55);
+            this.Flute1_Label.Name = "Flute1_Label";
+            this.Flute1_Label.Size = new System.Drawing.Size(42, 14);
+            this.Flute1_Label.TabIndex = 36;
+            this.Flute1_Label.Text = "Flute";
+            this.Flute1_Label.Visible = false;
             // 
-            // sync
+            // SyncBox
             // 
-            this.sync.AutoSize = true;
-            this.sync.Location = new System.Drawing.Point(196, 127);
-            this.sync.Name = "sync";
-            this.sync.Size = new System.Drawing.Size(54, 18);
-            this.sync.TabIndex = 33;
-            this.sync.Text = "Sync";
-            this.sync.UseVisualStyleBackColor = true;
-            this.sync.Visible = false;
+            this.SyncBox.AutoSize = true;
+            this.SyncBox.Location = new System.Drawing.Point(196, 127);
+            this.SyncBox.Name = "SyncBox";
+            this.SyncBox.Size = new System.Drawing.Size(54, 18);
+            this.SyncBox.TabIndex = 33;
+            this.SyncBox.Text = "Sync";
+            this.SyncBox.UseVisualStyleBackColor = true;
+            this.SyncBox.Visible = false;
             // 
             // flute5
             // 
@@ -945,15 +982,15 @@ namespace TinyFinder
             this.flute3.TabIndex = 37;
             this.flute3.Visible = false;
             // 
-            // label12
+            // Flute4_Label
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(266, 142);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(56, 14);
-            this.label12.TabIndex = 40;
-            this.label12.Text = "Flute 4";
-            this.label12.Visible = false;
+            this.Flute4_Label.AutoSize = true;
+            this.Flute4_Label.Location = new System.Drawing.Point(266, 142);
+            this.Flute4_Label.Name = "Flute4_Label";
+            this.Flute4_Label.Size = new System.Drawing.Size(56, 14);
+            this.Flute4_Label.TabIndex = 40;
+            this.Flute4_Label.Text = "Flute 4";
+            this.Flute4_Label.Visible = false;
             // 
             // flute4
             // 
@@ -968,15 +1005,15 @@ namespace TinyFinder
             this.flute4.TabIndex = 39;
             this.flute4.Visible = false;
             // 
-            // h
+            // HA_Label
             // 
-            this.h.AutoSize = true;
-            this.h.Location = new System.Drawing.Point(126, 27);
-            this.h.Name = "h";
-            this.h.Size = new System.Drawing.Size(21, 14);
-            this.h.TabIndex = 27;
-            this.h.Text = "HA";
-            this.h.Visible = false;
+            this.HA_Label.AutoSize = true;
+            this.HA_Label.Location = new System.Drawing.Point(126, 27);
+            this.HA_Label.Name = "HA_Label";
+            this.HA_Label.Size = new System.Drawing.Size(21, 14);
+            this.HA_Label.TabIndex = 27;
+            this.HA_Label.Text = "HA";
+            this.HA_Label.Visible = false;
             // 
             // flute2
             // 
@@ -991,20 +1028,20 @@ namespace TinyFinder
             this.flute2.TabIndex = 37;
             this.flute2.Visible = false;
             // 
-            // label11
+            // Flute2_Label
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(266, 84);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(56, 14);
-            this.label11.TabIndex = 38;
-            this.label11.Text = "Flute 2";
-            this.label11.Visible = false;
+            this.Flute2_Label.AutoSize = true;
+            this.Flute2_Label.Location = new System.Drawing.Point(266, 84);
+            this.Flute2_Label.Name = "Flute2_Label";
+            this.Flute2_Label.Size = new System.Drawing.Size(56, 14);
+            this.Flute2_Label.TabIndex = 38;
+            this.Flute2_Label.Text = "Flute 2";
+            this.Flute2_Label.Visible = false;
             // 
-            // hidden
+            // HASlot
             // 
-            this.hidden.FormattingEnabled = true;
-            this.hidden.Items.AddRange(new object[] {
+            this.HASlot.FormattingEnabled = true;
+            this.HASlot.Items.AddRange(new object[] {
             "Don\'t Care",
             "Any",
             "1",
@@ -1012,21 +1049,21 @@ namespace TinyFinder
             "3",
             "4",
             "5"});
-            this.hidden.Location = new System.Drawing.Point(167, 24);
-            this.hidden.Name = "hidden";
-            this.hidden.Size = new System.Drawing.Size(83, 22);
-            this.hidden.TabIndex = 26;
-            this.hidden.Visible = false;
+            this.HASlot.Location = new System.Drawing.Point(167, 24);
+            this.HASlot.Name = "HASlot";
+            this.HASlot.Size = new System.Drawing.Size(83, 22);
+            this.HASlot.TabIndex = 26;
+            this.HASlot.Visible = false;
             // 
-            // s
+            // Slots_Label
             // 
-            this.s.AutoSize = true;
-            this.s.Location = new System.Drawing.Point(9, 132);
-            this.s.Name = "s";
-            this.s.Size = new System.Drawing.Size(42, 14);
-            this.s.TabIndex = 25;
-            this.s.Text = "Slots";
-            this.s.Visible = false;
+            this.Slots_Label.AutoSize = true;
+            this.Slots_Label.Location = new System.Drawing.Point(9, 132);
+            this.Slots_Label.Name = "Slots_Label";
+            this.Slots_Label.Size = new System.Drawing.Size(42, 14);
+            this.Slots_Label.TabIndex = 25;
+            this.Slots_Label.Text = "Slots";
+            this.Slots_Label.Visible = false;
             // 
             // slots
             // 
@@ -1046,23 +1083,23 @@ namespace TinyFinder
             this.slots.TabIndex = 24;
             this.slots.Visible = false;
             // 
-            // label4
+            // SID_Label
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(9, 54);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(28, 14);
-            this.label4.TabIndex = 23;
-            this.label4.Text = "SID";
+            this.SID_Label.AutoSize = true;
+            this.SID_Label.Location = new System.Drawing.Point(9, 54);
+            this.SID_Label.Name = "SID_Label";
+            this.SID_Label.Size = new System.Drawing.Size(28, 14);
+            this.SID_Label.TabIndex = 23;
+            this.SID_Label.Text = "SID";
             // 
-            // label3
+            // TID_Label
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 27);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(28, 14);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "TID";
+            this.TID_Label.AutoSize = true;
+            this.TID_Label.Location = new System.Drawing.Point(9, 27);
+            this.TID_Label.Name = "TID_Label";
+            this.TID_Label.Size = new System.Drawing.Size(28, 14);
+            this.TID_Label.TabIndex = 22;
+            this.TID_Label.Text = "TID";
             // 
             // sid
             // 
@@ -1088,28 +1125,28 @@ namespace TinyFinder
             this.tid.Size = new System.Drawing.Size(65, 22);
             this.tid.TabIndex = 20;
             // 
-            // groupBox3
+            // Calibr_Box
             // 
-            this.groupBox3.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.groupBox3.Controls.Add(this.updateBTN);
-            this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Controls.Add(this.label7);
-            this.groupBox3.Controls.Add(this.label6);
-            this.groupBox3.Controls.Add(this.label5);
-            this.groupBox3.Controls.Add(this.DateLabel);
-            this.groupBox3.Controls.Add(this.t3);
-            this.groupBox3.Controls.Add(this.t2);
-            this.groupBox3.Controls.Add(this.t0);
-            this.groupBox3.Controls.Add(this.t1);
-            this.groupBox3.Controls.Add(this.y);
-            this.groupBox3.Controls.Add(this.year);
-            this.groupBox3.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.groupBox3.Location = new System.Drawing.Point(21, 63);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(289, 267);
-            this.groupBox3.TabIndex = 19;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Step 1 - Calibration";
+            this.Calibr_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Calibr_Box.Controls.Add(this.updateBTN);
+            this.Calibr_Box.Controls.Add(this.Tiny0_Label);
+            this.Calibr_Box.Controls.Add(this.Tiny1_Label);
+            this.Calibr_Box.Controls.Add(this.Tiny2_Label);
+            this.Calibr_Box.Controls.Add(this.Tiny3_Label);
+            this.Calibr_Box.Controls.Add(this.Date_Label);
+            this.Calibr_Box.Controls.Add(this.t3);
+            this.Calibr_Box.Controls.Add(this.t2);
+            this.Calibr_Box.Controls.Add(this.t0);
+            this.Calibr_Box.Controls.Add(this.t1);
+            this.Calibr_Box.Controls.Add(this.Year_Label);
+            this.Calibr_Box.Controls.Add(this.year);
+            this.Calibr_Box.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Calibr_Box.Location = new System.Drawing.Point(21, 63);
+            this.Calibr_Box.Name = "Calibr_Box";
+            this.Calibr_Box.Size = new System.Drawing.Size(289, 267);
+            this.Calibr_Box.TabIndex = 19;
+            this.Calibr_Box.TabStop = false;
+            this.Calibr_Box.Text = "Step 1 - Calibration";
             // 
             // updateBTN
             // 
@@ -1123,55 +1160,55 @@ namespace TinyFinder
             this.updateBTN.Visible = false;
             this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
             // 
-            // label8
+            // Tiny0_Label
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.label8.Location = new System.Drawing.Point(57, 196);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(63, 15);
-            this.label8.TabIndex = 17;
-            this.label8.Text = "Tiny [0]";
+            this.Tiny0_Label.AutoSize = true;
+            this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
+            this.Tiny0_Label.Name = "Tiny0_Label";
+            this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny0_Label.TabIndex = 17;
+            this.Tiny0_Label.Text = "Tiny [0]";
             // 
-            // label7
+            // Tiny1_Label
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.label7.Location = new System.Drawing.Point(57, 165);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(63, 15);
-            this.label7.TabIndex = 16;
-            this.label7.Text = "Tiny [1]";
+            this.Tiny1_Label.AutoSize = true;
+            this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
+            this.Tiny1_Label.Name = "Tiny1_Label";
+            this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny1_Label.TabIndex = 16;
+            this.Tiny1_Label.Text = "Tiny [1]";
             // 
-            // label6
+            // Tiny2_Label
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.label6.Location = new System.Drawing.Point(57, 134);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(63, 15);
-            this.label6.TabIndex = 15;
-            this.label6.Text = "Tiny [2]";
+            this.Tiny2_Label.AutoSize = true;
+            this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
+            this.Tiny2_Label.Name = "Tiny2_Label";
+            this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny2_Label.TabIndex = 15;
+            this.Tiny2_Label.Text = "Tiny [2]";
             // 
-            // label5
+            // Tiny3_Label
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.label5.Location = new System.Drawing.Point(57, 103);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 15);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "Tiny [3]";
+            this.Tiny3_Label.AutoSize = true;
+            this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
+            this.Tiny3_Label.Name = "Tiny3_Label";
+            this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny3_Label.TabIndex = 14;
+            this.Tiny3_Label.Text = "Tiny [3]";
             // 
-            // DateLabel
+            // Date_Label
             // 
-            this.DateLabel.AutoSize = true;
-            this.DateLabel.Font = new System.Drawing.Font("Consolas", 9F);
-            this.DateLabel.Location = new System.Drawing.Point(1, 67);
-            this.DateLabel.Name = "DateLabel";
-            this.DateLabel.Size = new System.Drawing.Size(56, 14);
-            this.DateLabel.TabIndex = 13;
-            this.DateLabel.Text = "message";
+            this.Date_Label.AutoSize = true;
+            this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Date_Label.Location = new System.Drawing.Point(1, 67);
+            this.Date_Label.Name = "Date_Label";
+            this.Date_Label.Size = new System.Drawing.Size(56, 14);
+            this.Date_Label.TabIndex = 13;
+            this.Date_Label.Text = "message";
             // 
             // SearchGen
             // 
@@ -1358,9 +1395,9 @@ namespace TinyFinder
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1150, 661);
             this.Controls.Add(this.Generator);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.Filters_Box);
+            this.Controls.Add(this.Calibr_Box);
+            this.Controls.Add(this.Settings_Box);
             this.Controls.Add(this.SearchGen);
             this.Controls.Add(this.Searcher);
             this.Controls.Add(this.Tools);
@@ -1375,12 +1412,12 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.year)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.Settings_Box.ResumeLayout(false);
+            this.Settings_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.Filters_Box.ResumeLayout(false);
+            this.Filters_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.potential)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.atleast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.flute5)).EndInit();
@@ -1390,8 +1427,8 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.flute2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).EndInit();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
+            this.Calibr_Box.ResumeLayout(false);
+            this.Calibr_Box.PerformLayout();
             this.SearchGen.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).EndInit();
             this.Tools.ResumeLayout(false);
@@ -1409,80 +1446,90 @@ namespace TinyFinder
         private HexBox t1;
         private HexBox t0;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.RadioButton xyRadio;
-        private System.Windows.Forms.RadioButton orasRadio;
+        private System.Windows.Forms.RadioButton XY_Button;
+        private System.Windows.Forms.RadioButton ORAS_Button;
         private System.Windows.Forms.ComboBox Methods;
-        private System.Windows.Forms.Label game;
-        private System.Windows.Forms.Label method;
+        private System.Windows.Forms.Label Game_Label;
+        private System.Windows.Forms.Label Method_Label;
         private System.Windows.Forms.NumericUpDown year;
-        private System.Windows.Forms.Label y;
+        private System.Windows.Forms.Label Year_Label;
         private System.Windows.Forms.NumericUpDown min;
         private System.Windows.Forms.NumericUpDown max;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Label DateLabel;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label Min_Label;
+        private System.Windows.Forms.Label Max_Label;
+        private System.Windows.Forms.GroupBox Settings_Box;
+        private System.Windows.Forms.GroupBox Filters_Box;
+        private System.Windows.Forms.GroupBox Calibr_Box;
+        private System.Windows.Forms.Label Date_Label;
+        private System.Windows.Forms.Label SID_Label;
+        private System.Windows.Forms.Label TID_Label;
         private System.Windows.Forms.NumericUpDown sid;
         private System.Windows.Forms.NumericUpDown tid;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label Tiny0_Label;
+        private System.Windows.Forms.Label Tiny1_Label;
+        private System.Windows.Forms.Label Tiny2_Label;
+        private System.Windows.Forms.Label Tiny3_Label;
         private Controls.CheckBoxComboBox checkBoxComboBox1;
         private Controls.CheckBoxComboBox slots;
-        private System.Windows.Forms.Label h;
-        private System.Windows.Forms.ComboBox hidden;
-        private System.Windows.Forms.Label s;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label flutelabel;
-        private System.Windows.Forms.Label r;
-        private System.Windows.Forms.CheckBox sync;
+        private System.Windows.Forms.Label HA_Label;
+        private System.Windows.Forms.ComboBox HASlot;
+        private System.Windows.Forms.Label Slots_Label;
+        private System.Windows.Forms.Label Flute3_Label;
+        private System.Windows.Forms.Label Flute5_Label;
+        private System.Windows.Forms.Label Flute1_Label;
+        private System.Windows.Forms.Label Rate_Label;
+        private System.Windows.Forms.CheckBox SyncBox;
         private System.Windows.Forms.NumericUpDown flute5;
         private System.Windows.Forms.NumericUpDown flute1;
         private System.Windows.Forms.NumericUpDown flute3;
-        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label Flute4_Label;
         private System.Windows.Forms.NumericUpDown ratio;
         private System.Windows.Forms.NumericUpDown flute4;
-        private System.Windows.Forms.Label p;
+        private System.Windows.Forms.Label Party_Label;
         private System.Windows.Forms.NumericUpDown party;
-        private System.Windows.Forms.CheckBox boost;
+        private System.Windows.Forms.CheckBox BoostBox;
         private System.Windows.Forms.NumericUpDown flute2;
-        private System.Windows.Forms.CheckBox cave;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox month;
-        private System.Windows.Forms.Label mo;
-        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.CheckBox CaveBox;
+        private System.Windows.Forms.Label Flute2_Label;
+        private System.Windows.Forms.ComboBox Months;
+        private System.Windows.Forms.Label Month_Label;
+        private System.Windows.Forms.Label FindNum_Label;
         private System.Windows.Forms.NumericUpDown atleast;
-        private System.Windows.Forms.ComboBox location;
-        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.ComboBox XY_Locations;
+        private System.Windows.Forms.Label Location_Label;
         private System.Windows.Forms.TabControl SearchGen;
         private System.Windows.Forms.TabPage Srch;
         private System.Windows.Forms.TabPage Gen;
         private System.Windows.Forms.DataGridView Generator;
-        private System.Windows.Forms.Label patch_board;
-        private System.Windows.Forms.CheckBox water;
-        private System.Windows.Forms.ComboBox surfLocation;
+        private System.Windows.Forms.Label Patches_Board;
+        private System.Windows.Forms.CheckBox SurfBox;
+        private System.Windows.Forms.ComboBox SurfLocations;
         private Controls.CheckBoxComboBox navFilters;
-        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label NavFilters_Label;
         private System.Windows.Forms.ComboBox NavType;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label NavType_Label;
+        private System.Windows.Forms.Label Potential_Label;
         private System.Windows.Forms.NumericUpDown potential;
-        private System.Windows.Forms.CheckBox dexnavpokes;
+        private System.Windows.Forms.CheckBox ExclusiveBox;
         private System.Windows.Forms.Button updateBTN;
-        private System.Windows.Forms.Label ChainLabel;
-        private System.Windows.Forms.Label StepLabel;
+        private System.Windows.Forms.Label Chain_Label;
+        private System.Windows.Forms.Label Step_Label;
         private System.Windows.Forms.MenuStrip Tools;
         private System.Windows.Forms.ToolStripMenuItem toolsStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ntr;
         private System.Windows.Forms.ToolStripMenuItem profiles;
         private System.Windows.Forms.ToolStripMenuItem profilemanager;
-        private System.Windows.Forms.CheckBox ignoreFilters;
+        private System.Windows.Forms.CheckBox ΙgnoreFilters;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Rand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny3;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny2;
@@ -1494,16 +1541,7 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Rand;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Index;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Rand;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
+        private System.Windows.Forms.ComboBox ORAS_Locations;
     }
 }
 
