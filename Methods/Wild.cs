@@ -9,27 +9,21 @@
         public byte slot, encounter, flute, randInt, item;
         public bool Sync;
 
-        public void results(uint[] current, bool oras, bool cave, byte slotLine, byte ES)
+        public void results(uint[] current, bool oras, byte slotLine, byte NPC, byte Extra)
         {
             current.CopyTo(temp, 0);
             tinywild.nextState(temp);
             randInt = tinywild.Rand(temp, 100);
 
-            if (!oras)
-            {
-                if (cave)
-                    tinywild.nextState(temp);
-                else
-                    for (byte i = 1; i < ES; i++)
-                        tinywild.nextState(temp);
-            }
+            for (byte i = 0; i < NPC; i++)
+                tinywild.nextState(temp);
 
             Sync = tinywild.Rand(temp, 100) < 50;
 
             tinywild.nextState(temp);
             encounter = tinywild.Rand(temp, 100);
 
-            if (ES != 0 && !cave)
+            for (byte i = 0; i < Extra; i++)
                 tinywild.nextState(temp);
 
             tinywild.nextState(temp);
