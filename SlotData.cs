@@ -1,4 +1,6 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+
 namespace TinyFinder
 {
     class SlotData
@@ -23,34 +25,34 @@ namespace TinyFinder
             new byte[] { 50,30,15,4,1 },                        // Rock Smash / Surfing
         };
 
-        public byte getAdvances(string loc)
+        public static byte[,] Wild_Influence = new byte[,]
         {
-            if (loc.Equals("Elsewhere"))
-                return 10; //***Temporary solution
-            else
-                for (byte i = 0; i < 5; i++)
-                    foreach (string x in Locations[i])
-                        if (x.Equals(loc))
-                            return i;
-            return 0;
-        }
-
-        public string getLocation(byte i)
-        {
-                return SurfLocations[i];
-        }
-
-        private static string[][] Locations = new string[][]
-        {                                                                                                       //Enctr/Sync       Slot
-            new string[] { "Route 2", "Route 3", "Santalune Forest", "Route 22" },                              //  +0 (0)        +1 (1)
-            new string[] { "Azure Bay", "Route 4", "Route 7", "Route 8", "Route 10", "Route 15", "Route 20" },  //  +1 (1)        +1 (2)
-            new string[] { "Route 5", "Route 11", "Route 12", "Route 14", "Route 21" },                         //  +2 (2)        +1 (3)
-            new string[] { "Route 18", "Route 19", "Pokemon Village" },                                         //  +3 (3)        +1 (4)
-          //new string[] { "Caves/Creepy Places"},                                                              //  +1 (1)        +0 (1)
-          //new string[] { "Elsewhere" },                                                                       //  +0 (0)        +0 (0)
+            { 0, 0 },   //Elsewhere
+            { 1, 1 },   //Azure Bay
+            { 2, 0 },   //Lost Hotel
+            { 3, 1 },   //Pokemon Village
+            { 0, 1 },   //Route 2
+            { 0, 1 },   //Route 3
+            { 1, 1 },   //Route 4
+            { 2, 1 },   //Route 5
+            { 1, 1 },   //Route 7
+            { 1, 1 },   //Route 8
+            { 0, 0 },   //Route 9
+            { 1, 1 },   //Route 10
+            { 2, 1 },   //Route 11
+            { 2, 1 },   //Route 12
+            { 2, 1 },   //Route 14
+            { 1, 1 },   //Route 15
+            { 0, 0 },   //Route 17
+            { 3, 1 },   //Route 18
+            { 3, 1 },   //Route 19
+            { 1, 1 },   //Route 20
+            { 2, 1 },   //Route 21
+            { 0, 1 },   //Route 22
+            { 0, 1 }    //Santalune Forest
+          //{ 1, 0 }    //Caves
         };
-
-        public static string[] SurfLocations = { "Magma/Aqua Hideout", "Battle Resort", "Underwater" };
+        public static byte[,] getWild_Influence() { return Wild_Influence; }
 
     }
 }
