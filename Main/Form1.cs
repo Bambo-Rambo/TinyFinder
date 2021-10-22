@@ -355,7 +355,7 @@ namespace TinyFinder
             NavFilters_Label.Visible = Potential_Label.Visible = potential.Visible = ExclusiveBox.Visible = Step_Label.Visible = Chain_Label.Visible = false;
             CaveBox.Checked = SurfBox.Checked = false;
             SurfBox.Text = "Surf";
-            ratio.Minimum = 1; ratio.Maximum = 100;
+            ratio.Minimum = 1; ratio.Maximum = 99;
             if (SearchGen.SelectedIndex == 0)
             {
                 min.Value = min.Minimum = XY_Button.Checked ? 35 :

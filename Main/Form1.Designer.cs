@@ -676,6 +676,11 @@ namespace TinyFinder
             // ratio
             // 
             this.ratio.Location = new System.Drawing.Point(284, 226);
+            this.ratio.Maximum = new decimal(new int[] {
+            99,
+            0,
+            0,
+            0});
             this.ratio.Minimum = new decimal(new int[] {
             1,
             0,
