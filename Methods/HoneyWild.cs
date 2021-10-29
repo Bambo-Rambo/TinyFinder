@@ -2,42 +2,27 @@
 {
     class HoneyWild
     {
-        public byte slot, flute, item, randInt, slotLine, advances;
+        public byte slot, flute, item, rand100, slotCase, Bag_Advances;
         public bool Sync;
         public uint[] temp = new uint[4];
 
         TinyMT tinyhoney = new TinyMT();
-        SlotData data = new SlotData();
+        Data data = new Data();
 
-        public void results(uint[] current, bool oras, bool cave, bool water, byte party, byte location)
+        public void results(uint[] current, bool oras, byte party)
         {
             current.CopyTo(temp, 0);
 
             tinyhoney.nextState(temp);
-            randInt = tinyhoney.Rand(temp, 100);
+            rand100 = tinyhoney.Rand(temp, 100);
 
-            if (cave)
-                advances = 3;
-            else
-            {
-                if (!oras)
-                    advances = 27;
-                else
-                {
-                    if (!water)
-                        advances = 15;
-                    else
-                        advances = (byte)(location == 1 ? 6 : location == 3 ? 3 : 15);
-                }
-            }
-
-            for (byte i = 0; i < advances + (3 * party); i++)
+            for (byte i = 0; i < Bag_Advances + (3 * party); i++)
                 tinyhoney.nextState(temp);
 
             Sync = tinyhoney.Rand(temp, 100) < 50;
 
             tinyhoney.nextState(temp);
-            slot = data.getSlot(tinyhoney.Rand(temp, 100), slotLine);
+            slot = data.getSlot(tinyhoney.Rand(temp, 100), slotCase);
 
             if (oras)
             {

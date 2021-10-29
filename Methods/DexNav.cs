@@ -9,7 +9,7 @@ namespace TinyFinder
     {
         public bool sync, boost, HA, eggMove, shiny, trigger;
         public sbyte right, down;
-        public byte levelBoost, flute, potential, randInt;
+        public byte levelBoost, flute, potential, rand100;
         public int TargetValue, CheckCount, Index, slot, slotype;
         public string encounter;
         public uint[] temp = new uint[4];
@@ -20,7 +20,7 @@ namespace TinyFinder
         public void results(uint[] current, ushort searchlevel, uint chain, bool charm, bool exclusives, int type)
         {
             current.CopyTo(temp, 0);
-            randInt = (byte)Rand(100);
+            rand100 = (byte)Rand(100);
 
             //The chance of hitting a successful index is 50%
             //The actual chance of generating a patch successfully, depends on your current tile along with the patch's exact location

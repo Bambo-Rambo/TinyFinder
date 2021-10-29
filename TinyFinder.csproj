@@ -88,6 +88,7 @@
     <Compile Include="Controls\HexBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Location.cs" />
     <Compile Include="Main\FindResults.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,7 +102,6 @@
     <Compile Include="Methods\DexNav.cs" />
     <Compile Include="Methods\HoneyWild.cs" />
     <Compile Include="Methods\Horde.cs" />
-    <Compile Include="Methods\RockSmash.cs" />
     <Compile Include="Subforms\NTR\NtrClient.cs" />
     <Compile Include="Subforms\NTR\NTRHelper.cs">
       <SubType>Form</SubType>
@@ -114,7 +114,7 @@
     <Compile Include="Methods\Radar.cs" />
     <Compile Include="RNG\TinyMT.cs" />
     <Compile Include="Methods\Wild.cs" />
-    <Compile Include="SlotData.cs" />
+    <Compile Include="Data.cs" />
     <Compile Include="Subforms\Profiles\Calibrator.cs">
       <SubType>Form</SubType>
     </Compile>

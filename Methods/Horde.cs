@@ -2,33 +2,55 @@
 {
     class Horde
     {
-        public byte slot, HA, randInt, advances;
-        public bool sync;
+        public byte slot, HA, rand100, Bag_Advances, encounter;
+        public bool sync, trigger;
         public byte[] flutes = new byte[5], items = new byte[5];
         public uint[] temp = new uint[4];
         public TinyMT tinyhorde = new TinyMT();
-        public SlotData data = new SlotData();
+        public Data data = new Data();
 
-        public void results(uint[] current, byte party, bool oras, bool cave)
+        public void HordeTurn(uint[] current, bool oras, byte ratio, byte NPC, bool XY_TallGrass)
         {
             current.CopyTo(temp, 0);
             tinyhorde.nextState(temp);
-            randInt = tinyhorde.Rand(temp, 100);
 
-            if (cave)
-                advances = 3;
-            else
-            {
-                if (oras)
-                    advances = 15;
-                else advances = 27;
-            }
+            for (byte i = 0; i < NPC; i++)          //NPC Influence taken into account before everything else
+                tinyhorde.nextState(temp);
 
-            for (byte i = 0; i < advances + (3 * party); i++)
+            rand100 = tinyhorde.Rand(temp, 100);
+
+            tinyhorde.nextState(temp);              //+1 to avoid using the same rand100 for Horde trigger and Sync
+            sync = tinyhorde.Rand(temp, 100) < 50;  //Every horde, triggered by step, would be synced otherwise
+
+            tinyhorde.nextState(temp);
+            encounter = tinyhorde.Rand(temp, 100);
+
+            trigger = encounter < ratio && rand100 < 5;
+
+            if (XY_TallGrass)                       //Unknown reason
+                tinyhorde.nextState(temp);
+
+            results(oras);
+        }
+
+        //(Sweet Scent is different - probably ignores the party number since it doesn't makes use of memories)
+        public void HordeHoney(uint[] current, bool oras)
+        {
+            current.CopyTo(temp, 0);
+            tinyhorde.nextState(temp);
+            rand100 = tinyhorde.Rand(temp, 100);
+
+            for (byte i = 0; i < Bag_Advances; i++)
                 tinyhorde.nextState(temp);
 
             sync = tinyhorde.Rand(temp, 100) < 50;
+            trigger = true;
 
+            results(oras);
+        }
+
+        public void results(bool oras)
+        {
             tinyhorde.nextState(temp);
             slot = data.getSlot(tinyhorde.Rand(temp, 100), 2);
 

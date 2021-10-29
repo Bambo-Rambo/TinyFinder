@@ -61,13 +61,15 @@ namespace TinyFinder
             this.Min_Label = new System.Windows.Forms.Label();
             this.Max_Label = new System.Windows.Forms.Label();
             this.Settings_Box = new System.Windows.Forms.GroupBox();
-            this.ORAS_Locations = new System.Windows.Forms.ComboBox();
+            this.BagBox = new System.Windows.Forms.CheckBox();
+            this.CharmBox = new System.Windows.Forms.CheckBox();
+            this.LongGrassBox = new System.Windows.Forms.CheckBox();
+            this.Horde_Turn = new System.Windows.Forms.CheckBox();
             this.Chain_Label = new System.Windows.Forms.Label();
             this.Step_Label = new System.Windows.Forms.Label();
             this.ExclusiveBox = new System.Windows.Forms.CheckBox();
-            this.SurfLocations = new System.Windows.Forms.ComboBox();
             this.SurfBox = new System.Windows.Forms.CheckBox();
-            this.XY_Locations = new System.Windows.Forms.ComboBox();
+            this.locations = new System.Windows.Forms.ComboBox();
             this.Location_Label = new System.Windows.Forms.Label();
             this.Months = new System.Windows.Forms.ComboBox();
             this.Month_Label = new System.Windows.Forms.Label();
@@ -80,25 +82,25 @@ namespace TinyFinder
             this.Filters_Box = new System.Windows.Forms.GroupBox();
             this.ΙgnoreFilters = new System.Windows.Forms.CheckBox();
             this.Potential_Label = new System.Windows.Forms.Label();
-            this.potential = new System.Windows.Forms.NumericUpDown();
+            this.Potential = new System.Windows.Forms.NumericUpDown();
             this.NavFilters_Label = new System.Windows.Forms.Label();
             this.NavType = new System.Windows.Forms.ComboBox();
             this.NavType_Label = new System.Windows.Forms.Label();
-            this.navFilters = new TinyFinder.Controls.CheckBoxComboBox();
+            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.Patches_Board = new System.Windows.Forms.Label();
             this.FindNum_Label = new System.Windows.Forms.Label();
-            this.atleast = new System.Windows.Forms.NumericUpDown();
+            this.Atleast = new System.Windows.Forms.NumericUpDown();
             this.Flute3_Label = new System.Windows.Forms.Label();
             this.Flute5_Label = new System.Windows.Forms.Label();
             this.Flute1_Label = new System.Windows.Forms.Label();
             this.SyncBox = new System.Windows.Forms.CheckBox();
-            this.flute5 = new System.Windows.Forms.NumericUpDown();
-            this.flute1 = new System.Windows.Forms.NumericUpDown();
-            this.flute3 = new System.Windows.Forms.NumericUpDown();
+            this.Flute5 = new System.Windows.Forms.NumericUpDown();
+            this.Flute1 = new System.Windows.Forms.NumericUpDown();
+            this.Flute3 = new System.Windows.Forms.NumericUpDown();
             this.Flute4_Label = new System.Windows.Forms.Label();
-            this.flute4 = new System.Windows.Forms.NumericUpDown();
+            this.Flute4 = new System.Windows.Forms.NumericUpDown();
             this.HA_Label = new System.Windows.Forms.Label();
-            this.flute2 = new System.Windows.Forms.NumericUpDown();
+            this.Flute2 = new System.Windows.Forms.NumericUpDown();
             this.Flute2_Label = new System.Windows.Forms.Label();
             this.HASlot = new System.Windows.Forms.ComboBox();
             this.Slots_Label = new System.Windows.Forms.Label();
@@ -141,13 +143,13 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.Filters_Box.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.potential)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.atleast)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Potential)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Atleast)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).BeginInit();
             this.Calibr_Box.SuspendLayout();
@@ -187,7 +189,6 @@ namespace TinyFinder
             this.Searcher.Size = new System.Drawing.Size(1123, 305);
             this.Searcher.TabIndex = 0;
             this.Searcher.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Searcher_CellFormatting);
-            this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
             // 
             // s_Date
             // 
@@ -468,13 +469,15 @@ namespace TinyFinder
             // Settings_Box
             // 
             this.Settings_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.Settings_Box.Controls.Add(this.ORAS_Locations);
+            this.Settings_Box.Controls.Add(this.BagBox);
+            this.Settings_Box.Controls.Add(this.CharmBox);
+            this.Settings_Box.Controls.Add(this.LongGrassBox);
+            this.Settings_Box.Controls.Add(this.Horde_Turn);
             this.Settings_Box.Controls.Add(this.Chain_Label);
             this.Settings_Box.Controls.Add(this.Step_Label);
             this.Settings_Box.Controls.Add(this.ExclusiveBox);
-            this.Settings_Box.Controls.Add(this.SurfLocations);
             this.Settings_Box.Controls.Add(this.SurfBox);
-            this.Settings_Box.Controls.Add(this.XY_Locations);
+            this.Settings_Box.Controls.Add(this.locations);
             this.Settings_Box.Controls.Add(this.Location_Label);
             this.Settings_Box.Controls.Add(this.Months);
             this.Settings_Box.Controls.Add(this.Month_Label);
@@ -501,27 +504,51 @@ namespace TinyFinder
             this.Settings_Box.TabStop = false;
             this.Settings_Box.Text = "Step 2 - Settings";
             // 
-            // ORAS_Locations
+            // BagBox
             // 
-            this.ORAS_Locations.FormattingEnabled = true;
-            this.ORAS_Locations.Items.AddRange(new object[] {
-            "Elsewhere",
-            "Mt Pyre Inside",
-            "New Mauville",
-            "Sky Pillar",
-            "Route 111 Desert",
-            "Route 117",
-            "Route 118",
-            "Route 119",
-            "Route 120",
-            "Route 123",
-            "Safari Zone"});
-            this.ORAS_Locations.Location = new System.Drawing.Point(94, 96);
-            this.ORAS_Locations.Name = "ORAS_Locations";
-            this.ORAS_Locations.Size = new System.Drawing.Size(121, 22);
-            this.ORAS_Locations.TabIndex = 22;
-            this.ORAS_Locations.Visible = false;
-            this.ORAS_Locations.SelectedIndexChanged += new System.EventHandler(this.ORAS_Locations_SelectedIndexChanged);
+            this.BagBox.AutoSize = true;
+            this.BagBox.Location = new System.Drawing.Point(237, 40);
+            this.BagBox.Name = "BagBox";
+            this.BagBox.Size = new System.Drawing.Size(110, 18);
+            this.BagBox.TabIndex = 42;
+            this.BagBox.Text = "Use from Bag";
+            this.BagBox.UseVisualStyleBackColor = true;
+            this.BagBox.Visible = false;
+            // 
+            // CharmBox
+            // 
+            this.CharmBox.AutoSize = true;
+            this.CharmBox.Location = new System.Drawing.Point(237, 140);
+            this.CharmBox.Name = "CharmBox";
+            this.CharmBox.Size = new System.Drawing.Size(103, 18);
+            this.CharmBox.TabIndex = 41;
+            this.CharmBox.Text = "Shiny Charm";
+            this.CharmBox.UseVisualStyleBackColor = true;
+            this.CharmBox.Visible = false;
+            // 
+            // LongGrassBox
+            // 
+            this.LongGrassBox.AutoSize = true;
+            this.LongGrassBox.Enabled = false;
+            this.LongGrassBox.Location = new System.Drawing.Point(237, 80);
+            this.LongGrassBox.Name = "LongGrassBox";
+            this.LongGrassBox.Size = new System.Drawing.Size(96, 18);
+            this.LongGrassBox.TabIndex = 40;
+            this.LongGrassBox.Text = "Long Grass";
+            this.LongGrassBox.UseVisualStyleBackColor = true;
+            this.LongGrassBox.Visible = false;
+            // 
+            // Horde_Turn
+            // 
+            this.Horde_Turn.AutoSize = true;
+            this.Horde_Turn.Location = new System.Drawing.Point(237, 60);
+            this.Horde_Turn.Name = "Horde_Turn";
+            this.Horde_Turn.Size = new System.Drawing.Size(131, 18);
+            this.Horde_Turn.TabIndex = 39;
+            this.Horde_Turn.Text = "Trigger by turn";
+            this.Horde_Turn.UseVisualStyleBackColor = true;
+            this.Horde_Turn.Visible = false;
+            this.Horde_Turn.CheckedChanged += new System.EventHandler(this.Horde_Turn_CheckedChanged);
             // 
             // Chain_Label
             // 
@@ -548,70 +575,35 @@ namespace TinyFinder
             // ExclusiveBox
             // 
             this.ExclusiveBox.AutoSize = true;
-            this.ExclusiveBox.Location = new System.Drawing.Point(237, 130);
+            this.ExclusiveBox.Location = new System.Drawing.Point(237, 160);
             this.ExclusiveBox.Name = "ExclusiveBox";
             this.ExclusiveBox.Size = new System.Drawing.Size(96, 18);
             this.ExclusiveBox.TabIndex = 36;
             this.ExclusiveBox.Text = "Exclusives";
             this.ExclusiveBox.UseVisualStyleBackColor = true;
-            this.ExclusiveBox.CheckedChanged += new System.EventHandler(this.dexnavpokes_CheckedChanged);
-            // 
-            // SurfLocations
-            // 
-            this.SurfLocations.FormattingEnabled = true;
-            this.SurfLocations.Items.AddRange(new object[] {
-            "Elsewhere",
-            "Magma/Aqua Hideout",
-            "Battle Resort",
-            "Underwater"});
-            this.SurfLocations.Location = new System.Drawing.Point(94, 96);
-            this.SurfLocations.Name = "SurfLocations";
-            this.SurfLocations.Size = new System.Drawing.Size(121, 22);
-            this.SurfLocations.TabIndex = 21;
+            this.ExclusiveBox.Visible = false;
+            this.ExclusiveBox.CheckedChanged += new System.EventHandler(this.ExclusiveBox_CheckedChanged);
             // 
             // SurfBox
             // 
             this.SurfBox.AutoSize = true;
-            this.SurfBox.Location = new System.Drawing.Point(237, 63);
+            this.SurfBox.Location = new System.Drawing.Point(237, 120);
             this.SurfBox.Name = "SurfBox";
             this.SurfBox.Size = new System.Drawing.Size(54, 18);
             this.SurfBox.TabIndex = 35;
             this.SurfBox.Text = "Surf";
             this.SurfBox.UseVisualStyleBackColor = true;
-            this.SurfBox.CheckedChanged += new System.EventHandler(this.water_CheckedChanged);
+            this.SurfBox.Visible = false;
+            this.SurfBox.CheckedChanged += new System.EventHandler(this.SurfBox_CheckedChanged);
             // 
-            // XY_Locations
+            // locations
             // 
-            this.XY_Locations.FormattingEnabled = true;
-            this.XY_Locations.Items.AddRange(new object[] {
-            "Elsewhere",
-            "Azure Bay",
-            "Lost Hotel",
-            "Pokemon Village",
-            "Route 2",
-            "Route 3",
-            "Route 4",
-            "Route 5",
-            "Route 7",
-            "Route 8",
-            "Route 9",
-            "Route 10",
-            "Route 11",
-            "Route 12",
-            "Route 14",
-            "Route 15",
-            "Route 17",
-            "Route 18",
-            "Route 19",
-            "Route 20",
-            "Route 21",
-            "Route 22",
-            "Santalune Forest"});
-            this.XY_Locations.Location = new System.Drawing.Point(94, 96);
-            this.XY_Locations.Name = "XY_Locations";
-            this.XY_Locations.Size = new System.Drawing.Size(121, 22);
-            this.XY_Locations.TabIndex = 20;
-            this.XY_Locations.SelectedIndexChanged += new System.EventHandler(this.location_SelectedIndexChanged);
+            this.locations.FormattingEnabled = true;
+            this.locations.Location = new System.Drawing.Point(94, 96);
+            this.locations.Name = "locations";
+            this.locations.Size = new System.Drawing.Size(121, 22);
+            this.locations.TabIndex = 20;
+            this.locations.SelectedIndexChanged += new System.EventHandler(this.location_SelectedIndexChanged);
             // 
             // Location_Label
             // 
@@ -665,7 +657,7 @@ namespace TinyFinder
             // BoostBox
             // 
             this.BoostBox.AutoSize = true;
-            this.BoostBox.Location = new System.Drawing.Point(237, 35);
+            this.BoostBox.Location = new System.Drawing.Point(237, 20);
             this.BoostBox.Name = "BoostBox";
             this.BoostBox.Size = new System.Drawing.Size(103, 18);
             this.BoostBox.TabIndex = 29;
@@ -700,14 +692,14 @@ namespace TinyFinder
             // CaveBox
             // 
             this.CaveBox.AutoSize = true;
-            this.CaveBox.Location = new System.Drawing.Point(237, 96);
+            this.CaveBox.Location = new System.Drawing.Point(237, 100);
             this.CaveBox.Name = "CaveBox";
             this.CaveBox.Size = new System.Drawing.Size(54, 18);
             this.CaveBox.TabIndex = 28;
             this.CaveBox.Text = "Cave";
             this.CaveBox.UseVisualStyleBackColor = true;
             this.CaveBox.Visible = false;
-            this.CaveBox.CheckedChanged += new System.EventHandler(this.cave_CheckedChanged);
+            this.CaveBox.CheckedChanged += new System.EventHandler(this.CaveBox_CheckedChanged);
             // 
             // Party_Label
             // 
@@ -747,26 +739,26 @@ namespace TinyFinder
             this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.Filters_Box.Controls.Add(this.ΙgnoreFilters);
             this.Filters_Box.Controls.Add(this.Potential_Label);
-            this.Filters_Box.Controls.Add(this.potential);
+            this.Filters_Box.Controls.Add(this.Potential);
             this.Filters_Box.Controls.Add(this.NavFilters_Label);
             this.Filters_Box.Controls.Add(this.NavType);
             this.Filters_Box.Controls.Add(this.NavType_Label);
-            this.Filters_Box.Controls.Add(this.navFilters);
+            this.Filters_Box.Controls.Add(this.NavFilters);
             this.Filters_Box.Controls.Add(this.Patches_Board);
             this.Filters_Box.Controls.Add(this.button1);
             this.Filters_Box.Controls.Add(this.FindNum_Label);
-            this.Filters_Box.Controls.Add(this.atleast);
+            this.Filters_Box.Controls.Add(this.Atleast);
             this.Filters_Box.Controls.Add(this.Flute3_Label);
             this.Filters_Box.Controls.Add(this.Flute5_Label);
             this.Filters_Box.Controls.Add(this.Flute1_Label);
             this.Filters_Box.Controls.Add(this.SyncBox);
-            this.Filters_Box.Controls.Add(this.flute5);
-            this.Filters_Box.Controls.Add(this.flute1);
-            this.Filters_Box.Controls.Add(this.flute3);
+            this.Filters_Box.Controls.Add(this.Flute5);
+            this.Filters_Box.Controls.Add(this.Flute1);
+            this.Filters_Box.Controls.Add(this.Flute3);
             this.Filters_Box.Controls.Add(this.Flute4_Label);
-            this.Filters_Box.Controls.Add(this.flute4);
+            this.Filters_Box.Controls.Add(this.Flute4);
             this.Filters_Box.Controls.Add(this.HA_Label);
-            this.Filters_Box.Controls.Add(this.flute2);
+            this.Filters_Box.Controls.Add(this.Flute2);
             this.Filters_Box.Controls.Add(this.Flute2_Label);
             this.Filters_Box.Controls.Add(this.HASlot);
             this.Filters_Box.Controls.Add(this.Slots_Label);
@@ -803,17 +795,17 @@ namespace TinyFinder
             this.Potential_Label.TabIndex = 50;
             this.Potential_Label.Text = "Potential";
             // 
-            // potential
+            // Potential
             // 
-            this.potential.Location = new System.Drawing.Point(205, 53);
-            this.potential.Maximum = new decimal(new int[] {
+            this.Potential.Location = new System.Drawing.Point(205, 53);
+            this.Potential.Maximum = new decimal(new int[] {
             3,
             0,
             0,
             0});
-            this.potential.Name = "potential";
-            this.potential.Size = new System.Drawing.Size(51, 22);
-            this.potential.TabIndex = 49;
+            this.Potential.Name = "Potential";
+            this.Potential.Size = new System.Drawing.Size(51, 22);
+            this.Potential.TabIndex = 49;
             // 
             // NavFilters_Label
             // 
@@ -845,26 +837,26 @@ namespace TinyFinder
             this.NavType_Label.TabIndex = 46;
             this.NavType_Label.Text = "Type";
             // 
-            // navFilters
+            // NavFilters
             // 
-            this.navFilters.BlankText = null;
+            this.NavFilters.BlankText = null;
             checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.navFilters.CheckBoxProperties = checkBoxProperties1;
-            this.navFilters.DisplayMemberSingleItem = "";
-            this.navFilters.DropDownHeight = 170;
-            this.navFilters.FormattingEnabled = true;
-            this.navFilters.Items.AddRange(new object[] {
+            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
+            this.NavFilters.DisplayMemberSingleItem = "";
+            this.NavFilters.DropDownHeight = 170;
+            this.NavFilters.FormattingEnabled = true;
+            this.NavFilters.Items.AddRange(new object[] {
             "Success",
             "Shiny",
             "HA",
             "Egg Move",
             "Level Boost",
             "Sync"});
-            this.navFilters.Location = new System.Drawing.Point(71, 164);
-            this.navFilters.Name = "navFilters";
-            this.navFilters.Size = new System.Drawing.Size(110, 22);
-            this.navFilters.TabIndex = 25;
-            this.navFilters.Visible = false;
+            this.NavFilters.Location = new System.Drawing.Point(71, 164);
+            this.NavFilters.Name = "NavFilters";
+            this.NavFilters.Size = new System.Drawing.Size(110, 22);
+            this.NavFilters.TabIndex = 25;
+            this.NavFilters.Visible = false;
             // 
             // Patches_Board
             // 
@@ -885,23 +877,23 @@ namespace TinyFinder
             this.FindNum_Label.TabIndex = 44;
             this.FindNum_Label.Text = "Find at least";
             // 
-            // atleast
+            // Atleast
             // 
-            this.atleast.Location = new System.Drawing.Point(113, 217);
-            this.atleast.Maximum = new decimal(new int[] {
+            this.Atleast.Location = new System.Drawing.Point(113, 217);
+            this.Atleast.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
-            this.atleast.Minimum = new decimal(new int[] {
+            this.Atleast.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.atleast.Name = "atleast";
-            this.atleast.Size = new System.Drawing.Size(51, 22);
-            this.atleast.TabIndex = 43;
-            this.atleast.Value = new decimal(new int[] {
+            this.Atleast.Name = "Atleast";
+            this.Atleast.Size = new System.Drawing.Size(51, 22);
+            this.Atleast.TabIndex = 43;
+            this.Atleast.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -948,44 +940,44 @@ namespace TinyFinder
             this.SyncBox.UseVisualStyleBackColor = true;
             this.SyncBox.Visible = false;
             // 
-            // flute5
+            // Flute5
             // 
-            this.flute5.Location = new System.Drawing.Point(334, 167);
-            this.flute5.Maximum = new decimal(new int[] {
+            this.Flute5.Location = new System.Drawing.Point(334, 167);
+            this.Flute5.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.flute5.Name = "flute5";
-            this.flute5.Size = new System.Drawing.Size(51, 22);
-            this.flute5.TabIndex = 41;
-            this.flute5.Visible = false;
+            this.Flute5.Name = "Flute5";
+            this.Flute5.Size = new System.Drawing.Size(51, 22);
+            this.Flute5.TabIndex = 41;
+            this.Flute5.Visible = false;
             // 
-            // flute1
+            // Flute1
             // 
-            this.flute1.Location = new System.Drawing.Point(334, 52);
-            this.flute1.Maximum = new decimal(new int[] {
+            this.Flute1.Location = new System.Drawing.Point(334, 52);
+            this.Flute1.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.flute1.Name = "flute1";
-            this.flute1.Size = new System.Drawing.Size(51, 22);
-            this.flute1.TabIndex = 35;
-            this.flute1.Visible = false;
+            this.Flute1.Name = "Flute1";
+            this.Flute1.Size = new System.Drawing.Size(51, 22);
+            this.Flute1.TabIndex = 35;
+            this.Flute1.Visible = false;
             // 
-            // flute3
+            // Flute3
             // 
-            this.flute3.Location = new System.Drawing.Point(334, 110);
-            this.flute3.Maximum = new decimal(new int[] {
+            this.Flute3.Location = new System.Drawing.Point(334, 110);
+            this.Flute3.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.flute3.Name = "flute3";
-            this.flute3.Size = new System.Drawing.Size(51, 22);
-            this.flute3.TabIndex = 37;
-            this.flute3.Visible = false;
+            this.Flute3.Name = "Flute3";
+            this.Flute3.Size = new System.Drawing.Size(51, 22);
+            this.Flute3.TabIndex = 37;
+            this.Flute3.Visible = false;
             // 
             // Flute4_Label
             // 
@@ -997,18 +989,18 @@ namespace TinyFinder
             this.Flute4_Label.Text = "Flute 4";
             this.Flute4_Label.Visible = false;
             // 
-            // flute4
+            // Flute4
             // 
-            this.flute4.Location = new System.Drawing.Point(334, 138);
-            this.flute4.Maximum = new decimal(new int[] {
+            this.Flute4.Location = new System.Drawing.Point(334, 138);
+            this.Flute4.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.flute4.Name = "flute4";
-            this.flute4.Size = new System.Drawing.Size(51, 22);
-            this.flute4.TabIndex = 39;
-            this.flute4.Visible = false;
+            this.Flute4.Name = "Flute4";
+            this.Flute4.Size = new System.Drawing.Size(51, 22);
+            this.Flute4.TabIndex = 39;
+            this.Flute4.Visible = false;
             // 
             // HA_Label
             // 
@@ -1020,18 +1012,18 @@ namespace TinyFinder
             this.HA_Label.Text = "HA";
             this.HA_Label.Visible = false;
             // 
-            // flute2
+            // Flute2
             // 
-            this.flute2.Location = new System.Drawing.Point(334, 81);
-            this.flute2.Maximum = new decimal(new int[] {
+            this.Flute2.Location = new System.Drawing.Point(334, 81);
+            this.Flute2.Maximum = new decimal(new int[] {
             4,
             0,
             0,
             0});
-            this.flute2.Name = "flute2";
-            this.flute2.Size = new System.Drawing.Size(51, 22);
-            this.flute2.TabIndex = 37;
-            this.flute2.Visible = false;
+            this.Flute2.Name = "Flute2";
+            this.Flute2.Size = new System.Drawing.Size(51, 22);
+            this.Flute2.TabIndex = 37;
+            this.Flute2.Visible = false;
             // 
             // Flute2_Label
             // 
@@ -1277,7 +1269,6 @@ namespace TinyFinder
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
-            this.Generator.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDown);
             // 
             // g_Index
             // 
@@ -1423,13 +1414,13 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             this.Filters_Box.ResumeLayout(false);
             this.Filters_Box.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.potential)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.atleast)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.flute2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Potential)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Atleast)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Flute2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).EndInit();
             this.Calibr_Box.ResumeLayout(false);
@@ -1484,23 +1475,23 @@ namespace TinyFinder
         private System.Windows.Forms.Label Flute1_Label;
         private System.Windows.Forms.Label Rate_Label;
         private System.Windows.Forms.CheckBox SyncBox;
-        private System.Windows.Forms.NumericUpDown flute5;
-        private System.Windows.Forms.NumericUpDown flute1;
-        private System.Windows.Forms.NumericUpDown flute3;
+        private System.Windows.Forms.NumericUpDown Flute5;
+        private System.Windows.Forms.NumericUpDown Flute1;
+        private System.Windows.Forms.NumericUpDown Flute3;
         private System.Windows.Forms.Label Flute4_Label;
         private System.Windows.Forms.NumericUpDown ratio;
-        private System.Windows.Forms.NumericUpDown flute4;
+        private System.Windows.Forms.NumericUpDown Flute4;
         private System.Windows.Forms.Label Party_Label;
         private System.Windows.Forms.NumericUpDown party;
         private System.Windows.Forms.CheckBox BoostBox;
-        private System.Windows.Forms.NumericUpDown flute2;
+        private System.Windows.Forms.NumericUpDown Flute2;
         private System.Windows.Forms.CheckBox CaveBox;
         private System.Windows.Forms.Label Flute2_Label;
         private System.Windows.Forms.ComboBox Months;
         private System.Windows.Forms.Label Month_Label;
         private System.Windows.Forms.Label FindNum_Label;
-        private System.Windows.Forms.NumericUpDown atleast;
-        private System.Windows.Forms.ComboBox XY_Locations;
+        private System.Windows.Forms.NumericUpDown Atleast;
+        private System.Windows.Forms.ComboBox locations;
         private System.Windows.Forms.Label Location_Label;
         private System.Windows.Forms.TabControl SearchGen;
         private System.Windows.Forms.TabPage Srch;
@@ -1508,13 +1499,12 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridView Generator;
         private System.Windows.Forms.Label Patches_Board;
         private System.Windows.Forms.CheckBox SurfBox;
-        private System.Windows.Forms.ComboBox SurfLocations;
-        private Controls.CheckBoxComboBox navFilters;
+        private Controls.CheckBoxComboBox NavFilters;
         private System.Windows.Forms.Label NavFilters_Label;
         private System.Windows.Forms.ComboBox NavType;
         private System.Windows.Forms.Label NavType_Label;
         private System.Windows.Forms.Label Potential_Label;
-        private System.Windows.Forms.NumericUpDown potential;
+        private System.Windows.Forms.NumericUpDown Potential;
         private System.Windows.Forms.CheckBox ExclusiveBox;
         private System.Windows.Forms.Button updateBTN;
         private System.Windows.Forms.Label Chain_Label;
@@ -1546,7 +1536,10 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Rand;
-        private System.Windows.Forms.ComboBox ORAS_Locations;
+        private System.Windows.Forms.CheckBox Horde_Turn;
+        private System.Windows.Forms.CheckBox LongGrassBox;
+        private System.Windows.Forms.CheckBox CharmBox;
+        private System.Windows.Forms.CheckBox BagBox;
     }
 }
 

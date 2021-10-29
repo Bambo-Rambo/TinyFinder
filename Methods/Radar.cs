@@ -3,9 +3,9 @@ namespace TinyFinder
 {
     class Radar
     {
-        public SlotData data = new SlotData();
+        public Data data = new Data();
         public static TinyMT tinyradar;
-        public byte slot, item, randInt, music;
+        public byte slot, item, rand100, music;
         public bool sync;
         public uint[] temp = new uint[4];
 
@@ -31,10 +31,10 @@ namespace TinyFinder
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);
-            randInt = Rand(temp, 100);
+            rand100 = Rand(temp, 100);
             if (length == 0)
             {
-                sync = randInt < 50;
+                sync = rand100 < 50;
                 tinyradar.nextState(temp);
                 if (method == 8)
                     tinyradar.nextState(temp);
