@@ -1465,7 +1465,7 @@ namespace TinyFinder
         private System.Windows.Forms.Label Tiny1_Label;
         private System.Windows.Forms.Label Tiny2_Label;
         private System.Windows.Forms.Label Tiny3_Label;
-        private Controls.CheckBoxComboBox checkBoxComboBox1;
+        //private Controls.CheckBoxComboBox checkBoxComboBox1;
         private Controls.CheckBoxComboBox slots;
         private System.Windows.Forms.Label HA_Label;
         private System.Windows.Forms.ComboBox HASlot;
