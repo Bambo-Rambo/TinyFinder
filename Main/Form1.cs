@@ -71,7 +71,6 @@ namespace TinyFinder
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
             ManageControls((byte)Methods.SelectedIndex);
-            //ManageSurfButton();
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
@@ -113,12 +112,13 @@ namespace TinyFinder
 
         private void CaveBox_CheckedChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 1)
-                LongGrassBox.Enabled = !CaveBox.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes 
-                    && !(locations.SelectedIndex > 5 && locations.SelectedIndex < 9);
+            if (Methods.SelectedIndex == 1 && locations.Items.Count != 0)
+                LongGrassBox.Enabled = !CaveBox.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes
+                        && !(locations.SelectedIndex > 5 && locations.SelectedIndex < 9);
+
             if (Location_Label.Visible)
             {
-                Location_Label.Enabled = locations.Enabled = CaveBox.Checked ? false : true;
+                Location_Label.Enabled = locations.Enabled = !CaveBox.Checked;
                 ManageRatio();
             }
         }
@@ -245,7 +245,7 @@ namespace TinyFinder
                     catch
                     { }
                 }
-                else
+                /*else
                 {
                     try
                     {
@@ -255,7 +255,7 @@ namespace TinyFinder
                     }
                     catch
                     { }
-                }
+                }*/
             }
         }
         private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -488,6 +488,7 @@ namespace TinyFinder
                     }
                 }
             }
+            //CaveBox.Checked = false;
         }
 
         private void ManageSlots(byte method)

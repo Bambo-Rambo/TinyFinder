@@ -100,7 +100,8 @@ namespace TinyFinder
             if (Methods.SelectedIndex == 1 || (Methods.SelectedIndex == 4 && Horde_Turn.Checked))
             {
                 CurrentLocation = (byte)locations.SelectedIndex;
-                NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
+                if (!(Methods.SelectedIndex == 4 && ORAS_Button.Checked))
+                    NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
                 HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes)) 
                     || (ORAS_Button.Checked && LongGrassBox.Checked && !CaveBox.Checked);
                 XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
@@ -179,18 +180,17 @@ namespace TinyFinder
                             wild.results(array, (byte)ratio.Value, ORAS_Button.Checked, SlotCase, NPC_Influence, HasHordes, XY_TallGrass);
                             if (!ΙgnoreFilters.Checked)
                             {
-                                if (wild.trigger && Slots.Contains(wild.slot) && ((SyncBox.Checked && wild.Sync) || !SyncBox.Checked))
+                                if (wild.trigger && Slots.Contains(wild.slot) && (wild.Sync || !SyncBox.Checked))
                                 {
                                     if (ORAS_Button.Checked)
                                     {
-                                        if ((Flute1.Value != 0 && Flute1.Value == wild.flute) || Flute1.Value == 0)
+                                        if (Flute1.Value == wild.flute || Flute1.Value == 0)
                                         {
                                             if (DateSearcher)
                                                 ShowWildSrch(wild, calc.secondsToDate(seconds, Year), store_seed, j);
                                             else
                                                 ShowWildGen(table, wild, array, j);
                                         }
-
                                     }
                                     else
                                     {
@@ -228,11 +228,11 @@ namespace TinyFinder
                             smash.RockSmash(array, ORAS_Button.Checked);
                             if (!ΙgnoreFilters.Checked)
                             {
-                                if (smash.encounter == 0 && Slots.Contains(smash.slot) && ((SyncBox.Checked && smash.Sync) || !SyncBox.Checked))
+                                if (smash.encounter == 0 && Slots.Contains(smash.slot) && (smash.Sync || !SyncBox.Checked))
                                 {
                                     if (ORAS_Button.Checked)
                                     {
-                                        if ((Flute1.Value != 0 && Flute1.Value == smash.flute) || Flute1.Value == 0)
+                                        if (Flute1.Value == smash.flute || Flute1.Value == 0)
                                         {
                                             if (DateSearcher)
                                                 ShowSmashSrch(smash, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -302,8 +302,7 @@ namespace TinyFinder
 
                                         &&
 
-                                        ((SyncBox.Checked && horde.sync)
-                                        || !SyncBox.Checked))
+                                        (horde.sync || !SyncBox.Checked))
                                         ShowHorde(table, horde, calc.secondsToDate(seconds, Year), store_seed, j, array);
                             }
                             else
@@ -344,11 +343,11 @@ namespace TinyFinder
                             honey.results(array, ORAS_Button.Checked, (byte)party.Value);
                             if (!ΙgnoreFilters.Checked)
                             {
-                                if (Slots.Contains(honey.slot) && ((SyncBox.Checked && honey.Sync) || !SyncBox.Checked))
+                                if (Slots.Contains(honey.slot) && (honey.Sync || !SyncBox.Checked))
                                 {
                                     if (ORAS_Button.Checked)
                                     {
-                                        if ((Flute1.Value != 0 && Flute1.Value == honey.flute) || Flute1.Value == 0)
+                                        if (Flute1.Value == honey.flute || Flute1.Value == 0)
                                         {
                                             if (DateSearcher)
                                                 ShowHoneySrch(honey, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -401,7 +400,7 @@ namespace TinyFinder
                                     radar.results(array, 0, (byte)party.Value, BoostBox.Checked, 6, 0);
                                     if (!ΙgnoreFilters.Checked)
                                     {
-                                        if (Slots.Contains(radar.slot) && ((SyncBox.Checked && radar.sync) || (!SyncBox.Checked)))
+                                        if (Slots.Contains(radar.slot) && (radar.sync || (!SyncBox.Checked)))
                                         {
                                             if (DateSearcher)
                                                 ShowRadarSrch(radar, calc.secondsToDate(seconds, Year), store_seed, j, 0);
@@ -472,19 +471,19 @@ namespace TinyFinder
                                 nav.results(array, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type);
                                 if (!ΙgnoreFilters.Checked)
                                 {
-                                    if ((nav.shiny && NavFilters.CheckBoxItems[1].Checked) || (!NavFilters.CheckBoxItems[1].Checked))
-                                        if ((nav.trigger && NavFilters.CheckBoxItems[0].Checked) || (!NavFilters.CheckBoxItems[0].Checked))
+                                    if (nav.shiny || !NavFilters.CheckBoxItems[1].Checked)
+                                        if (nav.trigger || !NavFilters.CheckBoxItems[0].Checked)
                                             if (((NavType.SelectedIndex == 0 && nav.slotype != 2) || (NavType.SelectedIndex == 1 && nav.slotype == 2))
                                                 && Slots.Contains((byte)nav.slot)
                                                 &&
-                                                ((nav.HA && NavFilters.CheckBoxItems[2].Checked) || (!NavFilters.CheckBoxItems[2].Checked))
+                                                (nav.HA || !NavFilters.CheckBoxItems[2].Checked)
                                                 &&
-                                                ((nav.eggMove && NavFilters.CheckBoxItems[3].Checked) || (!NavFilters.CheckBoxItems[3].Checked))
+                                                (nav.eggMove || !NavFilters.CheckBoxItems[3].Checked)
                                                 &&
-                                                ((nav.sync && NavFilters.CheckBoxItems[5].Checked) || (!NavFilters.CheckBoxItems[5].Checked))
+                                                (nav.sync || !NavFilters.CheckBoxItems[5].Checked)
                                                 &&
                                                 ((nav.potential == Potential.Value) || (Potential.Value == 0)))
-                                                if (((nav.boost && NavFilters.CheckBoxItems[4].Checked) || (!NavFilters.CheckBoxItems[4].Checked))
+                                                if ((nav.boost || !NavFilters.CheckBoxItems[4].Checked)
                                                     && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
                                                 {
                                                     if (DateSearcher)
@@ -521,7 +520,7 @@ namespace TinyFinder
                             swoop.results(array, 0, 0, false, 8, 0);
                             if (!ΙgnoreFilters.Checked)
                             {
-                                if (Slots.Contains(swoop.slot) && ((SyncBox.Checked && swoop.sync) || !SyncBox.Checked))
+                                if (Slots.Contains(swoop.slot) && (swoop.sync || !SyncBox.Checked))
                                 {
                                     if (DateSearcher)
                                         ShowSwoopSrch(swoop, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -586,7 +585,7 @@ namespace TinyFinder
                     count = 0;
                     for (byte f = 0; f < 5; f++)
                     {
-                        if ((fluteArray[f] != 0 && fluteArray[f] == horde.flutes[f]) || fluteArray[f] == 0)
+                        if (fluteArray[f] == horde.flutes[f] || fluteArray[f] == 0)
                             count++;
                     }
                     if (count == 5)
@@ -613,7 +612,7 @@ namespace TinyFinder
                     count = 0;
                     for (byte f = 0; f < 5; f++)
                     {
-                        if ((fluteArray[f] != 0 && fluteArray[f] == horde.flutes[f]) || fluteArray[f] == 0 || ΙgnoreFilters.Checked)
+                        if (fluteArray[f] == horde.flutes[f] || fluteArray[f] == 0 || ΙgnoreFilters.Checked)
                             count++;
                     }
                     if (count == 5)
