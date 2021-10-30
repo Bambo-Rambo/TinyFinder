@@ -1,6 +1,6 @@
 # TinyFinder
 
-### [Latest Build](https://drive.google.com/u/0/uc?id=1b0A18zAmTtp1kUDHAR966sAz0jxfEtlH&export=download) - 30/10/2021
+### [Latest Build](https://drive.google.com/u/0/uc?id=1ZOn8u9mpMEY3Nsd1sDt8eKZF9jVvAcQJ&export=download) - 30/10/2021
 
 This program is based on the Tiny Timeline Tool in 3DS RNG Tool. 
 It's main purpose, is to get rid of the timeline needed for most cases in gen 6 RNG, making things easier.
