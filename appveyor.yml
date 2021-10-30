@@ -2,5 +2,5 @@ version: 0.9.1.{build}
 build:
   verbosity: minimal
 artifacts:
-- path: C:\Debug\tinyfinder
+- path: C:\projects\tinyfinder
   name: Debug
