@@ -79,38 +79,48 @@ namespace TinyFinder
         {
             Location area;
             List<Location> Areas = new List<Location>();
-            if (method == 1 && oras)
-                for (byte i = 0; i < 11; i++)
+            if (oras)
+            {
+                if (method == 1 || method == 4)
+                    for (byte i = 0; i < 11; i++)
+                    {
+                        area = new Location
+                        {
+                            Name = string.Copy(ORAS_Locations[i, 0].ToString()),
+                            NPC = Convert.ToByte(ORAS_Locations[i, 1]),
+                            Has_Hordes = (bool)ORAS_Locations[i, 2],
+                            ratio = Convert.ToByte(ORAS_Locations[i, 3])
+                        };
+                        if (method == 1 || Equals(area.Name, "Elsewhere") || Equals(area.Name, "Route 123"))
+                            Areas.Add(area);
+                    }
+                else //if (method == 5)
                 {
-                    area = new Location();
-                    area.Name = string.Copy(ORAS_Locations[i, 0].ToString());
-                    area.NPC = Convert.ToByte(ORAS_Locations[i, 1]);
-                    area.Has_Hordes = (bool)ORAS_Locations[i, 2];
-                    area.ratio = Convert.ToByte(ORAS_Locations[i, 3]);
-                    Areas.Add(area);
+                    for (byte i = 11; i < 14; i++)
+                    {
+                        area = new Location
+                        {
+                            Name = string.Copy(ORAS_Locations[i, 0].ToString()),
+                            ratio = Convert.ToByte(ORAS_Locations[i, 1])
+                        };
+                        Areas.Add(area);
+                    }
                 }
-            else if ((method == 1 && !oras) ||  method == 4)
+            }
+            else
             {
                 for (byte i = 0; i < 23; i++)
                 {
-                    area = new Location();
-                    area.Name = string.Copy(XY_Locations[i, 0].ToString());
-                    area.NPC = Convert.ToByte(XY_Locations[i, 1]);
-                    area.Has_Hordes = (bool)XY_Locations[i, 2];
-                    area.ratio = Convert.ToByte(XY_Locations[i, 3]);
-                    area.Tall_Grass = (bool)XY_Locations[i, 4];
+                    area = new Location
+                    {
+                        Name = string.Copy(XY_Locations[i, 0].ToString()),
+                        NPC = Convert.ToByte(XY_Locations[i, 1]),
+                        Has_Hordes = (bool)XY_Locations[i, 2],
+                        ratio = Convert.ToByte(XY_Locations[i, 3]),
+                        Tall_Grass = (bool)XY_Locations[i, 4]
+                    };
                     if (method == 1 || (method == 4 && area.Has_Hordes))
                         Areas.Add(area);
-                }
-            }
-            else //if (method == 5)
-            {
-                for (byte i = 11; i < 14; i++)
-                {
-                    area = new Location();
-                    area.Name = string.Copy(ORAS_Locations[i, 0].ToString());
-                    area.ratio = Convert.ToByte(ORAS_Locations[i, 1]);
-                    Areas.Add(area);
                 }
             }
             return Areas;

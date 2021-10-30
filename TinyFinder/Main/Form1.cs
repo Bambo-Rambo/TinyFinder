@@ -42,11 +42,11 @@ namespace TinyFinder
         public Form1()
         {
             InitializeComponent();
-
             Generator.Visible = false;
             XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            DefaultPositions();
             ManageControls(0);
         }
 
@@ -91,22 +91,22 @@ namespace TinyFinder
 
         private void Horde_Turn_CheckedChanged(object sender, EventArgs e)
         {
-            CaveBox.Checked = false;
-            CaveBox.Enabled = !Horde_Turn.Checked || !ORAS_Button.Checked;
-            Rate_Label.Visible = ratio.Visible = Horde_Turn.Checked;
-            Party_Label.Visible = party.Visible = !Horde_Turn.Checked;
-            if (XY_Button.Checked)
+            if (Methods.SelectedIndex == 1 || Methods.SelectedIndex == 4)
             {
+                CaveBox.Checked = false;
+                CaveBox.Enabled = !(Horde_Turn.Checked && ORAS_Button.Checked);
+                Rate_Label.Visible = ratio.Visible = Horde_Turn.Checked;
+                Party_Label.Visible = party.Visible = !Horde_Turn.Checked;
                 Location_Label.Visible = locations.Visible = Horde_Turn.Checked;
                 Location_Label.Enabled = locations.Enabled = !CaveBox.Checked;
                 ManageLocations();
                 ManageRatio();
-            }
-            else
-            {
-                LongGrassBox.Visible = LongGrassBox.Checked = Horde_Turn.Checked;
-                LongGrassBox.Enabled = false;
-                ratio.Value = 13;
+                if (ORAS_Button.Checked)
+                {
+                    LongGrassBox.Visible = LongGrassBox.Checked = Horde_Turn.Checked;
+                    LongGrassBox.Enabled = false;
+                    ratio.Value = 13;
+                }
             }
         }
 
@@ -140,16 +140,24 @@ namespace TinyFinder
 
         private void location_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LongGrassBox.Enabled = LongGrassBox.Checked = false;
-            if (ORAS_Button.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes)
+            if (Methods.SelectedIndex == 1)
             {
-                LongGrassBox.Enabled = true;
-                if (locations.SelectedIndex > 5 && locations.SelectedIndex < 9)
+                LongGrassBox.Enabled = LongGrassBox.Checked = false;
+                if (ORAS_Button.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes)
                 {
-                    LongGrassBox.Enabled = false;
-                    LongGrassBox.Checked = true;
+                    LongGrassBox.Enabled = true;
+                    if (locations.SelectedIndex > 5 && locations.SelectedIndex < 9)
+                    {
+                        LongGrassBox.Enabled = false;
+                        LongGrassBox.Checked = true;
+                    }
                 }
             }
+            else if (Methods.SelectedIndex == 4)
+            {
+
+            }
+
             ManageRatio();
         }
 
@@ -419,14 +427,7 @@ namespace TinyFinder
                 max.Value = 50000;
             }
 
-            if (Method == 0)
-            {
-                TID_Label.Location = new Point(109, 79);
-                tid.Location = new Point(139, 77);
-                SID_Label.Location = new Point(109, 118);
-                sid.Location = new Point(139, 116);
-            }
-            else
+            if (Method != 0)
             {
                 ManageSlots((byte)Methods.SelectedIndex);
                 Slots_Label.Location = new Point(13, 46);
@@ -488,7 +489,21 @@ namespace TinyFinder
                     }
                 }
             }
-            //CaveBox.Checked = false;
+        }
+
+        private void DefaultPositions()
+        {
+            BoostBox.Location = new Point(237, 80);
+            BagBox.Location = new Point(237, 120);
+
+            SurfBox.Location = new Point(237, 60);
+            CharmBox.Location = new Point(237, 100);
+            ExclusiveBox.Location = new Point(237, 140);
+
+            TID_Label.Location = new Point(109, 79);
+            tid.Location = new Point(139, 77);
+            SID_Label.Location = new Point(109, 118);
+            sid.Location = new Point(139, 116);
         }
 
         private void ManageSlots(byte method)

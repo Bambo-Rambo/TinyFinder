@@ -100,8 +100,7 @@ namespace TinyFinder
             if (Methods.SelectedIndex == 1 || (Methods.SelectedIndex == 4 && Horde_Turn.Checked))
             {
                 CurrentLocation = (byte)locations.SelectedIndex;
-                if (!(Methods.SelectedIndex == 4 && ORAS_Button.Checked))
-                    NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
+                NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
                 HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes)) 
                     || (ORAS_Button.Checked && LongGrassBox.Checked && !CaveBox.Checked);
                 XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
