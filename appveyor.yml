@@ -1,0 +1,6 @@
+version: 0.9.1.{build}
+build:
+  verbosity: minimal
+artifacts:
+- path: C:\Debug\tinyfinder
+  name: Debug
