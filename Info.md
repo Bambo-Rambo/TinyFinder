@@ -31,18 +31,18 @@ The same goes for the rest of the variables. The possible slots would have been 
 
 We tend to forget that hordes can also be triggered by moving in the grass/cave/whatever. During a successful encounter (depends on the ratio), if rand(100) < 5, a horde is generated instead of a single encounter. In XY, it can be done at any place that generates hordes, but in ORAS, it's only possible at Long Grass. This actually explains a lot of things and in fact, hordes are the reason why Normal Wild RNG in most XY places is affected. 
 
-So, the rand(100) for normal wild is supposed to check nature syncing, if < 50, the nature syncs. But for places that can generate a horde by moving, sync should use a different value because if both variables were using the same rand(100), then every successful horde encounter by step, would sync the nature since rand(100) would be < 5 and thus < 50 as well. For that reason, one extra rand call is performed before syncing for those places that obviously affects the rest of the variables as well (encounter ratio, slot etc). For consistency purposes, the developers could make this rand call occur in every place regardless of the possible horde generatio, but code-related, this would be a bad implementation, an unnecessary rand call would never be good. By the way, the NPC influence has to be taken into account before the first rand call, otherwise it will give the wrong rand(100) value. Finally and for a currently unknown reason, they decided to force one extra rand call for grass/flowers in XY before the slot generation.
+So, the rand(100) for normal wild is supposed to check nature syncing, if < 50, the nature syncs. But for places that can generate hordes by moving, sync should use a different value because if both variables were using the same rand(100), then every successful horde trigger by step, would sync the nature since rand(100) would be < 5 and thus < 50 as well. This kills the whole "random" generation idea an for that reason, one extra rand call is performed, before sync calculation for those places, that obviously affects the rest of the variables as well (encounter ratio, slot etc). For consistency purposes, the developers could make this rand call occur in every place regardless of the possible horde generation, but code-related, this would be a bad implementation - an unnecessary rand call is never a good idea. By the way, the NPC influence has to be taken into account before the first rand call, otherwise it will give the wrong rand(100) value. Finally and for a currently unknown reason, they decided to put one extra rand call for tall grass/flowers in XY before the slot generation (not to be confused with the long grass at Routes 9/16).
 
 To summarize:
 * The NPC influence can advance up to 2 indexes at the moment you get control of your character by exiting the X menu. It needs to be calculated first.
-* +1 advance before sync if the place can generate hordes (most XY places including caves, long grass only in ORAS).
+* +1 advance before sync if the place can generate hordes (most XY places including caves, long grass only if ORAS).
 * +1 advance before slot if RNG abusing in XY tall grass/flowers.
 
 Examples:
 * Kalos Route 2: Quiet place and only 1 advance before slot since XY tall grass and doesn't have hordes.
 * Kalos Route 7: Quiet place. 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
 * Kalos Route 11: Noisy place. 1 advance before anything, 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
-* Kalos Route 16: Quiet place and no extra advances since hordes cannot be triggered by moving and isn't XY tall grass/flowers. Can be done with 3DS RNG Tool.
+* Kalos Route 16: Quiet place and in long grass, no extra advances since hordes cannot be generated and isn't XY tall grass/flowers. Can be done with 3DS RNG Tool. If in yellow flowers, same as Route 7.
 * Kalos Route 18: Very noisy place. 2 advances before anything, 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
 * Kalos Caves: Quiet places. Only 1 advance before sync since hordes are possible and nothing else since not XY tall grass/flowers.
 * Hoenn Route 101: Same as Kalos Route 16.
