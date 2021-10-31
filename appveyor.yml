@@ -2,7 +2,5 @@ version: 0.9.1{build}
 build:
   verbosity: minimal
 artifacts:
-- path: C:\TinyFinder\bin\Debug
-  name: Debug
-  artifacts:
-  - path: TinyFinder.zip
+- path: TinyFinder.zip
+  name: TinyFinder
