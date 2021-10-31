@@ -1,6 +1,8 @@
 version: 0.9.1{build}
 build:
   verbosity: minimal
+after_build: \bin\Debug\TinyFinder.exe
+  - cmd: 
 artifacts:
 - path: TinyFinder.zip
   name: TinyFinder
