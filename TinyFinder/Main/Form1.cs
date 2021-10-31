@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -408,6 +408,8 @@ namespace TinyFinder
             Party_Label.Visible = party.Visible = Method > 3 && Method < 7;
 
             Step_Label.Visible = Chain_Label.Visible = false;
+
+            CaveBox.Enabled = Method == 1 || Method == 4 || Method == 5;
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
