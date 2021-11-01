@@ -396,7 +396,7 @@ namespace TinyFinder
                                     tiny.nextState(array);
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(array, 0, (byte)party.Value, BoostBox.Checked, 6, 0);
+                                    radar.results(array, 0, (byte)party.Value, BoostBox.Checked, 0);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (Slots.Contains(radar.slot) && (radar.sync || (!SyncBox.Checked)))
@@ -431,7 +431,7 @@ namespace TinyFinder
                                     tiny.nextState(array);
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(array, (byte)ratio.Value, (byte)party.Value, BoostBox.Checked, 6, advances);
+                                    radar.results(array, (byte)ratio.Value, (byte)party.Value, BoostBox.Checked, advances);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (radar.Shiny)
@@ -505,7 +505,7 @@ namespace TinyFinder
                     break;
 
                 case 8:     //Swooping
-                    Radar swoop = new Radar();
+                    Wild swoop = new Wild();
                     do
                     {
                         if (DateSearcher)
@@ -516,10 +516,10 @@ namespace TinyFinder
                             tiny.nextState(array);
                         for (uint j = Min; j <= Max; j++)
                         {
-                            swoop.results(array, 0, 0, false, 8, 0);
+                            swoop.Swooping(array);
                             if (!ΙgnoreFilters.Checked)
                             {
-                                if (Slots.Contains(swoop.slot) && (swoop.sync || !SyncBox.Checked))
+                                if (Slots.Contains(swoop.slot) && (swoop.Sync || !SyncBox.Checked))
                                 {
                                     if (DateSearcher)
                                         ShowSwoopSrch(swoop, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -687,15 +687,15 @@ namespace TinyFinder
                 nav.potential, nav.flute, nav.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
 
-        private void ShowSwoopSrch(Radar swoop, string date, uint[] store_seed, uint index)
+        private void ShowSwoopSrch(Wild swoop, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, swoop.sync, swoop.slot, null, swoop.item + "%", swoop.rand100);
+                    index, swoop.Sync, swoop.slot, null, swoop.item + "%", swoop.rand100);
         }
 
-        private void ShowSwoopGen(DataTable table, Radar swoop, uint[] state, uint index)
+        private void ShowSwoopGen(DataTable table, Wild swoop, uint[] state, uint index)
         {
-            table.Rows.Add(index, swoop.sync, swoop.slot, swoop.item.ToString() + "%", swoop.rand100, 
+            table.Rows.Add(index, swoop.Sync, swoop.slot, swoop.item.ToString() + "%", swoop.rand100, 
                 hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
         #endregion

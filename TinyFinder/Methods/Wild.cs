@@ -4,6 +4,7 @@
     {
         //Normal, Fishing, Friend Safari
         //Rock Smash
+        //Swooping
         private TinyMT tinywild = new TinyMT();
         private Data data = new Data();
         private uint[] temp = new uint[4];
@@ -52,7 +53,22 @@
 
             tinywild.nextState(temp);
             slot = data.getSlot(tinywild.Rand(temp, 100), 3);
+
             FluteItem(oras);
+        }
+
+        public void Swooping(uint[] current)
+        {
+            current.CopyTo(temp, 0);
+            rand100 = tinywild.Rand(temp, 100);
+
+            tinywild.nextState(temp);
+            slot = data.getSlot(tinywild.Rand(temp, 100), 0);
+
+            tinywild.nextState(temp);
+            Sync = tinywild.Rand(temp, 100) < 50;
+
+            FluteItem(false);
         }
 
         public void FluteItem(bool oras)
