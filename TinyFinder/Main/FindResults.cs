@@ -470,19 +470,19 @@ namespace TinyFinder
                                 nav.results(array, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type);
                                 if (!ΙgnoreFilters.Checked)
                                 {
-                                    if (nav.shiny || !NavFilters.CheckBoxItems[1].Checked)
-                                        if (nav.trigger || !NavFilters.CheckBoxItems[0].Checked)
+                                    if (nav.shiny || !NavFilters.CheckBoxItems[2].Checked)
+                                        if (nav.trigger || !NavFilters.CheckBoxItems[1].Checked)
                                             if (((NavType.SelectedIndex == 0 && nav.slotype != 2) || (NavType.SelectedIndex == 1 && nav.slotype == 2))
                                                 && Slots.Contains((byte)nav.slot)
                                                 &&
-                                                (nav.HA || !NavFilters.CheckBoxItems[2].Checked)
+                                                (nav.HA || !NavFilters.CheckBoxItems[3].Checked)
                                                 &&
-                                                (nav.eggMove || !NavFilters.CheckBoxItems[3].Checked)
+                                                (nav.eggMove || !NavFilters.CheckBoxItems[4].Checked)
                                                 &&
-                                                (nav.sync || !NavFilters.CheckBoxItems[5].Checked)
+                                                (nav.sync || !NavFilters.CheckBoxItems[6].Checked)
                                                 &&
                                                 ((nav.potential == Potential.Value) || (Potential.Value == 0)))
-                                                if ((nav.boost || !NavFilters.CheckBoxItems[4].Checked)
+                                                if ((nav.boost || !NavFilters.CheckBoxItems[5].Checked)
                                                     && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
                                                 {
                                                     if (DateSearcher)
