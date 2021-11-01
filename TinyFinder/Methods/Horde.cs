@@ -19,7 +19,7 @@
 
             rand100 = tinyhorde.Rand(temp, 100);
 
-            tinyhorde.nextState(temp);              //+1 to avoid using the same rand100 for Horde trigger and Sync
+            tinyhorde.nextState(temp);              //+1 in order to avoid using the same rand100 for Horde trigger check and Sync
             sync = tinyhorde.Rand(temp, 100) < 50;  //Every horde, triggered by step, would be synced otherwise
 
             tinyhorde.nextState(temp);
@@ -33,7 +33,7 @@
             results(oras);
         }
 
-        //(Sweet Scent is different - probably ignores the party number since it doesn't makes use of memories)
+        //(Sweet Scent is different - probably ignores the party number since it doesn't make use of memories)
         public void HordeHoney(uint[] current, bool oras)
         {
             current.CopyTo(temp, 0);

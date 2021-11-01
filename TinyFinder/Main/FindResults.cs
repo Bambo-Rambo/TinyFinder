@@ -85,7 +85,7 @@ namespace TinyFinder
                 }
                 Slots = new HashSet<byte>();
                 for (byte s = 1; s < SlotLimit; s++)
-                    if (slots.CheckBoxItems[s - 1].Checked)
+                    if (slots.CheckBoxItems[s].Checked)
                         Slots.Add(s);
                 if (Slots.Count == 0 && !ΙgnoreFilters.Checked && (!isRadar1() || (Methods.SelectedIndex == 6 && ORAS_Button.Checked)))
                 {
@@ -136,7 +136,7 @@ namespace TinyFinder
                             }
                             else
                             {
-                                //Bad implementation, fix soon
+                                //Bad implementation, fix later
                                 id.results(array);
                                 if (!ΙgnoreFilters.Checked)
                                 {
@@ -279,7 +279,7 @@ namespace TinyFinder
                         array.CopyTo(store_seed, 0);
 
                         if (!Horde_Turn.Checked)
-                            horde.Bag_Advances += (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
+                            horde.Bag_Advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
 
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(array);
@@ -325,7 +325,7 @@ namespace TinyFinder
                         if (XY_Button.Checked)
                             honey.Bag_Advances = 27;
                         else
-                            honey.Bag_Advances = (byte)(locations.Enabled ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
+                            honey.Bag_Advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
                     }
                     honey.slotCase = (byte)(SurfBox.Checked ? 3 : 0);
 
@@ -589,18 +589,18 @@ namespace TinyFinder
                     }
                     if (count == 5)
                     {
-                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, horde.sync, horde.slot,
-                        horde.HA, horde.flutes[0] + ", " + horde.flutes[1] + ", " + horde.flutes[2] + ", " + horde.flutes[3] + ", " + horde.flutes[4],
-                        horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " + horde.items[3] + "%, " + horde.items[4] + "%",
-                        horde.rand100);
+                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, horde.encounter, 
+                            horde.sync, horde.slot, horde.HA, horde.flutes[0] + ", " + horde.flutes[1] + ", " + horde.flutes[2] + ", " + horde.flutes[3] 
+                            + ", " + horde.flutes[4], horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " + horde.items[3] + "%, " 
+                            + horde.items[4] + "%", horde.rand100);
                         Searcher.Update();
                     }
                 }
                 else
                 {
-                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, horde.sync, horde.slot, horde.HA, horde.sync, horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " +
-                    horde.items[3] + "%, " + horde.items[4] + "%", horde.rand100);
+                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, horde.encounter, 
+                        horde.sync, horde.slot, horde.HA, horde.sync, horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " +
+                        horde.items[3] + "%, " + horde.items[4] + "%", horde.rand100);
                     Searcher.Update();
                 }
             }
@@ -615,7 +615,7 @@ namespace TinyFinder
                             count++;
                     }
                     if (count == 5)
-                        table.Rows.Add(index, horde.sync.ToString(), horde.slot, horde.HA, horde.flutes[0].ToString() + ", " + 
+                        table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA, horde.flutes[0].ToString() + ", " + 
                             horde.flutes[1].ToString() + ", " + horde.flutes[2].ToString() + ", " + horde.flutes[3].ToString() + ", " + 
                             horde.flutes[4].ToString(), horde.items[0].ToString() + "%, " + horde.items[1].ToString()
                             + "%, " + horde.items[2].ToString() + "%, " + horde.items[3].ToString() + "%, " + horde.items[4].ToString() + "%", 
@@ -623,7 +623,7 @@ namespace TinyFinder
                 }
                 else
                 {
-                    table.Rows.Add(index, horde.sync.ToString(), horde.slot, horde.HA, horde.items[0].ToString() + "%, " + 
+                    table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA, horde.items[0].ToString() + "%, " + 
                         horde.items[1].ToString() + "%, " + horde.items[2].ToString() + "%, " + horde.items[3].ToString() + "%, " + 
                         horde.items[4].ToString() + "%", horde.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
                 }

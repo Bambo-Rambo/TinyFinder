@@ -68,6 +68,7 @@ namespace TinyFinder
             { "Route 123", 1, true, 13 },
             { "Safari Zone", 0, true, 13 },
             { "Sky Pillar", 0, false, 7 },
+            //Honey Wild Locations
             //Name, Bag/Honey Advances, null, null
             { "Elsewhere", 15, null, null },
             { "Magma/Aqua Hideout", 6, null, null },

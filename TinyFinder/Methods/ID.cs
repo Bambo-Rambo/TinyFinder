@@ -20,7 +20,7 @@ namespace TinyFinder
             randhex = Convert.ToUInt32(secretID.ToString("X") + trainerID.ToString("X").PadLeft(4, '0'), 16);
         }
 
-        //Bad implementation, fix soon
+        //Bad implementation, fix later
         public void results(uint[] current)
         {
             current.CopyTo(temp, 0);

@@ -356,6 +356,7 @@ namespace TinyFinder
             // 
             // Methods
             // 
+            this.Methods.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Methods.FormattingEnabled = true;
             this.Methods.Items.AddRange(new object[] {
             "ID",
@@ -598,6 +599,7 @@ namespace TinyFinder
             // 
             // locations
             // 
+            this.locations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.locations.FormattingEnabled = true;
             this.locations.Location = new System.Drawing.Point(94, 96);
             this.locations.Name = "locations";
@@ -616,6 +618,7 @@ namespace TinyFinder
             // 
             // Months
             // 
+            this.Months.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.Months.FormattingEnabled = true;
             this.Months.Items.AddRange(new object[] {
             "January",
@@ -818,6 +821,7 @@ namespace TinyFinder
             // 
             // NavType
             // 
+            this.NavType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NavType.Enabled = false;
             this.NavType.Items.AddRange(new object[] {
             "Normal",
@@ -844,6 +848,7 @@ namespace TinyFinder
             this.NavFilters.CheckBoxProperties = checkBoxProperties1;
             this.NavFilters.DisplayMemberSingleItem = "";
             this.NavFilters.DropDownHeight = 170;
+            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NavFilters.FormattingEnabled = true;
             this.NavFilters.Items.AddRange(new object[] {
             "Success",
@@ -1037,6 +1042,8 @@ namespace TinyFinder
             // 
             // HASlot
             // 
+            this.HASlot.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
+            this.HASlot.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.HASlot.FormattingEnabled = true;
             this.HASlot.Items.AddRange(new object[] {
             "Don\'t Care",
@@ -1069,6 +1076,7 @@ namespace TinyFinder
             this.slots.CheckBoxProperties = checkBoxProperties2;
             this.slots.DisplayMemberSingleItem = "";
             this.slots.DropDownHeight = 310;
+            this.slots.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.slots.FormattingEnabled = true;
             this.slots.Items.AddRange(new object[] {
             "1",
@@ -1342,6 +1350,7 @@ namespace TinyFinder
             // 
             // Tools
             // 
+            this.Tools.BackColor = System.Drawing.SystemColors.ButtonFace;
             this.Tools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolsStripMenuItem});
             this.Tools.Location = new System.Drawing.Point(0, 0);

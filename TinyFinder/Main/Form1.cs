@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
@@ -84,7 +84,7 @@ namespace TinyFinder
         {
             if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
-                SyncBox.Enabled = slots.Enabled = Slots_Label.Enabled = ratio.Value == 0 ? true : false;
+                SyncBox.Enabled = slots.Enabled = Slots_Label.Enabled = ratio.Value == 0;
                 BoostBox.Enabled = BagBox.Enabled = isRadar1();
             }
         }
@@ -133,7 +133,7 @@ namespace TinyFinder
 
         private void ExclusiveBox_CheckedChanged(object sender, EventArgs e)
         {
-            NavType.Enabled = ExclusiveBox.Checked ? true : false;
+            NavType.Enabled = ExclusiveBox.Checked;
             if (!ExclusiveBox.Checked)
                 NavType.SelectedIndex = 0;
         }
@@ -152,13 +152,8 @@ namespace TinyFinder
                         LongGrassBox.Checked = true;
                     }
                 }
+                ManageRatio();
             }
-            else if (Methods.SelectedIndex == 4)
-            {
-
-            }
-
-            ManageRatio();
         }
 
         private void NavType_SelectedIndexChanged(object sender, EventArgs e)
@@ -578,13 +573,14 @@ namespace TinyFinder
 
         private void ManageLocations()
         {
-            Locations = data.SetLocations((byte)Methods.SelectedIndex, ORAS_Button.Checked);
-            locations.Items.Clear();
-            for (byte i = 0; i < Locations.Count; i++)
+            if (Location_Label.Visible)
             {
-                locations.Items.Add(Locations[i].Name);
+                Locations = data.SetLocations((byte)Methods.SelectedIndex, ORAS_Button.Checked);
+                locations.Items.Clear();
+                for (byte i = 0; i < Locations.Count; i++)
+                    locations.Items.Add(Locations[i].Name);
+                locations.SelectedIndex = 0;
             }
-            locations.SelectedIndex = 0;
         }
 
         #endregion
@@ -613,6 +609,7 @@ namespace TinyFinder
                 }
                 else if (method == 4)
                 {
+                    table.Columns.Add("Ratio", typeof(byte));
                     table.Columns.Add("Sync", typeof(string));
                     table.Columns.Add("Slot", typeof(byte));
                     table.Columns.Add("HA", typeof(byte));
@@ -692,7 +689,7 @@ namespace TinyFinder
             }
             else if (Equals(method, "Horde")) 
             {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
+                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
                 Generator.Columns["Item"].Width = 150;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 75;
@@ -758,6 +755,7 @@ namespace TinyFinder
                 }
                 else if (method == 4)
                 {
+                    Searcher.Columns.Add("ratio", "Ratio"); Searcher.Columns["ratio"].Width = 50;
                     Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
                     Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
                     Searcher.Columns.Add("ha", "HA"); Searcher.Columns["ha"].Width = 30;
@@ -843,7 +841,9 @@ namespace TinyFinder
                 else if (MethodUsed == 4)
                 {
                     if (view.Rows[row].Cells[column].Value != null)
-                        if (Convert.ToInt32(view.Rows[row].Cells["Rand(100)"].Value) < 5 && Horde_Turn.Checked)
+                        if (Convert.ToInt32(view.Rows[row].Cells[num].Value) < ratio.Value 
+                            && Convert.ToInt32(view.Rows[row].Cells["Rand(100)"].Value) < 5 
+                            && Horde_Turn.Checked)
                             view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                 }
                 else if (isRadar1())
