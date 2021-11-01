@@ -1,7 +1,7 @@
 # TinyFinder
 
-This program is based on the Tiny Timeline Tool in 3DS RNG Tool. 
-It's main purpose, is to get rid of the timeline needed for most cases in gen 6 RNG, making things easier.
+This program is supposed to be an improved version of 3DS's RNG Tool, Tiny Timeline Tool.
+It's main purpose, is to make things easier by getting rid of the timeline needed for most gen 6 RNG cases.
 
 ### Features not included in 3DS RNG Tool
 
@@ -9,10 +9,10 @@ It's main purpose, is to get rid of the timeline needed for most cases in gen 6 
 * Index filtering depending on the user's preferences
 * DexNav RNG support (Egg moves are not predicted)
 * Normal Wild RNG support for every location. Indexes that generate hordes instead, are not shown. The NPC influence is accounted for, as well.
-* Support for Horde RNG in caves (Honey). Also, for triggering hordes by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass). Location matters and the NPC influence is accounted for, as well.
-* Wild RNG using honey for places that allow it (those that don't generate hordes).
-* Option to use the Poke Radar from the bag instead of the Y menu (makes every index reachable).
-* Support for Swopping encounters in XY Victory Road (since Sync is calculated differently).
+* Support for Horde RNG in caves (Honey). Also, for triggering hordes by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass). Location matters and the NPC influence is accounted for, as well
+* Wild RNG using honey for places that allow it (those that don't generate hordes)
+* Option to use the Poke Radar from the bag instead of the Y menu (makes every index reachable)
+* Support for Swopping encounters in XY Victory Road (since Sync is calculated differently)
 
 
 ### Step 1 - Calibration
@@ -62,9 +62,13 @@ When chain > 0, you search and RNG for guaranteed shiny patches. Remember that s
 
 For DexNav read the [main guide](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/DexNavRNG.md) as well as the [extra info](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/ExtraInfo.md) including slots etc. They explain everything.
 
-Finally, Swooping is pretty simple. The encounter slots are (1-8) for Fearow, (9-10) for Skarmory and (11-12) for Hydreigon. In 3DS RNG Tool, set the delay to +40.
+Finally, Swooping is pretty simple. The encounter slots are (1-8) for Fearow, (9-10) for Skarmory and (11-12) for Hydreigon. 
+In 3DS RNG Tool, set the delay to +40. 
+This is the best spot:
 
-If you haven't calibrated already, the tool **will take some time** to do so when you hit the "Search" button and it will not calibrate again until you change the Initial State.
+![](https://i.imgur.com/HLl4wmj.png)
+
+If you are using the Date Searcher and you haven't calibrated already, the tool **will need some time** when you press the "Calibrate and Search" button and it will not calibrate again until you change the Initial State.
 
 ### Credits
 wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
