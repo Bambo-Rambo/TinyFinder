@@ -146,7 +146,7 @@ namespace TinyFinder
                 if (ORAS_Button.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes)
                 {
                     LongGrassBox.Enabled = true;
-                    if (locations.SelectedIndex > 5 && locations.SelectedIndex < 9)
+                    if (locations.SelectedIndex == 6 || locations.SelectedIndex == 7 || locations.SelectedIndex == 9)
                     {
                         LongGrassBox.Enabled = false;
                         LongGrassBox.Checked = true;
@@ -448,8 +448,6 @@ namespace TinyFinder
 
                 else if (Method == 4)
                 {
-                    HA_Label.Location = new Point(16, 98);
-                    HASlot.Location = new Point(75, 94);
                     Flute1_Label.Location = new Point(266, 55);
                     Flute1.Location = new Point(334, 52);
                     HASlot.SelectedIndex = 1;
@@ -463,8 +461,6 @@ namespace TinyFinder
                         ratio.Value = 1;    //Chain
                         ratio.Maximum = 60;
                         SyncBox.Enabled = slots.Enabled = !isRadar1();
-                        Patches_Board.Location = new Point(205, 26);
-                        Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
                     }
                     else
                     {
@@ -473,14 +469,8 @@ namespace TinyFinder
                         party.Maximum = 999;
                         party.Value = 999;
                         Party_Label.Location = new Point(185, 194);
-                        NavType_Label.Location = new Point(9, 45);
                         Slots_Label.Location = new Point(9, 93);
-                        NavFilters_Label.Location = new Point(9, 140);
-                        NavType.Location = new Point(71, 41);
                         slots.Location = new Point(71, 89);
-                        NavFilters.Location = new Point(71, 137);
-                        Potential_Label.Location = new Point(254, 93);
-                        Potential.Location = new Point(341, 89);
                         Flute1_Label.Location = new Point(254, 140);
                         Flute1.Location = new Point(341, 137);
                     }
@@ -501,6 +491,19 @@ namespace TinyFinder
             tid.Location = new Point(139, 77);
             SID_Label.Location = new Point(109, 118);
             sid.Location = new Point(139, 116);
+
+            HA_Label.Location = new Point(16, 98);
+            HASlot.Location = new Point(75, 94);
+
+            Patches_Board.Location = new Point(205, 26);
+            Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
+
+            NavType_Label.Location = new Point(9, 45);
+            NavType.Location = new Point(71, 41);
+            NavFilters_Label.Location = new Point(9, 140);
+            NavFilters.Location = new Point(71, 137);
+            Potential_Label.Location = new Point(254, 93);
+            Potential.Location = new Point(341, 89);
         }
 
         private void ManageSlots(byte method)

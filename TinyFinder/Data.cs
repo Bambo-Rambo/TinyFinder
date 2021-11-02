@@ -60,11 +60,12 @@ namespace TinyFinder
             { "Elsewhere", 0, false, 13 },
             { "Mt Pyre Inside", 0, false, 7 },
             { "New Mauville", 0, false, 7 },
-            { "Route 111 Desert", 1, false, 7 },
+            { "Route 111 Desert", 1, false, 1 },
             { "Route 117", 1, false, 13 },
             { "Route 118", 0, true, 13 },
             { "Route 119", 0, true, 13 },
             { "Route 120", 0, true, 13 },
+            { "Route 121", 0, true, 13 },
             { "Route 123", 1, true, 13 },
             { "Safari Zone", 0, true, 13 },
             { "Sky Pillar", 0, false, 7 },
@@ -97,7 +98,7 @@ namespace TinyFinder
                     }
                 else //if (method == 5)
                 {
-                    for (byte i = 11; i < 14; i++)
+                    for (byte i = 12; i < 15; i++)
                     {
                         area = new Location
                         {
