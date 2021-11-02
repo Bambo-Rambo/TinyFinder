@@ -13,6 +13,7 @@ namespace TinyFinder
         //Main Event (Search Button)
         private void button1_Click(object sender, EventArgs e)
         {
+            uint[] actual_state = new uint[4];
             DateSearcher = SearchGen.SelectedIndex == 0;
             MethodUsed = (byte)Methods.SelectedIndex;
             DataTable table = new DataTable();
@@ -94,7 +95,7 @@ namespace TinyFinder
                 }
             }
 
-            byte NPC_Influence = 0, CurrentLocation;
+            byte NPC_Influence = 0, CurrentLocation, advances = 0;
             bool XY_TallGrass = false; 
             HasHordes = false;
             if (Methods.SelectedIndex == 1 || (Methods.SelectedIndex == 4 && Horde_Turn.Checked))
@@ -274,21 +275,27 @@ namespace TinyFinder
 
                     do
                     {
+                        if (!Horde_Turn.Checked)
+                            advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
+
                         if (DateSearcher)
                             array = tiny.init(i, 1);
+
                         array.CopyTo(store_seed, 0);
-
-                        if (!Horde_Turn.Checked)
-                            horde.Bag_Advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
-
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(array);
+
+                        array.CopyTo(actual_state, 0);
+
+                        for (byte j = 0; j < advances; j++)
+                            tiny.nextState(actual_state);
+
                         for (uint j = Min; j <= Max; j++)
                         {
                             if (Horde_Turn.Checked)
                                 horde.HordeTurn(array, ORAS_Button.Checked, (byte)ratio.Value, NPC_Influence, XY_TallGrass);
                             else
-                                horde.HordeHoney(array, ORAS_Button.Checked);
+                                horde.HordeHoney(actual_state, ORAS_Button.Checked);
 
                             if (!ΙgnoreFilters.Checked)
                             {
@@ -308,6 +315,7 @@ namespace TinyFinder
                                 ShowHorde(table, horde, calc.secondsToDate(seconds, Year), store_seed, j, array);
 
                             tiny.nextState(array);
+                            tiny.nextState(actual_state);
                         }
                         seconds++;
                         i += 1000;
@@ -319,27 +327,34 @@ namespace TinyFinder
                 case 5:     //Honey Wild
                     HoneyWild honey = new HoneyWild();
                     if (CaveBox.Checked)
-                        honey.Bag_Advances = 3;
+                        advances = 3;
                     else
                     {
                         if (XY_Button.Checked)
-                            honey.Bag_Advances = 27;
+                            advances = 27;
                         else
-                            honey.Bag_Advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
+                            advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
                     }
+                    advances += (byte)(party.Value * 3);
                     honey.slotCase = (byte)(SurfBox.Checked ? 3 : 0);
 
                     do
                     {
                         if (DateSearcher)
                             array = tiny.init(i, 1);
-                        array.CopyTo(store_seed, 0);
 
+                        array.CopyTo(store_seed, 0);
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(array);
+
+                        array.CopyTo(actual_state, 0);
+
+                        for (byte j = 0; j < advances; j++)
+                            tiny.nextState(actual_state);
+
                         for (uint j = Min; j <= Max; j++)
                         {
-                            honey.results(array, ORAS_Button.Checked, (byte)party.Value);
+                            honey.results(actual_state, ORAS_Button.Checked);
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if (Slots.Contains(honey.slot) && (honey.Sync || !SyncBox.Checked))
@@ -367,6 +382,7 @@ namespace TinyFinder
                                 ShowHoneyGen(table, honey, array, j);
                             
                             tiny.nextState(array);
+                            tiny.nextState(actual_state);
                         }
                         seconds++;
                         i += 1000;
@@ -396,7 +412,7 @@ namespace TinyFinder
                                     tiny.nextState(array);
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(array, 0, (byte)party.Value, BoostBox.Checked, 0);
+                                    radar.results(array, 0, (byte)party.Value, BoostBox.Checked);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (Slots.Contains(radar.slot) && (radar.sync || (!SyncBox.Checked)))
@@ -420,18 +436,25 @@ namespace TinyFinder
                         }
                         else
                         {
-                            byte advances = (byte)(BagBox.Checked ? 27 : 0);
+                            advances = (byte)(party.Value * 3 + (BagBox.Checked ? 27 : 0));
                             Searcher.Update();
                             do
                             {
                                 if (DateSearcher)
                                     array = tiny.init(i, 1);
+
                                 array.CopyTo(store_seed, 0);
                                 for (uint j = 0; j < Min; j++)
                                     tiny.nextState(array);
+
+                                array.CopyTo(actual_state, 0);
+
+                                for (byte j = 0; j < advances; j++)
+                                    tiny.nextState(actual_state);
+
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(array, (byte)ratio.Value, (byte)party.Value, BoostBox.Checked, advances);
+                                    radar.results(actual_state, (byte)ratio.Value, (byte)party.Value, BoostBox.Checked);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (radar.Shiny)
@@ -444,7 +467,9 @@ namespace TinyFinder
                                     }
                                     else
                                         ShowRadarGen(table, radar, array, j, (byte)ratio.Value);
+
                                     tiny.nextState(array);
+                                    tiny.nextState(actual_state);
                                 }
                                 seconds++;
                                 i += 1000;

@@ -2,7 +2,7 @@
 {
     class Horde
     {
-        public byte slot, HA, rand100, Bag_Advances, encounter;
+        public byte slot, HA, rand100, encounter;
         public bool sync, trigger;
         public byte[] flutes = new byte[5], items = new byte[5];
         public uint[] temp = new uint[4];
@@ -40,8 +40,10 @@
             tinyhorde.nextState(temp);
             rand100 = tinyhorde.Rand(temp, 100);
 
-            for (byte i = 0; i < Bag_Advances; i++)
-                tinyhorde.nextState(temp);
+            /*Number of Bag advances calculated only once in FindResults.cs:        // 3 if Cave / ORAS underwater
+                                                                                    // 27 if XY
+            for (byte i = 0; i < Bag_advances + (3 * party); i++)                   // 15 if ORAS
+              tinyhoney.nextState(temp);                                            */
 
             sync = tinyhorde.Rand(temp, 100) < 50;
             trigger = true;

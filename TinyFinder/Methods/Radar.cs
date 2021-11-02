@@ -27,7 +27,7 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current, byte length, byte num, bool boost, byte advances)
+        public void results(uint[] current, byte length, byte num, bool boost)
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);
@@ -56,8 +56,12 @@ namespace TinyFinder
             }
             else
             {
-                for (int i = 3 * num + advances; i > 0; i--)
-                    tinyradar.nextState(temp);
+
+                /*Number of Advances calculated only once in FindResults.cs:
+                                                                                        // 0 if using from Y menu
+                for (byte i = 0; i < Advances + (3 * party); i++)                       // 27 if using from Bag
+                    tinyhoney.nextState(temp);                                          */
+
 
                 music = tinyradar.Rand(temp, 100);
                 boost &= music >= 50;

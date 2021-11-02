@@ -2,22 +2,24 @@
 {
     class HoneyWild
     {
-        public byte slot, flute, item, rand100, slotCase, Bag_Advances;
+        public byte slot, flute, item, rand100, slotCase;
         public bool Sync;
         public uint[] temp = new uint[4];
 
         TinyMT tinyhoney = new TinyMT();
         Data data = new Data();
 
-        public void results(uint[] current, bool oras, byte party)
+        public void results(uint[] current, bool oras)
         {
             current.CopyTo(temp, 0);
 
             tinyhoney.nextState(temp);
             rand100 = tinyhoney.Rand(temp, 100);
 
-            for (byte i = 0; i < Bag_Advances + (3 * party); i++)
-                tinyhoney.nextState(temp);
+            /*Number of Bag advances calculated only once in FindResults.cs:        // 3 if Cave / ORAS underwater
+                                                                                    // 27 if XY
+            for (byte i = 0; i < Bag_advances + (3 * party); i++)                   // 15 if ORAS
+              tinyhoney.nextState(temp);                                            // 6 if ORAS Magma/Aqua Hideout*/
 
             Sync = tinyhoney.Rand(temp, 100) < 50;
 
