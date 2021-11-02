@@ -27,9 +27,40 @@ The same goes for the rest of the variables. The possible slots would have been 
 
 # Interesting observations
 
-### Normal Wild / Horde
+### NPC Influence
 
-We tend to forget that hordes can also be triggered by moving in the grass/cave/whatever. During a successful encounter (depends on the ratio), if rand(100) < 5, a horde is generated instead of a single encounter. In XY, it can be done at any place that generates hordes, but in ORAS, it's only possible at Long Grass. This actually explains a lot of things and in fact, hordes are the reason why Normal Wild RNG in most XY places is affected. 
+Running/blinking NPCs exist in most places and affect the current TinyMT state. 
+Note that in caves, mostly in XY, even though NPCs exists, they don't affect anything since they are not moving/blinking.
+Active NPCs can be dealt with by defeating them in battle.
+This is a temporary workaround though, since they become active again if the player leaves the area.
+On top of that, not all active NPCs can be battled so their influence is still an issue.
+
+The nice thing is, that their moves can be studied and be dealt with, depending on the place, for the first 10 frames (after exiting the X menu at least).
+And thankfully that's enough for us to have consistency.
+The idea is to stay in the X menu until we get close to our target frame.
+To be more specific, when we are 10 frames away from our target, we slowly unfreeze the game by holding the 'X' button, and tapping select until we reach our target.
+
+Now for the first 8 frames, the NPC influence is not activated and no matter the place, the TinyMT state is not affected unless your character blinks (not an issue with the bag method).
+At the 10th frame, which is also the frame you get control of your character, the NPC influence starts again:
+
+* If there is 1 running NPC, the TinyMT state advances by 1 in the 10th frame (noisy).
+* If there are 2 running NPCs, the TinyMT state advances by 2 in the 10th frame (very noisy).
+* If there are no running NPCs, the TinyMT state, is not affected in the 10th frame no matter what. 
+It may advance, in the 12th frame for example, if there are blinking NPCs, but the 10th frame is always safe.
+
+Would this be an issue since the encounter needs 6/14 more frames to start? Thankfully not.
+
+During the player's turn/step, the game cannot handle both things (the movement and the NPC influence) at the same time, so it temporarily ignores the NPCs and preserves the current TinyMT state. This means that at Kalos Route 11 for example, which has 1 running NPC and many blinking ones, when you start closing the menu, the TinyMT state remains the same for the first 8 frames, and advances by 1 in the 10th. At those 6 delay frames, nothing is affected and all we need to do is start closing the menu 1 index earlier.
+
+Tiny Finder takes into account the NPC influence so we don't even have to do that.
+
+By the way, when entering the bag, the lower screen menus (PSS etc), are temporarily deleted from the game's memory. When exiting the bag, 1 TinyMT advance is being placed in queue and occurs after closing the X menu. To be more specific, it occurs in the 12th frame. Nothing special though, since as we explained, when the player moves, the game ignores everything else for that time. This even goes for routes 9 and 17 which have longer delay (20) due to the player mounting a Pokemon in those places.
+
+### Normal Wild - Hordes connection
+
+We tend to forget that hordes can also be triggered by moving in the grass/cave/whatever. During a successful encounter (depends on the ratio), if rand(100) < 5, a horde is generated instead of a single encounter. 
+In XY, it can be done at any place that generates hordes, but in ORAS, it's only possible at Long Grass. 
+This actually explains a lot of things and in fact, hordes are the reason why Normal Wild RNG in most XY places is affected. 
 
 So, the rand(100) for normal wild is supposed to check nature syncing, if < 50, the nature syncs. But for places that can generate hordes by moving, sync should use a different value because if both variables were using the same rand(100), then every successful horde trigger by step, would sync the nature since rand(100) would be < 5 and thus < 50 as well. This kills the whole "random" generation idea and for that reason, one extra rand call is performed, before sync calculation for those places, that obviously affects the rest of the variables as well (encounter ratio, slot etc). For consistency purposes, the developers could make this rand call occur in every place regardless of the possible horde generation, but code-related, this would be a bad implementation - an unnecessary rand call is never a good idea. By the way, the NPC influence has to be taken into account before the first rand call, otherwise it will give the wrong rand(100) value. Finally and for a currently unknown reason, they decided to put one extra rand call for tall grass/flowers in XY before the slot generation (not to be confused with the long grass at Routes 9/16).
 
@@ -54,10 +85,10 @@ Examples:
 
 # Consecutive cases
 
-For what described above, it's impossible for some specific consecutive combinations to occur. For example in Poke Radar RNG, it's impossible to find 2 consecutive slot 12
-indexes that also sync the nature. This happens because every time you come across a slot 12, 
-it means that the rand value of the next index is always 99 no matter what, so no sync for
-the next index. As for the rest of the methods, here are some examples of specific index combinations:
+For what described in the beggining, it's impossible for some specific consecutive combinations to occur. 
+For example in Poke Radar RNG, it's impossible to find 2 consecutive slot 12 indexes that also sync the nature. 
+This happens because every time you come across a slot 12, it means that the rand value of the next index is always 99 no matter what, so no sync for that index. 
+As for the rest of the methods, here are some examples: 
 
 ### Normal Wid
 
@@ -66,14 +97,14 @@ the next index. As for the rest of the methods, here are some examples of specif
 * For grass with illumise leading (Ratio = 26) it's impossible to have 2 consecutive encounters whose slots are 4 or higher
 * For grass with illumise leading + O-power (max Ratio = 78) it's impossible to have 2 consecutive encounters whose slots are 9 or higher
 
-The same occur for Friend Safari. Consider FS slot 1 as slots 1/2/3 in Normal Wild, slot 2 as slots 4/5/6/7 and slot 3 as slots 8/9/10/11/12.
+The same occur for Friend Safari. Consider FS slot 1 as 1/2/3 in Normal Wild, slot 2 as 4/5/6/7 and slot 3 as 8/9/10/11/12.
 
 ### Fishing
 
 * Without leading with Suction Cups (ratio = 49), it's impossible to have 2 consecutive encounter whose slots are 2 or higher
 * Leading with Suction Cups (ratio = 98), you can find 2 consecutive slots 3 that also sync, and both their white flute effects are 4, 
 but it's pointless since you replace the Synchronizer with Suction Cups anyway.
-Funnily enough, the 1st flute will always be 4 (the rarest) while the second can be any.
+Funnily enough, the 1st flute will always be 4 (the rarest) while the second may be any.
 
 ### Rock Smash
 
