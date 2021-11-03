@@ -61,6 +61,8 @@ namespace TinyFinder
             this.Min_Label = new System.Windows.Forms.Label();
             this.Max_Label = new System.Windows.Forms.Label();
             this.Settings_Box = new System.Windows.Forms.GroupBox();
+            this.Noise_Label = new System.Windows.Forms.Label();
+            this.noise = new System.Windows.Forms.NumericUpDown();
             this.BagBox = new System.Windows.Forms.CheckBox();
             this.CharmBox = new System.Windows.Forms.CheckBox();
             this.LongGrassBox = new System.Windows.Forms.CheckBox();
@@ -140,6 +142,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).BeginInit();
             this.Settings_Box.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noise)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.Filters_Box.SuspendLayout();
@@ -470,6 +473,8 @@ namespace TinyFinder
             // Settings_Box
             // 
             this.Settings_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Settings_Box.Controls.Add(this.Noise_Label);
+            this.Settings_Box.Controls.Add(this.noise);
             this.Settings_Box.Controls.Add(this.BagBox);
             this.Settings_Box.Controls.Add(this.CharmBox);
             this.Settings_Box.Controls.Add(this.LongGrassBox);
@@ -505,10 +510,32 @@ namespace TinyFinder
             this.Settings_Box.TabStop = false;
             this.Settings_Box.Text = "Step 2 - Settings";
             // 
+            // Noise_Label
+            // 
+            this.Noise_Label.AutoSize = true;
+            this.Noise_Label.Location = new System.Drawing.Point(230, 158);
+            this.Noise_Label.Name = "Noise_Label";
+            this.Noise_Label.Size = new System.Drawing.Size(42, 14);
+            this.Noise_Label.TabIndex = 44;
+            this.Noise_Label.Text = "Noise";
+            this.Noise_Label.Visible = false;
+            // 
+            // noise
+            // 
+            this.noise.Location = new System.Drawing.Point(284, 156);
+            this.noise.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.noise.Name = "noise";
+            this.noise.Size = new System.Drawing.Size(51, 22);
+            this.noise.TabIndex = 43;
+            // 
             // BagBox
             // 
             this.BagBox.AutoSize = true;
-            this.BagBox.Location = new System.Drawing.Point(237, 40);
+            this.BagBox.Location = new System.Drawing.Point(237, 24);
             this.BagBox.Name = "BagBox";
             this.BagBox.Size = new System.Drawing.Size(110, 18);
             this.BagBox.TabIndex = 42;
@@ -519,7 +546,7 @@ namespace TinyFinder
             // CharmBox
             // 
             this.CharmBox.AutoSize = true;
-            this.CharmBox.Location = new System.Drawing.Point(237, 140);
+            this.CharmBox.Location = new System.Drawing.Point(237, 102);
             this.CharmBox.Name = "CharmBox";
             this.CharmBox.Size = new System.Drawing.Size(103, 18);
             this.CharmBox.TabIndex = 41;
@@ -531,7 +558,7 @@ namespace TinyFinder
             // 
             this.LongGrassBox.AutoSize = true;
             this.LongGrassBox.Enabled = false;
-            this.LongGrassBox.Location = new System.Drawing.Point(237, 80);
+            this.LongGrassBox.Location = new System.Drawing.Point(237, 56);
             this.LongGrassBox.Name = "LongGrassBox";
             this.LongGrassBox.Size = new System.Drawing.Size(96, 18);
             this.LongGrassBox.TabIndex = 40;
@@ -542,7 +569,7 @@ namespace TinyFinder
             // Horde_Turn
             // 
             this.Horde_Turn.AutoSize = true;
-            this.Horde_Turn.Location = new System.Drawing.Point(237, 60);
+            this.Horde_Turn.Location = new System.Drawing.Point(237, 40);
             this.Horde_Turn.Name = "Horde_Turn";
             this.Horde_Turn.Size = new System.Drawing.Size(131, 18);
             this.Horde_Turn.TabIndex = 39;
@@ -576,7 +603,7 @@ namespace TinyFinder
             // ExclusiveBox
             // 
             this.ExclusiveBox.AutoSize = true;
-            this.ExclusiveBox.Location = new System.Drawing.Point(237, 160);
+            this.ExclusiveBox.Location = new System.Drawing.Point(237, 118);
             this.ExclusiveBox.Name = "ExclusiveBox";
             this.ExclusiveBox.Size = new System.Drawing.Size(96, 18);
             this.ExclusiveBox.TabIndex = 36;
@@ -588,7 +615,7 @@ namespace TinyFinder
             // SurfBox
             // 
             this.SurfBox.AutoSize = true;
-            this.SurfBox.Location = new System.Drawing.Point(237, 120);
+            this.SurfBox.Location = new System.Drawing.Point(237, 87);
             this.SurfBox.Name = "SurfBox";
             this.SurfBox.Size = new System.Drawing.Size(54, 18);
             this.SurfBox.TabIndex = 35;
@@ -660,7 +687,7 @@ namespace TinyFinder
             // BoostBox
             // 
             this.BoostBox.AutoSize = true;
-            this.BoostBox.Location = new System.Drawing.Point(237, 20);
+            this.BoostBox.Location = new System.Drawing.Point(237, 8);
             this.BoostBox.Name = "BoostBox";
             this.BoostBox.Size = new System.Drawing.Size(103, 18);
             this.BoostBox.TabIndex = 29;
@@ -695,7 +722,7 @@ namespace TinyFinder
             // CaveBox
             // 
             this.CaveBox.AutoSize = true;
-            this.CaveBox.Location = new System.Drawing.Point(237, 100);
+            this.CaveBox.Location = new System.Drawing.Point(237, 72);
             this.CaveBox.Name = "CaveBox";
             this.CaveBox.Size = new System.Drawing.Size(54, 18);
             this.CaveBox.TabIndex = 28;
@@ -1374,7 +1401,7 @@ namespace TinyFinder
             // 
             this.ntr.Enabled = false;
             this.ntr.Name = "ntr";
-            this.ntr.Size = new System.Drawing.Size(170, 22);
+            this.ntr.Size = new System.Drawing.Size(180, 22);
             this.ntr.Text = "NTR Helper";
             this.ntr.Click += new System.EventHandler(this.ntr_Click);
             // 
@@ -1382,7 +1409,7 @@ namespace TinyFinder
             // 
             this.profiles.Enabled = false;
             this.profiles.Name = "profiles";
-            this.profiles.Size = new System.Drawing.Size(170, 22);
+            this.profiles.Size = new System.Drawing.Size(180, 22);
             this.profiles.Text = "Create Profile";
             this.profiles.Click += new System.EventHandler(this.profiles_Click);
             // 
@@ -1390,7 +1417,7 @@ namespace TinyFinder
             // 
             this.profilemanager.Enabled = false;
             this.profilemanager.Name = "profilemanager";
-            this.profilemanager.Size = new System.Drawing.Size(170, 22);
+            this.profilemanager.Size = new System.Drawing.Size(180, 22);
             this.profilemanager.Text = "Profile Manager";
             this.profilemanager.Click += new System.EventHandler(this.profilemanager_Click);
             // 
@@ -1419,6 +1446,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.max)).EndInit();
             this.Settings_Box.ResumeLayout(false);
             this.Settings_Box.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.noise)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             this.Filters_Box.ResumeLayout(false);
@@ -1549,6 +1577,8 @@ namespace TinyFinder
         private System.Windows.Forms.CheckBox LongGrassBox;
         private System.Windows.Forms.CheckBox CharmBox;
         private System.Windows.Forms.CheckBox BagBox;
+        private System.Windows.Forms.NumericUpDown noise;
+        private System.Windows.Forms.Label Noise_Label;
     }
 }
 

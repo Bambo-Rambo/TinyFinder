@@ -492,7 +492,7 @@ namespace TinyFinder
                                 tiny.nextState(array);
                             for (uint j = Min; j <= Max; j++)
                             {
-                                nav.results(array, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type);
+                                nav.results(array, (byte)noise.Value, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type);
                                 if (!ΙgnoreFilters.Checked)
                                 {
                                     if (nav.shiny || !NavFilters.CheckBoxItems[2].Checked)

@@ -397,7 +397,7 @@ namespace TinyFinder
             CaveBox.Visible = Method == 1 || Method == 4 || Method == 5;
             SurfBox.Visible = Method == 5 || (Method == 6 && ORAS_Button.Checked);
             CharmBox.Visible = Method == 6 && ORAS_Button.Checked;
-            ExclusiveBox.Visible = NavType_Label.Visible = NavType.Visible = NavFilters_Label.Visible =
+            Noise_Label.Visible = noise.Visible = ExclusiveBox.Visible = NavType_Label.Visible = NavType.Visible = NavFilters_Label.Visible = 
                 NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS_Button.Checked && Method == 6;
 
             Party_Label.Visible = party.Visible = Method > 3 && Method < 7;
@@ -411,6 +411,7 @@ namespace TinyFinder
             Party_Label.Text = (Method == 6 && ORAS_Button.Checked) ? "Search Level" : "Party";
 
             ratio.Minimum = 1; ratio.Maximum = 99;
+
             if (SearchGen.SelectedIndex == 0)
             {
                 min.Value = min.Minimum = XY_Button.Checked ? 35 :
@@ -483,9 +484,9 @@ namespace TinyFinder
             BoostBox.Location = new Point(237, 80);
             BagBox.Location = new Point(237, 120);
 
-            SurfBox.Location = new Point(237, 60);
-            CharmBox.Location = new Point(237, 100);
-            ExclusiveBox.Location = new Point(237, 140);
+            SurfBox.Location = new Point(237, 40);
+            CharmBox.Location = new Point(237, 80);
+            ExclusiveBox.Location = new Point(237, 120);
 
             TID_Label.Location = new Point(109, 79);
             tid.Location = new Point(139, 77);

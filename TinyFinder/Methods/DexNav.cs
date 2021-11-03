@@ -17,10 +17,13 @@ namespace TinyFinder
         private static TinyMT tinynav = new TinyMT();
         private uint Rand(ulong n) => (uint)((tinynav.Nextuint(temp) * n) >> 32);
 
-        public void results(uint[] current, ushort searchlevel, uint chain, bool charm, bool exclusives, int type)
+        public void results(uint[] current, byte noise, ushort searchlevel, uint chain, bool charm, bool exclusives, int type)
         {
             current.CopyTo(temp, 0);
             rand100 = (byte)Rand(100);
+
+            for (byte i = 0; i < noise; i++)
+                tinynav.nextState(temp);
 
             //The chance of hitting a successful index is 50%
             //The actual chance of generating a patch successfully, depends on your current tile along with the patch's exact location
