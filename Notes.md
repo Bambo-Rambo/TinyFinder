@@ -2,7 +2,7 @@
 The TinyMT algorithm in gen 6 games is being used to decide various things including when an encounter is triggered, the encounter slot, the nature sync etc. 
 
 # Generation
-Unlike the main seed, the TinyMT seed depends solely on your system's current RTC when you boot the game. 
+Unlike the main seed, the TinyMT seed depends solely on the system's current RTC when the game is booted.
 On Citra, it can be abused very easily by setting the RTC to fixed mode but on console it's about milisecond accuracy. 
 Citra does not support miliseconds yet so for every second added to the RTC, the TinyMT initial seed is increased by 1000 (0x3E8 in hex).
 
@@ -17,7 +17,7 @@ So for example if the Hex Rand's value is 0xFDCB8660, the TID is: decimal(0x8660
 To generate the results for other methods like wild RNG, hordes etc, the Hex Rand passes through a final function (Rand(n)) 
 where  [0-n)  is the range of possible results in what I will call Int Rand. For the most cases, n = 100.
 
-It's important to note, that every time a variable (sync, ratio, slot etc) is calculated, the Int Rand advances by one.
+It's important to note, that every time a variable (sync, ratio, slot etc) is calculated, the Int Rand advances by one (rand call).
 This is important for the randomness of the results but is also necessary for one more reason. Read below.
 
 If rand < 50, the nature syncs for that index. Also for normal Wild/Fishing/Friend Safari, the encounter ratio, becomes the Rand's value. 
@@ -58,11 +58,12 @@ By the way, when entering the bag, the lower screen menus (PSS etc), are tempora
 
 ### Normal Wild - Hordes connection
 
-We tend to forget that hordes can also be triggered by moving in the grass/cave/whatever. During a successful encounter (depends on the ratio), if rand(100) < 5, a horde is generated instead of a single encounter. 
-In XY, it can be done at any place that generates hordes, but in ORAS, it's only possible at Long Grass. 
+We tend to forget that hordes can also be triggered by moving in the grass/cave/whatever. 
+During a successful encounter (depends on the ratio), if rand(100) < 5, a horde is generated instead of a single encounter. 
+In XY, it can be done in any place that generates hordes, but in ORAS, it's only possible in Long Grass. 
 This actually explains a lot of things and in fact, hordes are the reason why Normal Wild RNG in most XY places is affected. 
 
-So, the rand(100) for normal wild is supposed to check nature syncing, if < 50, the nature syncs. But for places that can generate hordes by moving, sync should use a different value because if both variables were using the same rand(100), then every successful horde trigger by step, would sync the nature since rand(100) would be < 5 and thus < 50 as well. This kills the whole "random" generation idea and for that reason, one extra rand call is performed, before sync calculation for those places, that obviously affects the rest of the variables as well (encounter ratio, slot etc). For consistency purposes, the developers could make this rand call occur in every place regardless of the possible horde generation, but code-related, this would be a bad implementation - an unnecessary rand call is never a good idea. By the way, the NPC influence has to be taken into account before the first rand call, otherwise it will give the wrong rand(100) value. Finally and for a currently unknown reason, they decided to put one extra rand call for tall grass/flowers in XY before the slot generation (not to be confused with the long grass at Routes 6/16).
+So, the first rand call (1 TinyMT advance) for normal wild is supposed to check nature syncing. If < 50, the nature syncs. But in places that can trigger hordes, sync should use a different value because if both variables were using the same rand(100) value, then every successful step horde, would sync the nature since rand(100) would be < 5 and thus < 50 as well. This would be very bad for the game's "random" behavior and for that reason, one extra rand is called, before sync calculation for those places, that obviously affects the rest of the variables as well (encounter ratio, slot etc). For consistency purposes, the developers could add this rand call in every place regardless of a possible horde generation, but code-related, this would be a bad implementation - an unnecessary rand call is never a good idea for such a big game. By the way, the NPC influence has to be taken into account before everything else, otherwise it will give the wrong rand(100) values. Finally and for whatever reason, they decided to add one extra rand call for tall grass/flowers in XY only, before the slot generation (not to be confused with the long grass at Routes 6/16).
 
 To summarize:
 * The NPC influence can advance up to 2 indexes at the moment you get control of your character by exiting the X menu. It needs to be calculated first.
@@ -70,23 +71,23 @@ To summarize:
 * +1 advance before slot if RNG abusing in XY tall grass/flowers.
 
 Examples:
-* Kalos Route 2: Quiet place and only 1 advance before slot since XY tall grass and doesn't have hordes.
+* Kalos Route 2: Quiet place and only 1 advance before slot since XY tall grass and doesn't have hordes at all.
 * Kalos Route 7: Quiet place. 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
 * Kalos Route 11: Noisy place. 1 advance before anything, 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
-* Kalos Route 16: Quiet place and in long grass, no extra advances since hordes cannot be generated and isn't XY tall grass/flowers. Can be done with 3DS RNG Tool. If in yellow flowers, same as Route 7.
+* Kalos Route 16: Quiet place. In long grass, no extra advances since hordes cannot be generated and isn't XY tall grass/flowers. Can be done with 3DS RNG Tool. If in yellow flowers, probably same as Route 7 or Route 11 depending on the noise for those spots.
 * Kalos Route 18: Very noisy place. 2 advances before anything, 1 advance before sync since hordes are possible and 1 more advance since XY tall grass/flowers.
 * Kalos Caves: Quiet places. Only 1 advance before sync since hordes are possible and nothing else since not XY tall grass/flowers.
-* Hoenn Route 101: Same as Kalos Route 16.
+* Hoenn Route 101: Same as Kalos Route 16 Long grass.
 * Hoenn Route 117: Noisy place. 1 advance before anything and no extra advances since hordes cannot be triggered by moving and isn't XY tall grass/flowers.
-* Hoenn Route 118: Quiet place. If in tall grass, the same as Route 101. If in Long grass, 1 advance before sync since hordes by moving are possible and nothing else since it isn't XY tall grass/flowers.
-* Hoenn Route 118: Quiet place with long grass only. Same as Route 118 long grass.
+* Hoenn Route 118: Quiet place. If in tall grass, the same as Route 101. If in Long grass, 1 advance before sync since hordes by moving are possible and nothing else since it isn't XY tall grass/flowers (similar to XY caves).
+* Hoenn Route 120: Quiet place with long grass only. Same as Route 118 long grass.
 * Hoenn Route 123: Noisy place. 1 advance before anything and 1 more before sync since hordes are possible by moving and nothing else since it isn't XY tall grass/flowers.
 * Hoenn Caves: Same as Kalos Route 16.
 
 # Consecutive cases
 
-For what described in the beggining, it's impossible for some specific consecutive combinations to occur. 
-For example in Poke Radar RNG, it's impossible to find 2 consecutive slot 12 indexes that also sync the nature. 
+Due to how rand calls work, it's impossible for some specific consecutive index combinations to occur. 
+For example in Poke Radar RNG (when chain = 0), it's impossible to find 2 consecutive slot 12 indexes that also sync the nature. 
 This happens because every time you come across a slot 12, it means that the rand value of the next index is always 99 no matter what, so no sync for that index. 
 As for the rest of the methods, here are some examples: 
 
