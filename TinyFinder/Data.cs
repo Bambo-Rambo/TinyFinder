@@ -60,7 +60,7 @@ namespace TinyFinder
             { "Elsewhere", 0, false, 13 },
             { "Mt Pyre Inside", 0, false, 7 },
             { "New Mauville", 0, false, 7 },
-            { "Route 111 Desert", 1, false, 1 },
+            { "Route 111 Desert", 1, false, 1 },    //Ratio is 7 but only 1 works every time
             { "Route 117", 1, false, 13 },
             { "Route 118", 0, true, 13 },
             { "Route 119", 0, true, 13 },
