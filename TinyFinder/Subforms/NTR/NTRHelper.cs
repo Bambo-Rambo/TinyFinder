@@ -6,13 +6,11 @@ namespace TinyFinder
     public partial class NTRHelper : Form
     {
         public static NtrClient ntrclient;
-        public Form1 form;
         public NTRHelper()
         {
             InitializeComponent();
-            IP.Text = "192.168.1.0";
+            IP.Text = Properties.Settings.Default.IP;
             ntrclient = new NtrClient();
-            form = new Form1();
             ntrclient.Connect += OnConnected;
             ntrclient.Message += OnMsgArrival;
             ntrclient.setServer(IP.Text, 8000);
@@ -22,6 +20,12 @@ namespace TinyFinder
             this.Hide();
             this.Parent = null;
             e.Cancel = true;
+        }
+
+        private void IP_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.IP = IP.Text;
+            Properties.Settings.Default.Save();
         }
 
         public void Connect(bool OneClick)
@@ -94,5 +98,6 @@ namespace TinyFinder
         {
             try { ntrclient.sendHeartbeatPacket(); } catch { }
         }
+
     }
 }

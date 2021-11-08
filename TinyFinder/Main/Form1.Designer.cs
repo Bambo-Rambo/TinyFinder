@@ -1411,6 +1411,7 @@ namespace TinyFinder
             this.profiles.Name = "profiles";
             this.profiles.Size = new System.Drawing.Size(180, 22);
             this.profiles.Text = "Create Profile";
+            this.profiles.Visible = false;
             this.profiles.Click += new System.EventHandler(this.profiles_Click);
             // 
             // profilemanager
@@ -1419,6 +1420,7 @@ namespace TinyFinder
             this.profilemanager.Name = "profilemanager";
             this.profilemanager.Size = new System.Drawing.Size(180, 22);
             this.profilemanager.Text = "Profile Manager";
+            this.profilemanager.Visible = false;
             this.profilemanager.Click += new System.EventHandler(this.profilemanager_Click);
             // 
             // Form1

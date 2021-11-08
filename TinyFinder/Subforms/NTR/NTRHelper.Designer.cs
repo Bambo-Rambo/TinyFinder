@@ -102,6 +102,7 @@ namespace TinyFinder
             this.IP.Size = new System.Drawing.Size(102, 22);
             this.IP.TabIndex = 112;
             this.IP.Text = "192.168.0.1";
+            this.IP.TextChanged += new System.EventHandler(this.IP_TextChanged);
             // 
             // NTR_Timer
             // 
