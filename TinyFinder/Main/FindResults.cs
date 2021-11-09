@@ -182,17 +182,7 @@ namespace TinyFinder
                             {
                                 if (wild.trigger && Slots.Contains(wild.slot) && (wild.Sync || !SyncBox.Checked))
                                 {
-                                    if (ORAS_Button.Checked)
-                                    {
-                                        if (Flute1.Value == wild.flute || Flute1.Value == 0)
-                                        {
-                                            if (DateSearcher)
-                                                ShowWildSrch(wild, calc.secondsToDate(seconds, Year), store_seed, j);
-                                            else
-                                                ShowWildGen(table, wild, array, j);
-                                        }
-                                    }
-                                    else
+                                    if (XY_Button.Checked || Flute1.Value == wild.flute || Flute1.Value == 0)
                                     {
                                         if (DateSearcher)
                                             ShowWildSrch(wild, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -230,17 +220,7 @@ namespace TinyFinder
                             {
                                 if (smash.encounter == 0 && Slots.Contains(smash.slot) && (smash.Sync || !SyncBox.Checked))
                                 {
-                                    if (ORAS_Button.Checked)
-                                    {
-                                        if (Flute1.Value == smash.flute || Flute1.Value == 0)
-                                        {
-                                            if (DateSearcher)
-                                                ShowSmashSrch(smash, calc.secondsToDate(seconds, Year), store_seed, j);
-                                            else
-                                                ShowSmashGen(table, smash, array, j);
-                                        }
-                                    }
-                                    else
+                                    if (XY_Button.Checked || Flute1.Value == smash.flute || Flute1.Value == 0)
                                     {
                                         if (DateSearcher)
                                             ShowSmashSrch(smash, calc.secondsToDate(seconds, Year), store_seed, j);
@@ -359,17 +339,7 @@ namespace TinyFinder
                             {
                                 if (Slots.Contains(honey.slot) && (honey.Sync || !SyncBox.Checked))
                                 {
-                                    if (ORAS_Button.Checked)
-                                    {
-                                        if (Flute1.Value == honey.flute || Flute1.Value == 0)
-                                        {
-                                            if (DateSearcher)
-                                                ShowHoneySrch(honey, calc.secondsToDate(seconds, Year), store_seed, j);
-                                            else
-                                                ShowHoneyGen(table, honey, array, j);
-                                        }
-                                    }
-                                    else
+                                    if (XY_Button.Checked || Flute1.Value == honey.flute || Flute1.Value == 0)
                                     {
                                         if (DateSearcher)
                                             ShowHoneySrch(honey, calc.secondsToDate(seconds, Year), store_seed, j);
