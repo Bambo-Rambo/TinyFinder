@@ -13,6 +13,7 @@ It's main purpose, is to make things easier by getting rid of the timeline neede
 * Wild RNG using honey for places that allow it (those that don't generate hordes)
 * Option to use the Poke Radar from the bag instead of the Y menu (makes every index reachable)
 * Support for Swopping encounters in XY Victory Road (since Sync is calculated differently)
+* Instant screen update when scrolling through the indexes
 
 
 ### Step 1 - Calibration
