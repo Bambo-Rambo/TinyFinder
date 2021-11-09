@@ -5,6 +5,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
+using System.Reflection;
 using TinyFinder.Subforms.Profile_Calibration;
 using TinyFinder.Subforms.Profile_Manager;
 
@@ -730,6 +731,8 @@ namespace TinyFinder
                 Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
             if (!Equals(method, "ID"))
                 Generator.Columns["Rand(100)"].Width = 85;
+
+            DoubleBuffered(Generator);
         }
 
         private void ManageSearcher(ref DataGridView Searcher, byte method)
@@ -822,9 +825,16 @@ namespace TinyFinder
                     Searcher.Columns["item"].Visible = false;
 
                 Searcher.Columns.Add("Rand(100)", "Rand(100)"); Searcher.Columns["Rand(100)"].Width = 90;
+                DoubleBuffered(Searcher);
             }
         }
 
+        private void DoubleBuffered(DataGridView view)
+        {
+            Type dgvType = view.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(view, true, null);
+        }
         private void CellFormatting(ref DataGridView view, int row, int column, byte num)
         {
             try
