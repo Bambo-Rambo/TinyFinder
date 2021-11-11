@@ -1,6 +1,10 @@
 version: 0.9.1{build}
+image: Visual Studio 2019
+configuration: Release
 build:
   verbosity: minimal
+after_build:
+- cmd: 7z a TinyFinder.zip .\TinyFinder\bin\Release\TinyFinder.exe
 artifacts:
 - path: TinyFinder.zip
   name: TinyFinder
