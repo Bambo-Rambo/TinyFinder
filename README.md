@@ -1,5 +1,7 @@
 # TinyFinder
 
+### [Latest Commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/41499528/artifacts)
+
 This program is supposed to be an improved version of 3DS's RNG Tool, Tiny Timeline Tool.
 It's main purpose, is to make things easier by getting rid of the timeline needed for most gen 6 RNG cases.
 
