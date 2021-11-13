@@ -14,11 +14,11 @@
         public void results(uint[] current, byte ratio, bool oras, byte slotCase, byte NPC, bool HasHordes, bool XY_TallGrass)
         {
             current.CopyTo(temp, 0);
-            tinywild.nextState(temp);
 
             for (byte i = 0; i < NPC; i++)          //NPC Influence taken into account before everything else
                 tinywild.nextState(temp);
 
+            tinywild.nextState(temp);
             rand100 = tinywild.Rand(temp, 100);     //If (rand100 < 5) -> Horde
 
             if (HasHordes)                          //+1 to avoid using the same rand100 for Horde trigger and Sync
@@ -29,7 +29,7 @@
             tinywild.nextState(temp);
             encounter = tinywild.Rand(temp, 100);
 
-            trigger = encounter < ratio && (rand100 > 4 || !HasHordes);
+            trigger = encounter < ratio && (!HasHordes || rand100 > 4);
 
             if (XY_TallGrass)                       //Unknown reason
                 tinywild.nextState(temp);

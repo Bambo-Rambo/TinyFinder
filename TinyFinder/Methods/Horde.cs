@@ -12,11 +12,11 @@
         public void HordeTurn(uint[] current, bool oras, byte ratio, byte NPC, bool XY_TallGrass)
         {
             current.CopyTo(temp, 0);
-            tinyhorde.nextState(temp);
 
             for (byte i = 0; i < NPC; i++)          //NPC Influence taken into account before everything else
                 tinyhorde.nextState(temp);
 
+            tinyhorde.nextState(temp);
             rand100 = tinyhorde.Rand(temp, 100);
 
             tinyhorde.nextState(temp);              //+1 in order to avoid using the same rand100 for Horde trigger check and Sync
@@ -25,7 +25,7 @@
             tinyhorde.nextState(temp);
             encounter = tinyhorde.Rand(temp, 100);
 
-            trigger = encounter < ratio && rand100 < 5;
+            trigger =  rand100 < 5 && encounter < ratio;
 
             if (XY_TallGrass)                       //Unknown reason
                 tinyhorde.nextState(temp);
