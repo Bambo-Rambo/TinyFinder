@@ -324,7 +324,7 @@ namespace TinyFinder
             // 
             // button1
             // 
-            this.button1.Font = new System.Drawing.Font("Consolas", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.button1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button1.Location = new System.Drawing.Point(205, 204);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(171, 44);
@@ -874,11 +874,10 @@ namespace TinyFinder
             checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
             this.NavFilters.CheckBoxProperties = checkBoxProperties1;
             this.NavFilters.DisplayMemberSingleItem = "";
-            this.NavFilters.DropDownHeight = 170;
+            this.NavFilters.DropDownHeight = 140;
             this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.NavFilters.FormattingEnabled = true;
             this.NavFilters.Items.AddRange(new object[] {
-            "Success",
             "Shiny",
             "HA",
             "Egg Move",
@@ -1401,7 +1400,7 @@ namespace TinyFinder
             // 
             this.ntr.Enabled = false;
             this.ntr.Name = "ntr";
-            this.ntr.Size = new System.Drawing.Size(180, 22);
+            this.ntr.Size = new System.Drawing.Size(170, 22);
             this.ntr.Text = "NTR Helper";
             this.ntr.Click += new System.EventHandler(this.ntr_Click);
             // 
@@ -1409,7 +1408,7 @@ namespace TinyFinder
             // 
             this.profiles.Enabled = false;
             this.profiles.Name = "profiles";
-            this.profiles.Size = new System.Drawing.Size(180, 22);
+            this.profiles.Size = new System.Drawing.Size(170, 22);
             this.profiles.Text = "Create Profile";
             this.profiles.Visible = false;
             this.profiles.Click += new System.EventHandler(this.profiles_Click);
@@ -1418,7 +1417,7 @@ namespace TinyFinder
             // 
             this.profilemanager.Enabled = false;
             this.profilemanager.Name = "profilemanager";
-            this.profilemanager.Size = new System.Drawing.Size(180, 22);
+            this.profilemanager.Size = new System.Drawing.Size(170, 22);
             this.profilemanager.Text = "Profile Manager";
             this.profilemanager.Visible = false;
             this.profilemanager.Click += new System.EventHandler(this.profilemanager_Click);

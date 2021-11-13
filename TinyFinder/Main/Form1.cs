@@ -23,7 +23,7 @@ namespace TinyFinder
         Calibrator calibrator;
         Manager manager;
         uint seconds, initial = 0;
-        byte count, searchMonth, SlotLimit;
+        byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes;
         byte MethodUsed;
 
@@ -47,7 +47,7 @@ namespace TinyFinder
             XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-            DefaultPositions();
+            DefaultChanges();
             ManageControls(0);
         }
 
@@ -238,40 +238,29 @@ namespace TinyFinder
         }
         private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (Methods.SelectedIndex == 6)
+            if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
-                if (XY_Button.Checked)
+                try
                 {
-                    try
-                    {
-                        Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
-                    }
-                    catch
-                    { }
+                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
                 }
-                /*else
-                {
-                    try
-                    {
-                        //To do
-                        int one = Convert.ToInt32(Generator.Rows[e.RowIndex].Cells[1].Value.ToString());
-                        int two = Convert.ToInt32(Generator.Rows[e.RowIndex].Cells[2].Value.ToString());
-                    }
-                    catch
-                    { }
-                }*/
+                catch
+                { }
             }
         }
         private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
             //Searcher doesn't work with getIndex() because multiple indexes have the same number. Possibly use the Rand(100) as well
             //Currently doesn't work when sort the rows. To do
-            try
+            if (XY_Button.Checked)
             {
-                Patches_Board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+                try
+                {
+                    Patches_Board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+                }
+                catch
+                { }
             }
-            catch
-            { }
         }
 
         /*private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
@@ -316,33 +305,33 @@ namespace TinyFinder
             updateBTN.Enabled = IsConnected;
         }
 
-        public void parseNTRInfo(string name, object state)
+        public void parseNTRInfo(string name, object info)
         {
             switch (name)
             {
                 case "TTT":
-                    var tiny = (uint[])state;
+                    var tiny = (uint[])info;
                     t3.Value = tiny[3];
                     t2.Value = tiny[2];
                     t1.Value = tiny[1];
                     t0.Value = tiny[0];
                     return;
                 case "Step":
-                    var steps = (uint[])state;
+                    var steps = (uint[])info;
                     Step_Label.Visible = true;
                     Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
                     Step_Label.Location = new Point(25, 100);
                     Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
                     break;
                 case "DexNavChain":
-                    var chain = (uint[])state;
+                    var chain = (uint[])info;
                     ratio.Value = chain[0];
                     Chain_Label.Visible = true;
                     Chain_Label.Location = new Point(25, 140);
                     Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
                     break;
                 case "RadarChain":
-                    var chainRadar = (uint[])state;
+                    var chainRadar = (uint[])info;
                     //ratio.Value = chainRadar[0];
                     Chain_Label.Visible = true;
                     Chain_Label.Location = new Point(25, 118);
@@ -480,7 +469,7 @@ namespace TinyFinder
             }
         }
 
-        private void DefaultPositions()
+        private void DefaultChanges()
         {
             BoostBox.Location = new Point(237, 80);
             BagBox.Location = new Point(237, 120);
@@ -829,7 +818,7 @@ namespace TinyFinder
             }
         }
 
-        private void DoubleBuffered(DataGridView view)
+        private new void DoubleBuffered(DataGridView view)
         {
             Type dgvType = view.GetType();
             PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -839,6 +828,14 @@ namespace TinyFinder
         {
             try
             {
+                /*if (view.Rows[row].Cells[column].Value != null)
+                {
+                    view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
+                    view.Rows[row].Cells["Tiny [2]"].Style.Font = new Font("Consolas", 9.75F);
+                    view.Rows[row].Cells["Tiny [1]"].Style.Font = new Font("Consolas", 9.75F);
+                    view.Rows[row].Cells["Tiny [0]"].Style.Font = new Font("Consolas", 9.75F);
+                }*/
+
                 if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
                 {
                     if (view.Rows[row].Cells[column].Value != null)
