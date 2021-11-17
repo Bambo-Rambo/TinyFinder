@@ -8,7 +8,8 @@
         private TinyMT tinywild = new TinyMT();
         private Data data = new Data();
         private uint[] temp = new uint[4];
-        public byte slot, encounter, flute, rand100, item;
+        public byte slot, encounter, flute, rand100; 
+      //public byte item;
         public bool Sync, trigger;
 
         public void results(uint[] current, byte ratio, bool oras, byte slotCase, byte NPC, bool HasHordes, bool XY_TallGrass)
@@ -68,7 +69,7 @@
             tinywild.nextState(temp);
             Sync = tinywild.Rand(temp, 100) < 50;
 
-            FluteItem(false);
+            //FluteItem(false);
         }
 
         public void FluteItem(bool oras)
@@ -85,7 +86,7 @@
                 else flute = 4;
             }
 
-            tinywild.nextState(temp);
+            /*tinywild.nextState(temp);
             tinywild.nextState(temp);
             if (tinywild.Rand(temp, 100) < 50)
                 item = 50;
@@ -93,7 +94,7 @@
                 item = 5;
             else if (tinywild.Rand(temp, 100) < 56)
                 item = 1;
-            else item = 0;
+            else item = 0;*/
         }
     }
 }

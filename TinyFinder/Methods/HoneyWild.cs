@@ -2,7 +2,8 @@
 {
     class HoneyWild
     {
-        public byte slot, flute, item, rand100, slotCase;
+        public byte slot, flute, rand100, slotCase;
+      //public byte item;
         public bool Sync;
         public uint[] temp = new uint[4];
 
@@ -38,7 +39,7 @@
                 else flute = 4;
             }
 
-            tinyhoney.nextState(temp);
+            /*tinyhoney.nextState(temp);
             tinyhoney.nextState(temp);
             if (tinyhoney.Rand(temp, 100) < 50)
                 item = 50;
@@ -46,7 +47,7 @@
                 item = 5;
             else if (tinyhoney.Rand(temp, 100) < 56)
                 item = 1;
-            else item = 0;
+            else item = 0;*/
         }
     }
 }

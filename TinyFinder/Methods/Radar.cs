@@ -5,7 +5,8 @@ namespace TinyFinder
     {
         public Data data = new Data();
         public static TinyMT tinyradar;
-        public byte slot, item, rand100, music;
+        public byte slot, rand100, music;
+      //public byte item;
         public bool sync;
         public uint[] temp = new uint[4];
 
@@ -41,13 +42,13 @@ namespace TinyFinder
 
                 tinyradar.nextState(temp);
                 tinyradar.nextState(temp);
-                if (tinyradar.Rand(temp, 100) < 50)
+                /*if (tinyradar.Rand(temp, 100) < 50)
                     item = 50;
                 else if (tinyradar.Rand(temp, 100) < 55)
                     item = 5;
                 else if (tinyradar.Rand(temp, 100) < 56)
                     item = 1;
-                else item = 0;
+                else item = 0;*/
 
                 for (int i = 0; i < 3 * (num - 1); i++)
                     tinyradar.nextState(temp);

@@ -4,7 +4,7 @@
     {
         public byte slot, HA, rand100, encounter;
         public bool sync, trigger;
-        public byte[] flutes = new byte[5], items = new byte[5];
+        public byte[] flutes = new byte[5]; //items = new byte[5];
         public uint[] temp = new uint[4];
         public TinyMT tinyhorde = new TinyMT();
         public Data data = new Data();
@@ -80,7 +80,7 @@
                 }
             }
 
-            tinyhorde.nextState(temp);
+            /*tinyhorde.nextState(temp);
             for (byte i = 0; i < 5; i++)
             {
                 if (tinyhorde.Rand(temp, 100) < 50)
@@ -91,7 +91,7 @@
                     items[i] = 1;
                 else items[i] = 0;
                 tinyhorde.nextState(temp);
-            }
+            }*/
         }
     }
 }
