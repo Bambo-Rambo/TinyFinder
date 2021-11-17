@@ -1,21 +1,37 @@
 # TinyFinder
 
-### [Latest Commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/41499528/artifacts)
+### Download the [latest Commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/41499528/artifacts) from AppVeyor
 
-This program is supposed to be an improved version of 3DS's RNG Tool, Tiny Timeline Tool.
-It's main purpose, is to make things easier by getting rid of the timeline needed for most gen 6 RNG cases.
+A more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
 
-### Features not included in 3DS RNG Tool
+### Differences from 3DS RNG Tool
 
-* Index search by date (Citra only - mainly useful for ID, DexNav and Radar RNG)
-* Index filtering depending on the user's preferences
-* DexNav RNG support (Egg moves are not predicted)
-* Normal Wild RNG support for every location. Indexes that generate hordes instead, are not shown. The NPC influence is accounted for, as well.
-* Support for Horde RNG in caves (Honey). Also, for triggering hordes by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass). Location matters and the NPC influence is accounted for, as well
-* Wild RNG using honey for places that allow it (those that don't generate hordes)
-* Option to use the Poke Radar from the bag instead of the Y menu (makes every index reachable)
-* Support for Swopping encounters in XY Victory Road (since Sync is calculated differently)
-* Instant screen response when scrolling through the indexes
+**(+)** Index search by date (Citra only - specifically useful for ID, DexNav and Radar RNG)
+
+**(+)** Index filtering
+
+**(+)** DexNav RNG support (Egg moves are not predicted)
+
+**(+)** Complete Normal Wild RNG support for every location. Indexes that would generate hordes instead, are not shown. The NPC influence is accounted for, as well.
+
+**(+)** Complete Horde RNG support for every location, including caves, 
+either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass). 
+The NPC influence is accounted for, as well.
+
+**(+)** Honey Wild RNG support for places that don't generate hordes
+
+**(+)** Allow Poke Radar usage from the bag instead of the Y menu (no timeline needed and every index is hittable)
+
+**(+)** XY Victory Road swooping encounters (because Sync is calculated differently)
+
+**(+)** Minor performance improvements (no lag when scrolling through the indexes etc)
+
+**(-)** TinyMT Timeline calibration is not implemented at all. 
+While it is required for XY ID RNG, nature sync for stationaries, fishing and rock smash, other methods including: 
+wild, hordes, dexnav, radar etc, can be done way faster using the bag method (see [RNG Guides](https://github.com/Bambo-Rambo/RNG-Guides))
+Index filtering can still be used for fishing and rock smash to avoid scrolling in 3DS RNG Tool.
+
+**(-)** Held item chance calculation is not really worth and is not implemented
 
 
 ### Step 1 - Calibration
@@ -37,13 +53,13 @@ As explained above, if you are using the Date Searcher, the month selection is o
 If you are doing Normal Wild RNG, choose the location since the results vary depending on it. 
 The encounter ratio changes depending on your choice but you can edit it regardless. 
 
-If you are doing Horde RNG and the "Trigger by turn" button is checked, the same things apply.
+If you are doing Horde RNG by moving (the "Trigger by turn" button is checked), the same things apply.
 
 For radar put the number of your party and the chain length. If 0, the tool will search for the desired slot and sync. 
 If > 0, it will search for shiny patches since the slot is the one you have been chaining for while sync is decided when you step into the patch. 
 (It's not possible to generate shiny patches if current chain = 0). 
 Check the Boost box only if the radar-exclusive music currently plays in the background. 
-If you are using the Radar device from the bag (recommended), check the "corresponding" box.
+If you are using the Radar device from the bag (recommended), check the corresponding box.
 
 ### Step 3 - Preferences
 
@@ -59,7 +75,7 @@ Poke Radar RNG is split in 2 categories:
 - Chain length -> 0 
 - Chain length -> higher than 0
 
-When chain == 0, you search and RNG for slot and sync. Activate the radar anytime and when inside the target index, step inside the patch.
+When chain = 0, you search and RNG for slot and sync. Activate the radar anytime and when inside the target index, step inside the patch.
 
 When chain > 0, you search and RNG for guaranteed shiny patches. Remember that shininess is TinyMT dependant in that case. Simply activate the radar during the shiny (blue) index and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check their exact locations in the tool. Double click inside an index to do that. 'C' means "Character" and is always in the middle of the array. 'S' means shiny and is the one you are gonna be stepping in while the rest are "Good" (G), "Bad" (B) and "Empty" (X) which break the chain and must be avoided. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it after the patch generation as well.
 
