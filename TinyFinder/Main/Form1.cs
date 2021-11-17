@@ -16,6 +16,7 @@ namespace TinyFinder
         HashSet<byte> Slots;
         List<Location> Locations;
         byte[] fluteArray = { 0, 0, 0, 0, 0 };
+        string Flutes;
         Calculate calc = new Calculate();
         TinyMT tiny = new TinyMT();
         Data data = new Data();
@@ -26,7 +27,7 @@ namespace TinyFinder
         byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes;
         byte MethodUsed;
-
+        int Rand100Cell;
         struct PatchSpot
         {
             public uint index;
@@ -226,7 +227,7 @@ namespace TinyFinder
         private int getIndex(ref DataGridView view, int row)
         {
             //When sort the rows, it would show the spots for the clicked row numer not for the clicked TinyMT index
-            int IndexNumber = Convert.ToInt32(view.Rows[row].Cells["Index"].Value);  //The clicked TinyMT index
+            int IndexNumber = Convert.ToInt32(view.Rows[row].Cells[0].Value);  //The clicked TinyMT index
             int num = 0;
             foreach (PatchSpot i in GPatchSpots)
             {
@@ -441,7 +442,7 @@ namespace TinyFinder
                 {
                     Flute1_Label.Location = new Point(266, 55);
                     Flute1.Location = new Point(334, 52);
-                    HASlot.SelectedIndex = 1;
+                    HASlot.SelectedIndex = 0;
                 }
 
                 else if (Method == 6)
@@ -541,7 +542,7 @@ namespace TinyFinder
                     ComboBoxHeight = 90;
                     break;
             }
-            slots.Text = "";
+            //slots.Text = "";
             slots.Items.Clear();
             slots.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
@@ -590,7 +591,7 @@ namespace TinyFinder
                 table.Columns.Add("TID", typeof(string));
                 table.Columns.Add("SID", typeof(string));
                 table.Columns.Add("TSV", typeof(string));
-                table.Columns.Add("TRV", typeof(byte));
+                table.Columns.Add("TRV", typeof(string));
                 table.Columns.Add("Rand#", typeof(string));
             }
             else
@@ -650,11 +651,11 @@ namespace TinyFinder
                     if (ORAS_Button.Checked)
                         table.Columns.Add("Flute", typeof(byte));
 
-                if (method != 6 || (method == 6 && !ORAS_Button.Checked))
+                /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
                     table.Columns.Add("Item", typeof(string));
 
                 if (method == 6 && XY_Button.Checked && ratio.Value > 0)
-                    table.Columns.Remove("Item");
+                    table.Columns.Remove("Item");*/
 
                 table.Columns.Add("Rand(100)", typeof(byte));
             }
@@ -662,9 +663,10 @@ namespace TinyFinder
             table.Columns.Add("Tiny [2]", typeof(string));
             table.Columns.Add("Tiny [1]", typeof(string));
             table.Columns.Add("Tiny [0]", typeof(string));
+
         }
 
-        private void ManageGenerator(ref DataGridView Generator, DataTable table, string method)
+        private void ManageGenerator(DataGridView Generator, DataTable table, string method)
         {
             Generator.DataSource = table;
             Generator.Columns[0].Width = 60;
@@ -676,28 +678,29 @@ namespace TinyFinder
             }
             else if (Equals(method, "Wild") || Equals(method, "Rock Smash"))
             {
-                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = 
-                    Generator.Columns["Slot"].Width = Generator.Columns["Item"].Width = 50;
+                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width =
+                    Generator.Columns["Slot"].Width = 50;
+                //Generator.Columns["Item"].Width = 50;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
-            else if (Equals(method, "Horde")) 
+            else if (Equals(method, "Horde"))
             {
                 Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
-                Generator.Columns["Item"].Width = 150;
+                //Generator.Columns["Item"].Width = 150;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 75;
             }
             else if (Equals(method, "Honey"))
             {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Item"].Width = 50;
+                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50; // Generator.Columns["Item"].Width = 50;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
             else if (Equals(method, "Radar0"))
             {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Music"].Width =
-                    Generator.Columns["Item"].Width = 50;
+                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Music"].Width = 50;
+                //Generator.Columns["Item"].Width = 50;
             }
             else if (Equals(method, "Radar1"))
             {
@@ -714,7 +717,7 @@ namespace TinyFinder
                     Generator.Columns["Flute"].Width = Generator.Columns["HA"].Width = 50;
             }
             else if (Equals(method, "Swooping"))
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Item"].Width = 50;
+                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50;// Generator.Columns["Item"].Width = 50;
 
             Generator.Columns["Tiny [3]"].Width = Generator.Columns["Tiny [2]"].Width = 
                 Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
@@ -785,7 +788,7 @@ namespace TinyFinder
                         Searcher.Columns.Add("type", "Type"); Searcher.Columns["type"].Width = 60;
                         Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
                         Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                        Searcher.Columns.Add("Shiny", "Shiny"); Searcher.Columns["Shiny"].Width = 50;
+                        Searcher.Columns.Add("shiny", "Shiny"); Searcher.Columns["shiny"].Width = 50;
                         Searcher.Columns.Add("lvlBoost", "Level"); Searcher.Columns["lvlBoost"].Width = 45;
                         Searcher.Columns.Add("ha", "HA"); Searcher.Columns["ha"].Width = 40;
                         Searcher.Columns.Add("eggmove", "Egg Move"); Searcher.Columns["eggmove"].Width = 85;
@@ -796,22 +799,22 @@ namespace TinyFinder
                 if (XY_Button.Checked)
                     Searcher.Columns["flute"].Visible = false;
 
-                if (method != 6 || (method == 6 && !ORAS_Button.Checked))
-                    Searcher.Columns.Add("item", "Item");
+                /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
+                    Searcher.Columns.Add("item", "Item");*/
                 if (method != 4)
                 {
-                    if (method != 6 || (method == 6 && !ORAS_Button.Checked))
-                        Searcher.Columns["item"].Width = 50;
+                    /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
+                        Searcher.Columns["item"].Width = 50;*/
                     Searcher.Columns["flute"].Width = 50;
                 }
                 else
                 {
                     Searcher.Columns["flute"].Width = 70;
-                    Searcher.Columns["item"].Width = 150;
+                  //Searcher.Columns["item"].Width = 150;
                 }
 
-                if (method == 6 && XY_Button.Checked && ratio.Value > 0)
-                    Searcher.Columns["item"].Visible = false;
+                /*if (method == 6 && XY_Button.Checked && ratio.Value > 0)
+                    Searcher.Columns["item"].Visible = false;*/
 
                 Searcher.Columns.Add("Rand(100)", "Rand(100)"); Searcher.Columns["Rand(100)"].Width = 90;
                 DoubleBuffered(Searcher);
@@ -824,71 +827,64 @@ namespace TinyFinder
             PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(view, true, null);
         }
-        private void CellFormatting(ref DataGridView view, int row, int column, byte num)
+        private void CellFormatting(DataGridView view, int row, int column, int baseCell, int randCell)
         {
             try
             {
-                /*if (view.Rows[row].Cells[column].Value != null)
+                if (view.Rows[row].Cells[column].Value != null)
                 {
-                    view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
-                    view.Rows[row].Cells["Tiny [2]"].Style.Font = new Font("Consolas", 9.75F);
-                    view.Rows[row].Cells["Tiny [1]"].Style.Font = new Font("Consolas", 9.75F);
-                    view.Rows[row].Cells["Tiny [0]"].Style.Font = new Font("Consolas", 9.75F);
-                }*/
+                    /*view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
+                      view.Rows[row].Cells["Tiny [2]"].Style.Font = new Font("Consolas", 9.75F);
+                      view.Rows[row].Cells["Tiny [1]"].Style.Font = new Font("Consolas", 9.75F);
+                      view.Rows[row].Cells["Tiny [0]"].Style.Font = new Font("Consolas", 9.75F);*/
 
-                if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
-                {
-                    if (view.Rows[row].Cells[column].Value != null)
-                        if (Convert.ToInt32(view.Rows[row].Cells[num].Value) < ratio.Value && 
-                            (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells["Rand(100)"].Value) > 4)))
+                    if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
+                    {
+                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
+                            (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
                             view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                }
-                else if (MethodUsed == 3)
-                {
-                    if (view.Rows[row].Cells[column].Value != null)
-                        if (Convert.ToInt32(view.Rows[row].Cells[num].Value) == 0)
+                    }
+                    else if (MethodUsed == 3)
+                    {
+                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) == 0)
                             view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                }
-                else if (MethodUsed == 4)
-                {
-                    if (view.Rows[row].Cells[column].Value != null)
-                        if (Convert.ToInt32(view.Rows[row].Cells[num].Value) < ratio.Value 
-                            && Convert.ToInt32(view.Rows[row].Cells["Rand(100)"].Value) < 5 
+                    }
+                    else if (MethodUsed == 4)
+                    {
+                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value
+                            && Convert.ToInt32(view.Rows[row].Cells[randCell].Value) < 5
                             && Horde_Turn.Checked)
                             view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                }
-                else if (isRadar1())
-                {
-                    if (view.Rows[row].Cells[column].Value != null)
-                        if (view.Rows[row].Cells["Shiny"].Value.ToString() == "True")
+                    }
+                    else if (isRadar1())
+                    {
+                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell].Value))
                             view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
-                }
-                else if (MethodUsed == 6)
-                {
-                    if (view.Rows[row].Cells[column].Value != null)
-                        if (view.Rows[row].Cells[num + 2].Value.ToString() == "True")
+                    }
+                    else if (MethodUsed == 6)
+                    {
+                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 2].Value))
                         {
-                            if (view.Rows[row].Cells[num + 6].Value.ToString() == "True")
+                            if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 6].Value))
                                 view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
                             else
                                 view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                         }
-                }
+                    }
+                } 
             }
-            catch
-            {
-
-            }
+            catch { }
         }
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(ref Searcher, e.RowIndex, e.ColumnIndex, 6);
+            CellFormatting(Searcher, e.RowIndex, e.ColumnIndex, 6, Rand100Cell + 5);
+
         }
 
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(ref Generator, e.RowIndex, e.ColumnIndex, 1);
+            CellFormatting(Generator, e.RowIndex, e.ColumnIndex, 1, Rand100Cell);
         }
         #endregion
     }

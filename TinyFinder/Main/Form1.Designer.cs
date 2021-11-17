@@ -31,6 +31,10 @@ namespace TinyFinder
         {
             TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Searcher = new System.Windows.Forms.DataGridView();
             this.s_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -1097,17 +1101,13 @@ namespace TinyFinder
             // 
             // slots
             // 
-            this.slots.BlankText = null;
+            this.slots.BlankText = "Any";
             checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
             this.slots.CheckBoxProperties = checkBoxProperties2;
             this.slots.DisplayMemberSingleItem = "";
             this.slots.DropDownHeight = 310;
             this.slots.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.slots.FormattingEnabled = true;
-            this.slots.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3"});
             this.slots.Location = new System.Drawing.Point(71, 127);
             this.slots.Name = "slots";
             this.slots.Size = new System.Drawing.Size(110, 22);
@@ -1348,6 +1348,8 @@ namespace TinyFinder
             // 
             // g_Tiny3
             // 
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.g_Tiny3.DefaultCellStyle = dataGridViewCellStyle1;
             this.g_Tiny3.HeaderText = "Tiny [3]";
             this.g_Tiny3.Name = "g_Tiny3";
             this.g_Tiny3.ReadOnly = true;
@@ -1355,6 +1357,8 @@ namespace TinyFinder
             // 
             // g_Tiny2
             // 
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.g_Tiny2.DefaultCellStyle = dataGridViewCellStyle2;
             this.g_Tiny2.HeaderText = "Tiny [2]";
             this.g_Tiny2.Name = "g_Tiny2";
             this.g_Tiny2.ReadOnly = true;
@@ -1362,6 +1366,8 @@ namespace TinyFinder
             // 
             // g_Tiny1
             // 
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.g_Tiny1.DefaultCellStyle = dataGridViewCellStyle3;
             this.g_Tiny1.HeaderText = "Tiny [1]";
             this.g_Tiny1.Name = "g_Tiny1";
             this.g_Tiny1.ReadOnly = true;
@@ -1369,6 +1375,8 @@ namespace TinyFinder
             // 
             // g_Tiny0
             // 
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.g_Tiny0.DefaultCellStyle = dataGridViewCellStyle4;
             this.g_Tiny0.HeaderText = "Tiny [0]";
             this.g_Tiny0.Name = "g_Tiny0";
             this.g_Tiny0.ReadOnly = true;
@@ -1553,16 +1561,6 @@ namespace TinyFinder
         private System.Windows.Forms.ToolStripMenuItem profiles;
         private System.Windows.Forms.ToolStripMenuItem profilemanager;
         private System.Windows.Forms.CheckBox ΙgnoreFilters;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Index;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Rand;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny3;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny2;
@@ -1580,6 +1578,16 @@ namespace TinyFinder
         private System.Windows.Forms.CheckBox BagBox;
         private System.Windows.Forms.NumericUpDown noise;
         private System.Windows.Forms.Label Noise_Label;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column6;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Rand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
     }
 }
 

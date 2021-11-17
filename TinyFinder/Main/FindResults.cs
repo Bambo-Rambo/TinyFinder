@@ -53,7 +53,7 @@ namespace TinyFinder
                                     break;
                                 }
                         Calibrated = true;
-                    } 
+                    }
                 }
                 button1.Text = "Search";
             }
@@ -132,7 +132,7 @@ namespace TinyFinder
                                     Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
                                     hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                                     j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                    id.TSV.ToString().PadLeft(4, '0'), id.TRV, hex(id.randhex));
+                                    id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
                                     Searcher.Update();
                                     Thread.Sleep(100);
                                 }
@@ -145,13 +145,13 @@ namespace TinyFinder
                                 {
                                     if (id.trainerID == tid.Value && id.secretID == sid.Value)
                                         table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV, hex(id.randhex), hex(state[3]), hex(state[2]),
+                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
                                         hex(state[1]), hex(state[0]));
                                 }
                                 else
                                 {
                                     table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV, hex(id.randhex), hex(state[3]), hex(state[2]),
+                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
                                         hex(state[1]), hex(state[0]));
                                 }
                             }
@@ -161,14 +161,15 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "ID");
+                        ManageGenerator(Generator, table, "ID");
                     break;
 
                 case 1:     //Normal Wild
                 case 2:     //Fishing
                 case 7:     //Friend Safari
-                    byte SlotCase = (byte)(MethodUsed == 2 ? 2 : MethodUsed == 7 ? 1 : 0);
                     Wild wild = new Wild();
+                    byte SlotCase = (byte)(MethodUsed == 2 ? 2 : MethodUsed == 7 ? 1 : 0);
+                    Rand100Cell = XY_Button.Checked ? 4 : 5;
                     do
                     {
                         if (DateSearcher)
@@ -202,7 +203,7 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "Wild");
+                        ManageGenerator(Generator, table, "Wild");
                     break;
 
                 case 3:     //Rock Smash
@@ -240,11 +241,12 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "Rock Smash");
+                        ManageGenerator(Generator, table, "Rock Smash");
                     break;
 
                 case 4:     //Horde
                     Horde horde = new Horde();
+                    Rand100Cell = XY_Button.Checked ? 5 : 6;
 
                     if (ORAS_Button.Checked)
                     {
@@ -303,7 +305,7 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "Horde");
+                        ManageGenerator(Generator, table, "Horde");
                     break;
 
                 case 5:     //Honey Wild
@@ -360,7 +362,7 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "Honey");
+                        ManageGenerator(Generator, table, "Honey");
                     break;
 
                 case 6:     //Radar / DexNav
@@ -404,7 +406,7 @@ namespace TinyFinder
                                 i += 1000;
                             } while (Searcher.Rows.Count < find);
                             if (!DateSearcher)
-                                ManageGenerator(ref Generator, table, "Radar0");
+                                ManageGenerator(Generator, table, "Radar0");
                         }
                         else
                         {
@@ -447,7 +449,7 @@ namespace TinyFinder
                                 i += 1000;
                             } while (Searcher.Rows.Count < find);
                             if (!DateSearcher)
-                                ManageGenerator(ref Generator, table, "Radar1");
+                                ManageGenerator(Generator, table, "Radar1");
                         }
                     }
                     else
@@ -496,7 +498,7 @@ namespace TinyFinder
                             i += 1000;
                         } while (Searcher.Rows.Count < find);
                         if (!DateSearcher)
-                            ManageGenerator(ref Generator, table, "DexNav");
+                            ManageGenerator(Generator, table, "DexNav");
                     }
                     break;
 
@@ -532,7 +534,7 @@ namespace TinyFinder
                         i += 1000;
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
-                        ManageGenerator(ref Generator, table, "Swooping");
+                        ManageGenerator(Generator, table, "Swooping");
                     Searcher.Update();
                     break;
             }
@@ -542,32 +544,32 @@ namespace TinyFinder
         private void ShowWildSrch(Wild wild, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                index, wild.encounter, wild.Sync, wild.slot, wild.flute, wild.item + "%", wild.rand100);
+                index, wild.encounter, wild.Sync, wild.slot, wild.flute, wild.rand100);
             Searcher.Update();
         }
         private void ShowWildGen(DataTable table, Wild wild, uint[] state, uint index)
         {
             if (ORAS_Button.Checked)
-                table.Rows.Add(index, wild.encounter, wild.Sync.ToString(), wild.slot, wild.flute, wild.item.ToString() + "%", wild.rand100,
+                table.Rows.Add(index, wild.encounter, wild.Sync.ToString(), wild.slot, wild.flute, wild.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
             else
-                table.Rows.Add(index, wild.encounter, wild.Sync.ToString(), wild.slot, wild.item.ToString() + "%", wild.rand100,
+                table.Rows.Add(index, wild.encounter, wild.Sync.ToString(), wild.slot, wild.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
 
         private void ShowSmashSrch(Wild smash, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index,
-                smash.encounter, smash.Sync, smash.slot, smash.flute, smash.item + "%", smash.rand100);
+                   smash.encounter, smash.Sync, smash.slot, smash.flute, smash.rand100);
             Searcher.Update();
         }
         private void ShowSmashGen(DataTable table, Wild smash, uint[] state, uint index)
         {
             if (ORAS_Button.Checked)
-                table.Rows.Add(index, smash.encounter, smash.Sync.ToString(), smash.slot, smash.flute, smash.item.ToString() + "%", smash.rand100,
+                table.Rows.Add(index, smash.encounter, smash.Sync.ToString(), smash.slot, smash.flute, smash.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
             else
-                table.Rows.Add(index, smash.encounter, smash.Sync.ToString(), smash.slot, smash.item.ToString() + "%", smash.rand100,
+                table.Rows.Add(index, smash.encounter, smash.Sync.ToString(), smash.slot, smash.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
 
@@ -585,18 +587,16 @@ namespace TinyFinder
                     }
                     if (count == 5)
                     {
-                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, horde.encounter, 
-                            horde.sync, horde.slot, horde.HA, horde.flutes[0] + ", " + horde.flutes[1] + ", " + horde.flutes[2] + ", " + horde.flutes[3] 
-                            + ", " + horde.flutes[4], horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " + horde.items[3] + "%, " 
-                            + horde.items[4] + "%", horde.rand100);
+                        Flutes = string.Join(", ", horde.flutes.Select(f => f.ToString()));
+                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), 
+                            index, horde.encounter, horde.sync, horde.slot, horde.HA, Flutes, horde.rand100);
                         Searcher.Update();
                     }
                 }
                 else
                 {
-                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, horde.encounter, 
-                        horde.sync, horde.slot, horde.HA, horde.sync, horde.items[0] + "%, " + horde.items[1] + "%, " + horde.items[2] + "%, " +
-                        horde.items[3] + "%, " + horde.items[4] + "%", horde.rand100);
+                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, 
+                        horde.encounter, horde.sync, horde.slot, horde.HA, horde.sync, horde.rand100);
                     Searcher.Update();
                 }
             }
@@ -611,17 +611,17 @@ namespace TinyFinder
                             count++;
                     }
                     if (count == 5)
-                        table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA, horde.flutes[0].ToString() + ", " + 
-                            horde.flutes[1].ToString() + ", " + horde.flutes[2].ToString() + ", " + horde.flutes[3].ToString() + ", " + 
-                            horde.flutes[4].ToString(), horde.items[0].ToString() + "%, " + horde.items[1].ToString()
-                            + "%, " + horde.items[2].ToString() + "%, " + horde.items[3].ToString() + "%, " + horde.items[4].ToString() + "%", 
-                            horde.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+                    {
+                        Flutes = string.Join(", ", horde.flutes.Select(f => f.ToString()));
+                        table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA,
+                            Flutes, horde.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+                    }
+
                 }
                 else
                 {
-                    table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA, horde.items[0].ToString() + "%, " + 
-                        horde.items[1].ToString() + "%, " + horde.items[2].ToString() + "%, " + horde.items[3].ToString() + "%, " + 
-                        horde.items[4].ToString() + "%", horde.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+                    table.Rows.Add(index, horde.encounter.ToString(), horde.sync.ToString(), horde.slot, horde.HA, 
+                        horde.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
                 }
             }
         }
@@ -629,16 +629,16 @@ namespace TinyFinder
         private void ShowHoneySrch(HoneyWild honey, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                index, honey.Sync, honey.slot, honey.flute, honey.item + "%", honey.rand100);
+                index, honey.Sync, honey.slot, honey.flute, honey.rand100);
             Searcher.Update();
         }
         private void ShowHoneyGen(DataTable table, HoneyWild honey, uint[] state, uint index)
         {
             if (ORAS_Button.Checked)
-                table.Rows.Add(index, honey.Sync.ToString(), honey.slot, honey.flute, honey.item.ToString() + "%", honey.rand100,
+                table.Rows.Add(index, honey.Sync.ToString(), honey.slot, honey.flute, honey.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
             else
-                table.Rows.Add(index, honey.Sync.ToString(), honey.slot, honey.item.ToString() + "%", honey.rand100,
+                table.Rows.Add(index, honey.Sync.ToString(), honey.slot, honey.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
 
@@ -646,10 +646,10 @@ namespace TinyFinder
         {
             if (chain == 0)
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, radar.sync, radar.slot, radar.Music, radar.item + "%", radar.rand100);
+                    index, radar.sync, radar.slot, radar.Music, radar.rand100);
             else
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, radar.Shiny, radar.Music, null, null, radar.rand100);
+                    index, radar.Shiny, radar.Music, null, radar.rand100);
             element.index = index;
             element.spots = radar.Overview;
             SPatchSpots.Add(element);
@@ -659,7 +659,7 @@ namespace TinyFinder
         private void ShowRadarGen(DataTable table, Radar radar, uint[] state, uint index, byte chain)
         {
             if (chain == 0)
-                table.Rows.Add(index, radar.sync.ToString(), radar.slot, radar.Music, radar.item.ToString() + "%", radar.rand100,
+                table.Rows.Add(index, radar.sync.ToString(), radar.slot, radar.Music, radar.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
             else
                 table.Rows.Add(index, radar.Shiny.ToString(), radar.Music, radar.rand100,
@@ -686,13 +686,12 @@ namespace TinyFinder
         private void ShowSwoopSrch(Wild swoop, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, swoop.Sync, swoop.slot, null, swoop.item + "%", swoop.rand100);
+                    index, swoop.Sync, swoop.slot, null, swoop.rand100);
         }
 
         private void ShowSwoopGen(DataTable table, Wild swoop, uint[] state, uint index)
         {
-            table.Rows.Add(index, swoop.Sync, swoop.slot, swoop.item.ToString() + "%", swoop.rand100, 
-                hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+            table.Rows.Add(index, swoop.Sync, swoop.slot, swoop.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
         #endregion
     }
