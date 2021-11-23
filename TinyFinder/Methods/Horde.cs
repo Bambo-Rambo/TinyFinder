@@ -9,7 +9,7 @@
         public TinyMT tinyhorde = new TinyMT();
         public Data data = new Data();
 
-        public void HordeTurn(uint[] current, bool oras, byte ratio, byte NPC, bool XY_TallGrass)
+        public void HordeTurn(uint[] current, bool oras, byte ratio, byte NPC, bool XY_TallGrass, bool searcher)
         {
             current.CopyTo(temp, 0);
 
@@ -26,6 +26,9 @@
             encounter = tinyhorde.Rand(temp, 100);
 
             trigger =  rand100 < 5 && encounter < ratio;
+
+            if (!trigger && searcher)
+                return;
 
             if (XY_TallGrass)                       //Unknown reason
                 tinyhorde.nextState(temp);

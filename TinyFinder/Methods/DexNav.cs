@@ -17,7 +17,7 @@ namespace TinyFinder
         private static TinyMT tinynav = new TinyMT();
         private uint Rand(ulong n) => (uint)((tinynav.Nextuint(temp) * n) >> 32);
 
-        public void results(uint[] current, byte noise, ushort searchlevel, uint chain, bool charm, bool exclusives, int type)
+        public void results(uint[] current, byte noise, ushort searchlevel, uint chain, bool charm, bool exclusives, int type, bool searcher)
         {
             current.CopyTo(temp, 0);
             rand100 = (byte)Rand(100);
@@ -30,6 +30,9 @@ namespace TinyFinder
             //(20 steps/turns required )
             trigger = Rand(100) < 50;
             //rate = tinydexnav.Rand(temp, 100); //Apparently not necessary
+
+            if (!trigger && searcher)
+                return;
 
             //The coordinates for a patch are generated inside the ring [-9, 9].
             //Currently unknown for caves, water and desert and varies for every tile
