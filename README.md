@@ -1,6 +1,6 @@
 # TinyFinder
 
-### Download the [latest Commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/41569482/artifacts) from AppVeyor
+### Download the [latest Commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/41630921/artifacts) from AppVeyor
 
 A more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
 
