@@ -277,7 +277,7 @@ namespace TinyFinder
                         for (uint j = Min; j <= Max; j++)
                         {
                             if (Horde_Turn.Checked)
-                                horde.HordeTurn(state, ORAS_Button.Checked, (byte)ratio.Value, NPC_Influence, XY_TallGrass);
+                                horde.HordeTurn(state, ORAS_Button.Checked, (byte)ratio.Value, NPC_Influence, XY_TallGrass, DateSearcher);
                             else
                                 horde.HordeHoney(state_hit, ORAS_Button.Checked);
 
@@ -466,7 +466,7 @@ namespace TinyFinder
                                 tiny.nextState(state);
                             for (uint j = Min; j <= Max; j++)
                             {
-                                nav.results(state, (byte)noise.Value, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type);
+                                nav.results(state, (byte)noise.Value, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type, DateSearcher);
                                 if (!ΙgnoreFilters.Checked)
                                 {
                                     if (nav.trigger && (nav.shiny || !NavFilters.CheckBoxItems[1].Checked))
