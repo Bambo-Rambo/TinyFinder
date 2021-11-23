@@ -926,7 +926,7 @@ namespace TinyFinder
             0,
             0});
             this.Atleast.Name = "Atleast";
-            this.Atleast.Size = new System.Drawing.Size(51, 22);
+            this.Atleast.Size = new System.Drawing.Size(57, 22);
             this.Atleast.TabIndex = 43;
             this.Atleast.Value = new decimal(new int[] {
             1,
@@ -1077,7 +1077,7 @@ namespace TinyFinder
             this.HASlot.FormattingEnabled = true;
             this.HASlot.Items.AddRange(new object[] {
             "Don\'t Care",
-            "Any",
+            "Any Slot",
             "1",
             "2",
             "3",

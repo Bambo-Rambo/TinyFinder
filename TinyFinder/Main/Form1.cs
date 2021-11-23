@@ -827,64 +827,61 @@ namespace TinyFinder
             PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(view, true, null);
         }
-        private void CellFormatting(DataGridView view, int row, int column, int baseCell, int randCell)
+        private void CellFormatting(DataGridView view, int row, int baseCell, int randCell)
         {
             try
             {
-                if (view.Rows[row].Cells[column].Value != null)
-                {
-                    /*view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
+                /*view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
                       view.Rows[row].Cells["Tiny [2]"].Style.Font = new Font("Consolas", 9.75F);
                       view.Rows[row].Cells["Tiny [1]"].Style.Font = new Font("Consolas", 9.75F);
                       view.Rows[row].Cells["Tiny [0]"].Style.Font = new Font("Consolas", 9.75F);*/
 
-                    if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
+                if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
+                {
+                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
+                        (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
+                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                }
+                else if (MethodUsed == 3)
+                {
+                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) == 0)
+                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                }
+                else if (MethodUsed == 4)
+                {
+                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value
+                        && Convert.ToInt32(view.Rows[row].Cells[randCell].Value) < 5
+                        && Horde_Turn.Checked)
+                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                }
+                else if (isRadar1())
+                {
+                    if (Convert.ToBoolean(view.Rows[row].Cells[baseCell].Value))
+                        view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
+                }
+                else if (MethodUsed == 6)
+                {
+                    if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 2].Value))
                     {
-                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
-                            (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                    }
-                    else if (MethodUsed == 3)
-                    {
-                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) == 0)
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                    }
-                    else if (MethodUsed == 4)
-                    {
-                        if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value
-                            && Convert.ToInt32(view.Rows[row].Cells[randCell].Value) < 5
-                            && Horde_Turn.Checked)
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                    }
-                    else if (isRadar1())
-                    {
-                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell].Value))
+                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 6].Value))
                             view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
+                        else
+                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                     }
-                    else if (MethodUsed == 6)
-                    {
-                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 2].Value))
-                        {
-                            if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 6].Value))
-                                view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
-                            else
-                                view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                        }
-                    }
-                } 
+                }
             }
             catch { }
         }
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Searcher, e.RowIndex, e.ColumnIndex, 6, Rand100Cell + 5);
+            CellFormatting(Searcher, e.RowIndex, 6, Rand100Cell + 5);
 
         }
 
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Generator, e.RowIndex, e.ColumnIndex, 1, Rand100Cell);
+            CellFormatting(Generator, e.RowIndex, 1, Rand100Cell);
         }
         #endregion
     }
