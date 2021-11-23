@@ -5,9 +5,8 @@ namespace TinyFinder
     {
         public Data data = new Data();
         public static TinyMT tinyradar;
-        public byte slot, rand100, music;
-      //public byte item;
-        public bool sync;
+        public byte slot, rand100, music, chain, party; //public byte item;
+        public bool sync, boost;
         public uint[] temp = new uint[4];
 
         public Patch[] patches = new Patch[5];
@@ -28,12 +27,12 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current, byte length, byte num, bool boost)
+        public void results(uint[] current)
         {
             tinyradar = new TinyMT();
             current.CopyTo(temp, 0);
             rand100 = Rand(temp, 100);
-            if (length == 0)
+            if (chain == 0)
             {
                 sync = rand100 < 50;
 
@@ -50,7 +49,7 @@ namespace TinyFinder
                     item = 1;
                 else item = 0;*/
 
-                for (int i = 0; i < 3 * (num - 1); i++)
+                for (int i = 0; i < 3 * (party - 1); i++)
                     tinyradar.nextState(temp);
                 music = tinyradar.Rand(temp, 100);
 
@@ -79,7 +78,7 @@ namespace TinyFinder
                     if (Rand(temp, 100) < GoodRate[ring])
                     {
                         tinyradar.nextState(temp);
-                        ulong Chance = boost || length >= 40 ? 100 : (ulong)(8100 - length * 200);
+                        ulong Chance = boost || chain >= 40 ? 100 : (ulong)(8100 - chain * 200);
 
                         tinyradar.nextState(temp);
                         patches[ring].condition = (byte)(tinyradar.temper(temp) * Chance <= uint.MaxValue ? 2 : 1);

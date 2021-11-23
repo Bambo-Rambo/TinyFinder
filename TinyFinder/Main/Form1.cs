@@ -27,7 +27,7 @@ namespace TinyFinder
         byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes;
         byte MethodUsed;
-        int Rand100Cell;
+        int Rand100Column;
         struct PatchSpot
         {
             public uint index;
@@ -224,7 +224,7 @@ namespace TinyFinder
             TinyChanged();
         }
 
-        private int getIndex(ref DataGridView view, int row)
+        private int getIndex(DataGridView view, int row)
         {
             //When sort the rows, it would show the spots for the clicked row numer not for the clicked TinyMT index
             int IndexNumber = Convert.ToInt32(view.Rows[row].Cells[0].Value);  //The clicked TinyMT index
@@ -239,11 +239,11 @@ namespace TinyFinder
         }
         private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (Methods.SelectedIndex == 6 && XY_Button.Checked)
+            if (isRadar1())
             {
                 try
                 {
-                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(ref Generator, e.RowIndex)].spots);
+                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(Generator, e.RowIndex)].spots);
                 }
                 catch
                 { }
@@ -253,7 +253,7 @@ namespace TinyFinder
         {
             //Searcher doesn't work with getIndex() because multiple indexes have the same number. Possibly use the Rand(100) as well
             //Currently doesn't work when sort the rows. To do
-            if (XY_Button.Checked)
+            if (isRadar1())
             {
                 try
                 {
@@ -690,6 +690,8 @@ namespace TinyFinder
                 //Generator.Columns["Item"].Width = 150;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 75;
+                if (!Horde_Turn.Checked)
+                    Generator.Columns["Ratio"].Visible = false;
             }
             else if (Equals(method, "Honey"))
             {
@@ -875,13 +877,12 @@ namespace TinyFinder
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Searcher, e.RowIndex, 6, Rand100Cell + 5);
-
+            CellFormatting(Searcher, e.RowIndex, 6, Rand100Column + 5);
         }
 
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Generator, e.RowIndex, 1, Rand100Cell);
+            CellFormatting(Generator, e.RowIndex, 1, Rand100Column);
         }
         #endregion
     }

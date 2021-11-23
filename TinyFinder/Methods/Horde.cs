@@ -2,14 +2,14 @@
 {
     class Horde
     {
-        public byte slot, HA, rand100, encounter;
-        public bool sync, trigger;
+        public byte slot, HA, rand100, encounter, ratio, NPC;
+        public bool sync, trigger, oras, XY_TallGrass, Trigger_only;
         public byte[] flutes = new byte[5]; //items = new byte[5];
         public uint[] temp = new uint[4];
         public TinyMT tinyhorde = new TinyMT();
         public Data data = new Data();
 
-        public void HordeTurn(uint[] current, bool oras, byte ratio, byte NPC, bool XY_TallGrass, bool searcher)
+        public void HordeTurn(uint[] current)
         {
             current.CopyTo(temp, 0);
 
@@ -27,17 +27,17 @@
 
             trigger =  rand100 < 5 && encounter < ratio;
 
-            if (!trigger && searcher)
+            if (!trigger && Trigger_only)
                 return;
 
             if (XY_TallGrass)                       //Unknown reason
                 tinyhorde.nextState(temp);
 
-            results(oras);
+            results();
         }
 
         //(Sweet Scent is different - probably ignores the party number since it doesn't make use of memories)
-        public void HordeHoney(uint[] current, bool oras)
+        public void HordeHoney(uint[] current)
         {
             current.CopyTo(temp, 0);
             tinyhorde.nextState(temp);
@@ -49,12 +49,11 @@
               tinyhoney.nextState(temp);                                            */
 
             sync = tinyhorde.Rand(temp, 100) < 50;
-            trigger = true;
 
-            results(oras);
+            results();
         }
 
-        public void results(bool oras)
+        public void results()
         {
             tinyhorde.nextState(temp);
             slot = data.getSlot(tinyhorde.Rand(temp, 100), 2);

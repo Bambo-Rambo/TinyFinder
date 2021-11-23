@@ -98,7 +98,7 @@ namespace TinyFinder
             }
 
             byte NPC_Influence = 0, CurrentLocation, advances = 0;
-            bool XY_TallGrass = false; 
+            bool Is_XY_TallGrass = false; 
             HasHordes = false;
             if (MethodUsed == 1 || (MethodUsed == 4 && Horde_Turn.Checked))
             {
@@ -106,7 +106,7 @@ namespace TinyFinder
                 NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
                 HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes)) 
                     || (ORAS_Button.Checked && LongGrassBox.Checked && !CaveBox.Checked);
-                XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
+                Is_XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
             }
 
 
@@ -167,9 +167,19 @@ namespace TinyFinder
                 case 1:     //Normal Wild
                 case 2:     //Fishing
                 case 7:     //Friend Safari
-                    Wild wild = new Wild();
-                    byte SlotCase = (byte)(MethodUsed == 2 ? 2 : MethodUsed == 7 ? 1 : 0);
-                    Rand100Cell = XY_Button.Checked ? 4 : 5;
+                    Wild wild = new Wild()
+                    {
+                        ratio = (byte)ratio.Value,
+                        oras = ORAS_Button.Checked,
+                        slotType = (byte)(MethodUsed == 2 ? 2 : MethodUsed == 7 ? 1 : 0),
+                        NPC = NPC_Influence,
+                        HasHordes = HasHordes,
+                        XY_TallGrass = Is_XY_TallGrass,
+
+                    };
+
+                    Rand100Column = XY_Button.Checked ? 4 : 5;    //Flute Column
+
                     do
                     {
                         if (DateSearcher)
@@ -180,7 +190,7 @@ namespace TinyFinder
                             tiny.nextState(state);
                         for (uint j = Min; j <= Max; j++)
                         {
-                            wild.results(state, (byte)ratio.Value, ORAS_Button.Checked, SlotCase, NPC_Influence, HasHordes, XY_TallGrass);
+                            wild.results(state);
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if (wild.trigger && (Slots.Contains(wild.slot) || SlotCount == 0) && (wild.Sync || !SyncBox.Checked))
@@ -207,7 +217,10 @@ namespace TinyFinder
                     break;
 
                 case 3:     //Rock Smash
-                    Wild smash = new Wild();
+                    Wild smash = new Wild()
+                    {
+                        oras = ORAS_Button.Checked
+                    };
                     do
                     {
                         if (DateSearcher)
@@ -218,7 +231,7 @@ namespace TinyFinder
                             tiny.nextState(state);
                         for (uint j = Min; j <= Max; j++)
                         {
-                            smash.RockSmash(state, ORAS_Button.Checked);
+                            smash.RockSmash(state);
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if (smash.encounter == 0 && (Slots.Contains(smash.slot) || SlotCount == 0) && (smash.Sync || !SyncBox.Checked))
@@ -245,8 +258,15 @@ namespace TinyFinder
                     break;
 
                 case 4:     //Horde
-                    Horde horde = new Horde();
-                    Rand100Cell = XY_Button.Checked ? 5 : 6;
+                    Horde horde = new Horde()
+                    {
+                        oras = ORAS_Button.Checked,
+                        ratio = (byte)ratio.Value,
+                        NPC = NPC_Influence,
+                        XY_TallGrass = Is_XY_TallGrass,
+                        Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
+                    };
+                    Rand100Column = XY_Button.Checked ? 5 : 6;
 
                     if (ORAS_Button.Checked)
                     {
@@ -257,11 +277,14 @@ namespace TinyFinder
                         fluteArray[4] = (byte)Flute5.Value;
                     }
 
+                    if (!Horde_Turn.Checked)
+                    {
+                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
+                        horde.trigger = true;
+                    }
+
                     do
                     {
-                        if (!Horde_Turn.Checked)
-                            advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
-
                         if (DateSearcher)
                             state = tiny.init(i, 1);
 
@@ -277,9 +300,9 @@ namespace TinyFinder
                         for (uint j = Min; j <= Max; j++)
                         {
                             if (Horde_Turn.Checked)
-                                horde.HordeTurn(state, ORAS_Button.Checked, (byte)ratio.Value, NPC_Influence, XY_TallGrass, DateSearcher);
+                                horde.HordeTurn(state);
                             else
-                                horde.HordeHoney(state_hit, ORAS_Button.Checked);
+                                horde.HordeHoney(state_hit);
 
                             if (!ΙgnoreFilters.Checked)
                             {
@@ -309,7 +332,11 @@ namespace TinyFinder
                     break;
 
                 case 5:     //Honey Wild
-                    HoneyWild honey = new HoneyWild();
+                    HoneyWild honey = new HoneyWild()
+                    {
+                        oras = ORAS_Button.Checked,
+                        slotCase = (byte)(SurfBox.Checked ? 3 : 0),
+                    };
                     if (CaveBox.Checked)
                         advances = 3;
                     else
@@ -320,7 +347,6 @@ namespace TinyFinder
                             advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
                     }
                     advances += (byte)(party.Value * 3);
-                    honey.slotCase = (byte)(SurfBox.Checked ? 3 : 0);
 
                     do
                     {
@@ -338,7 +364,7 @@ namespace TinyFinder
 
                         for (uint j = Min; j <= Max; j++)
                         {
-                            honey.results(state_hit, ORAS_Button.Checked);
+                            honey.results(state_hit);
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if ((Slots.Contains(honey.slot) || SlotCount == 0) && (honey.Sync || !SyncBox.Checked))
@@ -368,7 +394,12 @@ namespace TinyFinder
                 case 6:     //Radar / DexNav
                     if (Equals(Methods.Items[6], "Radar"))
                     {
-                        Radar radar = new Radar();
+                        Radar radar = new Radar()
+                        {
+                            chain = (byte)ratio.Value,
+                            party = (byte)party.Value,
+                            boost = BoostBox.Checked,
+                        };
                         if (DateSearcher)
                             SPatchSpots.Clear();
                         else
@@ -386,7 +417,7 @@ namespace TinyFinder
                                     tiny.nextState(state);
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(state, 0, (byte)party.Value, BoostBox.Checked);
+                                    radar.results(state);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if ((Slots.Contains(radar.slot) || SlotCount == 0) && (radar.sync || (!SyncBox.Checked)))
@@ -428,7 +459,7 @@ namespace TinyFinder
 
                                 for (uint j = Min; j <= Max; j++)
                                 {
-                                    radar.results(state_hit, (byte)ratio.Value, (byte)party.Value, BoostBox.Checked);
+                                    radar.results(state_hit);
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (radar.Shiny)
@@ -454,8 +485,16 @@ namespace TinyFinder
                     }
                     else
                     {
-                        DexNav nav = new DexNav();
-                        int type = SurfBox.Checked ? 1 : 0;
+                        DexNav nav = new DexNav()
+                        {
+                            noise = (byte)noise.Value,
+                            searchlevel = (ushort)party.Value,
+                            chain = (byte)ratio.Value,
+                            charm = CharmBox.Checked,
+                            exclusives = ExclusiveBox.Checked,
+                            type = SurfBox.Checked ? 1 : 0,
+                            Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
+                        };
                         do
                         {
                             if (DateSearcher)
@@ -466,11 +505,11 @@ namespace TinyFinder
                                 tiny.nextState(state);
                             for (uint j = Min; j <= Max; j++)
                             {
-                                nav.results(state, (byte)noise.Value, (ushort)party.Value, (uint)ratio.Value, CharmBox.Checked, ExclusiveBox.Checked, type, DateSearcher);
+                                nav.results(state);
                                 if (!ΙgnoreFilters.Checked)
                                 {
                                     if (nav.trigger && (nav.shiny || !NavFilters.CheckBoxItems[1].Checked))
-                                            if (((NavType.SelectedIndex == 0 && nav.slotype != 2) || (NavType.SelectedIndex == 1 && nav.slotype == 2))
+                                            if (((NavType.SelectedIndex == 0 && nav.slotType != 2) || (NavType.SelectedIndex == 1 && nav.slotType == 2))
                                                 && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
                                                 &&
                                                 (nav.HA || !NavFilters.CheckBoxItems[2].Checked)

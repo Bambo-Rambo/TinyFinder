@@ -116,15 +116,6 @@ namespace TinyFinder
             this.sid = new System.Windows.Forms.NumericUpDown();
             this.tid = new System.Windows.Forms.NumericUpDown();
             this.Calibr_Box = new System.Windows.Forms.GroupBox();
-            this.updateBTN = new System.Windows.Forms.Button();
-            this.Tiny0_Label = new System.Windows.Forms.Label();
-            this.Tiny1_Label = new System.Windows.Forms.Label();
-            this.Tiny2_Label = new System.Windows.Forms.Label();
-            this.Tiny3_Label = new System.Windows.Forms.Label();
-            this.Date_Label = new System.Windows.Forms.Label();
-            this.SearchGen = new System.Windows.Forms.TabControl();
-            this.Srch = new System.Windows.Forms.TabPage();
-            this.Gen = new System.Windows.Forms.TabPage();
             this.Generator = new System.Windows.Forms.DataGridView();
             this.g_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -136,6 +127,15 @@ namespace TinyFinder
             this.g_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.g_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.g_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.updateBTN = new System.Windows.Forms.Button();
+            this.Tiny0_Label = new System.Windows.Forms.Label();
+            this.Tiny1_Label = new System.Windows.Forms.Label();
+            this.Tiny2_Label = new System.Windows.Forms.Label();
+            this.Tiny3_Label = new System.Windows.Forms.Label();
+            this.Date_Label = new System.Windows.Forms.Label();
+            this.SearchGen = new System.Windows.Forms.TabControl();
+            this.Srch = new System.Windows.Forms.TabPage();
+            this.Gen = new System.Windows.Forms.TabPage();
             this.Tools = new System.Windows.Forms.MenuStrip();
             this.toolsStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ntr = new System.Windows.Forms.ToolStripMenuItem();
@@ -160,8 +160,8 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.sid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tid)).BeginInit();
             this.Calibr_Box.SuspendLayout();
-            this.SearchGen.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).BeginInit();
+            this.SearchGen.SuspendLayout();
             this.Tools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -196,6 +196,7 @@ namespace TinyFinder
             this.Searcher.Size = new System.Drawing.Size(1123, 305);
             this.Searcher.TabIndex = 0;
             this.Searcher.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Searcher_CellFormatting);
+            this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
             // 
             // s_Date
             // 
@@ -1179,101 +1180,6 @@ namespace TinyFinder
             this.Calibr_Box.TabStop = false;
             this.Calibr_Box.Text = "Step 1 - Calibration";
             // 
-            // updateBTN
-            // 
-            this.updateBTN.Enabled = false;
-            this.updateBTN.Location = new System.Drawing.Point(72, 227);
-            this.updateBTN.Name = "updateBTN";
-            this.updateBTN.Size = new System.Drawing.Size(161, 30);
-            this.updateBTN.TabIndex = 18;
-            this.updateBTN.Text = "Update";
-            this.updateBTN.UseVisualStyleBackColor = true;
-            this.updateBTN.Visible = false;
-            this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
-            // 
-            // Tiny0_Label
-            // 
-            this.Tiny0_Label.AutoSize = true;
-            this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
-            this.Tiny0_Label.Name = "Tiny0_Label";
-            this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny0_Label.TabIndex = 17;
-            this.Tiny0_Label.Text = "Tiny [0]";
-            // 
-            // Tiny1_Label
-            // 
-            this.Tiny1_Label.AutoSize = true;
-            this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
-            this.Tiny1_Label.Name = "Tiny1_Label";
-            this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny1_Label.TabIndex = 16;
-            this.Tiny1_Label.Text = "Tiny [1]";
-            // 
-            // Tiny2_Label
-            // 
-            this.Tiny2_Label.AutoSize = true;
-            this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
-            this.Tiny2_Label.Name = "Tiny2_Label";
-            this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny2_Label.TabIndex = 15;
-            this.Tiny2_Label.Text = "Tiny [2]";
-            // 
-            // Tiny3_Label
-            // 
-            this.Tiny3_Label.AutoSize = true;
-            this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
-            this.Tiny3_Label.Name = "Tiny3_Label";
-            this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny3_Label.TabIndex = 14;
-            this.Tiny3_Label.Text = "Tiny [3]";
-            // 
-            // Date_Label
-            // 
-            this.Date_Label.AutoSize = true;
-            this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Date_Label.Location = new System.Drawing.Point(1, 67);
-            this.Date_Label.Name = "Date_Label";
-            this.Date_Label.Size = new System.Drawing.Size(56, 14);
-            this.Date_Label.TabIndex = 13;
-            this.Date_Label.Text = "message";
-            // 
-            // SearchGen
-            // 
-            this.SearchGen.Controls.Add(this.Srch);
-            this.SearchGen.Controls.Add(this.Gen);
-            this.SearchGen.Location = new System.Drawing.Point(12, 35);
-            this.SearchGen.Name = "SearchGen";
-            this.SearchGen.SelectedIndex = 0;
-            this.SearchGen.Size = new System.Drawing.Size(1126, 303);
-            this.SearchGen.TabIndex = 20;
-            this.SearchGen.SelectedIndexChanged += new System.EventHandler(this.SearchGen_SelectedIndexChanged);
-            // 
-            // Srch
-            // 
-            this.Srch.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Srch.Location = new System.Drawing.Point(4, 24);
-            this.Srch.Name = "Srch";
-            this.Srch.Padding = new System.Windows.Forms.Padding(3);
-            this.Srch.Size = new System.Drawing.Size(1118, 275);
-            this.Srch.TabIndex = 0;
-            this.Srch.Text = "Date Searcher";
-            this.Srch.UseVisualStyleBackColor = true;
-            // 
-            // Gen
-            // 
-            this.Gen.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Gen.Location = new System.Drawing.Point(4, 24);
-            this.Gen.Name = "Gen";
-            this.Gen.Padding = new System.Windows.Forms.Padding(3);
-            this.Gen.Size = new System.Drawing.Size(1118, 275);
-            this.Gen.TabIndex = 1;
-            this.Gen.Text = "Generator";
-            this.Gen.UseVisualStyleBackColor = true;
-            // 
             // Generator
             // 
             this.Generator.AllowUserToAddRows = false;
@@ -1382,6 +1288,101 @@ namespace TinyFinder
             this.g_Tiny0.ReadOnly = true;
             this.g_Tiny0.Width = 75;
             // 
+            // updateBTN
+            // 
+            this.updateBTN.Enabled = false;
+            this.updateBTN.Location = new System.Drawing.Point(72, 227);
+            this.updateBTN.Name = "updateBTN";
+            this.updateBTN.Size = new System.Drawing.Size(161, 30);
+            this.updateBTN.TabIndex = 18;
+            this.updateBTN.Text = "Update";
+            this.updateBTN.UseVisualStyleBackColor = true;
+            this.updateBTN.Visible = false;
+            this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
+            // 
+            // Tiny0_Label
+            // 
+            this.Tiny0_Label.AutoSize = true;
+            this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
+            this.Tiny0_Label.Name = "Tiny0_Label";
+            this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny0_Label.TabIndex = 17;
+            this.Tiny0_Label.Text = "Tiny [0]";
+            // 
+            // Tiny1_Label
+            // 
+            this.Tiny1_Label.AutoSize = true;
+            this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
+            this.Tiny1_Label.Name = "Tiny1_Label";
+            this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny1_Label.TabIndex = 16;
+            this.Tiny1_Label.Text = "Tiny [1]";
+            // 
+            // Tiny2_Label
+            // 
+            this.Tiny2_Label.AutoSize = true;
+            this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
+            this.Tiny2_Label.Name = "Tiny2_Label";
+            this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny2_Label.TabIndex = 15;
+            this.Tiny2_Label.Text = "Tiny [2]";
+            // 
+            // Tiny3_Label
+            // 
+            this.Tiny3_Label.AutoSize = true;
+            this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
+            this.Tiny3_Label.Name = "Tiny3_Label";
+            this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny3_Label.TabIndex = 14;
+            this.Tiny3_Label.Text = "Tiny [3]";
+            // 
+            // Date_Label
+            // 
+            this.Date_Label.AutoSize = true;
+            this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Date_Label.Location = new System.Drawing.Point(1, 67);
+            this.Date_Label.Name = "Date_Label";
+            this.Date_Label.Size = new System.Drawing.Size(56, 14);
+            this.Date_Label.TabIndex = 13;
+            this.Date_Label.Text = "message";
+            // 
+            // SearchGen
+            // 
+            this.SearchGen.Controls.Add(this.Srch);
+            this.SearchGen.Controls.Add(this.Gen);
+            this.SearchGen.Location = new System.Drawing.Point(12, 35);
+            this.SearchGen.Name = "SearchGen";
+            this.SearchGen.SelectedIndex = 0;
+            this.SearchGen.Size = new System.Drawing.Size(1126, 303);
+            this.SearchGen.TabIndex = 20;
+            this.SearchGen.SelectedIndexChanged += new System.EventHandler(this.SearchGen_SelectedIndexChanged);
+            // 
+            // Srch
+            // 
+            this.Srch.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Srch.Location = new System.Drawing.Point(4, 24);
+            this.Srch.Name = "Srch";
+            this.Srch.Padding = new System.Windows.Forms.Padding(3);
+            this.Srch.Size = new System.Drawing.Size(1118, 275);
+            this.Srch.TabIndex = 0;
+            this.Srch.Text = "Date Searcher";
+            this.Srch.UseVisualStyleBackColor = true;
+            // 
+            // Gen
+            // 
+            this.Gen.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Gen.Location = new System.Drawing.Point(4, 24);
+            this.Gen.Name = "Gen";
+            this.Gen.Padding = new System.Windows.Forms.Padding(3);
+            this.Gen.Size = new System.Drawing.Size(1118, 275);
+            this.Gen.TabIndex = 1;
+            this.Gen.Text = "Generator";
+            this.Gen.UseVisualStyleBackColor = true;
+            // 
             // Tools
             // 
             this.Tools.BackColor = System.Drawing.SystemColors.ButtonFace;
@@ -1471,8 +1472,8 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.tid)).EndInit();
             this.Calibr_Box.ResumeLayout(false);
             this.Calibr_Box.PerformLayout();
-            this.SearchGen.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).EndInit();
+            this.SearchGen.ResumeLayout(false);
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             this.ResumeLayout(false);

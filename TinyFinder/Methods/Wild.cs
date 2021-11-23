@@ -8,12 +8,11 @@
         private TinyMT tinywild = new TinyMT();
         private Data data = new Data();
         private uint[] temp = new uint[4];
-        public byte slot, encounter, flute, rand100; 
-      //public byte item;
-        public bool Sync, trigger;
+        public byte slot, encounter, flute, rand100, ratio, slotType, NPC; //public byte item;
+        public bool Sync, trigger, oras, HasHordes, XY_TallGrass;
 
         //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
-        public void results(uint[] current, byte ratio, bool oras, byte slotCase, byte NPC, bool HasHordes, bool XY_TallGrass)
+        public void results(uint[] current)
         {
             current.CopyTo(temp, 0);
 
@@ -37,12 +36,13 @@
                 tinywild.nextState(temp);
 
             tinywild.nextState(temp);
-            slot = data.getSlot(tinywild.Rand(temp, 100), slotCase);
+            slot = data.getSlot(tinywild.Rand(temp, 100), slotType);
 
-            FluteItem(oras);
+            if (oras)
+                Findflute();
         }
 
-        public void RockSmash(uint[] current, bool oras)
+        public void RockSmash(uint[] current)
         {
             current.CopyTo(temp, 0);
 
@@ -56,7 +56,8 @@
             tinywild.nextState(temp);
             slot = data.getSlot(tinywild.Rand(temp, 100), 3);
 
-            FluteItem(oras);
+            if (oras)
+                Findflute();
         }
 
         public void Swooping(uint[] current)
@@ -70,22 +71,18 @@
             tinywild.nextState(temp);
             Sync = tinywild.Rand(temp, 100) < 50;
 
-            //FluteItem(false);
         }
 
-        public void FluteItem(bool oras)
+        public void Findflute()
         {
-            if (oras)
-            {
-                tinywild.nextState(temp);
-                if (tinywild.Rand(temp, 100) < 40)
-                    flute = 1;
-                else if (tinywild.Rand(temp, 100) < 70)
-                    flute = 2;
-                else if (tinywild.Rand(temp, 100) < 90)
-                    flute = 3;
-                else flute = 4;
-            }
+            tinywild.nextState(temp);
+            if (tinywild.Rand(temp, 100) < 40)
+                flute = 1;
+            else if (tinywild.Rand(temp, 100) < 70)
+                flute = 2;
+            else if (tinywild.Rand(temp, 100) < 90)
+                flute = 3;
+            else flute = 4;
 
             /*tinywild.nextState(temp);
             tinywild.nextState(temp);

@@ -4,13 +4,13 @@
     {
         public byte slot, flute, rand100, slotCase;
       //public byte item;
-        public bool Sync;
+        public bool Sync, oras;
         public uint[] temp = new uint[4];
 
         TinyMT tinyhoney = new TinyMT();
         Data data = new Data();
 
-        public void results(uint[] current, bool oras)
+        public void results(uint[] current)
         {
             current.CopyTo(temp, 0);
 

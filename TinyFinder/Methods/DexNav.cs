@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TinyFinder
+﻿namespace TinyFinder
 {
     //https://github.com/wwwwwwzx/3DSRNGTool/blob/master/3DSRNGTool/Gen6/DexNav.cs
     class DexNav
     {
-        public bool sync, boost, HA, eggMove, shiny, trigger;
+        public bool sync, boost, HA, eggMove, shiny, trigger, charm, exclusives, Trigger_only;
         public sbyte right, down;
-        public byte levelBoost, flute, potential, rand100;
-        public int TargetValue, CheckCount, Index, slot, slotype;
+        public byte levelBoost, flute, potential, rand100, noise, chain;
+        public int TargetValue, CheckCount, Index, slot, slotType, type;    //slotType -> Normal/DexNav, type -> Land(12)/Water(5)
+        public ushort searchlevel;
         public string encounter;
         public uint[] temp = new uint[4];
 
         private static TinyMT tinynav = new TinyMT();
         private uint Rand(ulong n) => (uint)((tinynav.Nextuint(temp) * n) >> 32);
 
-        public void results(uint[] current, byte noise, ushort searchlevel, uint chain, bool charm, bool exclusives, int type, bool searcher)
+        public void results(uint[] current)
         {
             current.CopyTo(temp, 0);
             rand100 = (byte)Rand(100);
@@ -31,7 +28,7 @@ namespace TinyFinder
             trigger = Rand(100) < 50;
             //rate = tinydexnav.Rand(temp, 100); //Apparently not necessary
 
-            if (!trigger && searcher)
+            if (!trigger && Trigger_only)
                 return;
 
             //The coordinates for a patch are generated inside the ring [-9, 9].
@@ -58,8 +55,8 @@ namespace TinyFinder
             }
 
             //If DexNav exclusives exist for the target encounter type (Grass or Surf), then a DexNav slot has 30% chance of occuring
-            slotype = Rand(100) < 30 && exclusives ? 2 : type;
-            encounter = slotype == 2 ? "DexNav" : "Normal";
+            slotType = Rand(100) < 30 && exclusives ? 2 : type;
+            encounter = slotType == 2 ? "DexNav" : "Normal";
 
             /*The special Boost has 4% chance of occuring unless the current chain length is [4, 9, 14, 19, 24 etc]
             In this case, it is guaranteed and improves the chances of getting forced shiny indexes as well as higher perfect IV counts
@@ -71,7 +68,7 @@ namespace TinyFinder
 
             //The rarity of the slots is reversed. The last slot for a given encounter type (Normal Grass [12], Normal Surf [5] and DexNav [3]),
             //is the most common and has 30% chance of occuring. If it doesn't, the game checks the previous slot whose chance is 30% as well etc
-            for (slot = SlotNum[slotype]; slot > 0; slot--)
+            for (slot = SlotNum[slotType]; slot > 0; slot--)
                 if (Rand(100) < 30)
                     break;
             //Slot 2 is the most rare because a possible slot 0, becomes slot 1
@@ -142,15 +139,15 @@ namespace TinyFinder
             else
                 TargetValue = 6 * searchlevel;
 
-            shiny = false;
             for (int i = 0; i < CheckCount; i++)
             {
                 if (Rand(10000) < TargetValue * 0.01)
                 {
                     shiny = true;
-                    break;                  //No more checks if a shiny index is found obviously
+                    return;                  //No more checks if a shiny index is found obviously
                 }
             }
+            shiny = false;
         }
 
         //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
