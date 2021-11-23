@@ -12,6 +12,7 @@
       //public byte item;
         public bool Sync, trigger;
 
+        //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
         public void results(uint[] current, byte ratio, bool oras, byte slotCase, byte NPC, bool HasHordes, bool XY_TallGrass)
         {
             current.CopyTo(temp, 0);
