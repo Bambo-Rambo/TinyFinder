@@ -16,7 +16,6 @@ namespace TinyFinder
                     yearsSeed += 0x57B12C00;
             }
             return yearsSeed;
-
         }
 
         public string secondsToDate(uint sec, int year)
@@ -29,7 +28,7 @@ namespace TinyFinder
             return date2.ToString("yyyy-MM-ddTHH:mm:ss");
         }
 
-        public uint findSeconds(byte monthDiff, int year)
+        public uint FindSeconds(byte monthDiff, int year)
         {
             uint seconds;
             if (DateTime.IsLeapYear(year))
@@ -40,10 +39,9 @@ namespace TinyFinder
                 for (byte j = 0; j < days[i]; j++)
                     seconds += 86400;
             return seconds;
-
         }
 
-        public uint findSeed(uint seed, uint seconds) => (seconds * 1000) + seed;
+        public uint FindMonthSeed(uint seed, uint seconds) => (seconds * 1000) + seed;
 
 
         public byte[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
