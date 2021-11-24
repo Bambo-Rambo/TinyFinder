@@ -760,6 +760,8 @@ namespace TinyFinder
                     Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
                     Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
                     Searcher.Columns.Add("ha", "HA"); Searcher.Columns["ha"].Width = 30;
+                    if (!Horde_Turn.Checked)
+                        Searcher.Columns["ratio"].Visible = false;
                 }
                 else if (method == 5 || method == 8)
                 {

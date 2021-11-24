@@ -34,7 +34,7 @@ namespace TinyFinder
                 ManageSearcher(ref Searcher, MethodUsed);
                 Searcher.Update();
 
-                byte extra = (byte)(MethodUsed == 0 ? 2 : 1);
+                byte screenState = (byte)(MethodUsed == 0 ? 2 : 1);
                 if (!Calibrated)
                 {
                     if (state[3] == 0 && state[2] == 0 && state[1] == 0 && state[0] == 0)
@@ -46,8 +46,8 @@ namespace TinyFinder
                     {
                         uint start_seed = calc.findTiny(Year);
                         for (uint c = start_seed; c < 0xFFFFFFFF; c++)
-                            if (tiny.init(c, extra)[3] == state[3])     //Comparing [3] and [2] should be enough
-                                if (tiny.init(c, extra)[2] == state[2])
+                            if (tiny.init(c, screenState)[3] == state[3])     //Comparing [3] and [2] should be enough
+                                if (tiny.init(c, screenState)[2] == state[2])
                                 {
                                     initial = c;
                                     break;
@@ -64,8 +64,8 @@ namespace TinyFinder
             }
 
             searchMonth = (byte)(Months.SelectedIndex + 1);
-            seconds = calc.findSeconds(searchMonth, Year);
-            uint i = calc.findSeed(initial, seconds);
+            seconds = calc.FindSeconds(searchMonth, Year);
+            uint tinyInitSeed = calc.FindMonthSeed(initial, seconds);
 
             if (MethodUsed != 0 && !isRadar1())
             {
@@ -115,10 +115,11 @@ namespace TinyFinder
                 case 0:     //ID
                     ID id = new ID((ushort)tid.Value, (ushort)sid.Value);
                     uint randID = id.randhex;
+
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 2);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 2);
                         state.CopyTo(store_seed, 0);
 
                         for (uint j = 0; j < Min; j++)
@@ -158,7 +159,8 @@ namespace TinyFinder
                             tiny.nextState(state);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 2);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "ID");
@@ -180,10 +182,10 @@ namespace TinyFinder
 
                     Rand100Column = XY_Button.Checked ? 4 : 5;    //Flute Column
 
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 1);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 1);
                         state.CopyTo(store_seed, 0);
 
                         for (uint j = 0; j < Min; j++)
@@ -210,7 +212,8 @@ namespace TinyFinder
                             tiny.nextState(state);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "Wild");
@@ -221,10 +224,11 @@ namespace TinyFinder
                     {
                         oras = ORAS_Button.Checked
                     };
+
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 1);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 1);
                         state.CopyTo(store_seed, 0);
 
                         for (uint j = 0; j < Min; j++)
@@ -251,7 +255,8 @@ namespace TinyFinder
                             tiny.nextState(state);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "Rock Smash");
@@ -283,12 +288,12 @@ namespace TinyFinder
                         horde.trigger = true;
                     }
 
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 1);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 1);
-
                         state.CopyTo(store_seed, 0);
+
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
 
@@ -325,7 +330,8 @@ namespace TinyFinder
                             tiny.nextState(state_hit);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "Horde");
@@ -348,12 +354,12 @@ namespace TinyFinder
                     }
                     advances += (byte)(party.Value * 3);
 
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 1);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 1);
-
                         state.CopyTo(store_seed, 0);
+
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
 
@@ -385,7 +391,8 @@ namespace TinyFinder
                             tiny.nextState(state_hit);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "Honey");
@@ -407,10 +414,10 @@ namespace TinyFinder
 
                         if (ratio.Value == 0)
                         {
+                            if (DateSearcher)
+                                state = tiny.init(tinyInitSeed, 1);
                             do
                             {
-                                if (DateSearcher)
-                                    state = tiny.init(i, 1);
                                 state.CopyTo(store_seed, 0);
 
                                 for (uint j = 0; j < Min; j++)
@@ -434,7 +441,8 @@ namespace TinyFinder
                                     tiny.nextState(state);
                                 }
                                 seconds++;
-                                i += 1000;
+                                tinyInitSeed += 1000;
+                                state = tiny.init(tinyInitSeed, 1);
                             } while (Searcher.Rows.Count < find);
                             if (!DateSearcher)
                                 ManageGenerator(Generator, table, "Radar0");
@@ -443,12 +451,13 @@ namespace TinyFinder
                         {
                             advances = (byte)(party.Value * 3 + (BagBox.Checked ? 27 : 0));
                             Searcher.Update();
+
+                            if (DateSearcher)
+                                state = tiny.init(tinyInitSeed, 1);
                             do
                             {
-                                if (DateSearcher)
-                                    state = tiny.init(i, 1);
-
                                 state.CopyTo(store_seed, 0);
+
                                 for (uint j = 0; j < Min; j++)
                                     tiny.nextState(state);
 
@@ -477,7 +486,8 @@ namespace TinyFinder
                                     tiny.nextState(state_hit);
                                 }
                                 seconds++;
-                                i += 1000;
+                                tinyInitSeed += 1000;
+                                state = tiny.init(tinyInitSeed, 1);
                             } while (Searcher.Rows.Count < find);
                             if (!DateSearcher)
                                 ManageGenerator(Generator, table, "Radar1");
@@ -495,10 +505,11 @@ namespace TinyFinder
                             type = SurfBox.Checked ? 1 : 0,
                             Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
                         };
+
+                        if (DateSearcher)
+                            state = tiny.init(tinyInitSeed, 1);
                         do
                         {
-                            if (DateSearcher)
-                                state = tiny.init(i, 1);
                             state.CopyTo(store_seed, 0);
 
                             for (uint j = 0; j < Min; j++)
@@ -534,7 +545,8 @@ namespace TinyFinder
                                 tiny.nextState(state);
                             }
                             seconds++;
-                            i += 1000;
+                            tinyInitSeed += 1000;
+                            state = tiny.init(tinyInitSeed, 1);
                         } while (Searcher.Rows.Count < find);
                         if (!DateSearcher)
                             ManageGenerator(Generator, table, "DexNav");
@@ -543,10 +555,10 @@ namespace TinyFinder
 
                 case 8:     //Swooping
                     Wild swoop = new Wild();
+                    if (DateSearcher)
+                        state = tiny.init(tinyInitSeed, 1);
                     do
                     {
-                        if (DateSearcher)
-                            state = tiny.init(i, 1);
                         state.CopyTo(store_seed, 0);
 
                         for (uint j = 0; j < Min; j++)
@@ -570,7 +582,8 @@ namespace TinyFinder
                             tiny.nextState(state);
                         }
                         seconds++;
-                        i += 1000;
+                        tinyInitSeed += 1000;
+                        state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
                     if (!DateSearcher)
                         ManageGenerator(Generator, table, "Swooping");
