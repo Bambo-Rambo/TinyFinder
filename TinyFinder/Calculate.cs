@@ -4,28 +4,28 @@ namespace TinyFinder
 {
     class Calculate
     {
-        public uint yearsSeed;
-        public uint findTiny(int y)
+        public uint yearMilliseconds;
+        public uint startingPoint(int y)
         {
-            yearsSeed = 0;
+            yearMilliseconds = 0;
             for (int i = 0; i < (y - 2000); i++)
             {
                 if (DateTime.IsLeapYear(2000 + i))
-                    yearsSeed += 0x5CD78800;
+                    yearMilliseconds += 0x5CD78800;     
                 else
-                    yearsSeed += 0x57B12C00;
+                    yearMilliseconds += 0x57B12C00;
             }
-            return yearsSeed;
+            return yearMilliseconds;
         }
 
         public string secondsToDate(uint sec, int year)
         {
-            DateTime date1 = new DateTime(year, 1, 1, 13, 0, 0);
-            DateTime date2 = date1.AddSeconds(sec);
+            DateTime standar = new DateTime(year, 1, 1, 13, 0, 0);
+            DateTime date = standar.AddSeconds(sec);
 
-            if (TimeZoneInfo.Local.IsDaylightSavingTime(date2))
-                return date2.AddSeconds(3600).ToString("yyyy-MM-ddTHH:mm:ss");
-            return date2.ToString("yyyy-MM-ddTHH:mm:ss");
+            if (TimeZoneInfo.Local.IsDaylightSavingTime(date))
+                return date.AddSeconds(3600).ToString("yyyy-MM-ddTHH:mm:ss");
+            return date.ToString("yyyy-MM-ddTHH:mm:ss");
         }
 
         public uint FindSeconds(byte monthDiff, int year)
