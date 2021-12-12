@@ -34,7 +34,7 @@ namespace TinyFinder.Subforms.Profile_Calibration
 
         public void Calibrate(byte advances)
         {
-            uint start_seed = calc.findTiny((int)year.Value);
+            uint start_seed = calc.startingPoint((int)year.Value);
             array[3] = tiny3.Value;
             array[2] = tiny2.Value;
             array[1] = tiny1.Value;
