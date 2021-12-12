@@ -13,5 +13,6 @@ namespace TinyFinder
         public bool Has_Hordes;
         public byte ratio;
         public bool Tall_Grass;
+        public byte Bag_Advances;
     }
 }
