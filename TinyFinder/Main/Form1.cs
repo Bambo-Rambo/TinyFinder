@@ -21,8 +21,8 @@ namespace TinyFinder
         TinyMT tiny = new TinyMT();
         Data data = new Data();
         NTRHelper ntrhelper;
-        Calibrator calibrator;
-        Manager manager;
+        //Calibrator calibrator;
+        //Manager manager;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes;
@@ -99,7 +99,7 @@ namespace TinyFinder
                 CaveBox.Enabled = !(Horde_Turn.Checked && ORAS_Button.Checked);
                 Rate_Label.Visible = ratio.Visible = Horde_Turn.Checked;
                 Party_Label.Visible = party.Visible = !Horde_Turn.Checked;
-                Location_Label.Visible = locations.Visible = Horde_Turn.Checked;
+                //Location_Label.Visible = locations.Visible = Horde_Turn.Checked;
                 Location_Label.Enabled = locations.Enabled = !CaveBox.Checked;
                 ManageLocations();
                 ManageRatio();
@@ -351,18 +351,18 @@ namespace TinyFinder
 
         private void profiles_Click(object sender, EventArgs e)
         {
-            if (calibrator == null)
+            /*if (calibrator == null)
                 calibrator = new Calibrator();
             calibrator.Show();
-            calibrator.Focus();
+            calibrator.Focus();*/
         }
 
         private void profilemanager_Click(object sender, EventArgs e)
         {
-            if (manager == null)
+            /*if (manager == null)
                 manager = new Manager();
             manager.Show();
-            manager.Focus();
+            manager.Focus();*/
         }
         #endregion
 
@@ -380,7 +380,7 @@ namespace TinyFinder
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
                 Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = ORAS_Button.Checked && Method == 4;
             Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
-            Location_Label.Visible = locations.Visible = Method == 1;
+            Location_Label.Visible = locations.Visible = Method == 1 || Method == 4;
 
             BoostBox.Visible = Patches_Board.Visible = XY_Button.Checked && Method == 6;
             BagBox.Visible = Method == 6 && XY_Button.Checked;
@@ -395,7 +395,7 @@ namespace TinyFinder
 
             Step_Label.Visible = Chain_Label.Visible = false;
 
-            CaveBox.Enabled = Method == 1 || Method == 4 || Method == 5;
+            CaveBox.Enabled = Location_Label.Enabled = locations.Enabled = Method == 1 || Method == 4 || Method == 5;
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
@@ -440,6 +440,7 @@ namespace TinyFinder
 
                 else if (Method == 4)
                 {
+                    ManageLocations();
                     Flute1_Label.Location = new Point(266, 55);
                     Flute1.Location = new Point(334, 52);
                     HASlot.SelectedIndex = 0;
@@ -557,7 +558,14 @@ namespace TinyFinder
                     ratio.Value = 7;
                 else
                 {
-                    ratio.Value = Locations[(byte)locations.SelectedIndex].ratio;
+                    try
+                    {
+                        ratio.Value = Locations[(byte)locations.SelectedIndex].ratio;
+                    }
+                    catch
+                    {
+                        ratio.Value = 13;
+                    }
                 }
             }
             else if (Methods.SelectedIndex == 2)
@@ -570,7 +578,7 @@ namespace TinyFinder
         {
             if (Location_Label.Visible)
             {
-                Locations = data.SetLocations((byte)Methods.SelectedIndex, ORAS_Button.Checked);
+                Locations = data.SetLocations((byte)Methods.SelectedIndex, ORAS_Button.Checked, Horde_Turn.Checked);
                 locations.Items.Clear();
                 for (byte i = 0; i < Locations.Count; i++)
                     locations.Items.Add(Locations[i].Name);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Data;
 using System.Linq;
 using System.Windows.Forms;
@@ -34,7 +33,7 @@ namespace TinyFinder
                 ManageSearcher(ref Searcher, MethodUsed);
                 Searcher.Update();
 
-                byte screenState = (byte)(MethodUsed == 0 ? 2 : 1);
+                byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
                 if (!Calibrated)
                 {
                     if (state[3] == 0 && state[2] == 0 && state[1] == 0 && state[0] == 0)
@@ -44,10 +43,10 @@ namespace TinyFinder
                     }
                     else
                     {
-                        uint start_seed = calc.findTiny(Year);
+                        uint start_seed = calc.startingPoint(Year);
                         for (uint c = start_seed; c < 0xFFFFFFFF; c++)
-                            if (tiny.init(c, screenState)[3] == state[3])     //Comparing [3] and [2] should be enough
-                                if (tiny.init(c, screenState)[2] == state[2])
+                            if (tiny.init(c, bootAdvances)[3] == state[3])     //Comparing [3] and [2] should be enough
+                                if (tiny.init(c, bootAdvances)[2] == state[2])
                                 {
                                     initial = c;
                                     break;
@@ -284,7 +283,7 @@ namespace TinyFinder
 
                     if (!Horde_Turn.Checked)
                     {
-                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : XY_Button.Checked ? 27 : 15));
+                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : Convert.ToByte(Locations[(byte)locations.SelectedIndex].Bag_Advances)));
                         horde.trigger = true;
                     }
 
