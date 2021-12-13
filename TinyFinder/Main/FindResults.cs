@@ -178,8 +178,8 @@ namespace TinyFinder
 
                     };
 
-                    Rand100Column = XY_Button.Checked ? 4 : 5;    //Flute Column
-
+                    Rand100Column = XY_Button.Checked && !DateSearcher ? 4 : 5;    //Searcher has the flute column for both XY and ORAS
+                                                                                   //Generator has it only for ORAS
                     if (DateSearcher)
                         state = tiny.init(tinyInitSeed, 1);
                     do
@@ -696,7 +696,7 @@ namespace TinyFinder
         {
             if (chain == 0)
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, radar.sync, radar.slot, radar.Music, radar.rand100);
+                    index, radar.sync, radar.slot, radar.Music, null, radar.rand100);
             else
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                     index, radar.Shiny, radar.Music, null, radar.rand100);
