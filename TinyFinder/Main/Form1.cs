@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
 using System.Reflection;
@@ -44,7 +43,11 @@ namespace TinyFinder
         public Form1()
         {
             InitializeComponent();
-            Generator.Visible = false;
+        }
+
+        #region GUI Events
+        private void Form1_Load(object sender, EventArgs e)
+        {
             XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
@@ -52,7 +55,11 @@ namespace TinyFinder
             ManageControls(0);
         }
 
-        #region GUI Events
+        //Main Event (Search Button)
+        private void MainButton_Click(object sender, EventArgs e)
+        {
+            StartSearch();
+        }
         private void xyRadio_CheckedChanged(object sender, EventArgs e)
         {
             Methods.Items[6] = "Radar";
@@ -79,7 +86,7 @@ namespace TinyFinder
         {
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             Calibrated = false; 
-            button1.Text = "Calibrate and Search";
+            MainButton.Text = "Calibrate and Search";
         }
 
         private void ratio_ValueChanged(object sender, EventArgs e)
@@ -171,13 +178,12 @@ namespace TinyFinder
             {
                 Date_Label.Location = new Point(1, 71);
                 Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-                button1.Text = Calibrated ? "Search" : "Calibrate and Search";
+                MainButton.Text = Calibrated ? "Search" : "Calibrate and Search";
                 FindNum_Label.Enabled = Atleast.Enabled = Month_Label.Visible = Months.Visible = true;
                 Year_Label.Visible = year.Visible = true;
                 Step_Label.Visible = Chain_Label.Visible = false;
                 ΙgnoreFilters.Checked = ΙgnoreFilters.Enabled = false;
-                Generator.Visible = ntr.Enabled = updateBTN.Visible = false;
-                Searcher.Visible = true;
+                ntr.Enabled = updateBTN.Visible = false;
                 min.Value = min.Minimum = XY_Button.Checked ? 35 :
                                           (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
                                           (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
@@ -188,12 +194,11 @@ namespace TinyFinder
             {
                 Date_Label.Location = new Point(98, 71);
                 Date_Label.Text = "Current State";
-                button1.Text = "Generate";
+                MainButton.Text = "Generate";
                 FindNum_Label.Enabled = Atleast.Enabled = Month_Label.Visible = Months.Visible = false;
                 ntr.Enabled = updateBTN.Visible = true;
                 ΙgnoreFilters.Enabled = true;
-                Searcher.Visible = year.Visible = Year_Label.Visible = false;
-                Generator.Visible = true;
+                year.Visible = Year_Label.Visible = false;
                 min.Minimum = 0; min.Value = 0;
                 max.Value = 50000;
             }
@@ -204,7 +209,7 @@ namespace TinyFinder
             if (SearchGen.SelectedIndex == 0)
             {
                 Calibrated = false;
-                button1.Text = "Calibrate and Search";
+                MainButton.Text = "Calibrate and Search";
             }
         }
         private void t3_TextChanged(object sender, EventArgs e)
@@ -293,7 +298,7 @@ namespace TinyFinder
                         NTRHelper.ntrclient.ReadTiny("RadarChain");
                     }
                 }
-                button1.PerformClick();
+                MainButton.PerformClick();
             }
             catch
             {
@@ -364,6 +369,7 @@ namespace TinyFinder
             manager.Show();
             manager.Focus();*/
         }
+
         #endregion
 
         #region Manage Buttons and Slots
@@ -488,7 +494,7 @@ namespace TinyFinder
             HA_Label.Location = new Point(16, 98);
             HASlot.Location = new Point(75, 94);
 
-            Patches_Board.Location = new Point(205, 26);
+            Patches_Board.Location = new Point(205, 20);
             Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
 
             NavType_Label.Location = new Point(9, 45);

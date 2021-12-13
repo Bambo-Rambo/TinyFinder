@@ -52,7 +52,7 @@ namespace TinyFinder
             this.t2 = new TinyFinder.HexBox();
             this.t1 = new TinyFinder.HexBox();
             this.t0 = new TinyFinder.HexBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.MainButton = new System.Windows.Forms.Button();
             this.XY_Button = new System.Windows.Forms.RadioButton();
             this.ORAS_Button = new System.Windows.Forms.RadioButton();
             this.Methods = new System.Windows.Forms.ComboBox();
@@ -116,6 +116,12 @@ namespace TinyFinder
             this.sid = new System.Windows.Forms.NumericUpDown();
             this.tid = new System.Windows.Forms.NumericUpDown();
             this.Calibr_Box = new System.Windows.Forms.GroupBox();
+            this.updateBTN = new System.Windows.Forms.Button();
+            this.Tiny0_Label = new System.Windows.Forms.Label();
+            this.Tiny1_Label = new System.Windows.Forms.Label();
+            this.Tiny2_Label = new System.Windows.Forms.Label();
+            this.Tiny3_Label = new System.Windows.Forms.Label();
+            this.Date_Label = new System.Windows.Forms.Label();
             this.Generator = new System.Windows.Forms.DataGridView();
             this.g_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -127,12 +133,6 @@ namespace TinyFinder
             this.g_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.g_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.g_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.updateBTN = new System.Windows.Forms.Button();
-            this.Tiny0_Label = new System.Windows.Forms.Label();
-            this.Tiny1_Label = new System.Windows.Forms.Label();
-            this.Tiny2_Label = new System.Windows.Forms.Label();
-            this.Tiny3_Label = new System.Windows.Forms.Label();
-            this.Date_Label = new System.Windows.Forms.Label();
             this.SearchGen = new System.Windows.Forms.TabControl();
             this.Srch = new System.Windows.Forms.TabPage();
             this.Gen = new System.Windows.Forms.TabPage();
@@ -162,6 +162,8 @@ namespace TinyFinder
             this.Calibr_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).BeginInit();
             this.SearchGen.SuspendLayout();
+            this.Srch.SuspendLayout();
+            this.Gen.SuspendLayout();
             this.Tools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -187,13 +189,13 @@ namespace TinyFinder
             this.Column4,
             this.s_Rand});
             this.Searcher.GridColor = System.Drawing.SystemColors.AppWorkspace;
-            this.Searcher.Location = new System.Drawing.Point(12, 340);
+            this.Searcher.Location = new System.Drawing.Point(5, 277);
             this.Searcher.Name = "Searcher";
             this.Searcher.ReadOnly = true;
             this.Searcher.RowHeadersVisible = false;
             this.Searcher.RowTemplate.Height = 25;
             this.Searcher.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.Searcher.Size = new System.Drawing.Size(1123, 305);
+            this.Searcher.Size = new System.Drawing.Size(1121, 316);
             this.Searcher.TabIndex = 0;
             this.Searcher.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Searcher_CellFormatting);
             this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
@@ -327,16 +329,16 @@ namespace TinyFinder
             this.t0.Value = ((uint)(0u));
             this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
             // 
-            // button1
+            // MainButton
             // 
-            this.button1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(205, 204);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(171, 44);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Calibrate and Search";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.MainButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MainButton.Location = new System.Drawing.Point(239, 204);
+            this.MainButton.Name = "MainButton";
+            this.MainButton.Size = new System.Drawing.Size(171, 44);
+            this.MainButton.TabIndex = 5;
+            this.MainButton.Text = "Calibrate and Search";
+            this.MainButton.UseVisualStyleBackColor = true;
+            this.MainButton.Click += new System.EventHandler(this.MainButton_Click);
             // 
             // XY_Button
             // 
@@ -780,7 +782,7 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.NavType_Label);
             this.Filters_Box.Controls.Add(this.NavFilters);
             this.Filters_Box.Controls.Add(this.Patches_Board);
-            this.Filters_Box.Controls.Add(this.button1);
+            this.Filters_Box.Controls.Add(this.MainButton);
             this.Filters_Box.Controls.Add(this.FindNum_Label);
             this.Filters_Box.Controls.Add(this.Atleast);
             this.Filters_Box.Controls.Add(this.Flute3_Label);
@@ -805,7 +807,7 @@ namespace TinyFinder
             this.Filters_Box.Font = new System.Drawing.Font("Consolas", 9F);
             this.Filters_Box.Location = new System.Drawing.Point(703, 63);
             this.Filters_Box.Name = "Filters_Box";
-            this.Filters_Box.Size = new System.Drawing.Size(425, 267);
+            this.Filters_Box.Size = new System.Drawing.Size(439, 267);
             this.Filters_Box.TabIndex = 18;
             this.Filters_Box.TabStop = false;
             this.Filters_Box.Text = "Step 3 - Preferences";
@@ -814,7 +816,7 @@ namespace TinyFinder
             // 
             this.ΙgnoreFilters.AutoSize = true;
             this.ΙgnoreFilters.Enabled = false;
-            this.ΙgnoreFilters.Location = new System.Drawing.Point(300, 10);
+            this.ΙgnoreFilters.Location = new System.Drawing.Point(310, 10);
             this.ΙgnoreFilters.Name = "ΙgnoreFilters";
             this.ΙgnoreFilters.Size = new System.Drawing.Size(124, 18);
             this.ΙgnoreFilters.TabIndex = 51;
@@ -897,10 +899,11 @@ namespace TinyFinder
             // Patches_Board
             // 
             this.Patches_Board.AutoSize = true;
-            this.Patches_Board.Font = new System.Drawing.Font("Consolas", 11.25F);
+            this.Patches_Board.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Patches_Board.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Patches_Board.Location = new System.Drawing.Point(256, 18);
             this.Patches_Board.Name = "Patches_Board";
-            this.Patches_Board.Size = new System.Drawing.Size(16, 18);
+            this.Patches_Board.Size = new System.Drawing.Size(18, 19);
             this.Patches_Board.TabIndex = 45;
             this.Patches_Board.Text = ".";
             // 
@@ -1084,9 +1087,9 @@ namespace TinyFinder
             "3",
             "4",
             "5"});
-            this.HASlot.Location = new System.Drawing.Point(167, 24);
+            this.HASlot.Location = new System.Drawing.Point(154, 24);
             this.HASlot.Name = "HASlot";
-            this.HASlot.Size = new System.Drawing.Size(83, 22);
+            this.HASlot.Size = new System.Drawing.Size(96, 22);
             this.HASlot.TabIndex = 26;
             this.HASlot.Visible = false;
             // 
@@ -1180,6 +1183,68 @@ namespace TinyFinder
             this.Calibr_Box.TabStop = false;
             this.Calibr_Box.Text = "Step 1 - Calibration";
             // 
+            // updateBTN
+            // 
+            this.updateBTN.Enabled = false;
+            this.updateBTN.Location = new System.Drawing.Point(72, 227);
+            this.updateBTN.Name = "updateBTN";
+            this.updateBTN.Size = new System.Drawing.Size(161, 30);
+            this.updateBTN.TabIndex = 18;
+            this.updateBTN.Text = "Update";
+            this.updateBTN.UseVisualStyleBackColor = true;
+            this.updateBTN.Visible = false;
+            this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
+            // 
+            // Tiny0_Label
+            // 
+            this.Tiny0_Label.AutoSize = true;
+            this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
+            this.Tiny0_Label.Name = "Tiny0_Label";
+            this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny0_Label.TabIndex = 17;
+            this.Tiny0_Label.Text = "Tiny [0]";
+            // 
+            // Tiny1_Label
+            // 
+            this.Tiny1_Label.AutoSize = true;
+            this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
+            this.Tiny1_Label.Name = "Tiny1_Label";
+            this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny1_Label.TabIndex = 16;
+            this.Tiny1_Label.Text = "Tiny [1]";
+            // 
+            // Tiny2_Label
+            // 
+            this.Tiny2_Label.AutoSize = true;
+            this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
+            this.Tiny2_Label.Name = "Tiny2_Label";
+            this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny2_Label.TabIndex = 15;
+            this.Tiny2_Label.Text = "Tiny [2]";
+            // 
+            // Tiny3_Label
+            // 
+            this.Tiny3_Label.AutoSize = true;
+            this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
+            this.Tiny3_Label.Name = "Tiny3_Label";
+            this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
+            this.Tiny3_Label.TabIndex = 14;
+            this.Tiny3_Label.Text = "Tiny [3]";
+            // 
+            // Date_Label
+            // 
+            this.Date_Label.AutoSize = true;
+            this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Date_Label.Location = new System.Drawing.Point(1, 67);
+            this.Date_Label.Name = "Date_Label";
+            this.Date_Label.Size = new System.Drawing.Size(56, 14);
+            this.Date_Label.TabIndex = 13;
+            this.Date_Label.Text = "message";
+            // 
             // Generator
             // 
             this.Generator.AllowUserToAddRows = false;
@@ -1200,12 +1265,12 @@ namespace TinyFinder
             this.g_Tiny2,
             this.g_Tiny1,
             this.g_Tiny0});
-            this.Generator.Location = new System.Drawing.Point(12, 340);
+            this.Generator.Location = new System.Drawing.Point(5, 277);
             this.Generator.Name = "Generator";
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1123, 305);
+            this.Generator.Size = new System.Drawing.Size(1121, 316);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1288,97 +1353,40 @@ namespace TinyFinder
             this.g_Tiny0.ReadOnly = true;
             this.g_Tiny0.Width = 75;
             // 
-            // updateBTN
-            // 
-            this.updateBTN.Enabled = false;
-            this.updateBTN.Location = new System.Drawing.Point(72, 227);
-            this.updateBTN.Name = "updateBTN";
-            this.updateBTN.Size = new System.Drawing.Size(161, 30);
-            this.updateBTN.TabIndex = 18;
-            this.updateBTN.Text = "Update";
-            this.updateBTN.UseVisualStyleBackColor = true;
-            this.updateBTN.Visible = false;
-            this.updateBTN.Click += new System.EventHandler(this.updateBTN_Click);
-            // 
-            // Tiny0_Label
-            // 
-            this.Tiny0_Label.AutoSize = true;
-            this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
-            this.Tiny0_Label.Name = "Tiny0_Label";
-            this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny0_Label.TabIndex = 17;
-            this.Tiny0_Label.Text = "Tiny [0]";
-            // 
-            // Tiny1_Label
-            // 
-            this.Tiny1_Label.AutoSize = true;
-            this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
-            this.Tiny1_Label.Name = "Tiny1_Label";
-            this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny1_Label.TabIndex = 16;
-            this.Tiny1_Label.Text = "Tiny [1]";
-            // 
-            // Tiny2_Label
-            // 
-            this.Tiny2_Label.AutoSize = true;
-            this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
-            this.Tiny2_Label.Name = "Tiny2_Label";
-            this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny2_Label.TabIndex = 15;
-            this.Tiny2_Label.Text = "Tiny [2]";
-            // 
-            // Tiny3_Label
-            // 
-            this.Tiny3_Label.AutoSize = true;
-            this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
-            this.Tiny3_Label.Name = "Tiny3_Label";
-            this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
-            this.Tiny3_Label.TabIndex = 14;
-            this.Tiny3_Label.Text = "Tiny [3]";
-            // 
-            // Date_Label
-            // 
-            this.Date_Label.AutoSize = true;
-            this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Date_Label.Location = new System.Drawing.Point(1, 67);
-            this.Date_Label.Name = "Date_Label";
-            this.Date_Label.Size = new System.Drawing.Size(56, 14);
-            this.Date_Label.TabIndex = 13;
-            this.Date_Label.Text = "message";
-            // 
             // SearchGen
             // 
+            this.SearchGen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchGen.Controls.Add(this.Srch);
             this.SearchGen.Controls.Add(this.Gen);
             this.SearchGen.Location = new System.Drawing.Point(12, 35);
             this.SearchGen.Name = "SearchGen";
             this.SearchGen.SelectedIndex = 0;
-            this.SearchGen.Size = new System.Drawing.Size(1126, 303);
+            this.SearchGen.Size = new System.Drawing.Size(1140, 625);
             this.SearchGen.TabIndex = 20;
             this.SearchGen.SelectedIndexChanged += new System.EventHandler(this.SearchGen_SelectedIndexChanged);
             // 
             // Srch
             // 
-            this.Srch.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Srch.Controls.Add(this.Searcher);
+            this.Srch.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Srch.Location = new System.Drawing.Point(4, 24);
             this.Srch.Name = "Srch";
             this.Srch.Padding = new System.Windows.Forms.Padding(3);
-            this.Srch.Size = new System.Drawing.Size(1118, 275);
+            this.Srch.Size = new System.Drawing.Size(1132, 597);
             this.Srch.TabIndex = 0;
             this.Srch.Text = "Date Searcher";
             this.Srch.UseVisualStyleBackColor = true;
             // 
             // Gen
             // 
-            this.Gen.Font = new System.Drawing.Font("Consolas", 9F);
+            this.Gen.Controls.Add(this.Generator);
+            this.Gen.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.Gen.Location = new System.Drawing.Point(4, 24);
             this.Gen.Name = "Gen";
             this.Gen.Padding = new System.Windows.Forms.Padding(3);
-            this.Gen.Size = new System.Drawing.Size(1118, 275);
+            this.Gen.Size = new System.Drawing.Size(1132, 597);
             this.Gen.TabIndex = 1;
             this.Gen.Text = "Generator";
             this.Gen.UseVisualStyleBackColor = true;
@@ -1390,7 +1398,7 @@ namespace TinyFinder
             this.toolsStripMenuItem});
             this.Tools.Location = new System.Drawing.Point(0, 0);
             this.Tools.Name = "Tools";
-            this.Tools.Size = new System.Drawing.Size(1150, 25);
+            this.Tools.Size = new System.Drawing.Size(1164, 25);
             this.Tools.TabIndex = 0;
             this.Tools.Text = "Tools";
             // 
@@ -1435,21 +1443,20 @@ namespace TinyFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1150, 661);
-            this.Controls.Add(this.Generator);
+            this.ClientSize = new System.Drawing.Size(1164, 661);
             this.Controls.Add(this.Filters_Box);
             this.Controls.Add(this.Calibr_Box);
             this.Controls.Add(this.Settings_Box);
             this.Controls.Add(this.SearchGen);
-            this.Controls.Add(this.Searcher);
             this.Controls.Add(this.Tools);
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Tools;
-            this.MinimumSize = new System.Drawing.Size(1166, 700);
+            this.MinimumSize = new System.Drawing.Size(1180, 700);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tiny Finder 0.9.1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Searcher)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).EndInit();
@@ -1474,6 +1481,8 @@ namespace TinyFinder
             this.Calibr_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Generator)).EndInit();
             this.SearchGen.ResumeLayout(false);
+            this.Srch.ResumeLayout(false);
+            this.Gen.ResumeLayout(false);
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             this.ResumeLayout(false);
@@ -1488,7 +1497,7 @@ namespace TinyFinder
         private HexBox t2;
         private HexBox t1;
         private HexBox t0;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button MainButton;
         private System.Windows.Forms.RadioButton XY_Button;
         private System.Windows.Forms.RadioButton ORAS_Button;
         private System.Windows.Forms.ComboBox Methods;

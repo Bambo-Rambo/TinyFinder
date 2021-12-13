@@ -9,8 +9,7 @@ namespace TinyFinder
 {
     public partial class Form1
     {
-        //Main Event (Search Button)
-        private void button1_Click(object sender, EventArgs e)
+        public void StartSearch()
         {
             uint[] state = new uint[4], store_seed = new uint[4], state_hit = new uint[4];
             DataTable table = new DataTable();
@@ -54,7 +53,7 @@ namespace TinyFinder
                         Calibrated = true;
                     }
                 }
-                button1.Text = "Search";
+                MainButton.Text = "Search";
             }
             else
             {
@@ -97,13 +96,13 @@ namespace TinyFinder
             }
 
             byte NPC_Influence = 0, CurrentLocation, advances = 0;
-            bool Is_XY_TallGrass = false; 
+            bool Is_XY_TallGrass = false;
             HasHordes = false;
             if (MethodUsed == 1 || (MethodUsed == 4 && Horde_Turn.Checked))
             {
                 CurrentLocation = (byte)locations.SelectedIndex;
                 NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
-                HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes)) 
+                HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes))
                     || (ORAS_Button.Checked && LongGrassBox.Checked && !CaveBox.Checked);
                 Is_XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
             }
@@ -250,7 +249,7 @@ namespace TinyFinder
                             }
                             else
                                 ShowSmashGen(table, smash, state, j);
-                            
+
                             tiny.nextState(state);
                         }
                         seconds++;
@@ -311,7 +310,7 @@ namespace TinyFinder
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if ((Slots.Contains(horde.slot) || SlotCount == 0) && horde.trigger)
-                                    if (((Enumerable.Range(2, 6).Contains(HASlot.SelectedIndex) 
+                                    if (((Enumerable.Range(2, 6).Contains(HASlot.SelectedIndex)
                                         && horde.HA == HASlot.SelectedIndex - 1)                //Seach for HA in specific slot
 
                                         || (HASlot.SelectedIndex == 1 && horde.HA != 0)         //Search for HA in any slot
@@ -385,7 +384,7 @@ namespace TinyFinder
                             }
                             else
                                 ShowHoneyGen(table, honey, state, j);
-                            
+
                             tiny.nextState(state);
                             tiny.nextState(state_hit);
                         }
@@ -436,7 +435,7 @@ namespace TinyFinder
                                     }
                                     else
                                         ShowRadarGen(table, radar, state, j, 0);
-                                    
+
                                     tiny.nextState(state);
                                 }
                                 seconds++;
@@ -519,28 +518,28 @@ namespace TinyFinder
                                 if (!ΙgnoreFilters.Checked)
                                 {
                                     if (nav.trigger && (nav.shiny || !NavFilters.CheckBoxItems[1].Checked))
-                                            if (((NavType.SelectedIndex == 0 && nav.slotType != 2) || (NavType.SelectedIndex == 1 && nav.slotType == 2))
-                                                && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
-                                                &&
-                                                (nav.HA || !NavFilters.CheckBoxItems[2].Checked)
-                                                &&
-                                                (nav.eggMove || !NavFilters.CheckBoxItems[3].Checked)
-                                                &&
-                                                (nav.sync || !NavFilters.CheckBoxItems[5].Checked)
-                                                &&
-                                                ((nav.potential == Potential.Value) || (Potential.Value == 0)))
-                                                if ((nav.boost || !NavFilters.CheckBoxItems[4].Checked)
-                                                    && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
-                                                {
-                                                    if (DateSearcher)
-                                                        ShowNavSrch(nav, calc.secondsToDate(seconds, Year), store_seed, j);
-                                                    else
-                                                        ShowNavGen(table, nav, state, j);
-                                                }
+                                        if (((NavType.SelectedIndex == 0 && nav.slotType != 2) || (NavType.SelectedIndex == 1 && nav.slotType == 2))
+                                            && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
+                                            &&
+                                            (nav.HA || !NavFilters.CheckBoxItems[2].Checked)
+                                            &&
+                                            (nav.eggMove || !NavFilters.CheckBoxItems[3].Checked)
+                                            &&
+                                            (nav.sync || !NavFilters.CheckBoxItems[5].Checked)
+                                            &&
+                                            ((nav.potential == Potential.Value) || (Potential.Value == 0)))
+                                            if ((nav.boost || !NavFilters.CheckBoxItems[4].Checked)
+                                                && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
+                                            {
+                                                if (DateSearcher)
+                                                    ShowNavSrch(nav, calc.secondsToDate(seconds, Year), store_seed, j);
+                                                else
+                                                    ShowNavGen(table, nav, state, j);
+                                            }
                                 }
                                 else
                                     ShowNavGen(table, nav, state, j);
-                                
+
                                 tiny.nextState(state);
                             }
                             seconds++;
