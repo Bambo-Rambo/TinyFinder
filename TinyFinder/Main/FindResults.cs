@@ -4,13 +4,15 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace TinyFinder
 {
     public partial class Form1
     {
-        public void StartSearch()
+        public async void StartSearch()
         {
+            synchronizationContext = SynchronizationContext.Current;
             uint[] state = new uint[4], store_seed = new uint[4], state_hit = new uint[4];
             DataTable table = new DataTable();
 
@@ -28,6 +30,7 @@ namespace TinyFinder
             DateSearcher = SearchGen.SelectedIndex == 0;
             if (DateSearcher)
             {
+                Filters_Box.Enabled = false;
                 Searcher.Rows.Clear();
                 ManageSearcher(ref Searcher, MethodUsed);
                 Searcher.Update();
@@ -42,18 +45,22 @@ namespace TinyFinder
                     }
                     else
                     {
+                        MainButton.Text = "Calibrating...";
                         uint start_seed = calc.startingPoint(Year);
-                        for (uint c = start_seed; c < 0xFFFFFFFF; c++)
+                        await Task.Run(() =>
+                        {
+                            for (uint c = start_seed; c < 0xFFFFFFFF; c++)
                             if (tiny.init(c, bootAdvances)[3] == state[3])     //Comparing [3] and [2] should be enough
                                 if (tiny.init(c, bootAdvances)[2] == state[2])
                                 {
                                     initial = c;
                                     break;
                                 }
+                        });
                         Calibrated = true;
                     }
                 }
-                MainButton.Text = "Search";
+                MainButton.Text = "Searching...";
             }
             else
             {
@@ -95,7 +102,7 @@ namespace TinyFinder
                 SlotCount = (byte)Slots.Count;
             }
 
-            byte NPC_Influence = 0, CurrentLocation, advances = 0;
+            byte NPC_Influence = 0, CurrentLocation = 0, advances = 0;
             bool Is_XY_TallGrass = false;
             HasHordes = false;
             if (MethodUsed == 1 || (MethodUsed == 4 && Horde_Turn.Checked))
@@ -107,61 +114,62 @@ namespace TinyFinder
                 Is_XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
             }
 
-
             switch (MethodUsed)
             {
                 case 0:     //ID
-                    ID id = new ID((ushort)tid.Value, (ushort)sid.Value);
+                    ushort TIDValue = (ushort)tid.Value;
+                    ushort SIDValue = (ushort)sid.Value;
+                    ID id = new ID(TIDValue, SIDValue);
                     uint randID = id.randhex;
 
                     if (DateSearcher)
                         state = tiny.init(tinyInitSeed, 2);
-                    do
+                    await Task.Run(() => 
                     {
-                        state.CopyTo(store_seed, 0);
-
-                        for (uint j = 0; j < Min; j++)
-                            tiny.nextState(state);
-                        for (uint j = Min; j <= Max; j++)
+                        do
                         {
-                            if (DateSearcher)
+                            state.CopyTo(store_seed, 0);
+                            for (uint j = 0; j < Min; j++)
+                                tiny.nextState(state);
+                            for (uint j = Min; j <= Max; j++)
                             {
-                                if (randID == tiny.temper(state))
+                                if (DateSearcher)
                                 {
-                                    Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
-                                    hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                                    j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                    id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
-                                    Searcher.Update();
-                                    Thread.Sleep(100);
-                                }
-                            }
-                            else
-                            {
-                                //Bad implementation, fix later
-                                id.results(state);
-                                if (!ΙgnoreFilters.Checked)
-                                {
-                                    if (id.trainerID == tid.Value && id.secretID == sid.Value)
-                                        table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                        hex(state[1]), hex(state[0]));
+                                    if (randID == tiny.temper(state))
+                                    {
+                                        synchronizationContext.Post(new SendOrPostCallback(o =>
+                                        {
+                                        Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
+                                            hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
+                                            j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
+                                        }), 0); Thread.Sleep(1000);
+                                    }
                                 }
                                 else
                                 {
-                                    table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                        hex(state[1]), hex(state[0]));
+                                    id.results(state);
+                                    if (!ΙgnoreFilters.Checked)
+                                    {
+                                        if (id.trainerID == TIDValue && id.secretID == SIDValue)
+                                            table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
+                                            hex(state[1]), hex(state[0]));
+                                    }
+                                    else
+                                    {
+                                        table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
+                                            hex(state[1]), hex(state[0]));
+                                    }
                                 }
+                                tiny.nextState(state);
                             }
-                            tiny.nextState(state);
-                        }
-                        seconds++;
-                        tinyInitSeed += 1000;
-                        state = tiny.init(tinyInitSeed, 2);
-                    } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "ID");
+                            seconds++;
+                            tinyInitSeed += 1000;
+                            state = tiny.init(tinyInitSeed, 2);
+                        } while (Searcher.Rows.Count < find);
+                    });
                     break;
 
                 case 1:     //Normal Wild
@@ -175,9 +183,7 @@ namespace TinyFinder
                         NPC = NPC_Influence,
                         HasHordes = HasHordes,
                         XY_TallGrass = Is_XY_TallGrass,
-
                     };
-
                     Rand100Column = XY_Button.Checked && !DateSearcher ? 4 : 5;    //Searcher has the flute column for both XY and ORAS
                                                                                    //Generator has it only for ORAS
                     if (DateSearcher)
@@ -185,7 +191,6 @@ namespace TinyFinder
                     do
                     {
                         state.CopyTo(store_seed, 0);
-
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
                         for (uint j = Min; j <= Max; j++)
@@ -213,8 +218,6 @@ namespace TinyFinder
                         tinyInitSeed += 1000;
                         state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "Wild");
                     break;
 
                 case 3:     //Rock Smash
@@ -228,7 +231,6 @@ namespace TinyFinder
                     do
                     {
                         state.CopyTo(store_seed, 0);
-
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
                         for (uint j = Min; j <= Max; j++)
@@ -256,8 +258,6 @@ namespace TinyFinder
                         tinyInitSeed += 1000;
                         state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "Rock Smash");
                     break;
 
                 case 4:     //Horde
@@ -271,6 +271,7 @@ namespace TinyFinder
                     };
                     Rand100Column = XY_Button.Checked ? 5 : 6;
 
+                    int DesiredHA = HASlot.SelectedIndex;
                     if (ORAS_Button.Checked)
                     {
                         fluteArray[0] = (byte)Flute1.Value;
@@ -282,7 +283,7 @@ namespace TinyFinder
 
                     if (!Horde_Turn.Checked)
                     {
-                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : Convert.ToByte(Locations[(byte)locations.SelectedIndex].Bag_Advances)));
+                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : Convert.ToByte(Locations[CurrentLocation].Bag_Advances)));
                         horde.trigger = true;
                     }
 
@@ -291,7 +292,6 @@ namespace TinyFinder
                     do
                     {
                         state.CopyTo(store_seed, 0);
-
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
 
@@ -299,7 +299,6 @@ namespace TinyFinder
 
                         for (byte j = 0; j < advances; j++)
                             tiny.nextState(state_hit);
-
                         for (uint j = Min; j <= Max; j++)
                         {
                             if (Horde_Turn.Checked)
@@ -310,11 +309,11 @@ namespace TinyFinder
                             if (!ΙgnoreFilters.Checked)
                             {
                                 if ((Slots.Contains(horde.slot) || SlotCount == 0) && horde.trigger)
-                                    if (((Enumerable.Range(2, 6).Contains(HASlot.SelectedIndex)
-                                        && horde.HA == HASlot.SelectedIndex - 1)                //Seach for HA in specific slot
+                                    if (((Enumerable.Range(2, 6).Contains(DesiredHA)
+                                        && horde.HA == DesiredHA - 1)                //Seach for HA in specific slot
 
-                                        || (HASlot.SelectedIndex == 1 && horde.HA != 0)         //Search for HA in any slot
-                                        || HASlot.SelectedIndex == 0)                           //Don't search for HA
+                                        || (DesiredHA == 1 && horde.HA != 0)         //Search for HA in any slot
+                                        || DesiredHA == 0)                           //Don't search for HA
 
                                         &&
 
@@ -327,12 +326,11 @@ namespace TinyFinder
                             tiny.nextState(state);
                             tiny.nextState(state_hit);
                         }
+
                         seconds++;
                         tinyInitSeed += 1000;
                         state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "Horde");
                     break;
 
                 case 5:     //Honey Wild
@@ -348,7 +346,7 @@ namespace TinyFinder
                         if (XY_Button.Checked)
                             advances = 27;
                         else
-                            advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
+                            advances = (byte)(locations.Visible ? Convert.ToByte(Locations[CurrentLocation].ratio) : 15);
                     }
                     advances += (byte)(party.Value * 3);
 
@@ -365,7 +363,6 @@ namespace TinyFinder
 
                         for (byte j = 0; j < advances; j++)
                             tiny.nextState(state_hit);
-
                         for (uint j = Min; j <= Max; j++)
                         {
                             honey.results(state_hit);
@@ -392,8 +389,6 @@ namespace TinyFinder
                         tinyInitSeed += 1000;
                         state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "Honey");
                     break;
 
                 case 6:     //Radar / DexNav
@@ -417,7 +412,6 @@ namespace TinyFinder
                             do
                             {
                                 state.CopyTo(store_seed, 0);
-
                                 for (uint j = 0; j < Min; j++)
                                     tiny.nextState(state);
                                 for (uint j = Min; j <= Max; j++)
@@ -442,13 +436,10 @@ namespace TinyFinder
                                 tinyInitSeed += 1000;
                                 state = tiny.init(tinyInitSeed, 1);
                             } while (Searcher.Rows.Count < find);
-                            if (!DateSearcher)
-                                ManageGenerator(Generator, table, "Radar0");
                         }
                         else
                         {
                             advances = (byte)(party.Value * 3 + (BagBox.Checked ? 27 : 0));
-                            Searcher.Update();
 
                             if (DateSearcher)
                                 state = tiny.init(tinyInitSeed, 1);
@@ -487,8 +478,6 @@ namespace TinyFinder
                                 tinyInitSeed += 1000;
                                 state = tiny.init(tinyInitSeed, 1);
                             } while (Searcher.Rows.Count < find);
-                            if (!DateSearcher)
-                                ManageGenerator(Generator, table, "Radar1");
                         }
                     }
                     else
@@ -503,13 +492,18 @@ namespace TinyFinder
                             type = SurfBox.Checked ? 1 : 0,
                             Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
                         };
+                        bool WantsExclusives = NavType.SelectedIndex == 1;
+                        bool WantsShiny = NavFilters.CheckBoxItems[1].Checked;
+                        bool WantsHA = NavFilters.CheckBoxItems[2].Checked;
+                        bool WantsEggMove = NavFilters.CheckBoxItems[3].Checked;
+                        bool WantsBoost = NavFilters.CheckBoxItems[4].Checked;
+                        bool WantsSync = NavFilters.CheckBoxItems[5].Checked;
 
                         if (DateSearcher)
                             state = tiny.init(tinyInitSeed, 1);
                         do
                         {
                             state.CopyTo(store_seed, 0);
-
                             for (uint j = 0; j < Min; j++)
                                 tiny.nextState(state);
                             for (uint j = Min; j <= Max; j++)
@@ -517,18 +511,18 @@ namespace TinyFinder
                                 nav.results(state);
                                 if (!ΙgnoreFilters.Checked)
                                 {
-                                    if (nav.trigger && (nav.shiny || !NavFilters.CheckBoxItems[1].Checked))
-                                        if (((NavType.SelectedIndex == 0 && nav.slotType != 2) || (NavType.SelectedIndex == 1 && nav.slotType == 2))
+                                    if (nav.trigger && (nav.shiny || !WantsShiny))
+                                        if (((!WantsExclusives && nav.slotType != 2) || (WantsExclusives && nav.slotType == 2))
                                             && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
                                             &&
-                                            (nav.HA || !NavFilters.CheckBoxItems[2].Checked)
+                                            (nav.HA || !WantsHA)
                                             &&
-                                            (nav.eggMove || !NavFilters.CheckBoxItems[3].Checked)
+                                            (nav.eggMove || !WantsEggMove)
                                             &&
-                                            (nav.sync || !NavFilters.CheckBoxItems[5].Checked)
+                                            (nav.sync || !WantsSync)
                                             &&
                                             ((nav.potential == Potential.Value) || (Potential.Value == 0)))
-                                            if ((nav.boost || !NavFilters.CheckBoxItems[4].Checked)
+                                            if ((nav.boost || !WantsBoost)
                                                 && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
                                             {
                                                 if (DateSearcher)
@@ -546,8 +540,6 @@ namespace TinyFinder
                             tinyInitSeed += 1000;
                             state = tiny.init(tinyInitSeed, 1);
                         } while (Searcher.Rows.Count < find);
-                        if (!DateSearcher)
-                            ManageGenerator(Generator, table, "DexNav");
                     }
                     break;
 
@@ -558,7 +550,6 @@ namespace TinyFinder
                     do
                     {
                         state.CopyTo(store_seed, 0);
-
                         for (uint j = 0; j < Min; j++)
                             tiny.nextState(state);
                         for (uint j = Min; j <= Max; j++)
@@ -583,11 +574,15 @@ namespace TinyFinder
                         tinyInitSeed += 1000;
                         state = tiny.init(tinyInitSeed, 1);
                     } while (Searcher.Rows.Count < find);
-                    if (!DateSearcher)
-                        ManageGenerator(Generator, table, "Swooping");
-                    Searcher.Update();
                     break;
             }
+
+            string M = isRadar1() ? "Radar1" : Methods.Text;
+            if (!DateSearcher)
+                ManageGenerator(Generator, table, M);
+
+            Filters_Box.Enabled = true;
+            MainButton.Text = DateSearcher ? "Search" : "Generate";
         }
 
         #region Show Results
@@ -595,7 +590,6 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                 index, wild.encounter, wild.Sync, wild.slot, wild.flute, wild.rand100);
-            Searcher.Update();
         }
         private void ShowWildGen(DataTable table, Wild wild, uint[] state, uint index)
         {
@@ -611,7 +605,6 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index,
                    smash.encounter, smash.Sync, smash.slot, smash.flute, smash.rand100);
-            Searcher.Update();
         }
         private void ShowSmashGen(DataTable table, Wild smash, uint[] state, uint index)
         {
@@ -638,16 +631,14 @@ namespace TinyFinder
                     if (count == 5)
                     {
                         Flutes = string.Join(", ", horde.flutes.Select(f => f.ToString()));
-                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), 
+                        Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                             index, horde.encounter, horde.sync, horde.slot, horde.HA, Flutes, horde.rand100);
-                        Searcher.Update();
                     }
                 }
                 else
                 {
-                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index, 
+                    Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index,
                         horde.encounter, horde.sync, horde.slot, horde.HA, horde.sync, horde.rand100);
-                    Searcher.Update();
                 }
             }
             else
@@ -680,7 +671,6 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                 index, honey.Sync, honey.slot, honey.flute, honey.rand100);
-            Searcher.Update();
         }
         private void ShowHoneyGen(DataTable table, HoneyWild honey, uint[] state, uint index)
         {
@@ -695,15 +685,18 @@ namespace TinyFinder
         private void ShowRadarSrch(Radar radar, string date, uint[] store_seed, uint index, byte chain)
         {
             if (chain == 0)
+            {
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                     index, radar.sync, radar.slot, radar.Music, null, radar.rand100);
+            }   
             else
+            {
                 Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                     index, radar.Shiny, radar.Music, null, radar.rand100);
+            }
             element.index = index;
             element.spots = radar.Overview;
             SPatchSpots.Add(element);
-            Searcher.Update();
         }
 
         private void ShowRadarGen(DataTable table, Radar radar, uint[] state, uint index, byte chain)
@@ -722,9 +715,8 @@ namespace TinyFinder
         private void ShowNavSrch(DexNav nav, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, nav.right, nav.down, nav.trigger, nav.encounter, nav.sync, nav.slot, nav.shiny, "+" + nav.levelBoost,
-                    nav.HA, nav.eggMove, nav.potential, nav.flute, nav.rand100);
-            Searcher.Update();
+                index, nav.right, nav.down, nav.trigger, nav.encounter, nav.sync, nav.slot, nav.shiny, "+" + 
+                nav.levelBoost, nav.HA, nav.eggMove, nav.potential, nav.flute, nav.rand100);
         }
         private void ShowNavGen(DataTable table, DexNav nav, uint[] state, uint index)
         {
@@ -736,7 +728,7 @@ namespace TinyFinder
         private void ShowSwoopSrch(Wild swoop, string date, uint[] store_seed, uint index)
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                    index, swoop.Sync, swoop.slot, null, swoop.rand100);
+                       index, swoop.Sync, swoop.slot, null, swoop.rand100);
         }
 
         private void ShowSwoopGen(DataTable table, Wild swoop, uint[] state, uint index)

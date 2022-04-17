@@ -20,8 +20,6 @@ namespace TinyFinder
         TinyMT tiny = new TinyMT();
         Data data = new Data();
         NTRHelper ntrhelper;
-        //Calibrator calibrator;
-        //Manager manager;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes;
@@ -36,7 +34,7 @@ namespace TinyFinder
 
         List<PatchSpot> GPatchSpots = new List<PatchSpot>();
         List<PatchSpot> SPatchSpots = new List<PatchSpot>();
-
+        SynchronizationContext synchronizationContext;
         private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
         private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
 
@@ -690,14 +688,6 @@ namespace TinyFinder
                 Generator.Columns["TRV"].Width = 35;
                 Generator.Columns["Rand#"].Width = 85;
             }
-            else if (Equals(method, "Wild") || Equals(method, "Rock Smash"))
-            {
-                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width =
-                    Generator.Columns["Slot"].Width = 50;
-                //Generator.Columns["Item"].Width = 50;
-                if (ORAS_Button.Checked)
-                    Generator.Columns["Flute"].Width = 50;
-            }
             else if (Equals(method, "Horde"))
             {
                 Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
@@ -707,13 +697,13 @@ namespace TinyFinder
                 if (!Horde_Turn.Checked)
                     Generator.Columns["Ratio"].Visible = false;
             }
-            else if (Equals(method, "Honey"))
+            else if (Equals(method, "Honey Wild"))
             {
                 Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50; // Generator.Columns["Item"].Width = 50;
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
-            else if (Equals(method, "Radar0"))
+            else if (Equals(method, "Radar"))
             {
                 Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Music"].Width = 50;
                 //Generator.Columns["Item"].Width = 50;
@@ -733,7 +723,17 @@ namespace TinyFinder
                     Generator.Columns["Flute"].Width = Generator.Columns["HA"].Width = 50;
             }
             else if (Equals(method, "Swooping"))
+            {
                 Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50;// Generator.Columns["Item"].Width = 50;
+            }
+            else //Normal Wild, Fishing, Rock Smash, Friend Safari
+            {
+                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width =
+                    Generator.Columns["Slot"].Width = 50;
+                //Generator.Columns["Item"].Width = 50;
+                if (ORAS_Button.Checked)
+                    Generator.Columns["Flute"].Width = 50;
+            }
 
             Generator.Columns["Tiny [3]"].Width = Generator.Columns["Tiny [2]"].Width = 
                 Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
