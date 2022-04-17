@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -590,6 +590,7 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                 index, wild.encounter, wild.Sync, wild.slot, wild.flute, wild.rand100);
+            Searcher.Update();
         }
         private void ShowWildGen(DataTable table, Wild wild, uint[] state, uint index)
         {
@@ -605,6 +606,7 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index,
                    smash.encounter, smash.Sync, smash.slot, smash.flute, smash.rand100);
+            Searcher.Update();
         }
         private void ShowSmashGen(DataTable table, Wild smash, uint[] state, uint index)
         {
@@ -633,12 +635,14 @@ namespace TinyFinder
                         Flutes = string.Join(", ", horde.flutes.Select(f => f.ToString()));
                         Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                             index, horde.encounter, horde.sync, horde.slot, horde.HA, Flutes, horde.rand100);
+                        Searcher.Update();
                     }
                 }
                 else
                 {
                     Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]), index,
                         horde.encounter, horde.sync, horde.slot, horde.HA, horde.sync, horde.rand100);
+                    Searcher.Update();
                 }
             }
             else
@@ -671,6 +675,7 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                 index, honey.Sync, honey.slot, honey.flute, honey.rand100);
+            Searcher.Update();
         }
         private void ShowHoneyGen(DataTable table, HoneyWild honey, uint[] state, uint index)
         {
@@ -697,6 +702,7 @@ namespace TinyFinder
             element.index = index;
             element.spots = radar.Overview;
             SPatchSpots.Add(element);
+            Searcher.Update();
         }
 
         private void ShowRadarGen(DataTable table, Radar radar, uint[] state, uint index, byte chain)
@@ -717,6 +723,7 @@ namespace TinyFinder
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                 index, nav.right, nav.down, nav.trigger, nav.encounter, nav.sync, nav.slot, nav.shiny, "+" + 
                 nav.levelBoost, nav.HA, nav.eggMove, nav.potential, nav.flute, nav.rand100);
+            Searcher.Update();
         }
         private void ShowNavGen(DataTable table, DexNav nav, uint[] state, uint index)
         {
@@ -729,6 +736,7 @@ namespace TinyFinder
         {
             Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                        index, swoop.Sync, swoop.slot, null, swoop.rand100);
+            Searcher.Update();
         }
 
         private void ShowSwoopGen(DataTable table, Wild swoop, uint[] state, uint index)
