@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -28,7 +28,6 @@ namespace TinyFinder
             DateSearcher = SearchGen.SelectedIndex == 0;
             if (DateSearcher)
             {
-                MainButton.Enabled = false;
                 Working = true;
                 Searcher.Rows.Clear();
                 ManageSearcher(ref Searcher, MethodUsed);
@@ -89,7 +88,7 @@ namespace TinyFinder
                 }
                 Slots = new HashSet<byte>();
                 for (byte s = 1; s < SlotLimit; s++)
-                    if (slots.CheckBoxItems[s].Checked)
+                    if (SlotsComboBox.CheckBoxItems[s].Checked)
                         Slots.Add(s);
                 SlotCount = (byte)Slots.Count;
             }

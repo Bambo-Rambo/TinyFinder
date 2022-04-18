@@ -55,6 +55,7 @@ namespace TinyFinder
         //Main Event (Search Button)
         private void MainButton_Click(object sender, EventArgs e)
         {
+            MainButton.Enabled = false;
             StartSearch();
         }
         private void StopButton_Click(object sender, EventArgs e)
@@ -94,7 +95,7 @@ namespace TinyFinder
         {
             if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
-                SyncBox.Enabled = slots.Enabled = Slots_Label.Enabled = ratio.Value == 0;
+                SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = ratio.Value == 0;
                 BoostBox.Enabled = BagBox.Enabled = isRadar1();
             }
         }
@@ -381,7 +382,7 @@ namespace TinyFinder
             LongGrassBox.Checked = CaveBox.Checked = SurfBox.Checked = Horde_Turn.Checked = false;
 
             TID_Label.Visible = SID_Label.Visible = tid.Visible = sid.Visible = Method == 0;
-            slots.Visible = Slots_Label.Visible = Method != 0;
+            SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
             SyncBox.Visible = Method != 0 && !Equals(Methods.Text,"DexNav");
             Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS_Button.Checked;
             HASlot.Visible = HA_Label.Visible = Horde_Turn.Visible = Method == 4;
@@ -428,13 +429,13 @@ namespace TinyFinder
             {
                 ManageSlots((byte)Methods.SelectedIndex);
                 Slots_Label.Location = new Point(13, 46);
-                slots.Location = new Point(75, 42);
+                SlotsComboBox.Location = new Point(75, 42);
                 Flute1_Label.Location = new Point(16, 98);
                 Flute1.Location = new Point(75, 94);
                 SyncBox.Location = new Point(53, 148);
                 Party_Label.Location = new Point(230, 193);
                 party.Maximum = 6;
-                Slots_Label.Enabled = slots.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
+                Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
 
                 if (Method == 1)
                 {
@@ -461,7 +462,7 @@ namespace TinyFinder
                     {
                         ratio.Value = 1;    //Chain
                         ratio.Maximum = 60;
-                        SyncBox.Enabled = slots.Enabled = !isRadar1();
+                        SyncBox.Enabled = SlotsComboBox.Enabled = !isRadar1();
                     }
                     else
                     {
@@ -471,7 +472,7 @@ namespace TinyFinder
                         party.Value = 999;
                         Party_Label.Location = new Point(185, 194);
                         Slots_Label.Location = new Point(9, 93);
-                        slots.Location = new Point(71, 89);
+                        SlotsComboBox.Location = new Point(71, 89);
                         Flute1_Label.Location = new Point(254, 140);
                         Flute1.Location = new Point(341, 137);
                     }
@@ -550,10 +551,10 @@ namespace TinyFinder
                     break;
             }
             //slots.Text = "";
-            slots.Items.Clear();
-            slots.DropDownHeight = ComboBoxHeight;
+            SlotsComboBox.Items.Clear();
+            SlotsComboBox.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
-                slots.Items.AddRange(new object[] { add });
+                SlotsComboBox.Items.AddRange(new object[] { add });
         }
 
         private void ManageRatio()

@@ -29,12 +29,12 @@ namespace TinyFinder
         /// </summary>
         private void InitializeComponent()
         {
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Searcher = new System.Windows.Forms.DataGridView();
             this.s_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,10 +48,6 @@ namespace TinyFinder
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.s_Rand = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.t3 = new TinyFinder.HexBox();
-            this.t2 = new TinyFinder.HexBox();
-            this.t1 = new TinyFinder.HexBox();
-            this.t0 = new TinyFinder.HexBox();
             this.MainButton = new System.Windows.Forms.Button();
             this.XY_Button = new System.Windows.Forms.RadioButton();
             this.ORAS_Button = new System.Windows.Forms.RadioButton();
@@ -93,7 +89,6 @@ namespace TinyFinder
             this.NavFilters_Label = new System.Windows.Forms.Label();
             this.NavType = new System.Windows.Forms.ComboBox();
             this.NavType_Label = new System.Windows.Forms.Label();
-            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.Patches_Board = new System.Windows.Forms.Label();
             this.Flute3_Label = new System.Windows.Forms.Label();
             this.Flute5_Label = new System.Windows.Forms.Label();
@@ -109,7 +104,6 @@ namespace TinyFinder
             this.Flute2_Label = new System.Windows.Forms.Label();
             this.HASlot = new System.Windows.Forms.ComboBox();
             this.Slots_Label = new System.Windows.Forms.Label();
-            this.slots = new TinyFinder.Controls.CheckBoxComboBox();
             this.SID_Label = new System.Windows.Forms.Label();
             this.TID_Label = new System.Windows.Forms.Label();
             this.sid = new System.Windows.Forms.NumericUpDown();
@@ -140,6 +134,12 @@ namespace TinyFinder
             this.ntr = new System.Windows.Forms.ToolStripMenuItem();
             this.profiles = new System.Windows.Forms.ToolStripMenuItem();
             this.profilemanager = new System.Windows.Forms.ToolStripMenuItem();
+            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
+            this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
+            this.t3 = new TinyFinder.HexBox();
+            this.t2 = new TinyFinder.HexBox();
+            this.t0 = new TinyFinder.HexBox();
+            this.t1 = new TinyFinder.HexBox();
             ((System.ComponentModel.ISupportInitialize)(this.Searcher)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
@@ -275,64 +275,12 @@ namespace TinyFinder
             this.s_Rand.ReadOnly = true;
             this.s_Rand.Width = 80;
             // 
-            // t3
-            // 
-            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t3.Location = new System.Drawing.Point(126, 100);
-            this.t3.Mask = "AAAAAAAA";
-            this.t3.Name = "t3";
-            this.t3.Size = new System.Drawing.Size(63, 23);
-            this.t3.TabIndex = 1;
-            this.t3.Text = "00000000";
-            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t3.Value = ((uint)(0u));
-            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
-            // 
-            // t2
-            // 
-            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t2.Location = new System.Drawing.Point(126, 132);
-            this.t2.Mask = "AAAAAAAA";
-            this.t2.Name = "t2";
-            this.t2.Size = new System.Drawing.Size(63, 23);
-            this.t2.TabIndex = 2;
-            this.t2.Text = "00000000";
-            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t2.Value = ((uint)(0u));
-            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
-            // 
-            // t1
-            // 
-            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t1.Location = new System.Drawing.Point(126, 162);
-            this.t1.Mask = "AAAAAAAA";
-            this.t1.Name = "t1";
-            this.t1.Size = new System.Drawing.Size(63, 23);
-            this.t1.TabIndex = 3;
-            this.t1.Text = "00000000";
-            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t1.Value = ((uint)(0u));
-            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
-            // 
-            // t0
-            // 
-            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t0.Location = new System.Drawing.Point(126, 193);
-            this.t0.Mask = "AAAAAAAA";
-            this.t0.Name = "t0";
-            this.t0.Size = new System.Drawing.Size(63, 23);
-            this.t0.TabIndex = 4;
-            this.t0.Text = "00000000";
-            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t0.Value = ((uint)(0u));
-            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
-            // 
             // MainButton
             // 
             this.MainButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainButton.Location = new System.Drawing.Point(38, 216);
+            this.MainButton.Location = new System.Drawing.Point(38, 205);
             this.MainButton.Name = "MainButton";
-            this.MainButton.Size = new System.Drawing.Size(175, 35);
+            this.MainButton.Size = new System.Drawing.Size(175, 38);
             this.MainButton.TabIndex = 5;
             this.MainButton.Text = "Calibrate and Search";
             this.MainButton.UseVisualStyleBackColor = true;
@@ -796,7 +744,7 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.Flute2_Label);
             this.Filters_Box.Controls.Add(this.HASlot);
             this.Filters_Box.Controls.Add(this.Slots_Label);
-            this.Filters_Box.Controls.Add(this.slots);
+            this.Filters_Box.Controls.Add(this.SlotsComboBox);
             this.Filters_Box.Controls.Add(this.SID_Label);
             this.Filters_Box.Controls.Add(this.TID_Label);
             this.Filters_Box.Controls.Add(this.sid);
@@ -812,9 +760,9 @@ namespace TinyFinder
             // StopButton
             // 
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(220, 216);
+            this.StopButton.Location = new System.Drawing.Point(220, 205);
             this.StopButton.Name = "StopButton";
-            this.StopButton.Size = new System.Drawing.Size(175, 35);
+            this.StopButton.Size = new System.Drawing.Size(175, 38);
             this.StopButton.TabIndex = 52;
             this.StopButton.Text = "Stop";
             this.StopButton.UseVisualStyleBackColor = true;
@@ -882,27 +830,6 @@ namespace TinyFinder
             this.NavType_Label.Size = new System.Drawing.Size(35, 14);
             this.NavType_Label.TabIndex = 46;
             this.NavType_Label.Text = "Type";
-            // 
-            // NavFilters
-            // 
-            this.NavFilters.BlankText = null;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
-            this.NavFilters.DisplayMemberSingleItem = "";
-            this.NavFilters.DropDownHeight = 140;
-            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.NavFilters.FormattingEnabled = true;
-            this.NavFilters.Items.AddRange(new object[] {
-            "Shiny",
-            "HA",
-            "Egg Move",
-            "Level Boost",
-            "Sync"});
-            this.NavFilters.Location = new System.Drawing.Point(71, 164);
-            this.NavFilters.Name = "NavFilters";
-            this.NavFilters.Size = new System.Drawing.Size(110, 22);
-            this.NavFilters.TabIndex = 25;
-            this.NavFilters.Visible = false;
             // 
             // Patches_Board
             // 
@@ -1080,21 +1007,6 @@ namespace TinyFinder
             this.Slots_Label.Text = "Slots";
             this.Slots_Label.Visible = false;
             // 
-            // slots
-            // 
-            this.slots.BlankText = "Any";
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.slots.CheckBoxProperties = checkBoxProperties2;
-            this.slots.DisplayMemberSingleItem = "";
-            this.slots.DropDownHeight = 310;
-            this.slots.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.slots.FormattingEnabled = true;
-            this.slots.Location = new System.Drawing.Point(71, 127);
-            this.slots.Name = "slots";
-            this.slots.Size = new System.Drawing.Size(110, 22);
-            this.slots.TabIndex = 24;
-            this.slots.Visible = false;
-            // 
             // SID_Label
             // 
             this.SID_Label.AutoSize = true;
@@ -1247,7 +1159,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1121, 316);
+            this.Generator.Size = new System.Drawing.Size(1121, 318);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1416,6 +1328,94 @@ namespace TinyFinder
             this.profilemanager.Visible = false;
             this.profilemanager.Click += new System.EventHandler(this.profilemanager_Click);
             // 
+            // NavFilters
+            // 
+            this.NavFilters.BlankText = null;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
+            this.NavFilters.DisplayMemberSingleItem = "";
+            this.NavFilters.DropDownHeight = 140;
+            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NavFilters.FormattingEnabled = true;
+            this.NavFilters.Items.AddRange(new object[] {
+            "Shiny",
+            "HA",
+            "Egg Move",
+            "Level Boost",
+            "Sync"});
+            this.NavFilters.Location = new System.Drawing.Point(71, 164);
+            this.NavFilters.Name = "NavFilters";
+            this.NavFilters.Size = new System.Drawing.Size(110, 22);
+            this.NavFilters.TabIndex = 25;
+            this.NavFilters.Visible = false;
+            // 
+            // SlotsComboBox
+            // 
+            this.SlotsComboBox.BlankText = "Any";
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SlotsComboBox.CheckBoxProperties = checkBoxProperties2;
+            this.SlotsComboBox.DisplayMemberSingleItem = "";
+            this.SlotsComboBox.DropDownHeight = 310;
+            this.SlotsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SlotsComboBox.FormattingEnabled = true;
+            this.SlotsComboBox.Location = new System.Drawing.Point(71, 127);
+            this.SlotsComboBox.Name = "SlotsComboBox";
+            this.SlotsComboBox.Size = new System.Drawing.Size(110, 22);
+            this.SlotsComboBox.TabIndex = 24;
+            this.SlotsComboBox.Visible = false;
+            // 
+            // t3
+            // 
+            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t3.Location = new System.Drawing.Point(126, 100);
+            this.t3.Mask = "AAAAAAAA";
+            this.t3.Name = "t3";
+            this.t3.Size = new System.Drawing.Size(63, 23);
+            this.t3.TabIndex = 1;
+            this.t3.Text = "00000000";
+            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t3.Value = ((uint)(0u));
+            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
+            // 
+            // t2
+            // 
+            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t2.Location = new System.Drawing.Point(126, 132);
+            this.t2.Mask = "AAAAAAAA";
+            this.t2.Name = "t2";
+            this.t2.Size = new System.Drawing.Size(63, 23);
+            this.t2.TabIndex = 2;
+            this.t2.Text = "00000000";
+            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t2.Value = ((uint)(0u));
+            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
+            // 
+            // t0
+            // 
+            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t0.Location = new System.Drawing.Point(126, 193);
+            this.t0.Mask = "AAAAAAAA";
+            this.t0.Name = "t0";
+            this.t0.Size = new System.Drawing.Size(63, 23);
+            this.t0.TabIndex = 4;
+            this.t0.Text = "00000000";
+            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t0.Value = ((uint)(0u));
+            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
+            // 
+            // t1
+            // 
+            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t1.Location = new System.Drawing.Point(126, 162);
+            this.t1.Mask = "AAAAAAAA";
+            this.t1.Name = "t1";
+            this.t1.Size = new System.Drawing.Size(63, 23);
+            this.t1.TabIndex = 3;
+            this.t1.Text = "00000000";
+            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t1.Value = ((uint)(0u));
+            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1498,7 +1498,7 @@ namespace TinyFinder
         private System.Windows.Forms.Label Tiny2_Label;
         private System.Windows.Forms.Label Tiny3_Label;
         //private Controls.CheckBoxComboBox checkBoxComboBox1;
-        private Controls.CheckBoxComboBox slots;
+        private Controls.CheckBoxComboBox SlotsComboBox;
         private System.Windows.Forms.Label HA_Label;
         private System.Windows.Forms.ComboBox HASlot;
         private System.Windows.Forms.Label Slots_Label;
