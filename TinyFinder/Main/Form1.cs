@@ -22,7 +22,7 @@ namespace TinyFinder
         NTRHelper ntrhelper;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit, SlotCount;
-        bool Calibrated = false, DateSearcher, HasHordes;
+        bool Calibrated = false, DateSearcher, HasHordes, Working;
         byte MethodUsed;
         int Rand100Column;
         struct PatchSpot
@@ -34,7 +34,6 @@ namespace TinyFinder
 
         List<PatchSpot> GPatchSpots = new List<PatchSpot>();
         List<PatchSpot> SPatchSpots = new List<PatchSpot>();
-        SynchronizationContext synchronizationContext;
         private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
         private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
 
@@ -57,6 +56,10 @@ namespace TinyFinder
         private void MainButton_Click(object sender, EventArgs e)
         {
             StartSearch();
+        }
+        private void StopButton_Click(object sender, EventArgs e)
+        {
+            Working = false;
         }
         private void xyRadio_CheckedChanged(object sender, EventArgs e)
         {
@@ -176,9 +179,9 @@ namespace TinyFinder
             {
                 Date_Label.Location = new Point(1, 71);
                 Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-                MainButton.Text = Calibrated ? "Search" : "Calibrate and Search";
-                FindNum_Label.Enabled = Atleast.Enabled = Month_Label.Visible = Months.Visible = true;
-                Year_Label.Visible = year.Visible = true;
+                if (!Working)
+                    MainButton.Text = Calibrated ? "Search" : "Calibrate and Search";
+                Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = true;
                 Step_Label.Visible = Chain_Label.Visible = false;
                 ΙgnoreFilters.Checked = ΙgnoreFilters.Enabled = false;
                 ntr.Enabled = updateBTN.Visible = false;
@@ -192,11 +195,11 @@ namespace TinyFinder
             {
                 Date_Label.Location = new Point(98, 71);
                 Date_Label.Text = "Current State";
-                MainButton.Text = "Generate";
-                FindNum_Label.Enabled = Atleast.Enabled = Month_Label.Visible = Months.Visible = false;
+                if (!Working) 
+                    MainButton.Text = "Generate";
                 ntr.Enabled = updateBTN.Visible = true;
                 ΙgnoreFilters.Enabled = true;
-                year.Visible = Year_Label.Visible = false;
+                year.Visible = Year_Label.Visible = Month_Label.Visible = Months.Visible = false;
                 min.Minimum = 0; min.Value = 0;
                 max.Value = 50000;
             }
@@ -207,7 +210,8 @@ namespace TinyFinder
             if (SearchGen.SelectedIndex == 0)
             {
                 Calibrated = false;
-                MainButton.Text = "Calibrate and Search";
+                if (!Working)
+                    MainButton.Text = "Calibrate and Search";
             }
         }
         private void t3_TextChanged(object sender, EventArgs e)
@@ -508,6 +512,7 @@ namespace TinyFinder
             //Default values for most methods
             byte SlotsCount = 13;
             ushort ComboBoxHeight = 310;
+            //
 
             switch (method)
             {
@@ -529,13 +534,10 @@ namespace TinyFinder
                             SlotsCount = 4;
                             ComboBoxHeight = 90;
                         }
-                        else
+                        else if (SurfBox.Checked)
                         {
-                            if (SurfBox.Checked)
-                            {
-                                SlotsCount = 6;
-                                ComboBoxHeight = 140;
-                            }
+                            SlotsCount = 6;
+                            ComboBoxHeight = 140;
                         }
                     }
                     break;

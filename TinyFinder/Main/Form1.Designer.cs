@@ -86,6 +86,7 @@ namespace TinyFinder
             this.Party_Label = new System.Windows.Forms.Label();
             this.party = new System.Windows.Forms.NumericUpDown();
             this.Filters_Box = new System.Windows.Forms.GroupBox();
+            this.StopButton = new System.Windows.Forms.Button();
             this.ΙgnoreFilters = new System.Windows.Forms.CheckBox();
             this.Potential_Label = new System.Windows.Forms.Label();
             this.Potential = new System.Windows.Forms.NumericUpDown();
@@ -94,8 +95,6 @@ namespace TinyFinder
             this.NavType_Label = new System.Windows.Forms.Label();
             this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.Patches_Board = new System.Windows.Forms.Label();
-            this.FindNum_Label = new System.Windows.Forms.Label();
-            this.Atleast = new System.Windows.Forms.NumericUpDown();
             this.Flute3_Label = new System.Windows.Forms.Label();
             this.Flute5_Label = new System.Windows.Forms.Label();
             this.Flute1_Label = new System.Windows.Forms.Label();
@@ -151,7 +150,6 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.Filters_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Potential)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Atleast)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute3)).BeginInit();
@@ -332,9 +330,9 @@ namespace TinyFinder
             // MainButton
             // 
             this.MainButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainButton.Location = new System.Drawing.Point(239, 204);
+            this.MainButton.Location = new System.Drawing.Point(38, 216);
             this.MainButton.Name = "MainButton";
-            this.MainButton.Size = new System.Drawing.Size(171, 44);
+            this.MainButton.Size = new System.Drawing.Size(175, 35);
             this.MainButton.TabIndex = 5;
             this.MainButton.Text = "Calibrate and Search";
             this.MainButton.UseVisualStyleBackColor = true;
@@ -774,6 +772,7 @@ namespace TinyFinder
             // Filters_Box
             // 
             this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Filters_Box.Controls.Add(this.StopButton);
             this.Filters_Box.Controls.Add(this.ΙgnoreFilters);
             this.Filters_Box.Controls.Add(this.Potential_Label);
             this.Filters_Box.Controls.Add(this.Potential);
@@ -783,8 +782,6 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.NavFilters);
             this.Filters_Box.Controls.Add(this.Patches_Board);
             this.Filters_Box.Controls.Add(this.MainButton);
-            this.Filters_Box.Controls.Add(this.FindNum_Label);
-            this.Filters_Box.Controls.Add(this.Atleast);
             this.Filters_Box.Controls.Add(this.Flute3_Label);
             this.Filters_Box.Controls.Add(this.Flute5_Label);
             this.Filters_Box.Controls.Add(this.Flute1_Label);
@@ -811,6 +808,17 @@ namespace TinyFinder
             this.Filters_Box.TabIndex = 18;
             this.Filters_Box.TabStop = false;
             this.Filters_Box.Text = "Step 3 - Preferences";
+            // 
+            // StopButton
+            // 
+            this.StopButton.Enabled = false;
+            this.StopButton.Location = new System.Drawing.Point(220, 216);
+            this.StopButton.Name = "StopButton";
+            this.StopButton.Size = new System.Drawing.Size(175, 35);
+            this.StopButton.TabIndex = 52;
+            this.StopButton.Text = "Stop";
+            this.StopButton.UseVisualStyleBackColor = true;
+            this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
             // 
             // ΙgnoreFilters
             // 
@@ -906,37 +914,6 @@ namespace TinyFinder
             this.Patches_Board.Size = new System.Drawing.Size(18, 19);
             this.Patches_Board.TabIndex = 45;
             this.Patches_Board.Text = ".";
-            // 
-            // FindNum_Label
-            // 
-            this.FindNum_Label.AutoSize = true;
-            this.FindNum_Label.Location = new System.Drawing.Point(9, 220);
-            this.FindNum_Label.Name = "FindNum_Label";
-            this.FindNum_Label.Size = new System.Drawing.Size(98, 14);
-            this.FindNum_Label.TabIndex = 44;
-            this.FindNum_Label.Text = "Find at least";
-            // 
-            // Atleast
-            // 
-            this.Atleast.Location = new System.Drawing.Point(113, 217);
-            this.Atleast.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
-            this.Atleast.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.Atleast.Name = "Atleast";
-            this.Atleast.Size = new System.Drawing.Size(57, 22);
-            this.Atleast.TabIndex = 43;
-            this.Atleast.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // Flute3_Label
             // 
@@ -1469,7 +1446,6 @@ namespace TinyFinder
             this.Filters_Box.ResumeLayout(false);
             this.Filters_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Potential)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Atleast)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Flute3)).EndInit();
@@ -1545,8 +1521,6 @@ namespace TinyFinder
         private System.Windows.Forms.Label Flute2_Label;
         private System.Windows.Forms.ComboBox Months;
         private System.Windows.Forms.Label Month_Label;
-        private System.Windows.Forms.Label FindNum_Label;
-        private System.Windows.Forms.NumericUpDown Atleast;
         private System.Windows.Forms.ComboBox locations;
         private System.Windows.Forms.Label Location_Label;
         private System.Windows.Forms.TabControl SearchGen;
@@ -1598,6 +1572,7 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny2;
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny1;
         private System.Windows.Forms.DataGridViewTextBoxColumn g_Tiny0;
+        private System.Windows.Forms.Button StopButton;
     }
 }
 
