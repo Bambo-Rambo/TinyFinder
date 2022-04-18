@@ -135,7 +135,7 @@ namespace TinyFinder
                                         id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
                                     }));
                                 }
-                                else
+                                else if (!DateSearcher)
                                 {
                                     id.results(state);
                                     if (!ΙgnoreFilters.Checked)
