@@ -63,7 +63,7 @@ namespace TinyFinder
                     tinyhoney.nextState(temp);                                          */
 
 
-                music = tinyradar.Rand(temp, 100);
+                music = tinyradar.Rand(temp, 100);  //Issue
                 boost &= music >= 50;
 
                 byte ring = 0;

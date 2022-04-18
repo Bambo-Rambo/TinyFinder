@@ -9,7 +9,7 @@
         private Data data = new Data();
         private uint[] temp = new uint[4];
         public byte slot, encounter, flute, rand100, ratio, slotType, NPC; //public byte item;
-        public bool Sync, trigger, oras, HasHordes, XY_TallGrass;
+        public bool Sync, trigger, oras, CanStepHorde, XY_TallGrass;
 
         //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
         public void results(uint[] current)
@@ -22,7 +22,7 @@
             tinywild.nextState(temp);
             rand100 = tinywild.Rand(temp, 100);     //If (rand100 < 5) -> Horde
 
-            if (HasHordes)                          //+1 to avoid using the same rand100 for Horde trigger and Sync
+            if (CanStepHorde)                          //+1 to avoid using the same rand100 for Horde trigger and Sync
                 tinywild.nextState(temp);           //Every horde, triggered by step, would be synced otherwise
 
             Sync = tinywild.Rand(temp, 100) < 50;
@@ -30,7 +30,7 @@
             tinywild.nextState(temp);
             encounter = tinywild.Rand(temp, 100);
 
-            trigger = encounter < ratio && (!HasHordes || rand100 > 4);
+            trigger = encounter < ratio && (!CanStepHorde || rand100 > 4);
 
             if (XY_TallGrass)                       //Unknown reason
                 tinywild.nextState(temp);
