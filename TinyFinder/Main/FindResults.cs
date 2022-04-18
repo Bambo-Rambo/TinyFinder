@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -125,18 +125,15 @@ namespace TinyFinder
                                 tiny.nextState(state);
                             for (uint j = Min; j <= Max; j++)
                             {
-                                if (DateSearcher)
+                                if (randID == tiny.temper(state) && DateSearcher)
                                 {
-                                    if (randID == tiny.temper(state))
+                                    Invoke(new Action(() =>
                                     {
-                                        Invoke(new Action(() =>
-                                        {
-                                            Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
-                                            hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                                            j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
-                                        }));
-                                    }
+                                        Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
+                                        hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
+                                        j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
+                                    }));
                                 }
                                 else
                                 {
