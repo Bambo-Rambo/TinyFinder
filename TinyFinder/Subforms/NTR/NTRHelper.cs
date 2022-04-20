@@ -27,7 +27,10 @@ namespace TinyFinder
             Properties.Settings.Default.IP = IP.Text;
             Properties.Settings.Default.Save();
         }
-
+        public void HandleException()
+        {
+            B_OneClick.PerformClick();
+        }
         public void Connect(bool OneClick)
         {
             B_Connect_Click(OneClick ? B_OneClick : null, null);
