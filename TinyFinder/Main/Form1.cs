@@ -27,8 +27,9 @@ namespace TinyFinder
         int Rand100Column;
         struct PatchSpot
         {
-            public uint index;
-            public string[] spots;
+            public uint RadarIndex;
+            public uint RadarState3;
+            public string[] RadarSpots;
         }
         PatchSpot element = new PatchSpot();
 
@@ -91,12 +92,17 @@ namespace TinyFinder
             MainButton.Text = "Calibrate and Search";
         }
 
+        private void party_ValueChanged(object sender, EventArgs e)
+        {
+            if (Methods.SelectedIndex == 7)
+                ManageSlots(7);
+        }
         private void ratio_ValueChanged(object sender, EventArgs e)
         {
             if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
                 SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = ratio.Value == 0;
-                BoostBox.Enabled = BagBox.Enabled = isRadar1();
+                BonusMusicBox.Enabled = BagBox.Enabled = isRadar1();
             }
         }
 
@@ -232,14 +238,18 @@ namespace TinyFinder
             TinyChanged();
         }
 
-        private int getIndex(DataGridView view, int row)
+        private int getIndex(DataGridView view, List<PatchSpot> listSpot, int row, int IndexColumn, int State3Column)
         {
-            //When sort the rows, it would show the spots for the clicked row numer not for the clicked TinyMT index
-            int IndexNumber = Convert.ToInt32(view.Rows[row].Cells[0].Value);  //The clicked TinyMT index
+            //When sort the rows, it would show the spots for the clicked row numer not for the selected TinyMT index
+            //For a clicked row, we check the values of its index and Tiny[3]
+            //For Generator, the index value would be enough but for Searcher many rows can have the same index value with different TinyMT state
+            uint IndexValue = Convert.ToUInt32(view.Rows[row].Cells[IndexColumn].Value);
+            string Tiny3ValueHex = view.Rows[row].Cells[State3Column].Value.ToString();                 //The value of Tiny[3] for the clicked row in hex
+            uint Tiny3Value = uint.Parse(Tiny3ValueHex, System.Globalization.NumberStyles.HexNumber);   //Covert to unsigned dec number
             int num = 0;
-            foreach (PatchSpot i in GPatchSpots)
+            foreach (PatchSpot i in listSpot)
             {
-                if (i.index == IndexNumber)
+                if (i.RadarState3 == Tiny3Value && i.RadarIndex == IndexValue)
                     break;
                 num++;
             }
@@ -251,38 +261,38 @@ namespace TinyFinder
             {
                 try
                 {
-                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(Generator, e.RowIndex)].spots);
+                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(Generator, GPatchSpots, e.RowIndex, 0, 4)].RadarSpots);
                 }
                 catch
-                { }
+                { }     //Only occurs if click in the headers
             }
         }
         private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //Searcher doesn't work with getIndex() because multiple indexes have the same number. Possibly use the Rand(100) as well
-            //Currently doesn't work when sort the rows. To do
             if (isRadar1())
             {
                 try
                 {
-                    Patches_Board.Text = string.Join("\n", SPatchSpots[e.RowIndex].spots);
+                    Patches_Board.Text = string.Join("\n", SPatchSpots[getIndex(Searcher, SPatchSpots, e.RowIndex, 5, 1)].RadarSpots);
                 }
                 catch
-                { }
+                { }     //Only occurs if click in the headers
             }
         }
 
-        /*private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            //To do
             if (e.Button == MouseButtons.Right)
             {
-                t3.Value = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["Tiny [3]"].Value);
-                t2.Value = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["Tiny [2]"].Value);
-                t1.Value = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["Tiny [1]"].Value);
-                t0.Value = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value);
+                /*if (MessageBox.Show("Set as Current State?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    t3.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [3]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                    t2.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [2]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                    t1.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [1]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                    t0.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                }*/
             }
-        }*/
+        }
 
         private void updateBTN_Click(object sender, EventArgs e)
         {
@@ -303,9 +313,10 @@ namespace TinyFinder
                 }
                 MainButton.PerformClick();
             }
-            catch
+            catch   //If click Update before the console connects again
             {
-                MessageBox.Show("Press One Click", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ntrhelper.HandleException();
+                updateBTN.PerformClick();
             }
         }
 
@@ -391,7 +402,7 @@ namespace TinyFinder
             Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
             Location_Label.Visible = locations.Visible = Method == 1 || Method == 4;
 
-            BoostBox.Visible = Patches_Board.Visible = XY_Button.Checked && Method == 6;
+            BonusMusicBox.Visible = Patches_Board.Visible = XY_Button.Checked && Method == 6;
             BagBox.Visible = Method == 6 && XY_Button.Checked;
             LongGrassBox.Visible = Method == 1 && ORAS_Button.Checked;
             CaveBox.Visible = Method == 1 || Method == 4 || Method == 5;
@@ -400,7 +411,7 @@ namespace TinyFinder
             Noise_Label.Visible = noise.Visible = ExclusiveBox.Visible = NavType_Label.Visible = NavType.Visible = NavFilters_Label.Visible = 
                 NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS_Button.Checked && Method == 6;
 
-            Party_Label.Visible = party.Visible = Method > 3 && Method < 7;
+            Party_Label.Visible = party.Visible = Method > 3 && Method < 8;
 
             Step_Label.Visible = Chain_Label.Visible = false;
 
@@ -408,7 +419,7 @@ namespace TinyFinder
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
-            Party_Label.Text = (Method == 6 && ORAS_Button.Checked) ? "Search Level" : "Party";
+            Party_Label.Text = (Method == 6 && ORAS_Button.Checked) ? "Search Level" : Method == 7 ? "Slots" : "Party";
 
             ratio.Minimum = 1; ratio.Maximum = 99;
 
@@ -434,7 +445,7 @@ namespace TinyFinder
                 Flute1.Location = new Point(75, 94);
                 SyncBox.Location = new Point(53, 148);
                 Party_Label.Location = new Point(230, 193);
-                party.Maximum = 6;
+                party.Minimum = Method == 7 ? 2 : 1; party.Maximum = Method == 7 ? 3 : 6; party.Value = party.Maximum;
                 Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
 
                 if (Method == 1)
@@ -482,7 +493,7 @@ namespace TinyFinder
 
         private void DefaultChanges()
         {
-            BoostBox.Location = new Point(237, 80);
+            BonusMusicBox.Location = new Point(237, 80);
             BagBox.Location = new Point(237, 120);
 
             SurfBox.Location = new Point(237, 40);
@@ -542,15 +553,18 @@ namespace TinyFinder
                         }
                     }
                     break;
+                case 7:     //Friend Safari
+                    SlotsCount = (byte)(party.Value == 2 ? 3 : 4);
+                    ComboBoxHeight = (ushort)(party.Value == 2 ? 65 : 90);
+                    break;
 
                 case 2:     //Fishing
                 case 4:     //Horde
-                case 7:     //Friend Safari
                     SlotsCount = 4;
                     ComboBoxHeight = 90;
                     break;
             }
-            //slots.Text = "";
+            //SlotsComboBox.Text = "";
             SlotsComboBox.Items.Clear();
             SlotsComboBox.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
@@ -852,11 +866,6 @@ namespace TinyFinder
         {
             try
             {
-                /*view.Rows[row].Cells["Tiny [3]"].Style.Font = new Font("Consolas", 9.75F);
-                      view.Rows[row].Cells["Tiny [2]"].Style.Font = new Font("Consolas", 9.75F);
-                      view.Rows[row].Cells["Tiny [1]"].Style.Font = new Font("Consolas", 9.75F);
-                      view.Rows[row].Cells["Tiny [0]"].Style.Font = new Font("Consolas", 9.75F);*/
-
                 if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
                 {
                     if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&

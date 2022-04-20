@@ -69,7 +69,7 @@ namespace TinyFinder
                 switch (MethodUsed)
                 {
                     case 1: case 8: SlotLimit = 13; break;
-                    case 2: case 4: case 7: SlotLimit = 4; break;
+                    case 2: case 4: SlotLimit = 4; break;
                     case 3: SlotLimit = 6; break;
                     case 5:
                         SlotLimit = (byte)(SurfBox.Checked ? 6 : 13);
@@ -85,11 +85,19 @@ namespace TinyFinder
                                 SlotLimit = 6;
                         }
                         break;
+                    case 7:
+                        SlotLimit = (byte)(party.Value == 2 ? 3 : 4);
+                        break;
                 }
                 Slots = new HashSet<byte>();
-                for (byte s = 1; s < SlotLimit; s++)
-                    if (SlotsComboBox.CheckBoxItems[s].Checked)
-                        Slots.Add(s);
+                try 
+                {
+                    for (byte s = 1; s < SlotLimit; s++)
+                        if (SlotsComboBox.CheckBoxItems[s].Checked)
+                            Slots.Add(s);
+                }
+                catch { }   //Only occurs if change FS slots from 2 to 3 and click Generate
+                
                 SlotCount = (byte)Slots.Count;
             }
 
@@ -163,11 +171,12 @@ namespace TinyFinder
                 case 1:     //Normal Wild
                 case 2:     //Fishing
                 case 7:     //Friend Safari
+                    
                     Wild wild = new Wild()
                     {
                         ratio = (byte)ratio.Value,
                         oras = ORAS_Button.Checked,
-                        slotType = (byte)(MethodUsed == 2 ? 2 : MethodUsed == 7 ? 1 : 0),
+                        slotType = (byte)(MethodUsed == 1 ? 0 : MethodUsed == 2 ? 3 : MethodUsed == 7 && party.Value == 2 ? 1 : 2),
                         NPC = NPC_Influence,
                         CanStepHorde = HasHordes,
                         XY_TallGrass = Is_XY_TallGrass,
@@ -334,7 +343,7 @@ namespace TinyFinder
                     HoneyWild honey = new HoneyWild()
                     {
                         oras = ORAS_Button.Checked,
-                        slotCase = (byte)(SurfBox.Checked ? 3 : 0),
+                        slotCase = (byte)(SurfBox.Checked ? 4 : 0),
                     };
                     if (CaveBox.Checked)
                         advances = 3;
@@ -398,7 +407,7 @@ namespace TinyFinder
                         {
                             chain = (byte)ratio.Value,
                             party = (byte)party.Value,
-                            boost = BoostBox.Checked,
+                            BonusMusic = BonusMusicBox.Checked,
                         };
                         if (DateSearcher)
                             SPatchSpots.Clear();
@@ -495,7 +504,7 @@ namespace TinyFinder
                             chain = (byte)ratio.Value,
                             charm = CharmBox.Checked,
                             exclusives = ExclusiveBox.Checked,
-                            type = SurfBox.Checked ? 1 : 0,
+                            slotType = SurfBox.Checked ? 1 : 0,
                             Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
                         };
                         bool WantsExclusives = NavType.SelectedIndex == 1;
@@ -520,7 +529,7 @@ namespace TinyFinder
                                     if (!ΙgnoreFilters.Checked)
                                     {
                                         if (nav.trigger && (nav.shiny || !WantsShiny))
-                                            if (((!WantsExclusives && nav.slotType != 2) || (WantsExclusives && nav.slotType == 2))
+                                            if (((!WantsExclusives && nav.EnctrType != 2) || (WantsExclusives && nav.EnctrType == 2))
                                                 && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
                                                 &&
                                                 (nav.HA || !WantsHA)
@@ -719,7 +728,7 @@ namespace TinyFinder
                     Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
                     index, radar.sync, radar.slot, radar.Music, null, radar.rand100);
                 }));
-            }   
+            }
             else
             {
                 Invoke(new Action(() =>
@@ -728,8 +737,9 @@ namespace TinyFinder
                     index, radar.Shiny, radar.Music, null, radar.rand100);
                 }));
             }
-            element.index = index;
-            element.spots = radar.Overview;
+            element.RadarIndex = index;
+            element.RadarState3 = store_seed[3];
+            element.RadarSpots = radar.Overview;
             SPatchSpots.Add(element);
         }
 
@@ -741,8 +751,9 @@ namespace TinyFinder
             else
                 table.Rows.Add(index, radar.Shiny.ToString(), radar.Music, radar.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
-            element.index = index;
-            element.spots = radar.Overview;
+            element.RadarIndex = index;
+            element.RadarState3 = state[3];
+            element.RadarSpots = radar.Overview;
             GPatchSpots.Add(element);
         }
 
