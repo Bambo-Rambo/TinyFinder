@@ -6,7 +6,7 @@
         public bool sync, boost, HA, eggMove, shiny, trigger, charm, exclusives, Trigger_only;
         public sbyte right, down;
         public byte levelBoost, flute, potential, rand100, noise, chain;
-        public int TargetValue, CheckCount, Index, slot, slotType, type;    //slotType -> Normal/DexNav, type -> Land(12)/Water(5)
+        public int TargetValue, CheckCount, Index, slot, EnctrType, slotType;    //EnctrType -> Normal/DexNav, slotType -> Land(12)/Water(5)
         public ushort searchlevel;
         public string encounter;
         public uint[] temp = new uint[4];
@@ -55,8 +55,8 @@
             }
 
             //If DexNav exclusives exist for the target encounter type (Grass or Surf), then a DexNav slot has 30% chance of occuring
-            slotType = Rand(100) < 30 && exclusives ? 2 : type;
-            encounter = slotType == 2 ? "DexNav" : "Normal";
+            EnctrType = Rand(100) < 30 && exclusives ? 2 : slotType;
+            encounter = EnctrType == 2 ? "DexNav" : "Normal";
 
             /*The special Boost has 4% chance of occuring unless the current chain length is [4, 9, 14, 19, 24 etc]
             In this case, it is guaranteed and improves the chances of getting forced shiny indexes as well as higher perfect IV counts
@@ -68,7 +68,7 @@
 
             //The rarity of the slots is reversed. The last slot for a given encounter type (Normal Grass [12], Normal Surf [5] and DexNav [3]),
             //is the most common and has 30% chance of occuring. If it doesn't, the game checks the previous slot whose chance is 30% as well etc
-            for (slot = SlotNum[slotType]; slot > 0; slot--)
+            for (slot = SlotNum[EnctrType]; slot > 0; slot--)
                 if (Rand(100) < 30)
                     break;
             //Slot 2 is the most rare because a possible slot 0, becomes slot 1

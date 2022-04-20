@@ -56,7 +56,7 @@
         public void results()
         {
             tinyhorde.nextState(temp);
-            slot = data.getSlot(tinyhorde.Rand(temp, 100), 2);
+            slot = data.getSlot(tinyhorde.Rand(temp, 100), 3);
 
             HA = 0;
             tinyhorde.nextState(temp);

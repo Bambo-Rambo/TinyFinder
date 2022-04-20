@@ -54,7 +54,7 @@
             Sync = tinywild.Rand(temp, 100) < 50;
 
             tinywild.nextState(temp);
-            slot = data.getSlot(tinywild.Rand(temp, 100), 3);
+            slot = data.getSlot(tinywild.Rand(temp, 100), 4);
 
             if (oras)
                 Findflute();

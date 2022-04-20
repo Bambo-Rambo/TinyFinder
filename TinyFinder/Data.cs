@@ -20,7 +20,8 @@ namespace TinyFinder
         public readonly static byte[][] SlotDistribution = new byte[][]
         {
             new byte[] { 10,10,10,10,10,10,10,10,10,5,4,1 },    // Wild / Radar
-            new byte[] { 34,33,33 },                            // Friend Safari
+            new byte[] { 50, 50 },                              // Friend Safari 2 slots
+            new byte[] { 34,33,33 },                            // Friend Safari 3 slots
             new byte[] { 60,35,5 },                             // Horde / Fishing
             new byte[] { 50,30,15,4,1 },                        // Rock Smash / Surfing
         };

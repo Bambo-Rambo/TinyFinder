@@ -6,7 +6,7 @@ namespace TinyFinder
         public Data data = new Data();
         public static TinyMT tinyradar;
         public byte slot, rand100, music, chain, party; //public byte item;
-        public bool sync, boost;
+        public bool sync, BonusMusic, boost;
         public uint[] temp = new uint[4];
 
         public Patch[] patches = new Patch[5];
@@ -62,9 +62,8 @@ namespace TinyFinder
                 for (byte i = 0; i < Advances + (3 * party); i++)                       // 27 if using from Bag
                     tinyhoney.nextState(temp);                                          */
 
-
-                music = tinyradar.Rand(temp, 100);  //Issue
-                boost &= music >= 50;
+                music = tinyradar.Rand(temp, 100);
+                boost = BonusMusic && music >= 50;
 
                 byte ring = 0;
                 for (; ring < 4; ring++)
