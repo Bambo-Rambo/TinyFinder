@@ -102,6 +102,13 @@
     <Compile Include="Methods\DexNav.cs" />
     <Compile Include="Methods\HoneyWild.cs" />
     <Compile Include="Methods\Horde.cs" />
+    <Compile Include="RNG\MT.cs" />
+    <Compile Include="Subforms\MT\MTForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\MT\MTForm.Designer.cs">
+      <DependentUpon>MTForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Subforms\NTR\NtrClient.cs" />
     <Compile Include="Subforms\NTR\NTRHelper.cs">
       <SubType>Form</SubType>
@@ -136,6 +143,9 @@
     <Compile Include="Subforms\Profiles\Profile.cs" />
     <EmbeddedResource Include="Main\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subforms\MT\MTForm.resx">
+      <DependentUpon>MTForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Subforms\NTR\NTRHelper.resx">
       <DependentUpon>NTRHelper.cs</DependentUpon>
