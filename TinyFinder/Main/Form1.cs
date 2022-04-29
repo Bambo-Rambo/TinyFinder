@@ -7,6 +7,7 @@ using System.Threading;
 using System.Reflection;
 using TinyFinder.Subforms.Profile_Calibration;
 using TinyFinder.Subforms.Profile_Manager;
+using TinyFinder.Subforms.MT;
 
 namespace TinyFinder
 {
@@ -20,6 +21,7 @@ namespace TinyFinder
         TinyMT tiny = new TinyMT();
         Data data = new Data();
         NTRHelper ntrhelper;
+        MTForm mersenne;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit, SlotCount;
         bool Calibrated = false, DateSearcher, HasHordes, Working;
@@ -72,6 +74,8 @@ namespace TinyFinder
                 Methods.Items.Add("Swooping");
             }
             ManageControls(0);
+            if (mersenne != null)
+                mersenne.SetGame(XY_Button.Checked);
         }
         private void orasRadio_CheckedChanged(object sender, EventArgs e)
         {
@@ -79,6 +83,8 @@ namespace TinyFinder
             Methods.Items.Remove("Swooping");
             Methods.Items[6] = "DexNav";
             ManageControls(0);
+            if (mersenne != null)
+                mersenne.SetGame(XY_Button.Checked);
         }
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -293,6 +299,23 @@ namespace TinyFinder
                 }*/
             }
         }
+        private void Searcher_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && Searcher.Rows.Count > 0)
+            {
+                Searcher.CurrentCell = Searcher.Rows[e.RowIndex].Cells[0];
+                if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    try
+                    {
+                        OpenMTForm();
+                        mersenne.SetDate(Searcher.Rows[e.RowIndex].Cells[0].Value.ToString());
+                    }
+                    catch 
+                    { }
+                }
+            }
+        }
 
         private void updateBTN_Click(object sender, EventArgs e)
         {
@@ -383,6 +406,24 @@ namespace TinyFinder
             manager.Show();
             manager.Focus();*/
         }
+
+        private void MTrng_Click(object sender, EventArgs e)
+        {
+            OpenMTForm();
+        }
+        private void OpenMTForm()
+        {
+            if (mersenne == null)
+                mersenne = new MTForm();
+            mersenne.Show();
+            mersenne.Focus();
+            mersenne.SetGame(XY_Button.Checked);
+        }
+
+        private void TIDSIDGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void DexNavGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
 
         #endregion
 
@@ -606,7 +647,7 @@ namespace TinyFinder
                 locations.SelectedIndex = 0;
             }
         }
-
+        
         #endregion
 
         #region ManageDataGridviews

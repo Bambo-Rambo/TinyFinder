@@ -4,7 +4,10 @@ namespace TinyFinder
 {
     class Calculate
     {
+        public byte[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public uint yearMilliseconds;
+
+        //TinyMT
         public uint startingPoint(int y)
         {
             yearMilliseconds = 0;
@@ -44,7 +47,16 @@ namespace TinyFinder
         public uint FindMonthSeed(uint seed, uint seconds) => (seconds * 1000) + seed;
 
 
-        public byte[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+        //MT
+        public uint FindNewSavePar(DateTime CitraRTC, uint CurrentSavePar, uint Seed300, uint TargetSeed)
+        {
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            double CurrentMS = Convert.ToInt64((CitraRTC - epoch).TotalMilliseconds);
+            double TimeVar = CurrentMS - 946684800000;
 
+            uint ExpectedSeed = (uint)(CurrentSavePar + TimeVar) & 0xFFFFFFFF;
+            uint Correction = ExpectedSeed - Seed300;
+            return (uint)(TargetSeed - TimeVar + Correction);
+        }
     }
 }
