@@ -90,4 +90,5 @@ This is the best spot:
 If you are using the Date Searcher and you haven't calibrated already, the tool **will need some time** when you press the "Calibrate and Search" button and it will not calibrate again until you change the Initial State.
 
 ### Credits
-wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
+* wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
+* Real96, zaksabeast, Admiral-Fish and Parzival/StarfBerry for their researches on the MT seed generation
