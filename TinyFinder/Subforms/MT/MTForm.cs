@@ -17,7 +17,12 @@ namespace TinyFinder.Subforms.MT
         DateTime CitraRTC;
         bool Working;
         string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
-        public void SetDate(string date) => TargetDate.Text = date;
+        public void SetDate(string date) 
+        {
+            TargetDate.Text = date.Substring(0, 10);
+            SpecificTime.Checked = true;
+            TargetTime.Text = date.Substring(11);
+        } 
         public void SetGame(bool XY)
         {
             if (XY)
@@ -35,7 +40,10 @@ namespace TinyFinder.Subforms.MT
             this.Parent = null;
             e.Cancel = true;
         }
-
+        private void SpecificTime_CheckedChanged(object sender, EventArgs e)
+        {
+            TargetTime.Enabled = SpecificTime.Checked;
+        }
         private void StopButton_Click(object sender, EventArgs e)
         {
             Working = StopButton.Enabled = false;
@@ -45,9 +53,16 @@ namespace TinyFinder.Subforms.MT
         {
             try
             {
-                CitraRTC = DateTime.ParseExact(TargetDate.Text, "yyyy-MM-ddTHH:mm:ss", null);
-                Working = StopButton.Enabled = true;
-                FindButton.Enabled = false;
+                if (SpecificTime.Checked)
+                    CitraRTC = DateTime.ParseExact(TargetDate.Text + TargetTime.Text, "yyyy-MM-ddHH:mm:ss", null);
+                else
+                    CitraRTC = DateTime.ParseExact(TargetDate.Text, "yyyy-MM-dd", null);
+
+                DateCol.Visible = Frame300Col.Visible = SpecificTime.Checked;
+                NewDateCol.Visible = !SpecificTime.Checked;
+                Working = StopButton.Enabled = SpecificTime.Checked;
+                FindButton.Enabled = !Working;
+
                 Research();
             }
             catch
@@ -59,7 +74,7 @@ namespace TinyFinder.Subforms.MT
         private async void Research()
         {
             uint Frame300Seed = Frame300.Value;
-            uint NewSavePar = calc.FindNewSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
+            uint NewSavePar = calc.FindSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
 
             DateTime Finaldate = CitraRTC;
             uint ExtraSeconds = 0;
@@ -69,32 +84,60 @@ namespace TinyFinder.Subforms.MT
 
             MT_DGV.Rows.Clear();
 
-            await Task.Run(() =>
+            if (!SpecificTime.Checked)
             {
-
-                while (Working)
+                uint next;
+                rng.Reseed(Frame300Seed);
+                for (uint i = 0; i < 2000; i++)
+                    rng.Generateuint();
+                for (uint i = 2000; i < 100000; i++)
                 {
-                    rng.Reseed(Frame300Seed);
+                    next = rng.Generateuint();
 
-                    for (uint i = 0; i < 2000; i++)
-                        rng.Generateuint();
-                    for (uint i = 2000; i < 10000; i++)
+                    //86400000 is the total MS in a day. For every 1000 added to the Save Par, the seconds are increased by 1
+                    //for (uint j = NewSavePar - 86400000; j <= NewSavePar; j += 1000) <- Slow
+
+                    if (next >= NewSavePar - 86400000 && next <= NewSavePar && ((next - (NewSavePar - 86400000)) % 1000 == 0))
                     {
-                        if (rng.Generateuint() == NewSavePar)
+                        Invoke(new Action(() =>
                         {
-                            Invoke(new Action(() =>
-                            {
-                                MT_DGV.Rows.Add(
-                                    Finaldate.AddSeconds(ExtraSeconds).ToString("yyyy-MM-ddTHH:mm:ss"),
-                                    hex(Frame300Seed), i - SaveDelay, hex(NewSavePar));
-                            }));
-                        }
+                            MT_DGV.Rows.Add(
+                                null, hex(Frame300Seed), i - SaveDelay, hex(next),
+                                Finaldate.AddSeconds((NewSavePar - next) / 1000).ToString("yyyy-MM-ddTHH:mm:ss"));
+                        }));
                     }
-
-                    ExtraSeconds++;         //+1 second in the RTC increases the Seed by 1000
-                    Frame300Seed += 1000;
                 }
-            });
+            }
+            else
+            {
+                FindButton.Text = "Searching...";
+                await Task.Run(() =>
+                {
+                    while (Working)
+                    {
+                        rng.Reseed(Frame300Seed);
+
+                        for (uint i = 0; i < 2000; i++)
+                            rng.Generateuint();
+                        for (uint i = 2000; i < 10000; i++)
+                        {
+                            if (rng.Generateuint() == NewSavePar)
+                            {
+                                Invoke(new Action(() =>
+                                {
+                                    MT_DGV.Rows.Add(
+                                        Finaldate.AddSeconds(ExtraSeconds).ToString("yyyy-MM-ddTHH:mm:ss"),
+                                        hex(Frame300Seed), i - SaveDelay, hex(NewSavePar), null);
+                                }));
+                            }
+                        }
+
+                        ExtraSeconds++;         //+1 second in the RTC increases the Seed by 1000
+                        Frame300Seed += 1000;
+                    }
+                });
+                FindButton.Text = "Search";
+            }
         }
     }
 }

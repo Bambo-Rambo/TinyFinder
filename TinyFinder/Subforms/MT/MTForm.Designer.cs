@@ -29,25 +29,30 @@ namespace TinyFinder.Subforms.MT
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.FindButton = new System.Windows.Forms.Button();
             this.TargetDate = new System.Windows.Forms.TextBox();
             this.RTC_Label = new System.Windows.Forms.Label();
             this.SavePar_Label = new System.Windows.Forms.Label();
             this.TargetSeed_Label = new System.Windows.Forms.Label();
             this.MT_DGV = new System.Windows.Forms.DataGridView();
-            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Frame300Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SaveFrameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NewSaveCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StopButton = new System.Windows.Forms.Button();
             this.XY_MTButton = new System.Windows.Forms.RadioButton();
             this.ORAS_MTButton = new System.Windows.Forms.RadioButton();
             this.Frame300_Label = new System.Windows.Forms.Label();
             this.SettingsGroup = new System.Windows.Forms.GroupBox();
+            this.PreferencesGroup = new System.Windows.Forms.GroupBox();
+            this.TargetTime = new System.Windows.Forms.TextBox();
+            this.SpecificTime = new System.Windows.Forms.CheckBox();
+            this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Frame300Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SaveFrameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NewSaveCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Target = new TinyFinder.HexBox();
             this.Frame300 = new TinyFinder.HexBox();
             this.CurrentSavePar = new TinyFinder.HexBox();
-            this.PreferencesGroup = new System.Windows.Forms.GroupBox();
-            this.Target = new TinyFinder.HexBox();
             ((System.ComponentModel.ISupportInitialize)(this.MT_DGV)).BeginInit();
             this.SettingsGroup.SuspendLayout();
             this.PreferencesGroup.SuspendLayout();
@@ -60,25 +65,25 @@ namespace TinyFinder.Subforms.MT
             this.FindButton.Name = "FindButton";
             this.FindButton.Size = new System.Drawing.Size(139, 31);
             this.FindButton.TabIndex = 0;
-            this.FindButton.Text = "Start";
+            this.FindButton.Text = "Search";
             this.FindButton.UseVisualStyleBackColor = true;
             this.FindButton.Click += new System.EventHandler(this.FindButton_Click);
             // 
             // TargetDate
             // 
             this.TargetDate.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.TargetDate.Location = new System.Drawing.Point(124, 69);
-            this.TargetDate.MaxLength = 19;
+            this.TargetDate.Location = new System.Drawing.Point(145, 44);
+            this.TargetDate.MaxLength = 10;
             this.TargetDate.Name = "TargetDate";
-            this.TargetDate.Size = new System.Drawing.Size(144, 22);
+            this.TargetDate.Size = new System.Drawing.Size(96, 22);
             this.TargetDate.TabIndex = 1;
-            this.TargetDate.Text = "2022-01-01T13:00:00";
+            this.TargetDate.Text = "2022-01-01";
             // 
             // RTC_Label
             // 
             this.RTC_Label.AutoSize = true;
             this.RTC_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.RTC_Label.Location = new System.Drawing.Point(22, 72);
+            this.RTC_Label.Location = new System.Drawing.Point(22, 48);
             this.RTC_Label.Name = "RTC_Label";
             this.RTC_Label.Size = new System.Drawing.Size(84, 14);
             this.RTC_Label.TabIndex = 2;
@@ -98,7 +103,7 @@ namespace TinyFinder.Subforms.MT
             // 
             this.TargetSeed_Label.AutoSize = true;
             this.TargetSeed_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.TargetSeed_Label.Location = new System.Drawing.Point(22, 123);
+            this.TargetSeed_Label.Location = new System.Drawing.Point(22, 143);
             this.TargetSeed_Label.Name = "TargetSeed_Label";
             this.TargetSeed_Label.Size = new System.Drawing.Size(84, 14);
             this.TargetSeed_Label.TabIndex = 9;
@@ -117,39 +122,13 @@ namespace TinyFinder.Subforms.MT
             this.DateCol,
             this.Frame300Col,
             this.SaveFrameCol,
-            this.NewSaveCol});
+            this.NewSaveCol,
+            this.NewDateCol});
             this.MT_DGV.Location = new System.Drawing.Point(12, 240);
             this.MT_DGV.Name = "MT_DGV";
             this.MT_DGV.RowHeadersVisible = false;
             this.MT_DGV.Size = new System.Drawing.Size(550, 309);
             this.MT_DGV.TabIndex = 10;
-            // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            this.DateCol.Width = 150;
-            // 
-            // Frame300Col
-            // 
-            this.Frame300Col.HeaderText = "Frame 300 Seed";
-            this.Frame300Col.Name = "Frame300Col";
-            this.Frame300Col.ReadOnly = true;
-            this.Frame300Col.Width = 120;
-            // 
-            // SaveFrameCol
-            // 
-            this.SaveFrameCol.HeaderText = "Save Frame";
-            this.SaveFrameCol.Name = "SaveFrameCol";
-            this.SaveFrameCol.ReadOnly = true;
-            // 
-            // NewSaveCol
-            // 
-            this.NewSaveCol.HeaderText = "New Save Parameter";
-            this.NewSaveCol.Name = "NewSaveCol";
-            this.NewSaveCol.ReadOnly = true;
-            this.NewSaveCol.Width = 150;
             // 
             // StopButton
             // 
@@ -214,6 +193,96 @@ namespace TinyFinder.Subforms.MT
             this.SettingsGroup.TabStop = false;
             this.SettingsGroup.Text = "Settings";
             // 
+            // PreferencesGroup
+            // 
+            this.PreferencesGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.PreferencesGroup.Controls.Add(this.TargetTime);
+            this.PreferencesGroup.Controls.Add(this.SpecificTime);
+            this.PreferencesGroup.Controls.Add(this.Target);
+            this.PreferencesGroup.Controls.Add(this.TargetDate);
+            this.PreferencesGroup.Controls.Add(this.RTC_Label);
+            this.PreferencesGroup.Controls.Add(this.TargetSeed_Label);
+            this.PreferencesGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PreferencesGroup.Location = new System.Drawing.Point(12, 12);
+            this.PreferencesGroup.Name = "PreferencesGroup";
+            this.PreferencesGroup.Size = new System.Drawing.Size(284, 185);
+            this.PreferencesGroup.TabIndex = 17;
+            this.PreferencesGroup.TabStop = false;
+            this.PreferencesGroup.Text = "Preferences";
+            // 
+            // TargetTime
+            // 
+            this.TargetTime.Enabled = false;
+            this.TargetTime.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.TargetTime.Location = new System.Drawing.Point(145, 91);
+            this.TargetTime.MaxLength = 9;
+            this.TargetTime.Name = "TargetTime";
+            this.TargetTime.Size = new System.Drawing.Size(96, 22);
+            this.TargetTime.TabIndex = 11;
+            this.TargetTime.Text = "00:00:00";
+            // 
+            // SpecificTime
+            // 
+            this.SpecificTime.AutoSize = true;
+            this.SpecificTime.Location = new System.Drawing.Point(25, 93);
+            this.SpecificTime.Name = "SpecificTime";
+            this.SpecificTime.Size = new System.Drawing.Size(103, 18);
+            this.SpecificTime.TabIndex = 10;
+            this.SpecificTime.Text = "Target Time";
+            this.SpecificTime.UseVisualStyleBackColor = true;
+            this.SpecificTime.CheckedChanged += new System.EventHandler(this.SpecificTime_CheckedChanged);
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            this.DateCol.Width = 150;
+            // 
+            // Frame300Col
+            // 
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300Col.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Frame300Col.HeaderText = "Frame 300 Seed";
+            this.Frame300Col.Name = "Frame300Col";
+            this.Frame300Col.ReadOnly = true;
+            this.Frame300Col.Width = 120;
+            // 
+            // SaveFrameCol
+            // 
+            this.SaveFrameCol.HeaderText = "Save Frame";
+            this.SaveFrameCol.Name = "SaveFrameCol";
+            this.SaveFrameCol.ReadOnly = true;
+            // 
+            // NewSaveCol
+            // 
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F);
+            this.NewSaveCol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NewSaveCol.HeaderText = "New Save Parameter";
+            this.NewSaveCol.Name = "NewSaveCol";
+            this.NewSaveCol.ReadOnly = true;
+            this.NewSaveCol.Width = 150;
+            // 
+            // NewDateCol
+            // 
+            this.NewDateCol.HeaderText = "New Date";
+            this.NewDateCol.Name = "NewDateCol";
+            this.NewDateCol.ReadOnly = true;
+            this.NewDateCol.Visible = false;
+            this.NewDateCol.Width = 150;
+            // 
+            // Target
+            // 
+            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Target.Location = new System.Drawing.Point(145, 140);
+            this.Target.Mask = "AAAAAAAA";
+            this.Target.Name = "Target";
+            this.Target.Size = new System.Drawing.Size(64, 22);
+            this.Target.TabIndex = 8;
+            this.Target.Text = "00000000";
+            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Target.Value = ((uint)(0u));
+            // 
             // Frame300
             // 
             this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
@@ -237,33 +306,6 @@ namespace TinyFinder.Subforms.MT
             this.CurrentSavePar.Text = "00000000";
             this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.CurrentSavePar.Value = ((uint)(0u));
-            // 
-            // PreferencesGroup
-            // 
-            this.PreferencesGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.PreferencesGroup.Controls.Add(this.Target);
-            this.PreferencesGroup.Controls.Add(this.TargetDate);
-            this.PreferencesGroup.Controls.Add(this.RTC_Label);
-            this.PreferencesGroup.Controls.Add(this.TargetSeed_Label);
-            this.PreferencesGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PreferencesGroup.Location = new System.Drawing.Point(12, 12);
-            this.PreferencesGroup.Name = "PreferencesGroup";
-            this.PreferencesGroup.Size = new System.Drawing.Size(284, 185);
-            this.PreferencesGroup.TabIndex = 17;
-            this.PreferencesGroup.TabStop = false;
-            this.PreferencesGroup.Text = "Preferences";
-            // 
-            // Target
-            // 
-            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Target.Location = new System.Drawing.Point(124, 120);
-            this.Target.Mask = "AAAAAAAA";
-            this.Target.Name = "Target";
-            this.Target.Size = new System.Drawing.Size(64, 22);
-            this.Target.TabIndex = 8;
-            this.Target.Text = "00000000";
-            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Target.Value = ((uint)(0u));
             // 
             // MTForm
             // 
@@ -308,9 +350,12 @@ namespace TinyFinder.Subforms.MT
         private HexBox Frame300;
         private System.Windows.Forms.GroupBox SettingsGroup;
         private System.Windows.Forms.GroupBox PreferencesGroup;
+        private System.Windows.Forms.TextBox TargetTime;
+        private System.Windows.Forms.CheckBox SpecificTime;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn Frame300Col;
         private System.Windows.Forms.DataGridViewTextBoxColumn SaveFrameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn NewSaveCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NewDateCol;
     }
 }
