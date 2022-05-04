@@ -705,7 +705,6 @@ namespace TinyFinder
                     {
                         table.Columns.Add("Right", typeof(sbyte));
                         table.Columns.Add("Up", typeof(sbyte));
-                        //table.Columns.Add("Rate", typeof(byte));
                         table.Columns.Add("Success", typeof(string));
                         table.Columns.Add("Type", typeof(string));
                         table.Columns.Add("Sync", typeof(string));
@@ -792,9 +791,11 @@ namespace TinyFinder
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
-
+            Generator.Columns["Tiny [3]"].DefaultCellStyle.Font = Generator.Columns["Tiny [2]"].DefaultCellStyle.Font =
+                Generator.Columns["Tiny [1]"].DefaultCellStyle.Font = Generator.Columns["Tiny [0]"].DefaultCellStyle.Font = new Font("Consolas", 9);
             Generator.Columns["Tiny [3]"].Width = Generator.Columns["Tiny [2]"].Width = 
                 Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
+
             if (!Equals(method, "ID"))
                 Generator.Columns["Rand(100)"].Width = 85;
 
@@ -809,6 +810,8 @@ namespace TinyFinder
             Searcher.Columns.Add("tiny2", "Tiny [2]"); Searcher.Columns["tiny2"].Width = 75;
             Searcher.Columns.Add("tiny1", "Tiny [1]"); Searcher.Columns["tiny1"].Width = 75;
             Searcher.Columns.Add("tiny0", "Tiny [0]"); Searcher.Columns["tiny0"].Width = 75;
+            Searcher.Columns["tiny3"].DefaultCellStyle.Font = Searcher.Columns["tiny2"].DefaultCellStyle.Font =
+                Searcher.Columns["tiny1"].DefaultCellStyle.Font = Searcher.Columns["tiny0"].DefaultCellStyle.Font = new Font("Consolas", 9);
             Searcher.Columns.Add("index", "Index"); Searcher.Columns["index"].Width = 60;
             if (method == 0)
             {
@@ -859,7 +862,6 @@ namespace TinyFinder
                     {
                         Searcher.Columns.Add("x", "Right"); Searcher.Columns["x"].Width = 40;
                         Searcher.Columns.Add("y", "Up"); Searcher.Columns["y"].Width = 40;
-                        //Searcher.Columns.Add("rate", "Rate"); view.Columns["rate"].Width = 50;
                         Searcher.Columns.Add("success", "Success"); Searcher.Columns["success"].Width = 55;
                         Searcher.Columns.Add("type", "Type"); Searcher.Columns["type"].Width = 60;
                         Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
@@ -941,7 +943,7 @@ namespace TinyFinder
                     }
                 }
             }
-            catch { }
+            catch { } //???
         }
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
