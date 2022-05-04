@@ -48,7 +48,7 @@ namespace TinyFinder
 
 
         //MT
-        public uint FindNewSavePar(DateTime CitraRTC, uint CurrentSavePar, uint Seed300, uint TargetSeed)
+        public uint FindSavePar(DateTime CitraRTC, uint CurrentSavePar, uint Seed300, uint TargetSeed)
         {
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             double CurrentMS = Convert.ToInt64((CitraRTC - epoch).TotalMilliseconds);
