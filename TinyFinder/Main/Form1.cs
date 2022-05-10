@@ -13,20 +13,19 @@ namespace TinyFinder
 {
     public partial class Form1 : Form
     {
+        DataTable table;
         HashSet<byte> Slots;
         List<Location> Locations;
-        byte[] fluteArray = { 0, 0, 0, 0, 0 };
-        string Flutes;
         Calculate calc = new Calculate();
         TinyMT tiny = new TinyMT();
         Data data = new Data();
         NTRHelper ntrhelper;
         MTForm mersenne;
-        uint seconds, initial = 0;
-        byte count, searchMonth, SlotLimit, SlotCount;
-        bool Calibrated = false, Calibrating, DateSearcher, HasHordes, Working;
+        byte count;
+        bool Calibrated = false, Working;
         byte MethodUsed;
-        int Rand100Column, AvailableThreads;
+        int Rand100Column;
+
         struct PatchSpot
         {
             public uint RadarIndex;
@@ -34,9 +33,9 @@ namespace TinyFinder
             public string[] RadarSpots;
         }
         PatchSpot element = new PatchSpot();
-
         List<PatchSpot> GPatchSpots = new List<PatchSpot>();
         List<PatchSpot> SPatchSpots = new List<PatchSpot>();
+
         private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
         private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
 
@@ -52,10 +51,7 @@ namespace TinyFinder
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
 
-            if (Properties.Settings.Default.CPUs == 0)
-                ThreadCount.Value = Environment.ProcessorCount;
-            else
-                ThreadCount.Value = Properties.Settings.Default.CPUs;
+            ThreadCount.Value = Properties.Settings.Default.CPUs == 0 ? Environment.ProcessorCount : Properties.Settings.Default.CPUs;
             ThreadCount.Maximum = Environment.ProcessorCount;
 
             DefaultChanges();
@@ -70,7 +66,9 @@ namespace TinyFinder
         }
         private void StopButton_Click(object sender, EventArgs e)
         {
-            Working = false;
+            StopButton.Enabled = Working = false;
+            MainButton.Enabled = true;
+            MainButton.Text = DateSearcher ? "Search" : "Generate";
         }
         private void ThreadCount_ValueChanged(object sender, EventArgs e)
         {
@@ -809,7 +807,7 @@ namespace TinyFinder
                 Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
 
             if (!Equals(method, "ID"))
-                Generator.Columns["Rand(100)"].Width = 85;
+                Generator.Columns["Rand(100)"].Width = 70;
 
             DoubleBuffered(Generator);
         }
@@ -906,7 +904,7 @@ namespace TinyFinder
                 /*if (method == 6 && XY_Button.Checked && ratio.Value > 0)
                     Searcher.Columns["item"].Visible = false;*/
 
-                Searcher.Columns.Add("Rand(100)", "Rand(100)"); Searcher.Columns["Rand(100)"].Width = 90;
+                Searcher.Columns.Add("Rand(100)", "Rand(100)"); Searcher.Columns["Rand(100)"].Width = 70;
                 DoubleBuffered(Searcher);
             }
         }

@@ -10,42 +10,32 @@ namespace TinyFinder
 {
     public partial class Form1
     {
-        public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
-        {
-            TinyMT tiny = new TinyMT();
-            byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
-            await Task.Run(() =>
-            {
-                while (Calibrating)
-                {
-                    if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
-                        if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
-                        {
-                            initial = Seed;
-                            Calibrated = true;
-                            Calibrating = false;
-                        }
-                    Seed += Jump;
-                }
-            });
-        }
+        int Year;
+        uint tinyInitSeed, seconds, initial = 0, Min, Max;
+        byte searchMonth, SlotLimit, SlotCount;
+        bool DateSearcher, HasHordes;
+        string Flutes;
+
+        byte[] fluteArray = { 0, 0, 0, 0, 0 };
         public async void StartSearch()
         {
             uint[] state = new uint[4], store_seed = new uint[4], state_hit = new uint[4];
-            DataTable table = new DataTable();
+            table = new DataTable();
 
             state[3] = t3.Value;
             state[2] = t2.Value;
             state[1] = t1.Value;
             state[0] = t0.Value;
 
-            int Year = (int)year.Value;
-            uint Min = (uint)min.Value;
-            uint Max = (uint)max.Value;
+            Year = (int)year.Value;
+            Min = (uint)min.Value;
+            Max = (uint)max.Value;
 
-            AvailableThreads = (int)ThreadCount.Value;
             MethodUsed = (byte)Methods.SelectedIndex;
             DateSearcher = SearchGen.SelectedIndex == 0;
+
+            var jobs = new Thread[(int)ThreadCount.Value];
+
             if (DateSearcher)
             {
                 Working = true;
@@ -56,17 +46,13 @@ namespace TinyFinder
                 byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
                 if (!Calibrated)
                 {
-                    Calibrating = true;
                     MainButton.Text = "Calibrating...";
 
-                    var jobs = new Thread[AvailableThreads];
                     uint start_seed = calc.startingPoint(Year);
                     for (int i = 0; i < jobs.Length; i++)
                     {
-                        jobs[i] = new Thread(() => FindTinySeed(start_seed, (uint)jobs.Length, state));
-                        jobs[i].Start();
+                        jobs[i] = new Thread(() => FindTinySeed(start_seed, (uint)jobs.Length, state)); jobs[i].Start();
                         Thread.Sleep(100);
-
                         start_seed++;
                     }
 
@@ -87,7 +73,7 @@ namespace TinyFinder
 
             searchMonth = (byte)(Months.SelectedIndex + 1);
             seconds = calc.FindSeconds(searchMonth, Year);
-            uint tinyInitSeed = calc.FindMonthSeed(initial, seconds);
+            tinyInitSeed = calc.FindMonthSeed(initial, seconds);
 
             if (MethodUsed != 0 && !isRadar1())
             {
@@ -142,56 +128,21 @@ namespace TinyFinder
             switch (MethodUsed)
             {
                 case 0:     //ID
-                    ushort TIDValue = (ushort)tid.Value;
-                    ushort SIDValue = (ushort)sid.Value;
-                    ID id = new ID(TIDValue, SIDValue);
-                    uint randID = id.randhex;
 
                     if (DateSearcher)
-                        state = tiny.init(tinyInitSeed, 2);
-                    await Task.Run(() => 
                     {
-                        do
+                        for (int i = 0; i < jobs.Length; i++)
                         {
-                            state.CopyTo(store_seed, 0);
-                            for (uint j = 0; j < Min; j++)
-                                tiny.nextState(state);
-                            for (uint j = Min; j <= Max; j++)
-                            {
-                                if (randID == tiny.temper(state) && DateSearcher)
-                                {
-                                    Invoke(new Action(() =>
-                                    {
-                                        Searcher.Rows.Add(calc.secondsToDate(seconds, Year),
-                                        hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
-                                        j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                        id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
-                                    }));
-                                }
-                                else if (!DateSearcher)
-                                {
-                                    id.results(state);
-                                    if (!ΙgnoreFilters.Checked)
-                                    {
-                                        if (id.trainerID == TIDValue && id.secretID == SIDValue)
-                                            table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                            hex(state[1]), hex(state[0]));
-                                    }
-                                    else
-                                    {
-                                        table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                            hex(state[1]), hex(state[0]));
-                                    }
-                                }
-                                tiny.nextState(state);
-                            }
-                            seconds++;
+                            jobs[i] = new Thread(() => IDSearch((ushort)tid.Value, (ushort)sid.Value, (uint)jobs.Length, state));
+                            jobs[i].Start();
+                            Thread.Sleep(100);
                             tinyInitSeed += 1000;
-                            state = tiny.init(tinyInitSeed, 2);
-                        } while (Working);
-                    });
+                            seconds++;
+                        }
+                    }
+                    else
+                        IDSearch((ushort)tid.Value, (ushort)sid.Value, 1, state);
+
                     break;
 
                 case 1:     //Normal Wild
@@ -624,13 +575,83 @@ namespace TinyFinder
                     break;
             }
 
-            string M = isRadar1() ? "Radar1" : Methods.Text;
             if (!DateSearcher)
+            {
+                MainButton.Enabled = true;
+                string M = isRadar1() ? "Radar1" : Methods.Text;
                 ManageGenerator(Generator, table, M);
+            }
+            
+        }
+        public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
+        {
+            TinyMT tiny = new TinyMT();
+            byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
+            await Task.Run(() =>
+            {
+                while (!Calibrated)
+                {
+                    if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
+                        if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
+                        {
+                            initial = Seed;
+                            Calibrated = true;
+                        }
+                    Seed += Jump;
+                }
+            });
+        }
 
-            StopButton.Enabled = Working = false;
-            MainButton.Enabled = true;
-            MainButton.Text = DateSearcher ? "Search" : "Generate";
+        public void IDSearch(ushort tid, ushort sid, uint Jump, uint[] state)
+        {
+            ID id = new ID(tid, sid); TinyMT tiny = new TinyMT();
+            uint[] StoreSeed = new uint[4];
+            uint randID = id.randhex, TotalSeconds = seconds, TinySeed = tinyInitSeed;
+
+            if (DateSearcher)
+                state = tiny.init(TinySeed, 2);
+            do
+            {
+                state.CopyTo(StoreSeed, 0);
+                for (uint j = 0; j < Min; j++)
+                    tiny.nextState(state);
+                for (uint j = Min; j <= Max; j++)
+                {
+                    if (randID == tiny.temper(state))
+                    {
+                        if (DateSearcher)
+                            Invoke(new Action(() =>
+                            {
+                                Searcher.Rows.Add(calc.secondsToDate(TotalSeconds, Year),
+                                hex(StoreSeed[3]), hex(StoreSeed[2]), hex(StoreSeed[1]), hex(StoreSeed[0]),
+                                j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
+                            }));
+                    }
+                    else if (!DateSearcher)
+                    {
+                        id.results(state);
+                        if (!ΙgnoreFilters.Checked)
+                        {
+                            if (id.trainerID == tid && id.secretID == sid)
+                                table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
+                                hex(state[1]), hex(state[0]));
+                        }
+                        else
+                        {
+                            table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
+                                hex(state[1]), hex(state[0]));
+                        }
+                    }
+                    tiny.nextState(state);
+                }
+                TotalSeconds += Jump;
+                TinySeed += 1000 * Jump;
+                state = tiny.init(TinySeed, 2);
+            }
+            while (Working);
         }
 
         #region Show Results
