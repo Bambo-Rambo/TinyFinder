@@ -10,6 +10,25 @@ namespace TinyFinder
 {
     public partial class Form1
     {
+        public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
+        {
+            TinyMT tiny = new TinyMT();
+            byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
+            await Task.Run(() =>
+            {
+                while (Calibrating)
+                {
+                    if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
+                        if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
+                        {
+                            initial = Seed;
+                            Calibrated = true;
+                            Calibrating = false;
+                        }
+                    Seed += Jump;
+                }
+            });
+        }
         public async void StartSearch()
         {
             uint[] state = new uint[4], store_seed = new uint[4], state_hit = new uint[4];
@@ -24,6 +43,7 @@ namespace TinyFinder
             uint Min = (uint)min.Value;
             uint Max = (uint)max.Value;
 
+            AvailableThreads = (int)ThreadCount.Value;
             MethodUsed = (byte)Methods.SelectedIndex;
             DateSearcher = SearchGen.SelectedIndex == 0;
             if (DateSearcher)
@@ -36,19 +56,25 @@ namespace TinyFinder
                 byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
                 if (!Calibrated)
                 {
+                    Calibrating = true;
                     MainButton.Text = "Calibrating...";
+
+                    var jobs = new Thread[AvailableThreads];
                     uint start_seed = calc.startingPoint(Year);
-                    await Task.Run(() =>
+                    for (int i = 0; i < jobs.Length; i++)
                     {
-                        for (uint c = start_seed; c < 0xFFFFFFFF; c++)
-                            if (tiny.init(c, bootAdvances)[3] == state[3])     //Comparing [3] and [2] should be enough
-                                if (tiny.init(c, bootAdvances)[2] == state[2])
-                                {
-                                    initial = c;
-                                    break;
-                                }
-                    });
-                    Calibrated = true;
+                        jobs[i] = new Thread(() => FindTinySeed(start_seed, (uint)jobs.Length, state));
+                        jobs[i].Start();
+                        Thread.Sleep(100);
+
+                        start_seed++;
+                    }
+
+                    //Bad Solution
+                    while (!Calibrated)
+                    {
+                        Application.DoEvents();
+                    }
                 }
                 MainButton.Text = "Searching...";
                 StopButton.Enabled = true;

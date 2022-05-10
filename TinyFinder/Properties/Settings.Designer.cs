@@ -40,5 +40,20 @@ namespace TinyFinder.Properties
                 this["IP"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int CPUs
+        {
+            get
+            {
+                return ((int)(this["CPUs"]));
+            }
+            set
+            {
+                this["CPUs"] = value;
+            }
+        }
     }
 }

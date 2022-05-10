@@ -24,9 +24,9 @@ namespace TinyFinder
         MTForm mersenne;
         uint seconds, initial = 0;
         byte count, searchMonth, SlotLimit, SlotCount;
-        bool Calibrated = false, DateSearcher, HasHordes, Working;
+        bool Calibrated = false, Calibrating, DateSearcher, HasHordes, Working;
         byte MethodUsed;
-        int Rand100Column;
+        int Rand100Column, AvailableThreads;
         struct PatchSpot
         {
             public uint RadarIndex;
@@ -51,6 +51,13 @@ namespace TinyFinder
             XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+
+            if (Properties.Settings.Default.CPUs == 0)
+                ThreadCount.Value = Environment.ProcessorCount;
+            else
+                ThreadCount.Value = Properties.Settings.Default.CPUs;
+            ThreadCount.Maximum = Environment.ProcessorCount;
+
             DefaultChanges();
             ManageControls(0);
         }
@@ -64,6 +71,11 @@ namespace TinyFinder
         private void StopButton_Click(object sender, EventArgs e)
         {
             Working = false;
+        }
+        private void ThreadCount_ValueChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.CPUs = (int)ThreadCount.Value;
+            Properties.Settings.Default.Save();
         }
         private void xyRadio_CheckedChanged(object sender, EventArgs e)
         {
@@ -647,7 +659,7 @@ namespace TinyFinder
                 locations.SelectedIndex = 0;
             }
         }
-        
+
         #endregion
 
         #region ManageDataGridviews

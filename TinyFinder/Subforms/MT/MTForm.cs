@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TinyFinder.RNG;
@@ -16,6 +17,7 @@ namespace TinyFinder.Subforms.MT
         Calculate calc = new Calculate();
         DateTime CitraRTC;
         bool Working;
+        int ThreadsForUse;
         string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
         public void SetDate(string date) 
         {
@@ -48,22 +50,38 @@ namespace TinyFinder.Subforms.MT
         {
             Working = StopButton.Enabled = false;
             FindButton.Enabled = true;
+            FindButton.Text = "Search";
         }
         private void FindButton_Click(object sender, EventArgs e)
         {
             try
             {
                 if (SpecificTime.Checked)
+                {
                     CitraRTC = DateTime.ParseExact(TargetDate.Text + TargetTime.Text, "yyyy-MM-ddHH:mm:ss", null);
+                    ThreadsForUse = Properties.Settings.Default.CPUs;
+                    FindButton.Text = "Searching...";
+                }
                 else
+                {
                     CitraRTC = DateTime.ParseExact(TargetDate.Text, "yyyy-MM-dd", null);
+                    ThreadsForUse = 1;
+                }
 
+                MT_DGV.Rows.Clear();
                 DateCol.Visible = Frame300Col.Visible = SpecificTime.Checked;
                 NewDateCol.Visible = !SpecificTime.Checked;
                 Working = StopButton.Enabled = SpecificTime.Checked;
                 FindButton.Enabled = !Working;
 
-                Research();
+                var jobs = new Thread[ThreadsForUse];
+
+                for (uint i = 0; i < jobs.Length; i++)
+                {
+                    jobs[i] = new Thread(() => Research((uint)jobs.Length, i));
+                    jobs[i].Start();
+                    Thread.Sleep(100);
+                }
             }
             catch
             {
@@ -71,26 +89,27 @@ namespace TinyFinder.Subforms.MT
             }
         }
 
-        private async void Research()
+        private async void Research(uint SecondsAdvance, uint Offset)
         {
             uint Frame300Seed = Frame300.Value;
             uint NewSavePar = calc.FindSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
 
+            Frame300Seed += Offset * 1000;
+
             DateTime Finaldate = CitraRTC;
-            uint ExtraSeconds = 0;
+            uint SecondsAdd = Offset; //uint AddSeconds = 0; Before Multithreading
 
             int SaveDelay = XY_MTButton.Checked ? 24 : 26;
             MersenneTwister rng = new MersenneTwister(0);
 
-            MT_DGV.Rows.Clear();
-
+            
             if (!SpecificTime.Checked)
             {
                 uint next;
                 rng.Reseed(Frame300Seed);
                 for (uint i = 0; i < 2000; i++)
                     rng.Generateuint();
-                for (uint i = 2000; i < 100000; i++)
+                for (uint i = 2000; i < 200000; i++)
                 {
                     next = rng.Generateuint();
 
@@ -110,7 +129,7 @@ namespace TinyFinder.Subforms.MT
             }
             else
             {
-                FindButton.Text = "Searching...";
+                uint SeedAdvance = SecondsAdvance * 1000;
                 await Task.Run(() =>
                 {
                     while (Working)
@@ -126,17 +145,15 @@ namespace TinyFinder.Subforms.MT
                                 Invoke(new Action(() =>
                                 {
                                     MT_DGV.Rows.Add(
-                                        Finaldate.AddSeconds(ExtraSeconds).ToString("yyyy-MM-ddTHH:mm:ss"),
+                                        Finaldate.AddSeconds(SecondsAdd).ToString("yyyy-MM-ddTHH:mm:ss"),
                                         hex(Frame300Seed), i - SaveDelay, hex(NewSavePar), null);
                                 }));
                             }
                         }
-
-                        ExtraSeconds++;         //+1 second in the RTC increases the Seed by 1000
-                        Frame300Seed += 1000;
+                        SecondsAdd += SecondsAdvance;            //+1 second in the RTC increases the Seed by 1000
+                        Frame300Seed += SeedAdvance;
                     }
                 });
-                FindButton.Text = "Search";
             }
         }
     }

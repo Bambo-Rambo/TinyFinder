@@ -146,6 +146,8 @@ namespace TinyFinder
             this.NormalGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.HordeGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
+            this.ThreadCount = new System.Windows.Forms.NumericUpDown();
+            this.Threads_Label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Searcher)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
@@ -169,6 +171,7 @@ namespace TinyFinder
             this.Srch.SuspendLayout();
             this.Gen.SuspendLayout();
             this.Tools.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).BeginInit();
             this.SuspendLayout();
             // 
             // Searcher
@@ -1482,11 +1485,42 @@ namespace TinyFinder
             this.DexNavGuide.Text = "DexNav RNG";
             this.DexNavGuide.Click += new System.EventHandler(this.DexNavGuide_Click);
             // 
+            // ThreadCount
+            // 
+            this.ThreadCount.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.ThreadCount.Location = new System.Drawing.Point(1072, 16);
+            this.ThreadCount.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ThreadCount.Name = "ThreadCount";
+            this.ThreadCount.Size = new System.Drawing.Size(65, 22);
+            this.ThreadCount.TabIndex = 21;
+            this.ThreadCount.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ThreadCount.ValueChanged += new System.EventHandler(this.ThreadCount_ValueChanged);
+            // 
+            // Threads_Label
+            // 
+            this.Threads_Label.AutoSize = true;
+            this.Threads_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Threads_Label.Location = new System.Drawing.Point(1010, 18);
+            this.Threads_Label.Name = "Threads_Label";
+            this.Threads_Label.Size = new System.Drawing.Size(56, 14);
+            this.Threads_Label.TabIndex = 22;
+            this.Threads_Label.Text = "Threads";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1164, 661);
+            this.Controls.Add(this.Threads_Label);
+            this.Controls.Add(this.ThreadCount);
             this.Controls.Add(this.Filters_Box);
             this.Controls.Add(this.Calibr_Box);
             this.Controls.Add(this.Settings_Box);
@@ -1527,6 +1561,7 @@ namespace TinyFinder
             this.Gen.ResumeLayout(false);
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1645,6 +1680,8 @@ namespace TinyFinder
         private System.Windows.Forms.ToolStripMenuItem NormalGuide;
         private System.Windows.Forms.ToolStripMenuItem HordeGuide;
         private System.Windows.Forms.ToolStripMenuItem DexNavGuide;
+        private System.Windows.Forms.NumericUpDown ThreadCount;
+        private System.Windows.Forms.Label Threads_Label;
     }
 }
 
