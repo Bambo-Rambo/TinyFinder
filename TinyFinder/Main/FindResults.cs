@@ -474,67 +474,28 @@ namespace TinyFinder
                     }
                     else
                     {
-                        DexNav nav = new DexNav()
-                        {
-                            noise = (byte)noise.Value,
-                            searchlevel = (ushort)party.Value,
-                            chain = (byte)ratio.Value,
-                            charm = CharmBox.Checked,
-                            exclusives = ExclusiveBox.Checked,
-                            slotType = SurfBox.Checked ? 1 : 0,
-                            Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
-                        };
-                        bool WantsExclusives = NavType.SelectedIndex == 1;
-                        bool WantsShiny = NavFilters.CheckBoxItems[1].Checked;
-                        bool WantsHA = NavFilters.CheckBoxItems[2].Checked;
-                        bool WantsEggMove = NavFilters.CheckBoxItems[3].Checked;
-                        bool WantsBoost = NavFilters.CheckBoxItems[4].Checked;
-                        bool WantsSync = NavFilters.CheckBoxItems[5].Checked;
+                        bool W_Exclusives = NavType.SelectedIndex == 1;
+                        bool W_Shiny = NavFilters.CheckBoxItems[1].Checked;
+                        bool W_HA = NavFilters.CheckBoxItems[2].Checked;
+                        bool W_EggMove = NavFilters.CheckBoxItems[3].Checked;
+                        bool W_Boost = NavFilters.CheckBoxItems[4].Checked;
+                        bool W_Sync = NavFilters.CheckBoxItems[5].Checked;
 
                         if (DateSearcher)
-                            state = tiny.init(tinyInitSeed, 1);
-                        await Task.Run(() =>
                         {
-                            do
+                            for (int i = 0; i < jobs.Length; i++)
                             {
-                                state.CopyTo(store_seed, 0);
-                                for (uint j = 0; j < Min; j++)
-                                    tiny.nextState(state);
-                                for (uint j = Min; j <= Max; j++)
-                                {
-                                    nav.results(state);
-                                    if (!ΙgnoreFilters.Checked)
-                                    {
-                                        if (nav.trigger && (nav.shiny || !WantsShiny))
-                                            if (((!WantsExclusives && nav.EnctrType != 2) || (WantsExclusives && nav.EnctrType == 2))
-                                                && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
-                                                &&
-                                                (nav.HA || !WantsHA)
-                                                &&
-                                                (nav.eggMove || !WantsEggMove)
-                                                &&
-                                                (nav.sync || !WantsSync)
-                                                &&
-                                                ((nav.potential == Potential.Value) || (Potential.Value == 0)))
-                                                if ((nav.boost || !WantsBoost)
-                                                    && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
-                                                {
-                                                    if (DateSearcher)
-                                                        ShowNavSrch(nav, calc.secondsToDate(seconds, Year), store_seed, j);
-                                                    else
-                                                        ShowNavGen(table, nav, state, j);
-                                                }
-                                    }
-                                    else
-                                        ShowNavGen(table, nav, state, j);
+                                jobs[i] = new Thread(() => DexNavSearch(W_Exclusives, W_Shiny, W_HA, W_EggMove, W_Boost, W_Sync, (uint)jobs.Length, state));
 
-                                    tiny.nextState(state);
-                                }
-                                seconds++;
+                                jobs[i].Start();
+                                Thread.Sleep(100);
                                 tinyInitSeed += 1000;
-                                state = tiny.init(tinyInitSeed, 1);
-                            } while (Working);
-                        });   
+                                seconds++;
+                            }
+                        }
+                        else
+                            DexNavSearch(W_Exclusives, W_Shiny, W_HA, W_EggMove, W_Boost, W_Sync, 1, state);
+
                     }
                     break;
 
@@ -602,6 +563,7 @@ namespace TinyFinder
             });
         }
 
+        #region ID
         public void IDSearch(ushort tid, ushort sid, uint Jump, uint[] state)
         {
             ID id = new ID(tid, sid); TinyMT tiny = new TinyMT();
@@ -653,6 +615,75 @@ namespace TinyFinder
             }
             while (Working);
         }
+        #endregion
+
+
+        #region DexNav
+        public  void DexNavSearch(bool W_Exclusives, bool W_Shiny, bool W_HA, bool W_EggMove, bool W_Boost, bool W_Sync, uint Jump, uint[] state)
+        {
+            TinyMT tiny = new TinyMT();
+            DexNav nav = new DexNav()
+            {
+                noise = (byte)noise.Value,
+                searchlevel = (ushort)party.Value,
+                chain = (byte)ratio.Value,
+                charm = CharmBox.Checked,
+                exclusives = ExclusiveBox.Checked,
+                slotType = SurfBox.Checked ? 1 : 0,
+                Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
+            };
+
+            uint[] StoreSeed = new uint[4];
+            uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
+
+            if (DateSearcher)
+                state = tiny.init(tinyInitSeed, 1);
+            //await Task.Run(() =>
+            //{
+            do
+            {
+                state.CopyTo(StoreSeed, 0);
+                for (uint j = 0; j < Min; j++)
+                    tiny.nextState(state);
+                for (uint j = Min; j <= Max; j++)
+                {
+                    nav.results(state);
+                    if (!ΙgnoreFilters.Checked)
+                    {
+                        if (nav.trigger && (nav.shiny || !W_Shiny))
+                            if (((!W_Exclusives && nav.EnctrType != 2) || (W_Exclusives && nav.EnctrType == 2))
+                                && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
+                                &&
+                                (nav.HA || !W_HA)
+                                &&
+                                (nav.eggMove || !W_EggMove)
+                                &&
+                                (nav.sync || !W_Sync)
+                                &&
+                                ((nav.potential == Potential.Value) || (Potential.Value == 0)))
+                                if ((nav.boost || !W_Boost)
+                                    && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
+                                {
+                                    if (DateSearcher)
+                                        ShowNavSrch(nav, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
+                                    else
+                                        ShowNavGen(table, nav, state, j);
+                                }
+                    }
+                    else
+                        ShowNavGen(table, nav, state, j);
+
+                    tiny.nextState(state);
+                }
+                TotalSeconds += Jump;
+                TinySeed += 1000 * Jump;
+                state = tiny.init(TinySeed, 1);
+            }
+            while (Working);
+            //});
+        }
+        #endregion
+
 
         #region Show Results
         private void ShowWildSrch(Wild wild, string date, uint[] store_seed, uint index)
