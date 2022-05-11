@@ -37,22 +37,22 @@ namespace TinyFinder.Subforms.MT
             this.SavePar_Label = new System.Windows.Forms.Label();
             this.TargetSeed_Label = new System.Windows.Forms.Label();
             this.MT_DGV = new System.Windows.Forms.DataGridView();
-            this.StopButton = new System.Windows.Forms.Button();
-            this.XY_MTButton = new System.Windows.Forms.RadioButton();
-            this.ORAS_MTButton = new System.Windows.Forms.RadioButton();
-            this.Frame300_Label = new System.Windows.Forms.Label();
-            this.SettingsGroup = new System.Windows.Forms.GroupBox();
-            this.PreferencesGroup = new System.Windows.Forms.GroupBox();
-            this.TargetTime = new System.Windows.Forms.TextBox();
-            this.SpecificTime = new System.Windows.Forms.CheckBox();
             this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Frame300Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SaveFrameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NewSaveCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Target = new TinyFinder.HexBox();
+            this.StopButton = new System.Windows.Forms.Button();
+            this.XY_MTButton = new System.Windows.Forms.RadioButton();
+            this.ORAS_MTButton = new System.Windows.Forms.RadioButton();
+            this.Frame300_Label = new System.Windows.Forms.Label();
+            this.SettingsGroup = new System.Windows.Forms.GroupBox();
             this.Frame300 = new TinyFinder.HexBox();
             this.CurrentSavePar = new TinyFinder.HexBox();
+            this.PreferencesGroup = new System.Windows.Forms.GroupBox();
+            this.TargetTime = new System.Windows.Forms.TextBox();
+            this.SpecificTime = new System.Windows.Forms.CheckBox();
+            this.Target = new TinyFinder.HexBox();
             ((System.ComponentModel.ISupportInitialize)(this.MT_DGV)).BeginInit();
             this.SettingsGroup.SuspendLayout();
             this.PreferencesGroup.SuspendLayout();
@@ -130,6 +130,45 @@ namespace TinyFinder.Subforms.MT
             this.MT_DGV.Size = new System.Drawing.Size(550, 309);
             this.MT_DGV.TabIndex = 10;
             // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Date";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            this.DateCol.Width = 150;
+            // 
+            // Frame300Col
+            // 
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300Col.DefaultCellStyle = dataGridViewCellStyle1;
+            this.Frame300Col.HeaderText = "Frame 300 Seed";
+            this.Frame300Col.Name = "Frame300Col";
+            this.Frame300Col.ReadOnly = true;
+            this.Frame300Col.Width = 120;
+            // 
+            // SaveFrameCol
+            // 
+            this.SaveFrameCol.HeaderText = "Save Frame";
+            this.SaveFrameCol.Name = "SaveFrameCol";
+            this.SaveFrameCol.ReadOnly = true;
+            // 
+            // NewSaveCol
+            // 
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F);
+            this.NewSaveCol.DefaultCellStyle = dataGridViewCellStyle2;
+            this.NewSaveCol.HeaderText = "New Save Parameter";
+            this.NewSaveCol.Name = "NewSaveCol";
+            this.NewSaveCol.ReadOnly = true;
+            this.NewSaveCol.Width = 150;
+            // 
+            // NewDateCol
+            // 
+            this.NewDateCol.HeaderText = "New Date";
+            this.NewDateCol.Name = "NewDateCol";
+            this.NewDateCol.ReadOnly = true;
+            this.NewDateCol.Visible = false;
+            this.NewDateCol.Width = 150;
+            // 
             // StopButton
             // 
             this.StopButton.Enabled = false;
@@ -193,6 +232,30 @@ namespace TinyFinder.Subforms.MT
             this.SettingsGroup.TabStop = false;
             this.SettingsGroup.Text = "Settings";
             // 
+            // Frame300
+            // 
+            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300.Location = new System.Drawing.Point(135, 93);
+            this.Frame300.Mask = "AAAAAAAA";
+            this.Frame300.Name = "Frame300";
+            this.Frame300.Size = new System.Drawing.Size(64, 22);
+            this.Frame300.TabIndex = 15;
+            this.Frame300.Text = "00000000";
+            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Frame300.Value = ((uint)(0u));
+            // 
+            // CurrentSavePar
+            // 
+            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.CurrentSavePar.Location = new System.Drawing.Point(135, 144);
+            this.CurrentSavePar.Mask = "AAAAAAAA";
+            this.CurrentSavePar.Name = "CurrentSavePar";
+            this.CurrentSavePar.Size = new System.Drawing.Size(64, 22);
+            this.CurrentSavePar.TabIndex = 7;
+            this.CurrentSavePar.Text = "00000000";
+            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CurrentSavePar.Value = ((uint)(0u));
+            // 
             // PreferencesGroup
             // 
             this.PreferencesGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
@@ -232,45 +295,6 @@ namespace TinyFinder.Subforms.MT
             this.SpecificTime.UseVisualStyleBackColor = true;
             this.SpecificTime.CheckedChanged += new System.EventHandler(this.SpecificTime_CheckedChanged);
             // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Date";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            this.DateCol.Width = 150;
-            // 
-            // Frame300Col
-            // 
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300Col.DefaultCellStyle = dataGridViewCellStyle1;
-            this.Frame300Col.HeaderText = "Frame 300 Seed";
-            this.Frame300Col.Name = "Frame300Col";
-            this.Frame300Col.ReadOnly = true;
-            this.Frame300Col.Width = 120;
-            // 
-            // SaveFrameCol
-            // 
-            this.SaveFrameCol.HeaderText = "Save Frame";
-            this.SaveFrameCol.Name = "SaveFrameCol";
-            this.SaveFrameCol.ReadOnly = true;
-            // 
-            // NewSaveCol
-            // 
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F);
-            this.NewSaveCol.DefaultCellStyle = dataGridViewCellStyle2;
-            this.NewSaveCol.HeaderText = "New Save Parameter";
-            this.NewSaveCol.Name = "NewSaveCol";
-            this.NewSaveCol.ReadOnly = true;
-            this.NewSaveCol.Width = 150;
-            // 
-            // NewDateCol
-            // 
-            this.NewDateCol.HeaderText = "New Date";
-            this.NewDateCol.Name = "NewDateCol";
-            this.NewDateCol.ReadOnly = true;
-            this.NewDateCol.Visible = false;
-            this.NewDateCol.Width = 150;
-            // 
             // Target
             // 
             this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
@@ -282,30 +306,6 @@ namespace TinyFinder.Subforms.MT
             this.Target.Text = "00000000";
             this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Target.Value = ((uint)(0u));
-            // 
-            // Frame300
-            // 
-            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300.Location = new System.Drawing.Point(135, 93);
-            this.Frame300.Mask = "AAAAAAAA";
-            this.Frame300.Name = "Frame300";
-            this.Frame300.Size = new System.Drawing.Size(64, 22);
-            this.Frame300.TabIndex = 15;
-            this.Frame300.Text = "00000000";
-            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Frame300.Value = ((uint)(0u));
-            // 
-            // CurrentSavePar
-            // 
-            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentSavePar.Location = new System.Drawing.Point(135, 144);
-            this.CurrentSavePar.Mask = "AAAAAAAA";
-            this.CurrentSavePar.Name = "CurrentSavePar";
-            this.CurrentSavePar.Size = new System.Drawing.Size(64, 22);
-            this.CurrentSavePar.TabIndex = 7;
-            this.CurrentSavePar.Text = "00000000";
-            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CurrentSavePar.Value = ((uint)(0u));
             // 
             // MTForm
             // 
@@ -324,6 +324,7 @@ namespace TinyFinder.Subforms.MT
             this.Name = "MTForm";
             this.Text = "MT RNG";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MTForm_FormClosing_1);
+            this.Load += new System.EventHandler(this.MTForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.MT_DGV)).EndInit();
             this.SettingsGroup.ResumeLayout(false);
             this.SettingsGroup.PerformLayout();

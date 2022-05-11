@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -35,6 +30,12 @@ namespace TinyFinder.Subforms.MT
         public MTForm()
         {
             InitializeComponent();
+        }
+        private void MTForm_Load(object sender, EventArgs e)
+        {
+            Type dgvType = MT_DGV.GetType();
+            PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
+            pi.SetValue(MT_DGV, true, null);
         }
         private void MTForm_FormClosing_1(object sender, FormClosingEventArgs e)
         {
@@ -156,5 +157,6 @@ namespace TinyFinder.Subforms.MT
                 });
             }
         }
+        
     }
 }

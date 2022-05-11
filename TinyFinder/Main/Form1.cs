@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Threading;
 using System.Reflection;
 using TinyFinder.Subforms.Profile_Calibration;
 using TinyFinder.Subforms.Profile_Manager;
@@ -21,9 +20,8 @@ namespace TinyFinder
         Data data = new Data();
         NTRHelper ntrhelper;
         MTForm mersenne;
-        byte count;
-        bool Calibrated = false, Working;
         byte MethodUsed;
+        bool Calibrated = false, Working;
         int Rand100Column;
 
         struct PatchSpot
@@ -204,7 +202,7 @@ namespace TinyFinder
                 Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
                 if (!Working)
                     MainButton.Text = Calibrated ? "Search" : "Calibrate and Search";
-                Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = true;
+                Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = true;
                 Step_Label.Visible = Chain_Label.Visible = false;
                 ΙgnoreFilters.Checked = ΙgnoreFilters.Enabled = false;
                 ntr.Enabled = updateBTN.Visible = false;
@@ -222,7 +220,7 @@ namespace TinyFinder
                     MainButton.Text = "Generate";
                 ntr.Enabled = updateBTN.Visible = true;
                 ΙgnoreFilters.Enabled = true;
-                year.Visible = Year_Label.Visible = Month_Label.Visible = Months.Visible = false;
+                year.Visible = Year_Label.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = false;
                 min.Minimum = 0; min.Value = 0;
                 max.Value = 50000;
             }
@@ -258,7 +256,7 @@ namespace TinyFinder
         {
             //When sort the rows, it would show the spots for the clicked row numer not for the selected TinyMT index
             //For a clicked row, we check the values of its index and Tiny[3]
-            //For Generator, the index value would be enough but for Searcher many rows can have the same index value with different TinyMT state
+            //For Generator, the index value would be enough but for Searcher many rows can have the same index value and different TinyMT state
             uint IndexValue = Convert.ToUInt32(view.Rows[row].Cells[IndexColumn].Value);
             string Tiny3ValueHex = view.Rows[row].Cells[State3Column].Value.ToString();                 //The value of Tiny[3] for the clicked row in hex
             uint Tiny3Value = uint.Parse(Tiny3ValueHex, System.Globalization.NumberStyles.HexNumber);   //Covert to unsigned dec number
@@ -300,30 +298,33 @@ namespace TinyFinder
         {
             if (e.Button == MouseButtons.Right)
             {
-                /*if (MessageBox.Show("Set as Current State?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                /*try
                 {
-                    t3.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [3]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                    t2.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [2]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                    t1.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [1]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                    t0.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                }*/
+                    if (MessageBox.Show("Set as Current State?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                    {
+                        t3.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [3]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                        t2.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [2]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                        t1.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [1]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                        t0.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
+                    }
+                }
+                catch { }*/
             }
         }
         private void Searcher_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right && Searcher.Rows.Count > 0)
             {
-                Searcher.CurrentCell = Searcher.Rows[e.RowIndex].Cells[0];
-                if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                try
                 {
-                    try
+                    Searcher.CurrentCell = Searcher.Rows[e.RowIndex].Cells[0];
+                    if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         OpenMTForm();
                         mersenne.SetDate(Searcher.Rows[e.RowIndex].Cells[0].Value.ToString());
                     }
-                    catch 
-                    { }
                 }
+                catch { }   //Do nothing if the user clicks in a cell header
             }
         }
 
@@ -346,7 +347,7 @@ namespace TinyFinder
                 }
                 MainButton.PerformClick();
             }
-            catch   //If click Update before the console connects again
+            catch   //If the user clicks Update before the console is connected again
             {
                 ntrhelper.HandleException();
                 updateBTN.PerformClick();
@@ -942,7 +943,7 @@ namespace TinyFinder
                     if (Convert.ToBoolean(view.Rows[row].Cells[baseCell].Value))
                         view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
                 }
-                else if (MethodUsed == 6)
+                else if (MethodUsed == 6 && !Equals(Methods.Items[6], "Radar"))
                 {
                     if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 2].Value))
                     {
