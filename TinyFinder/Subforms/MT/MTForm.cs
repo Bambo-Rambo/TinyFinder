@@ -14,13 +14,13 @@ namespace TinyFinder.Subforms.MT
         bool Working;
         int ThreadsForUse;
         string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
-        public void SetDate(string date) 
+        public void SetDate(string date)    //Called from MainForm
         {
             TargetDate.Text = date.Substring(0, 10);
             SpecificTime.Checked = true;
             TargetTime.Text = date.Substring(11);
         } 
-        public void SetGame(bool XY)
+        public void SetGame(bool XY)        //Called from MainForm
         {
             if (XY)
                 XY_MTButton.Checked = true;
@@ -90,15 +90,15 @@ namespace TinyFinder.Subforms.MT
             }
         }
 
-        private async void Research(uint SecondsAdvance, uint Offset)
+        private void Research(uint SecondsAdvance, uint Offset)
         {
             uint Frame300Seed = Frame300.Value;
             uint NewSavePar = calc.FindSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
 
-            Frame300Seed += Offset * 1000;
+            Frame300Seed += Offset * 1000;  //Start seed will be different for each thread obviously
 
             DateTime Finaldate = CitraRTC;
-            uint SecondsAdd = Offset; //uint AddSeconds = 0; Before Multithreading
+            uint SecondsAdd = Offset;
 
             int SaveDelay = XY_MTButton.Checked ? 24 : 26;
             MersenneTwister rng = new MersenneTwister(0);
@@ -106,24 +106,24 @@ namespace TinyFinder.Subforms.MT
             
             if (!SpecificTime.Checked)
             {
-                uint next;
+                uint SavePar;
                 rng.Reseed(Frame300Seed);
                 for (uint i = 0; i < 2000; i++)
                     rng.Generateuint();
                 for (uint i = 2000; i < 200000; i++)
                 {
-                    next = rng.Generateuint();
+                    SavePar = rng.Generateuint();
 
                     //86400000 is the total MS in a day. For every 1000 added to the Save Par, the seconds are increased by 1
                     //for (uint j = NewSavePar - 86400000; j <= NewSavePar; j += 1000) <- Slow
 
-                    if (next >= NewSavePar - 86400000 && next <= NewSavePar && ((next - (NewSavePar - 86400000)) % 1000 == 0))
+                    if (SavePar >= NewSavePar - 86400000 && SavePar <= NewSavePar && ((SavePar - (NewSavePar - 86400000)) % 1000 == 0))
                     {
                         Invoke(new Action(() =>
                         {
                             MT_DGV.Rows.Add(
-                                null, hex(Frame300Seed), i - SaveDelay, hex(next),
-                                Finaldate.AddSeconds((NewSavePar - next) / 1000).ToString("yyyy-MM-ddTHH:mm:ss"));
+                                null, hex(Frame300Seed), i - SaveDelay, hex(SavePar),
+                                Finaldate.AddSeconds((NewSavePar - SavePar) / 1000).ToString("yyyy-MM-ddTHH:mm:ss"));
                         }));
                     }
                 }
@@ -131,30 +131,27 @@ namespace TinyFinder.Subforms.MT
             else
             {
                 uint SeedAdvance = SecondsAdvance * 1000;
-                await Task.Run(() =>
+                while (Working)
                 {
-                    while (Working)
-                    {
-                        rng.Reseed(Frame300Seed);
+                    rng.Reseed(Frame300Seed);
 
-                        for (uint i = 0; i < 2000; i++)
-                            rng.Generateuint();
-                        for (uint i = 2000; i < 10000; i++)
+                    for (uint i = 0; i < 2000; i++)
+                        rng.Generateuint();
+                    for (uint i = 2000; i < 10000; i++)
+                    {
+                        if (rng.Generateuint() == NewSavePar)
                         {
-                            if (rng.Generateuint() == NewSavePar)
+                            Invoke(new Action(() =>
                             {
-                                Invoke(new Action(() =>
-                                {
-                                    MT_DGV.Rows.Add(
-                                        Finaldate.AddSeconds(SecondsAdd).ToString("yyyy-MM-ddTHH:mm:ss"),
-                                        hex(Frame300Seed), i - SaveDelay, hex(NewSavePar), null);
-                                }));
-                            }
+                                MT_DGV.Rows.Add(
+                                    Finaldate.AddSeconds(SecondsAdd).ToString("yyyy-MM-ddTHH:mm:ss"),
+                                    hex(Frame300Seed), i - SaveDelay, hex(NewSavePar), null);
+                            }));
                         }
-                        SecondsAdd += SecondsAdvance;            //+1 second in the RTC increases the Seed by 1000
-                        Frame300Seed += SeedAdvance;
                     }
-                });
+                    SecondsAdd += SecondsAdvance;            //+1 second in the RTC increases the Seed by 1000
+                    Frame300Seed += SeedAdvance;
+                }
             }
         }
         

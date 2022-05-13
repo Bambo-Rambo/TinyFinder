@@ -64,9 +64,13 @@ namespace TinyFinder
         }
         private void StopButton_Click(object sender, EventArgs e)
         {
+            Finished();
+        }
+        private void Finished() //For future use
+        {
             StopButton.Enabled = Working = false;
             MainButton.Enabled = true;
-            MainButton.Text = DateSearcher ? "Search" : "Generate";
+            MainButton.Text = SearchGen.SelectedIndex == 0 ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
         }
         private void ThreadCount_ValueChanged(object sender, EventArgs e)
         {
@@ -102,8 +106,7 @@ namespace TinyFinder
         private void year_ValueChanged(object sender, EventArgs e)
         {
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-            Calibrated = false; 
-            MainButton.Text = "Calibrate and Search";
+            TinyChanged(); //Same effect
         }
 
         private void party_ValueChanged(object sender, EventArgs e)
@@ -196,16 +199,20 @@ namespace TinyFinder
 
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (SearchGen.SelectedIndex == 0)
+            bool DateSearcher = SearchGen.SelectedIndex == 0;
+            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = DateSearcher;
+            ntr.Enabled = updateBTN.Visible = ΙgnoreFilters.Enabled = !DateSearcher;
+            Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
+            Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
+
+            if (!Working)
+                MainButton.Text = DateSearcher ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
+
+            if (DateSearcher)
             {
-                Date_Label.Location = new Point(1, 71);
-                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-                if (!Working)
-                    MainButton.Text = Calibrated ? "Search" : "Calibrate and Search";
-                Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = true;
+                ΙgnoreFilters.Checked = false;
+
                 Step_Label.Visible = Chain_Label.Visible = false;
-                ΙgnoreFilters.Checked = ΙgnoreFilters.Enabled = false;
-                ntr.Enabled = updateBTN.Visible = false;
                 min.Value = min.Minimum = XY_Button.Checked ? 35 :
                                           (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
                                           (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
@@ -214,14 +221,7 @@ namespace TinyFinder
             }
             else
             {
-                Date_Label.Location = new Point(98, 71);
-                Date_Label.Text = "Current State";
-                if (!Working) 
-                    MainButton.Text = "Generate";
-                ntr.Enabled = updateBTN.Visible = true;
-                ΙgnoreFilters.Enabled = true;
-                year.Visible = Year_Label.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = false;
-                min.Minimum = 0; min.Value = 0;
+                min.Minimum = 0; min.Value = 0;     //Careful for exception here
                 max.Value = 50000;
             }
         }

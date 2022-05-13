@@ -49,7 +49,8 @@ namespace TinyFinder
                 {
                     MainButton.Text = "Calibrating...";
 
-                    uint start_seed = calc.startingPoint(Year);         //Each year's TinyMT seed at date 20xx:01:01 can be calculated, see Calculate.cs
+                    //Each year's approximate TinyMT seed at date 20xx:01:01 can be calculated to save time in the research, see Calculate.cs
+                    uint start_seed = calc.startingPoint(Year);
                     for (int i = 0; i < jobs.Length; i++)
                     {
                         jobs[i] = new Thread(() => FindTinySeed(start_seed, (uint)jobs.Length, state)); jobs[i].Start();
@@ -75,7 +76,6 @@ namespace TinyFinder
             searchMonth = (byte)(Months.SelectedIndex + 1);         //We calculate how many seconds have passed from January to the selected month,
             seconds = calc.FindSeconds(searchMonth, Year);          //then add them to find the TinyMT seed for the selected month's 1st day 
             tinyInitSeed = calc.FindMonthSeed(initial, seconds);    //and continue from there (1 second = +1000 seeds)
-
 
             if (MethodUsed != 0 && !isRadar1())     //Checking which slots are checked for searching (Pointless for ID and Radar chain 1)
             {
@@ -272,20 +272,23 @@ namespace TinyFinder
             
         }
 
-        public void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
+        public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
         {
             TinyMT tiny = new TinyMT();
             byte bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
-            while (!Calibrated)
+            await Task.Run(() =>
             {
-                if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
-                    if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
-                    {
-                        initial = Seed;
-                        Calibrated = true;
-                    }
-                Seed += Jump;
-            }
+                while (!Calibrated)
+                {
+                    if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
+                        if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
+                        {
+                            initial = Seed;
+                            Calibrated = true;
+                        }
+                    Seed += Jump;
+                }
+            });
         }
 
 
@@ -305,16 +308,15 @@ namespace TinyFinder
                     tiny.nextState(state);
                 for (uint j = Min; j <= Max; j++)
                 {
-                    if (randID == tiny.temper(state))
+                    if (randID == tiny.temper(state) && DateSearcher)
                     {
-                        if (DateSearcher)
-                            Invoke(new Action(() =>
-                            {
-                                Searcher.Rows.Add(calc.secondsToDate(TotalSeconds, Year),
-                                hex(StoreSeed[3]), hex(StoreSeed[2]), hex(StoreSeed[1]), hex(StoreSeed[0]),
-                                j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
-                            }));
+                        Invoke(new Action(() =>
+                        {
+                            Searcher.Rows.Add(calc.secondsToDate(TotalSeconds, Year),
+                            hex(StoreSeed[3]), hex(StoreSeed[2]), hex(StoreSeed[1]), hex(StoreSeed[0]),
+                            j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
+                        }));
                     }
                     else if (!DateSearcher)
                     {
