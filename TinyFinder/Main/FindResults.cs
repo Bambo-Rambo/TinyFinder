@@ -179,7 +179,7 @@ namespace TinyFinder
                     }
 
                     if (!Horde_Turn.Checked)
-                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : Convert.ToByte(Locations[CurrentLocation].Bag_Advances)));
+                        advances = (byte)((3 * party.Value) + (CaveBox.Checked ? 3 : Convert.ToByte(Locations[(byte)locations.SelectedIndex].Bag_Advances)));
 
                     if (DateSearcher)
                     {
@@ -206,7 +206,7 @@ namespace TinyFinder
                         if (XY_Button.Checked)
                             advances = 27;
                         else
-                            advances = (byte)(locations.Visible ? Convert.ToByte(Locations[CurrentLocation].ratio) : 15);
+                            advances = (byte)(locations.Visible ? Convert.ToByte(Locations[(byte)locations.SelectedIndex].ratio) : 15);
                     }
                     advances += (byte)(party.Value * 3);
 
@@ -304,9 +304,9 @@ namespace TinyFinder
             do
             {
                 state.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(state);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     if (randID == tiny.temper(state) && DateSearcher)
                     {
@@ -314,31 +314,23 @@ namespace TinyFinder
                         {
                             Searcher.Rows.Add(calc.secondsToDate(TotalSeconds, Year),
                             hex(StoreSeed[3]), hex(StoreSeed[2]), hex(StoreSeed[1]), hex(StoreSeed[0]),
-                            j - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                            Index - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
                             id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
                         }));
                     }
                     else if (!DateSearcher)
                     {
                         id.results(state);
-                        if (!ΙgnoreFilters.Checked)
+                        if ((id.trainerID == tid && id.secretID == sid) || ΙgnoreFilters.Checked)
                         {
-                            if (id.trainerID == tid && id.secretID == sid)
-                                table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                hex(state[1]), hex(state[0]));
-                        }
-                        else
-                        {
-                            table.Rows.Add(j, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                            table.Rows.Add(Index, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
                                 id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
                                 hex(state[1]), hex(state[0]));
                         }
                     }
                     tiny.nextState(state);
                 }
-                TotalSeconds += Jump;
-                TinySeed += 1000 * Jump;
+                TotalSeconds += Jump; TinySeed += 1000 * Jump;
                 state = tiny.init(TinySeed, 2);
             }
             while (Working);
@@ -366,9 +358,9 @@ namespace TinyFinder
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     wild.results(CurrentState);
                     if (!ΙgnoreFilters.Checked)
@@ -378,19 +370,18 @@ namespace TinyFinder
                             if (XY_Button.Checked || Flute1.Value == wild.flute || Flute1.Value == 0)
                             {
                                 if (DateSearcher)
-                                    ShowWildSrch(wild, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
+                                    ShowWildSrch(wild, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
                                 else
-                                    ShowWildGen(table, wild, CurrentState, j);
+                                    ShowWildGen(table, wild, CurrentState, Index);
                             }
                         }
                     }
                     else
-                        ShowWildGen(table, wild, CurrentState, j);
+                        ShowWildGen(table, wild, CurrentState, Index);
 
                     tiny.nextState(CurrentState);
                 }
-                TotalSeconds++;
-                TinySeed += 1000;
+                TotalSeconds++; TinySeed += 1000;
                 CurrentState = tiny.init(TinySeed, 1);
             } while (Working);
         }
@@ -429,31 +420,23 @@ namespace TinyFinder
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     smash.RockSmash(CurrentState);
-                    if (!ΙgnoreFilters.Checked)
+                    if ((smash.encounter == 0 && (Slots.Contains(smash.slot) || SlotCount == 0) && (smash.Sync || !SyncBox.Checked)
+                            &&
+                            (XY_Button.Checked || Flute1.Value == smash.flute || Flute1.Value == 0)) || ΙgnoreFilters.Checked)
                     {
-                        if (smash.encounter == 0 && (Slots.Contains(smash.slot) || SlotCount == 0) && (smash.Sync || !SyncBox.Checked))
-                        {
-                            if (XY_Button.Checked || Flute1.Value == smash.flute || Flute1.Value == 0)
-                            {
-                                if (DateSearcher)
-                                    ShowSmashSrch(smash, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
-                                else
-                                    ShowSmashGen(table, smash, CurrentState, j);
-                            }
-                        }
+                        if (DateSearcher)
+                            ShowSmashSrch(smash, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
+                        else
+                            ShowSmashGen(table, smash, CurrentState, Index);
                     }
-                    else
-                        ShowSmashGen(table, smash, CurrentState, j);
-
                     tiny.nextState(CurrentState);
                 }
-                TotalSeconds++;
-                TinySeed += 1000;
+                TotalSeconds++; TinySeed += 1000;
                 CurrentState = tiny.init(TinySeed, 1);
             } 
             while (Working);
@@ -499,14 +482,14 @@ namespace TinyFinder
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
 
                 CurrentState.CopyTo(StateHit, 0);
 
-                for (byte j = 0; j < advances; j++)
+                for (byte TempIndex = 0; TempIndex < advances; TempIndex++)
                     tiny.nextState(StateHit);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     if (Horde_Turn.Checked)
                         horde.HordeTurn(CurrentState);
@@ -525,17 +508,14 @@ namespace TinyFinder
                                 &&
 
                                 (horde.sync || !SyncBox.Checked))
-                                ShowHorde(table, horde, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j, CurrentState, 0);
+                                ShowHorde(table, horde, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index, CurrentState, 0);
                     }
                     else
-                        ShowHorde(table, horde, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j, CurrentState, 0);
+                        ShowHorde(table, horde, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index, CurrentState, 0);
 
-                    tiny.nextState(CurrentState);
-                    tiny.nextState(StateHit);
+                    tiny.nextState(CurrentState); tiny.nextState(StateHit);
                 }
-
-                TotalSeconds += Jump;
-                TinySeed += 1000 * Jump;
+                TotalSeconds += Jump; TinySeed += 1000 * Jump;
                 CurrentState = tiny.init(TinySeed, 1);
             }
             while (Working);
@@ -614,37 +594,30 @@ namespace TinyFinder
             {
                 CurrentState.CopyTo(StoreSeed, 0);
 
-                for (uint j = 0; j < Min; j++)
+                for (uint Inex = 0; Inex < Min; Inex++)
                     tiny.nextState(CurrentState);
 
                 CurrentState.CopyTo(StateHit, 0);
 
-                for (byte j = 0; j < advances; j++)
+                for (byte TempIndex = 0; TempIndex < advances; TempIndex++)
                     tiny.nextState(StateHit);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     honey.results(StateHit);
-                    if (!ΙgnoreFilters.Checked)
+                    if (((Slots.Contains(honey.slot) || SlotCount == 0) 
+                        && 
+                        (honey.Sync || !SyncBox.Checked)
+                        &&
+                        (XY_Button.Checked || Flute1.Value == honey.flute || Flute1.Value == 0)) || ΙgnoreFilters.Checked)
                     {
-                        if ((Slots.Contains(honey.slot) || SlotCount == 0) && (honey.Sync || !SyncBox.Checked))
-                        {
-                            if (XY_Button.Checked || Flute1.Value == honey.flute || Flute1.Value == 0)
-                            {
-                                if (DateSearcher)
-                                    ShowHoneySrch(honey, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
-                                else
-                                    ShowHoneyGen(table, honey, CurrentState, j);
-                            }
-                        }
+                        if (DateSearcher)
+                            ShowHoneySrch(honey, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
+                        else
+                            ShowHoneyGen(table, honey, CurrentState, Index);
                     }
-                    else
-                        ShowHoneyGen(table, honey, CurrentState, j);
-
-                    tiny.nextState(CurrentState);
-                    tiny.nextState(StateHit);
+                    tiny.nextState(CurrentState); tiny.nextState(StateHit);
                 }
-                TotalSeconds++;
-                TinySeed += 1000;
+                TotalSeconds++; TinySeed += 1000;
                 CurrentState = tiny.init(TinySeed, 1);
             } while (Working);
         }
@@ -686,15 +659,15 @@ namespace TinyFinder
             {
                 CurrentState.CopyTo(StoreSeed, 0);
 
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
 
                 CurrentState.CopyTo(StateHit, 0);
 
-                for (byte j = 0; j < advances; j++)
+                for (byte TempIndex = 0; TempIndex < advances; TempIndex++)
                     tiny.nextState(StateHit);
 
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     radar.results(StateHit);
                     if (!ΙgnoreFilters.Checked)
@@ -702,19 +675,18 @@ namespace TinyFinder
                         if (radar.Shiny || (radar.chain == 0 && (Slots.Contains(radar.slot) || SlotCount == 0) && (radar.sync || (!SyncBox.Checked))))
                         {
                             if (DateSearcher)
-                                ShowRadarSrch(radar, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j, (byte)ratio.Value);
+                                ShowRadarSrch(radar, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index, (byte)ratio.Value);
                             else
-                                ShowRadarGen(table, radar, CurrentState, j, (byte)ratio.Value);
+                                ShowRadarGen(table, radar, CurrentState, Index, (byte)ratio.Value);
                         }
                     }
                     else
-                        ShowRadarGen(table, radar, CurrentState, j, (byte)ratio.Value);
+                        ShowRadarGen(table, radar, CurrentState, Index, (byte)ratio.Value);
 
                     tiny.nextState(CurrentState);
                     tiny.nextState(StateHit);
                 }
-                TotalSeconds++;
-                TinySeed += 1000;
+                TotalSeconds++; TinySeed += 1000;
                 CurrentState = tiny.init(TinySeed, 1);
             } 
             while (Working);
@@ -781,16 +753,17 @@ namespace TinyFinder
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     nav.results(CurrentState);
                     if (!ΙgnoreFilters.Checked)
                     {
                         if (nav.trigger && (nav.shiny || !W_Shiny))
                             if (((!W_Exclusives && nav.EnctrType != 2) || (W_Exclusives && nav.EnctrType == 2))
-                                && (Slots.Contains((byte)nav.slot) || SlotCount == 0)
+                                && 
+                                (Slots.Contains((byte)nav.slot) || SlotCount == 0)
                                 &&
                                 (nav.HA || !W_HA)
                                 &&
@@ -803,18 +776,17 @@ namespace TinyFinder
                                     && ((Flute1.Value == 0) || nav.flute == Flute1.Value))
                                 {
                                     if (DateSearcher)
-                                        ShowNavSrch(nav, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
+                                        ShowNavSrch(nav, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
                                     else
-                                        ShowNavGen(table, nav, CurrentState, j);
+                                        ShowNavGen(table, nav, CurrentState, Index);
                                 }
                     }
                     else
-                        ShowNavGen(table, nav, CurrentState, j);
+                        ShowNavGen(table, nav, CurrentState, Index);
 
                     tiny.nextState(CurrentState);
                 }
-                TotalSeconds += Jump;
-                TinySeed += 1000 * Jump;
+                TotalSeconds += Jump; TinySeed += 1000 * Jump;
                 CurrentState = tiny.init(TinySeed, 1);
             }
             while (Working);
@@ -849,28 +821,21 @@ namespace TinyFinder
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint j = 0; j < Min; j++)
+                for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
-                for (uint j = Min; j <= Max; j++)
+                for (uint Index = Min; Index <= Max; Index++)
                 {
                     swoop.Swooping(CurrentState);
-                    if (!ΙgnoreFilters.Checked)
+                    if (((Slots.Contains(swoop.slot) || SlotCount == 0) && (swoop.Sync || !SyncBox.Checked))    || ΙgnoreFilters.Checked)
                     {
-                        if ((Slots.Contains(swoop.slot) || SlotCount == 0) && (swoop.Sync || !SyncBox.Checked))
-                        {
-                            if (DateSearcher)
-                                ShowSwoopSrch(swoop, calc.secondsToDate(TotalSeconds, Year), StoreSeed, j);
-                            else
-                                ShowSwoopGen(table, swoop, CurrentState, j);
-                        }
+                        if (DateSearcher)
+                            ShowSwoopSrch(swoop, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
+                        else
+                            ShowSwoopGen(table, swoop, CurrentState, Index);
                     }
-                    else
-                        ShowSwoopGen(table, swoop, CurrentState, j);
-
                     tiny.nextState(CurrentState);
                 }
-                TotalSeconds++;
-                TinySeed += 1000;
+                TotalSeconds++; TinySeed += 1000;
                 CurrentState = tiny.init(TinySeed, 1);
             } 
             while (Working);
@@ -883,7 +848,6 @@ namespace TinyFinder
                        index, swoop.Sync, swoop.slot, null, swoop.rand100);
             }));
         }
-
         private void ShowSwoopGen(DataTable table, Wild swoop, uint[] state, uint index)
         {
             table.Rows.Add(index, swoop.Sync, swoop.slot, swoop.rand100, hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));

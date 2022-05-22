@@ -55,5 +55,35 @@ namespace TinyFinder.Properties
                 this["CPUs"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PSVs
+        {
+            get
+            {
+                return ((int)(this["PSVs"]));
+            }
+            set
+            {
+                this["PSVs"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int PRVs
+        {
+            get
+            {
+                return ((int)(this["PRVs"]));
+            }
+            set
+            {
+                this["PRVs"] = value;
+            }
+        }
     }
 }

@@ -191,8 +191,9 @@ namespace TinyFinder
 
         public static string[,] GuideList = new string[,] 
         {
+            { "Initial Seed RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6MTSeedRNG.md" },
             { "TID / SID RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6TidSidRNG.md#gen-6-tidsid-rng-on-citra" },
-            { "Normal / FS RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/NormalWild-FS-RNG.md#normal-wild---friend-safari-rng" },
+            { "Normal  Wild / FS RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/NormalWild-FS-RNG.md#normal-wild---friend-safari-rng" },
             { "Horde RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/HordeRNG.md#horde-encounter-rng-abuse-guide" },
             { "DexNav RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/DexNavRNG.md#dexnav-rng-abuse-guide" },
         };

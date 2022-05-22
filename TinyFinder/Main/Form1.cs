@@ -4,8 +4,6 @@ using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
-using TinyFinder.Subforms.Profile_Calibration;
-using TinyFinder.Subforms.Profile_Manager;
 using TinyFinder.Subforms.MT;
 
 namespace TinyFinder
@@ -321,6 +319,7 @@ namespace TinyFinder
                     if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         OpenMTForm();
+                        mersenne.SetGame(XY_Button.Checked);
                         mersenne.SetDate(Searcher.Rows[e.RowIndex].Cells[0].Value.ToString());
                     }
                 }
@@ -402,22 +401,6 @@ namespace TinyFinder
             ntrhelper.Focus();
         }
 
-        private void profiles_Click(object sender, EventArgs e)
-        {
-            /*if (calibrator == null)
-                calibrator = new Calibrator();
-            calibrator.Show();
-            calibrator.Focus();*/
-        }
-
-        private void profilemanager_Click(object sender, EventArgs e)
-        {
-            /*if (manager == null)
-                manager = new Manager();
-            manager.Show();
-            manager.Focus();*/
-        }
-
         private void MTrng_Click(object sender, EventArgs e)
         {
             OpenMTForm();
@@ -428,9 +411,9 @@ namespace TinyFinder
                 mersenne = new MTForm();
             mersenne.Show();
             mersenne.Focus();
-            mersenne.SetGame(XY_Button.Checked);
         }
 
+        private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void TIDSIDGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
@@ -961,7 +944,6 @@ namespace TinyFinder
         {
             CellFormatting(Searcher, e.RowIndex, 6, Rand100Column + 5);
         }
-
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             CellFormatting(Generator, e.RowIndex, 1, Rand100Column);

@@ -7,7 +7,7 @@ namespace TinyFinder
         public byte[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
         public uint yearMilliseconds;
 
-        //TinyMT
+        //TinyMT RNG
         public uint startingPoint(int year)
         {
             yearMilliseconds = 0;
@@ -47,7 +47,12 @@ namespace TinyFinder
         public uint FindMonthSeed(uint seed, uint seconds) => (seconds * 1000) + seed;
 
 
-        //MT
+
+
+
+
+
+        //MT RNG
         public uint FindSavePar(DateTime CitraRTC, uint CurrentSavePar, uint ActualSeed, uint TargetSeed)
         {
             //https://gist.github.com/zaksabeast/c2140499a1c8280602d63d08937d22f9
@@ -58,6 +63,20 @@ namespace TinyFinder
             uint ExpectedSeed = (uint)(CurrentSavePar + TimeVar) & 0xFFFFFFFF;
             uint Correction = ExpectedSeed - ActualSeed;
             return (uint)(TargetSeed - TimeVar + Correction);
+        }
+
+        public string Check_DST(DateTime date1, uint seconds)
+        {
+            DateTime date2 = date1.AddSeconds(seconds);
+
+            if (TimeZoneInfo.Local.IsDaylightSavingTime(date2) && !TimeZoneInfo.Local.IsDaylightSavingTime(date1))
+                return date2.AddSeconds(3600).ToString("yyyy-MM-ddTHH:mm:ss");
+
+            else if (TimeZoneInfo.Local.IsDaylightSavingTime(date1) && !TimeZoneInfo.Local.IsDaylightSavingTime(date2))
+                return date2.AddSeconds(-3600).ToString("yyyy-MM-ddTHH:mm:ss");
+
+            else
+                return date2.ToString("yyyy-MM-ddTHH:mm:ss");
         }
     }
 }

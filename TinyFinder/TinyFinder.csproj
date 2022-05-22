@@ -103,6 +103,18 @@
     <Compile Include="Methods\HoneyWild.cs" />
     <Compile Include="Methods\Horde.cs" />
     <Compile Include="RNG\MT.cs" />
+    <Compile Include="Subforms\MT\Core.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\MT\FastHordes\Horde3.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\MT\FastHordes\Horde4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\MT\FastHordes\Horde5.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Subforms\MT\MTForm.cs">
       <SubType>Form</SubType>
     </Compile>

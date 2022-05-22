@@ -32,21 +32,28 @@
    Coded by Takuji Nishimura and Makoto Matsumoto.
    This is a faster version by taking Shawn Cokus's optimization,
    Matthe Bellew's simplification, Isaku Wada's real version.
+
    Before using, initialize the state by using init_genrand(seed) 
    or init_by_array(init_key, key_length).
+
    Copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura,
    All rights reserved.                          
+
    Redistribution and use in source and binary forms, with or without
    modification, are permitted provided that the following conditions
    are met:
+
      1. Redistributions of source code must retain the above copyright
         notice, this list of conditions and the following disclaimer.
+
      2. Redistributions in binary form must reproduce the above copyright
         notice, this list of conditions and the following disclaimer in the
         documentation and/or other materials provided with the distribution.
+
      3. The names of its contributors may not be used to endorse or promote 
         products derived from this software without specific prior written 
         permission.
+
    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -58,15 +65,29 @@
    LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
    NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
    Any feedback is very welcome.
    http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
    email: m-mat @ math.sci.hiroshima-u.ac.jp (remove space)
 */
 
+
 using System;
 
 namespace TinyFinder.RNG
 {
+    /// <summary>
+    ///     Generates pseudo-random numbers using the Mersenne Twister algorithm.
+    /// </summary>
+    /// <remarks>
+    ///     See
+    ///     <a href="http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html">
+    ///         http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html
+    ///     </a>
+    ///     for details
+    ///     on the algorithm.
+    /// </remarks>
     public class MersenneTwister
     {
         /* Period parameters */
@@ -77,12 +98,17 @@ namespace TinyFinder.RNG
         private const uint LowerMask = 0x7fffffff; /* least significant r bits */
 
         /* Tempering parameters */
-        public const uint TemperingMaskB = 0x9d2c5680;
-        public const uint TemperingMaskC = 0xefc60000;
-        public static readonly uint[] _mag01 = { 0x0, MatrixA };
-        public readonly uint[] _mt = new uint[N]; /* the array for the state vector  */
-        public Int16 _mti;
+        private const uint TemperingMaskB = 0x9d2c5680;
+        private const uint TemperingMaskC = 0xefc60000;
+        private static readonly uint[] _mag01 = { 0x0, MatrixA };
+        private readonly uint[] _mt = new uint[N]; /* the array for the state vector  */
+        private Int16 _mti;
+        //private uint p;
 
+        /// <summary>
+        ///     Creates a new pseudo-random number generator with a given seed.
+        /// </summary>
+        /// <param name="seed">A value to use as a seed.</param>
         public MersenneTwister(uint seed)
         {
             init(seed);
@@ -117,7 +143,13 @@ namespace TinyFinder.RNG
 
         #endregion
 
-        public uint Generateuint()
+        /// <summary>
+        ///     Generates a new pseudo-random <see cref="uint" />.
+        /// </summary>
+        /// <returns>
+        ///     A pseudo-random <see cref="uint" />.
+        /// </returns>
+        protected uint Generateuint()
         {
             // Run-time shuffle, modified by wwwwwwzx
             short kk = (short)(_mti < N - 1 ? _mti + 1 : 0);
@@ -177,6 +209,100 @@ namespace TinyFinder.RNG
             }
 
             _mt[0] = 0x80000000; /* MSB is 1; assuring non-zero initial array */
+        }
+    }
+
+    public class MersenneTwister_Fast // Little faster version, Modified by wwwwwwzx
+    {
+        /* Period parameters */
+        private const Int32 N = 624;
+        private const Int32 M = 397;
+        private const uint MatrixA = 0x9908b0df; /* constant vector a */
+        private const uint UpperMask = 0x80000000; /* most significant w-r bits */
+        private const uint LowerMask = 0x7fffffff; /* least significant r bits */
+
+        /* Tempering parameters */
+        private const uint TemperingMaskB = 0x9d2c5680;
+        private const uint TemperingMaskC = 0xefc60000;
+        private static readonly uint[] _mag01 = { 0x0, MatrixA };
+        private readonly uint[] _mt = new uint[N]; /* the array for the state vector  */
+        private short _mti;
+
+        public MersenneTwister_Fast(uint seed)
+        {
+            init(seed);
+        }
+
+        public uint Nextuint()
+        {
+            uint y;
+            if (_mti >= N)
+            {
+                short kk = 0;
+                for (; kk < N - M; ++kk)
+                {
+                    y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                    _mt[kk] = _mt[kk + M] ^ (y >> 1) ^ _mag01[y & 0x1];
+                }
+
+                for (; kk < N - 1; ++kk)
+                {
+                    y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                    _mt[kk] = _mt[kk + (M - N)] ^ (y >> 1) ^ _mag01[y & 0x1];
+                }
+
+                y = (_mt[N - 1] & UpperMask) | (_mt[0] & LowerMask);
+                _mt[N - 1] = _mt[M - 1] ^ (y >> 1) ^ _mag01[y & 0x1];
+
+                _mti = 0;
+            }
+            y = _mt[_mti++];
+            y ^= temperingShiftU(y);
+            y ^= temperingShiftS(y) & TemperingMaskB;
+            y ^= temperingShiftT(y) & TemperingMaskC;
+            y ^= temperingShiftL(y);
+            return y;
+        }
+
+        public void Next(int n)
+        {
+            _mti += (short)n;
+            while (_mti >= N)
+            {
+                short kk = 0;
+                uint y;
+                for (; kk < N - M; ++kk)
+                {
+                    y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                    _mt[kk] = _mt[kk + M] ^ (y >> 1) ^ _mag01[y & 0x1];
+                }
+
+                for (; kk < N - 1; ++kk)
+                {
+                    y = (_mt[kk] & UpperMask) | (_mt[kk + 1] & LowerMask);
+                    _mt[kk] = _mt[kk + (M - N)] ^ (y >> 1) ^ _mag01[y & 0x1];
+                }
+
+                y = (_mt[N - 1] & UpperMask) | (_mt[0] & LowerMask);
+                _mt[N - 1] = _mt[M - 1] ^ (y >> 1) ^ _mag01[y & 0x1];
+
+                _mti -= N;
+            }
+        }
+
+        private static uint temperingShiftU(uint y) => (y >> 11);
+
+        private static uint temperingShiftS(uint y) => (y << 7);
+
+        private static uint temperingShiftT(uint y) => (y << 15);
+
+        private static uint temperingShiftL(uint y) => (y >> 18);
+
+        private void init(uint seed)
+        {
+            _mt[0] = seed;
+            for (_mti = 1; _mti < N; _mti++)
+                _mt[_mti] = (uint)(1812433253U * (_mt[_mti - 1] ^ (_mt[_mti - 1] >> 30)) + _mti);
         }
     }
 }
