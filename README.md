@@ -1,10 +1,12 @@
 # TinyFinder
 
-### The latest release is quite outdated now. Download the latest [commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/build/artifacts) instead
+A Windows forms app mainly for assisting with TinyMT RNG in gen 6 games.
 
-A more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
+It can be seen as a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
 
-### Differences from 3DS RNG Tool
+Also a MT seed searcher for various things like specific PID/EC search, multi shiny hordes etc as well as Seed Time Finder for both MT and TinyMT.
+
+### TinyMT differences from 3DS RNG Tool
 
 **(+)** Index search by date (Citra only - specifically useful for ID, DexNav and Radar RNG)
 
