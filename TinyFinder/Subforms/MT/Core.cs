@@ -293,16 +293,16 @@ namespace TinyFinder.Subforms.MT
             {
                 mt = new MersenneTwister_Fast(Seed);
 
-                for (uint Frame = 0; Frame < 62; Frame++)
+                for (uint Frame = 0; Frame < Min + 62; Frame++)
                     mt.Nextuint();
 
-                for (uint Frame = 0; Frame < 80; Frame++)
+                for (uint Frame = Min; Frame < Min + 80; Frame++)
                 {
                     PIDList[Frame] = mt.Nextuint();
                     PSVList[Frame] = GetPSV(PIDList[Frame]);
                 }
 
-                for (uint Frame = 0; Frame < Max; Frame++)
+                for (uint Frame = Min; Frame < Max; Frame++)
                 {
                     HordePID = mt.Nextuint();
                     PIDList[Frame + 80] = HordePID;
@@ -347,16 +347,16 @@ namespace TinyFinder.Subforms.MT
             {
                 mt = new MersenneTwister_Fast(Seed);
 
-                for (uint frame = 0; frame < 62; frame++)
+                for (uint frame = 0; frame < Min + 62; frame++)
                     mt.Nextuint();
 
-                for (uint frame = 0; frame < 80; frame++)
+                for (uint frame = Min; frame < Min + 80; frame++)
                 {
                     PIDList[frame] = mt.Nextuint();
                     PSVList[frame] = GetPSV(PIDList[frame]);
                 }
 
-                for (uint Frame = 0; Frame < Max; Frame++)
+                for (uint Frame = Min; Frame < Max; Frame++)
                 {
                     HordePID = mt.Nextuint();
                     PIDList[Frame + 80] = HordePID;

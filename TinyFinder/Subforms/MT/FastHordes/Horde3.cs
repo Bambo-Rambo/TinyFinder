@@ -22,12 +22,12 @@ namespace TinyFinder.Subforms.MT
             {
                 mt = new MersenneTwister_Fast(initial);
 
-                for (uint frame = 0; frame < Min + 62; frame++)                                     //62 is the number of advances before the PID is calculated
+                for (uint frame = 0; frame < Min + 62; frame++)           //62 is the number of advances before the PID is calculated
                     mt.Nextuint();
 
-                for (uint frame = Min; frame < Min + 52; frame++)                                   //26 is the maximum possible jump between slot 1 and 3
+                for (uint frame = Min; frame < Min + 52; frame++)
                 {
-                    HordePID = mt.Nextuint();                                                       //Setting up the array so we can jump 26 frame immediately
+                    HordePID = mt.Nextuint();
                     P[frame] = ((HordePID >> 16) ^ (HordePID & 0xFFFF)) >> 4;
                 }
 

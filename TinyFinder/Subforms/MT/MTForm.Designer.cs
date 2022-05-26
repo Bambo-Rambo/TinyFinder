@@ -33,6 +33,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -48,13 +55,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             this.SearchTab = new System.Windows.Forms.TabPage();
             this.EC_DGV = new System.Windows.Forms.DataGridView();
             this.EC_SeedCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -63,6 +63,14 @@
             this.EC_IV1Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EC_IV2Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HORDE_DGV = new System.Windows.Forms.DataGridView();
+            this.SeedCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FrameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PSVCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CharmCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SyncCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.HACol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SpeciesCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PatternCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrefGroup = new System.Windows.Forms.GroupBox();
             this.FastBox = new System.Windows.Forms.CheckBox();
             this.ShiniesLabel = new System.Windows.Forms.Label();
@@ -72,6 +80,7 @@
             this.ShinyLabel = new System.Windows.Forms.Label();
             this.ShinyType = new System.Windows.Forms.ComboBox();
             this.PID_Label = new System.Windows.Forms.Label();
+            this.PIDBox = new TinyFinder.HexBox();
             this.SPE_Label = new System.Windows.Forms.Label();
             this.SPD_Label = new System.Windows.Forms.Label();
             this.SPA_Label = new System.Windows.Forms.Label();
@@ -103,11 +112,13 @@
             this.Count8Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SetGroup = new System.Windows.Forms.GroupBox();
             this.AnyTSVBox = new System.Windows.Forms.CheckBox();
+            this.CurrentTRV = new TinyFinder.HexBox();
             this.LabelOR = new System.Windows.Forms.Label();
             this.CurrentTSV = new System.Windows.Forms.NumericUpDown();
             this.TSV_Label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Gen6Categories = new System.Windows.Forms.ComboBox();
+            this.End_Seed = new TinyFinder.HexBox();
             this.R_Label_Seed = new System.Windows.Forms.Label();
             this.NiceEC = new System.Windows.Forms.CheckBox();
             this.R_Label_Frame = new System.Windows.Forms.Label();
@@ -117,15 +128,20 @@
             this.PerfectIVs = new System.Windows.Forms.NumericUpDown();
             this.MinFrame = new System.Windows.Forms.NumericUpDown();
             this.SeedLabel = new System.Windows.Forms.Label();
+            this.Start_Seed = new TinyFinder.HexBox();
             this.TabList = new System.Windows.Forms.TabControl();
             this.RNGTab = new System.Windows.Forms.TabPage();
             this.PreferencesGroup = new System.Windows.Forms.GroupBox();
+            this.Target = new TinyFinder.HexBox();
             this.TargetTime = new System.Windows.Forms.TextBox();
             this.SpecificTime = new System.Windows.Forms.CheckBox();
             this.TargetDate = new System.Windows.Forms.TextBox();
             this.RTC_Label = new System.Windows.Forms.Label();
             this.TargetSeed_Label = new System.Windows.Forms.Label();
             this.SettingsGroup = new System.Windows.Forms.GroupBox();
+            this.Game_Label_MT = new System.Windows.Forms.Label();
+            this.CurrentSavePar = new TinyFinder.HexBox();
+            this.Frame300 = new TinyFinder.HexBox();
             this.ORAS_MTButton = new System.Windows.Forms.RadioButton();
             this.XY_MTButton = new System.Windows.Forms.RadioButton();
             this.Frame300_Label = new System.Windows.Forms.Label();
@@ -138,21 +154,6 @@
             this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MT_SearchButton = new System.Windows.Forms.Button();
             this.MT_StopButton = new System.Windows.Forms.Button();
-            this.SeedCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FrameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PSVCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CharmCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SyncCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.HACol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.SpeciesCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PatternCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PIDBox = new TinyFinder.HexBox();
-            this.CurrentTRV = new TinyFinder.HexBox();
-            this.End_Seed = new TinyFinder.HexBox();
-            this.Start_Seed = new TinyFinder.HexBox();
-            this.Target = new TinyFinder.HexBox();
-            this.CurrentSavePar = new TinyFinder.HexBox();
-            this.Frame300 = new TinyFinder.HexBox();
             this.SearchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EC_DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HORDE_DGV)).BeginInit();
@@ -293,6 +294,83 @@
             this.HORDE_DGV.Size = new System.Drawing.Size(740, 343);
             this.HORDE_DGV.TabIndex = 32;
             this.HORDE_DGV.Visible = false;
+            // 
+            // SeedCol
+            // 
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle6.Format = "X8";
+            this.SeedCol.DefaultCellStyle = dataGridViewCellStyle6;
+            this.SeedCol.HeaderText = "Seed";
+            this.SeedCol.MinimumWidth = 80;
+            this.SeedCol.Name = "SeedCol";
+            this.SeedCol.ReadOnly = true;
+            // 
+            // FrameCol
+            // 
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.FrameCol.DefaultCellStyle = dataGridViewCellStyle7;
+            this.FrameCol.HeaderText = "Frame";
+            this.FrameCol.MinimumWidth = 60;
+            this.FrameCol.Name = "FrameCol";
+            this.FrameCol.ReadOnly = true;
+            this.FrameCol.Width = 80;
+            // 
+            // PSVCol
+            // 
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PSVCol.DefaultCellStyle = dataGridViewCellStyle8;
+            this.PSVCol.HeaderText = "PSV";
+            this.PSVCol.MinimumWidth = 40;
+            this.PSVCol.Name = "PSVCol";
+            this.PSVCol.ReadOnly = true;
+            this.PSVCol.Width = 60;
+            // 
+            // CharmCol
+            // 
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.CharmCol.DefaultCellStyle = dataGridViewCellStyle9;
+            this.CharmCol.HeaderText = "Charm";
+            this.CharmCol.MinimumWidth = 40;
+            this.CharmCol.Name = "CharmCol";
+            this.CharmCol.ReadOnly = true;
+            this.CharmCol.Width = 60;
+            // 
+            // SyncCol
+            // 
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.SyncCol.DefaultCellStyle = dataGridViewCellStyle10;
+            this.SyncCol.HeaderText = "Sync";
+            this.SyncCol.MinimumWidth = 40;
+            this.SyncCol.Name = "SyncCol";
+            this.SyncCol.ReadOnly = true;
+            this.SyncCol.Width = 60;
+            // 
+            // HACol
+            // 
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.HACol.DefaultCellStyle = dataGridViewCellStyle11;
+            this.HACol.HeaderText = "HA";
+            this.HACol.MinimumWidth = 40;
+            this.HACol.Name = "HACol";
+            this.HACol.ReadOnly = true;
+            this.HACol.Width = 60;
+            // 
+            // SpeciesCol
+            // 
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.SpeciesCol.DefaultCellStyle = dataGridViewCellStyle12;
+            this.SpeciesCol.HeaderText = "Species";
+            this.SpeciesCol.MinimumWidth = 80;
+            this.SpeciesCol.Name = "SpeciesCol";
+            this.SpeciesCol.ReadOnly = true;
+            // 
+            // PatternCol
+            // 
+            this.PatternCol.HeaderText = "Pattern";
+            this.PatternCol.MinimumWidth = 130;
+            this.PatternCol.Name = "PatternCol";
+            this.PatternCol.ReadOnly = true;
+            this.PatternCol.Width = 160;
             // 
             // PrefGroup
             // 
@@ -437,6 +515,18 @@
             this.PID_Label.Size = new System.Drawing.Size(28, 14);
             this.PID_Label.TabIndex = 29;
             this.PID_Label.Text = "PID";
+            // 
+            // PIDBox
+            // 
+            this.PIDBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PIDBox.Location = new System.Drawing.Point(78, 131);
+            this.PIDBox.Mask = "AAAAAAAA";
+            this.PIDBox.Name = "PIDBox";
+            this.PIDBox.Size = new System.Drawing.Size(63, 22);
+            this.PIDBox.TabIndex = 22;
+            this.PIDBox.Text = "00000000";
+            this.PIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PIDBox.Value = ((uint)(0u));
             // 
             // SPE_Label
             // 
@@ -839,6 +929,19 @@
             this.AnyTSVBox.UseVisualStyleBackColor = true;
             this.AnyTSVBox.Visible = false;
             // 
+            // CurrentTRV
+            // 
+            this.CurrentTRV.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.CurrentTRV.Location = new System.Drawing.Point(229, 226);
+            this.CurrentTRV.Mask = "A";
+            this.CurrentTRV.Name = "CurrentTRV";
+            this.CurrentTRV.Size = new System.Drawing.Size(15, 22);
+            this.CurrentTRV.TabIndex = 46;
+            this.CurrentTRV.Text = "0";
+            this.CurrentTRV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CurrentTRV.Value = ((uint)(0u));
+            this.CurrentTRV.TextChanged += new System.EventHandler(this.CurrentTRV_TextChanged);
+            // 
             // LabelOR
             // 
             this.LabelOR.AutoSize = true;
@@ -897,6 +1000,18 @@
             this.Gen6Categories.Size = new System.Drawing.Size(102, 23);
             this.Gen6Categories.TabIndex = 41;
             this.Gen6Categories.SelectedIndexChanged += new System.EventHandler(this.Gen6Categories_SelectedIndexChanged);
+            // 
+            // End_Seed
+            // 
+            this.End_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.End_Seed.Location = new System.Drawing.Point(227, 91);
+            this.End_Seed.Mask = "AAAAAAAA";
+            this.End_Seed.Name = "End_Seed";
+            this.End_Seed.Size = new System.Drawing.Size(62, 22);
+            this.End_Seed.TabIndex = 40;
+            this.End_Seed.Text = "FFFFFFFF";
+            this.End_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.End_Seed.Value = ((uint)(4294967295u));
             // 
             // R_Label_Seed
             // 
@@ -1008,6 +1123,18 @@
             this.SeedLabel.TabIndex = 1;
             this.SeedLabel.Text = "Seed Range";
             // 
+            // Start_Seed
+            // 
+            this.Start_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Start_Seed.Location = new System.Drawing.Point(143, 91);
+            this.Start_Seed.Mask = "AAAAAAAA";
+            this.Start_Seed.Name = "Start_Seed";
+            this.Start_Seed.Size = new System.Drawing.Size(62, 22);
+            this.Start_Seed.TabIndex = 0;
+            this.Start_Seed.Text = "00000000";
+            this.Start_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Start_Seed.Value = ((uint)(0u));
+            // 
             // TabList
             // 
             this.TabList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1051,6 +1178,18 @@
             this.PreferencesGroup.TabIndex = 22;
             this.PreferencesGroup.TabStop = false;
             this.PreferencesGroup.Text = "Preferences";
+            // 
+            // Target
+            // 
+            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Target.Location = new System.Drawing.Point(174, 177);
+            this.Target.Mask = "AAAAAAAA";
+            this.Target.Name = "Target";
+            this.Target.Size = new System.Drawing.Size(62, 22);
+            this.Target.TabIndex = 12;
+            this.Target.Text = "00000000";
+            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Target.Value = ((uint)(0u));
             // 
             // TargetTime
             // 
@@ -1107,6 +1246,7 @@
             // SettingsGroup
             // 
             this.SettingsGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.SettingsGroup.Controls.Add(this.Game_Label_MT);
             this.SettingsGroup.Controls.Add(this.CurrentSavePar);
             this.SettingsGroup.Controls.Add(this.Frame300);
             this.SettingsGroup.Controls.Add(this.ORAS_MTButton);
@@ -1121,11 +1261,44 @@
             this.SettingsGroup.TabStop = false;
             this.SettingsGroup.Text = "Settings";
             // 
+            // Game_Label_MT
+            // 
+            this.Game_Label_MT.AutoSize = true;
+            this.Game_Label_MT.Location = new System.Drawing.Point(74, 73);
+            this.Game_Label_MT.Name = "Game_Label_MT";
+            this.Game_Label_MT.Size = new System.Drawing.Size(35, 14);
+            this.Game_Label_MT.TabIndex = 17;
+            this.Game_Label_MT.Text = "Game";
+            // 
+            // CurrentSavePar
+            // 
+            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.CurrentSavePar.Location = new System.Drawing.Point(215, 177);
+            this.CurrentSavePar.Mask = "AAAAAAAA";
+            this.CurrentSavePar.Name = "CurrentSavePar";
+            this.CurrentSavePar.Size = new System.Drawing.Size(62, 22);
+            this.CurrentSavePar.TabIndex = 16;
+            this.CurrentSavePar.Text = "00000000";
+            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CurrentSavePar.Value = ((uint)(0u));
+            // 
+            // Frame300
+            // 
+            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300.Location = new System.Drawing.Point(215, 124);
+            this.Frame300.Mask = "AAAAAAAA";
+            this.Frame300.Name = "Frame300";
+            this.Frame300.Size = new System.Drawing.Size(62, 22);
+            this.Frame300.TabIndex = 15;
+            this.Frame300.Text = "00000000";
+            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Frame300.Value = ((uint)(0u));
+            // 
             // ORAS_MTButton
             // 
             this.ORAS_MTButton.AutoSize = true;
             this.ORAS_MTButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.ORAS_MTButton.Location = new System.Drawing.Point(186, 39);
+            this.ORAS_MTButton.Location = new System.Drawing.Point(224, 72);
             this.ORAS_MTButton.Name = "ORAS_MTButton";
             this.ORAS_MTButton.Size = new System.Drawing.Size(53, 18);
             this.ORAS_MTButton.TabIndex = 13;
@@ -1137,7 +1310,7 @@
             this.XY_MTButton.AutoSize = true;
             this.XY_MTButton.Checked = true;
             this.XY_MTButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.XY_MTButton.Location = new System.Drawing.Point(111, 39);
+            this.XY_MTButton.Location = new System.Drawing.Point(140, 72);
             this.XY_MTButton.Name = "XY_MTButton";
             this.XY_MTButton.Size = new System.Drawing.Size(39, 18);
             this.XY_MTButton.TabIndex = 12;
@@ -1149,7 +1322,7 @@
             // 
             this.Frame300_Label.AutoSize = true;
             this.Frame300_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300_Label.Location = new System.Drawing.Point(45, 100);
+            this.Frame300_Label.Location = new System.Drawing.Point(74, 127);
             this.Frame300_Label.Name = "Frame300_Label";
             this.Frame300_Label.Size = new System.Drawing.Size(105, 14);
             this.Frame300_Label.TabIndex = 14;
@@ -1159,7 +1332,7 @@
             // 
             this.SavePar_Label.AutoSize = true;
             this.SavePar_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.SavePar_Label.Location = new System.Drawing.Point(45, 151);
+            this.SavePar_Label.Location = new System.Drawing.Point(74, 180);
             this.SavePar_Label.Name = "SavePar_Label";
             this.SavePar_Label.Size = new System.Drawing.Size(105, 14);
             this.SavePar_Label.TabIndex = 3;
@@ -1272,168 +1445,6 @@
             this.MT_StopButton.Text = "Stop";
             this.MT_StopButton.UseVisualStyleBackColor = true;
             this.MT_StopButton.Click += new System.EventHandler(this.MTStopButton_Click);
-            // 
-            // SeedCol
-            // 
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle6.Format = "X8";
-            this.SeedCol.DefaultCellStyle = dataGridViewCellStyle6;
-            this.SeedCol.HeaderText = "Seed";
-            this.SeedCol.MinimumWidth = 80;
-            this.SeedCol.Name = "SeedCol";
-            this.SeedCol.ReadOnly = true;
-            // 
-            // FrameCol
-            // 
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.FrameCol.DefaultCellStyle = dataGridViewCellStyle7;
-            this.FrameCol.HeaderText = "Frame";
-            this.FrameCol.MinimumWidth = 60;
-            this.FrameCol.Name = "FrameCol";
-            this.FrameCol.ReadOnly = true;
-            this.FrameCol.Width = 80;
-            // 
-            // PSVCol
-            // 
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PSVCol.DefaultCellStyle = dataGridViewCellStyle8;
-            this.PSVCol.HeaderText = "PSV";
-            this.PSVCol.MinimumWidth = 40;
-            this.PSVCol.Name = "PSVCol";
-            this.PSVCol.ReadOnly = true;
-            this.PSVCol.Width = 60;
-            // 
-            // CharmCol
-            // 
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.CharmCol.DefaultCellStyle = dataGridViewCellStyle9;
-            this.CharmCol.HeaderText = "Charm";
-            this.CharmCol.MinimumWidth = 40;
-            this.CharmCol.Name = "CharmCol";
-            this.CharmCol.ReadOnly = true;
-            this.CharmCol.Width = 60;
-            // 
-            // SyncCol
-            // 
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.SyncCol.DefaultCellStyle = dataGridViewCellStyle10;
-            this.SyncCol.HeaderText = "Sync";
-            this.SyncCol.MinimumWidth = 40;
-            this.SyncCol.Name = "SyncCol";
-            this.SyncCol.ReadOnly = true;
-            this.SyncCol.Width = 60;
-            // 
-            // HACol
-            // 
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.HACol.DefaultCellStyle = dataGridViewCellStyle11;
-            this.HACol.HeaderText = "HA";
-            this.HACol.MinimumWidth = 40;
-            this.HACol.Name = "HACol";
-            this.HACol.ReadOnly = true;
-            this.HACol.Width = 60;
-            // 
-            // SpeciesCol
-            // 
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.SpeciesCol.DefaultCellStyle = dataGridViewCellStyle12;
-            this.SpeciesCol.HeaderText = "Species";
-            this.SpeciesCol.MinimumWidth = 80;
-            this.SpeciesCol.Name = "SpeciesCol";
-            this.SpeciesCol.ReadOnly = true;
-            // 
-            // PatternCol
-            // 
-            this.PatternCol.HeaderText = "Pattern";
-            this.PatternCol.MinimumWidth = 130;
-            this.PatternCol.Name = "PatternCol";
-            this.PatternCol.ReadOnly = true;
-            this.PatternCol.Width = 160;
-            // 
-            // PIDBox
-            // 
-            this.PIDBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PIDBox.Location = new System.Drawing.Point(78, 131);
-            this.PIDBox.Mask = "AAAAAAAA";
-            this.PIDBox.Name = "PIDBox";
-            this.PIDBox.Size = new System.Drawing.Size(63, 22);
-            this.PIDBox.TabIndex = 22;
-            this.PIDBox.Text = "00000000";
-            this.PIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.PIDBox.Value = ((uint)(0u));
-            // 
-            // CurrentTRV
-            // 
-            this.CurrentTRV.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentTRV.Location = new System.Drawing.Point(229, 226);
-            this.CurrentTRV.Mask = "A";
-            this.CurrentTRV.Name = "CurrentTRV";
-            this.CurrentTRV.Size = new System.Drawing.Size(15, 22);
-            this.CurrentTRV.TabIndex = 46;
-            this.CurrentTRV.Text = "0";
-            this.CurrentTRV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CurrentTRV.Value = ((uint)(0u));
-            this.CurrentTRV.TextChanged += new System.EventHandler(this.CurrentTRV_TextChanged);
-            // 
-            // End_Seed
-            // 
-            this.End_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.End_Seed.Location = new System.Drawing.Point(227, 91);
-            this.End_Seed.Mask = "AAAAAAAA";
-            this.End_Seed.Name = "End_Seed";
-            this.End_Seed.Size = new System.Drawing.Size(62, 22);
-            this.End_Seed.TabIndex = 40;
-            this.End_Seed.Text = "FFFFFFFF";
-            this.End_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.End_Seed.Value = ((uint)(4294967295u));
-            // 
-            // Start_Seed
-            // 
-            this.Start_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Start_Seed.Location = new System.Drawing.Point(143, 91);
-            this.Start_Seed.Mask = "AAAAAAAA";
-            this.Start_Seed.Name = "Start_Seed";
-            this.Start_Seed.Size = new System.Drawing.Size(62, 22);
-            this.Start_Seed.TabIndex = 0;
-            this.Start_Seed.Text = "00000000";
-            this.Start_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Start_Seed.Value = ((uint)(0u));
-            // 
-            // Target
-            // 
-            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Target.Location = new System.Drawing.Point(174, 177);
-            this.Target.Mask = "AAAAAAAA";
-            this.Target.Name = "Target";
-            this.Target.Size = new System.Drawing.Size(62, 22);
-            this.Target.TabIndex = 12;
-            this.Target.Text = "00000000";
-            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Target.Value = ((uint)(0u));
-            // 
-            // CurrentSavePar
-            // 
-            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentSavePar.Location = new System.Drawing.Point(186, 148);
-            this.CurrentSavePar.Mask = "AAAAAAAA";
-            this.CurrentSavePar.Name = "CurrentSavePar";
-            this.CurrentSavePar.Size = new System.Drawing.Size(62, 22);
-            this.CurrentSavePar.TabIndex = 16;
-            this.CurrentSavePar.Text = "00000000";
-            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CurrentSavePar.Value = ((uint)(0u));
-            // 
-            // Frame300
-            // 
-            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300.Location = new System.Drawing.Point(186, 97);
-            this.Frame300.Mask = "AAAAAAAA";
-            this.Frame300.Name = "Frame300";
-            this.Frame300.Size = new System.Drawing.Size(62, 22);
-            this.Frame300.TabIndex = 15;
-            this.Frame300.Text = "00000000";
-            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Frame300.Value = ((uint)(0u));
             // 
             // MTForm
             // 
@@ -1585,6 +1596,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn HACol;
         private System.Windows.Forms.DataGridViewTextBoxColumn SpeciesCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn PatternCol;
+        private System.Windows.Forms.Label Game_Label_MT;
     }
 }
 
