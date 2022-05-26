@@ -117,13 +117,13 @@ namespace TinyFinder
         public readonly static byte[][] SlotDistribution = new byte[][]
         {
             new byte[] { 10,10,10,10,10,10,10,10,10,5,4,1 },    // Wild / Radar
-            new byte[] { 50,50 },                              // Friend Safari 2 slots
+            new byte[] { 50,50 },                               // Friend Safari 2 slots
             new byte[] { 34,33,33 },                            // Friend Safari 3 slots
             new byte[] { 60,35,5 },                             // Horde / Fishing
             new byte[] { 50,30,15,4,1 },                        // Rock Smash / Surfing
         };
 
-        public static object[,] XY_Locations = new object[,]
+        public readonly static object[,] XY_Locations = new object[,]
         {
             //Name, NPC Influene, Has Hordes, Ratio, Tall Grass
             { "Elsewhere", 0, false, 13, false, },
@@ -152,7 +152,7 @@ namespace TinyFinder
           //{ "Cave", 0, true, false }
         };
 
-        public static object[,] ORAS_Locations = new object[,]
+        public readonly static object[,] ORAS_Locations = new object[,]
         {
             //Name, NPC Influence, Has Hordes/Long Grass, Ratio
             { "Elsewhere", 0, false, 13, },
@@ -174,7 +174,7 @@ namespace TinyFinder
             { "Underwater", 3, null, null, },
         };
 
-        public static object[,] Horde_Locations = new object[,]
+        public readonly static object[,] Horde_Locations = new object[,]
         {
             //Name, Bag Advances
             { "Elsewhere", 27, }, //XY
@@ -189,9 +189,9 @@ namespace TinyFinder
             { "Sky Pillar", 3, },
         };
 
-        public static string[,] GuideList = new string[,] 
+        public readonly static string[,] GuideList = new string[,] 
         {
-            { "Initial Seed RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6MTSeedRNG.md" },
+            { "Initial Seed RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6MTSeedRNG.md#gen-6-main-mt-seed-rng" },
             { "TID / SID RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6TidSidRNG.md#gen-6-tidsid-rng-on-citra" },
             { "Normal  Wild / FS RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/NormalWild-FS-RNG.md#normal-wild---friend-safari-rng" },
             { "Horde RNG", "https://github.com/Bambo-Rambo/RNG-Guides/blob/main/HordeRNG.md#horde-encounter-rng-abuse-guide" },

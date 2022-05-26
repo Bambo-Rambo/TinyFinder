@@ -57,8 +57,8 @@ namespace TinyFinder
         {
             //https://gist.github.com/zaksabeast/c2140499a1c8280602d63d08937d22f9
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-            double CurrentMS = Convert.ToInt64((CitraRTC - epoch).TotalMilliseconds);
-            double TimeVar = CurrentMS - 946684800000;
+            ulong CurrentMS = Convert.ToUInt64((CitraRTC - epoch).TotalMilliseconds);
+            ulong TimeVar = CurrentMS - 946684800000;
 
             uint ExpectedSeed = (uint)(CurrentSavePar + TimeVar) & 0xFFFFFFFF;
             uint Correction = ExpectedSeed - ActualSeed;
