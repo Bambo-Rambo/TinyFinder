@@ -146,6 +146,7 @@ namespace TinyFinder.Subforms.MT
                             AddToListPID(PIDSeed, ActualFrame, Desired_PID, GetPSV(PIDList[ActualFrame]), GetPRV(PIDList[ActualFrame]), IVs1, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
                         else if (EC)
                         {
+                            SelectedNatures.Clear();
                             int[] IVs2 = new int[6];
                             if (FindIVsNature(IVs1, ref Nature, PIDList, ActualFrame) | FindIVsNature(IVs2, ref Nature , PIDList, ActualFrame + 2))  //Both IVs should be calculated even if the first matches
                                 AddToListEC(PIDSeed, ActualFrame, PIDList[frame], IVs1, IVs2);
