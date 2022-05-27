@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Forms;
@@ -10,6 +12,8 @@ namespace TinyFinder.Subforms.MT
         Thread[] jobs;
         Calculate calc = new Calculate();
         DateTime CitraRTC;
+        Data data = new Data();
+        List<int> SelectedNatures = new List<int>();
 
         int IVcount, ShinyCount = 0;
         uint StartSeed, EndSeed, Min, Max, TSV, Desired_PID;
@@ -18,6 +22,7 @@ namespace TinyFinder.Subforms.MT
 
         byte Category, ShininessType;
         bool Fast, AnyTSV, EC;
+        string[] Natures;
         char UnownLetter1, UnownLetter2, UnownLetter3;
 
         public MTForm()
@@ -33,6 +38,8 @@ namespace TinyFinder.Subforms.MT
             Gen6Categories.SelectedIndex = 0; ShinyType.SelectedIndex = 3;
             CurrentTSV.Value = (uint)Properties.Settings.Default.PSVs;
             CurrentTRV.Value = (uint)Properties.Settings.Default.PRVs;
+            Natures = data.GetNatures();
+            DefaulPositions();
         }
         private void MTForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -52,6 +59,8 @@ namespace TinyFinder.Subforms.MT
 
             PID_Label.Visible = PIDBox.Visible = Category > 0 && Category < 4;
             PID_Label.Text = Category == 4 ? "PID/EC" : Category == 2 ? "EC" : "PID";
+
+            Nature_Label.Visible = NaturesCBox.Visible = Category != 2 && Category != 5;
 
             HP_Label.Enabled = ATK_Label.Enabled = DEF_Label.Enabled = SPA_Label.Enabled = SPD_Label.Enabled = SPE_Label.Enabled =
                 MinHP.Enabled = MinAtk.Enabled = MinDef.Enabled = MinSpA.Enabled = MinSpD.Enabled = MinSpe.Enabled =
@@ -156,6 +165,7 @@ namespace TinyFinder.Subforms.MT
                         Min_spD = (byte)MinSpD.Value; Max_spD = (byte)MaxSpD.Value;
                         Min_spe = (byte)MinSpe.Value; Max_spe = (byte)MaxSpe.Value;
 
+                        SelectSlots();
                     }
                     else
                     {
@@ -227,6 +237,25 @@ namespace TinyFinder.Subforms.MT
                     }
                 }   
             }
+        }
+
+        private void DefaulPositions()
+        {
+            PID_Label.Location = new Point(24, 100); PIDBox.Location = new Point(78, 97);
+            Nature_Label.Location = new Point(24, 134); NaturesCBox.Location = new Point(78, 131);
+        }
+
+        private void SelectSlots()
+        {
+            List<string> NatureString = new List<string>();
+            for (byte n = 1; n < 26; n++)
+                if (NaturesCBox.CheckBoxItems[n].Checked)
+                    NatureString.Add(NaturesCBox.CheckBoxItems[n].Text);
+
+            SelectedNatures.Clear();
+            for (byte n = 0; n < 25; n++)
+                if (NatureString.Contains(Natures[n]))
+                    SelectedNatures.Add(n);
         }
 
         private void DoubleBuffer(DataGridView view)

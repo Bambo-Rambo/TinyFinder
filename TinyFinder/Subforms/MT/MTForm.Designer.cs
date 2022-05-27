@@ -51,10 +51,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             this.SearchTab = new System.Windows.Forms.TabPage();
             this.EC_DGV = new System.Windows.Forms.DataGridView();
             this.EC_SeedCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -80,7 +82,6 @@
             this.ShinyLabel = new System.Windows.Forms.Label();
             this.ShinyType = new System.Windows.Forms.ComboBox();
             this.PID_Label = new System.Windows.Forms.Label();
-            this.PIDBox = new TinyFinder.HexBox();
             this.SPE_Label = new System.Windows.Forms.Label();
             this.SPD_Label = new System.Windows.Forms.Label();
             this.SPA_Label = new System.Windows.Forms.Label();
@@ -106,19 +107,18 @@
             this.PSVPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PRVCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IVsPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NatureCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnownCol1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnownCol2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UnownCol3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count8Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SetGroup = new System.Windows.Forms.GroupBox();
             this.AnyTSVBox = new System.Windows.Forms.CheckBox();
-            this.CurrentTRV = new TinyFinder.HexBox();
             this.LabelOR = new System.Windows.Forms.Label();
             this.CurrentTSV = new System.Windows.Forms.NumericUpDown();
             this.TSV_Label = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.Gen6Categories = new System.Windows.Forms.ComboBox();
-            this.End_Seed = new TinyFinder.HexBox();
             this.R_Label_Seed = new System.Windows.Forms.Label();
             this.NiceEC = new System.Windows.Forms.CheckBox();
             this.R_Label_Frame = new System.Windows.Forms.Label();
@@ -128,11 +128,9 @@
             this.PerfectIVs = new System.Windows.Forms.NumericUpDown();
             this.MinFrame = new System.Windows.Forms.NumericUpDown();
             this.SeedLabel = new System.Windows.Forms.Label();
-            this.Start_Seed = new TinyFinder.HexBox();
             this.TabList = new System.Windows.Forms.TabControl();
             this.RNGTab = new System.Windows.Forms.TabPage();
             this.PreferencesGroup = new System.Windows.Forms.GroupBox();
-            this.Target = new TinyFinder.HexBox();
             this.TargetTime = new System.Windows.Forms.TextBox();
             this.SpecificTime = new System.Windows.Forms.CheckBox();
             this.TargetDate = new System.Windows.Forms.TextBox();
@@ -140,8 +138,6 @@
             this.TargetSeed_Label = new System.Windows.Forms.Label();
             this.SettingsGroup = new System.Windows.Forms.GroupBox();
             this.Game_Label_MT = new System.Windows.Forms.Label();
-            this.CurrentSavePar = new TinyFinder.HexBox();
-            this.Frame300 = new TinyFinder.HexBox();
             this.ORAS_MTButton = new System.Windows.Forms.RadioButton();
             this.XY_MTButton = new System.Windows.Forms.RadioButton();
             this.Frame300_Label = new System.Windows.Forms.Label();
@@ -154,6 +150,15 @@
             this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MT_SearchButton = new System.Windows.Forms.Button();
             this.MT_StopButton = new System.Windows.Forms.Button();
+            this.Nature_Label = new System.Windows.Forms.Label();
+            this.NaturesCBox = new TinyFinder.Controls.CheckBoxComboBox();
+            this.PIDBox = new TinyFinder.HexBox();
+            this.CurrentTRV = new TinyFinder.HexBox();
+            this.End_Seed = new TinyFinder.HexBox();
+            this.Start_Seed = new TinyFinder.HexBox();
+            this.Target = new TinyFinder.HexBox();
+            this.CurrentSavePar = new TinyFinder.HexBox();
+            this.Frame300 = new TinyFinder.HexBox();
             this.SearchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EC_DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HORDE_DGV)).BeginInit();
@@ -375,6 +380,8 @@
             // PrefGroup
             // 
             this.PrefGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.PrefGroup.Controls.Add(this.Nature_Label);
+            this.PrefGroup.Controls.Add(this.NaturesCBox);
             this.PrefGroup.Controls.Add(this.FastBox);
             this.PrefGroup.Controls.Add(this.ShiniesLabel);
             this.PrefGroup.Controls.Add(this.HordeShinies);
@@ -515,18 +522,6 @@
             this.PID_Label.Size = new System.Drawing.Size(28, 14);
             this.PID_Label.TabIndex = 29;
             this.PID_Label.Text = "PID";
-            // 
-            // PIDBox
-            // 
-            this.PIDBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PIDBox.Location = new System.Drawing.Point(78, 131);
-            this.PIDBox.Mask = "AAAAAAAA";
-            this.PIDBox.Name = "PIDBox";
-            this.PIDBox.Size = new System.Drawing.Size(63, 22);
-            this.PIDBox.TabIndex = 22;
-            this.PIDBox.Text = "00000000";
-            this.PIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.PIDBox.Value = ((uint)(0u));
             // 
             // SPE_Label
             // 
@@ -784,6 +779,7 @@
             this.PSVPIDCol,
             this.PRVCol,
             this.IVsPIDCol,
+            this.NatureCol,
             this.UnownCol1,
             this.UnownCol2,
             this.UnownCol3,
@@ -850,10 +846,19 @@
             this.IVsPIDCol.ReadOnly = true;
             this.IVsPIDCol.Width = 150;
             // 
+            // NatureCol
+            // 
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.NatureCol.DefaultCellStyle = dataGridViewCellStyle19;
+            this.NatureCol.HeaderText = "Nature";
+            this.NatureCol.Name = "NatureCol";
+            this.NatureCol.ReadOnly = true;
+            this.NatureCol.Width = 80;
+            // 
             // UnownCol1
             // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol1.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol1.DefaultCellStyle = dataGridViewCellStyle20;
             this.UnownCol1.HeaderText = "Unown 1";
             this.UnownCol1.Name = "UnownCol1";
             this.UnownCol1.ReadOnly = true;
@@ -861,8 +866,8 @@
             // 
             // UnownCol2
             // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol2.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol2.DefaultCellStyle = dataGridViewCellStyle21;
             this.UnownCol2.HeaderText = "Unown 2";
             this.UnownCol2.Name = "UnownCol2";
             this.UnownCol2.ReadOnly = true;
@@ -870,8 +875,8 @@
             // 
             // UnownCol3
             // 
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol3.DefaultCellStyle = dataGridViewCellStyle21;
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol3.DefaultCellStyle = dataGridViewCellStyle22;
             this.UnownCol3.HeaderText = "Unown 3";
             this.UnownCol3.Name = "UnownCol3";
             this.UnownCol3.ReadOnly = true;
@@ -879,8 +884,8 @@
             // 
             // Count8Col
             // 
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Count8Col.DefaultCellStyle = dataGridViewCellStyle22;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Count8Col.DefaultCellStyle = dataGridViewCellStyle23;
             this.Count8Col.HeaderText = "8 Count";
             this.Count8Col.Name = "Count8Col";
             this.Count8Col.ReadOnly = true;
@@ -928,19 +933,6 @@
             this.AnyTSVBox.Text = "Any TSV";
             this.AnyTSVBox.UseVisualStyleBackColor = true;
             this.AnyTSVBox.Visible = false;
-            // 
-            // CurrentTRV
-            // 
-            this.CurrentTRV.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentTRV.Location = new System.Drawing.Point(229, 226);
-            this.CurrentTRV.Mask = "A";
-            this.CurrentTRV.Name = "CurrentTRV";
-            this.CurrentTRV.Size = new System.Drawing.Size(15, 22);
-            this.CurrentTRV.TabIndex = 46;
-            this.CurrentTRV.Text = "0";
-            this.CurrentTRV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CurrentTRV.Value = ((uint)(0u));
-            this.CurrentTRV.TextChanged += new System.EventHandler(this.CurrentTRV_TextChanged);
             // 
             // LabelOR
             // 
@@ -1000,18 +992,6 @@
             this.Gen6Categories.Size = new System.Drawing.Size(102, 23);
             this.Gen6Categories.TabIndex = 41;
             this.Gen6Categories.SelectedIndexChanged += new System.EventHandler(this.Gen6Categories_SelectedIndexChanged);
-            // 
-            // End_Seed
-            // 
-            this.End_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.End_Seed.Location = new System.Drawing.Point(227, 91);
-            this.End_Seed.Mask = "AAAAAAAA";
-            this.End_Seed.Name = "End_Seed";
-            this.End_Seed.Size = new System.Drawing.Size(62, 22);
-            this.End_Seed.TabIndex = 40;
-            this.End_Seed.Text = "FFFFFFFF";
-            this.End_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.End_Seed.Value = ((uint)(4294967295u));
             // 
             // R_Label_Seed
             // 
@@ -1123,18 +1103,6 @@
             this.SeedLabel.TabIndex = 1;
             this.SeedLabel.Text = "Seed Range";
             // 
-            // Start_Seed
-            // 
-            this.Start_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Start_Seed.Location = new System.Drawing.Point(143, 91);
-            this.Start_Seed.Mask = "AAAAAAAA";
-            this.Start_Seed.Name = "Start_Seed";
-            this.Start_Seed.Size = new System.Drawing.Size(62, 22);
-            this.Start_Seed.TabIndex = 0;
-            this.Start_Seed.Text = "00000000";
-            this.Start_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Start_Seed.Value = ((uint)(0u));
-            // 
             // TabList
             // 
             this.TabList.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -1178,18 +1146,6 @@
             this.PreferencesGroup.TabIndex = 22;
             this.PreferencesGroup.TabStop = false;
             this.PreferencesGroup.Text = "Preferences";
-            // 
-            // Target
-            // 
-            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Target.Location = new System.Drawing.Point(174, 177);
-            this.Target.Mask = "AAAAAAAA";
-            this.Target.Name = "Target";
-            this.Target.Size = new System.Drawing.Size(62, 22);
-            this.Target.TabIndex = 12;
-            this.Target.Text = "00000000";
-            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Target.Value = ((uint)(0u));
             // 
             // TargetTime
             // 
@@ -1270,30 +1226,6 @@
             this.Game_Label_MT.TabIndex = 17;
             this.Game_Label_MT.Text = "Game";
             // 
-            // CurrentSavePar
-            // 
-            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentSavePar.Location = new System.Drawing.Point(215, 177);
-            this.CurrentSavePar.Mask = "AAAAAAAA";
-            this.CurrentSavePar.Name = "CurrentSavePar";
-            this.CurrentSavePar.Size = new System.Drawing.Size(62, 22);
-            this.CurrentSavePar.TabIndex = 16;
-            this.CurrentSavePar.Text = "00000000";
-            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.CurrentSavePar.Value = ((uint)(0u));
-            // 
-            // Frame300
-            // 
-            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300.Location = new System.Drawing.Point(215, 124);
-            this.Frame300.Mask = "AAAAAAAA";
-            this.Frame300.Name = "Frame300";
-            this.Frame300.Size = new System.Drawing.Size(62, 22);
-            this.Frame300.TabIndex = 15;
-            this.Frame300.Text = "00000000";
-            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.Frame300.Value = ((uint)(0u));
-            // 
             // ORAS_MTButton
             // 
             this.ORAS_MTButton.AutoSize = true;
@@ -1346,14 +1278,14 @@
             this.Seed_DGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle23.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle23.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Seed_DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
+            dataGridViewCellStyle24.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle24.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle24.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle24.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle24.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle24.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Seed_DGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle24;
             this.Seed_DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.Seed_DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DateCol,
@@ -1361,24 +1293,24 @@
             this.SaveFrameCol,
             this.NewSaveCol,
             this.NewDateCol});
-            dataGridViewCellStyle26.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle26.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle26.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle26.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle26.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle26.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle26.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Seed_DGV.DefaultCellStyle = dataGridViewCellStyle26;
-            this.Seed_DGV.Location = new System.Drawing.Point(5, 299);
-            this.Seed_DGV.Name = "Seed_DGV";
             dataGridViewCellStyle27.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle27.BackColor = System.Drawing.SystemColors.Window;
             dataGridViewCellStyle27.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle27.ForeColor = System.Drawing.SystemColors.ControlText;
             dataGridViewCellStyle27.SelectionBackColor = System.Drawing.SystemColors.Highlight;
             dataGridViewCellStyle27.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.Seed_DGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle27;
+            dataGridViewCellStyle27.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Seed_DGV.DefaultCellStyle = dataGridViewCellStyle27;
+            this.Seed_DGV.Location = new System.Drawing.Point(5, 299);
+            this.Seed_DGV.Name = "Seed_DGV";
+            dataGridViewCellStyle28.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle28.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle28.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle28.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle28.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle28.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.Seed_DGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle28;
             this.Seed_DGV.RowHeadersVisible = false;
             this.Seed_DGV.RowHeadersWidth = 20;
             this.Seed_DGV.Size = new System.Drawing.Size(740, 343);
@@ -1393,8 +1325,8 @@
             // 
             // Frame300Col
             // 
-            dataGridViewCellStyle24.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Frame300Col.DefaultCellStyle = dataGridViewCellStyle24;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300Col.DefaultCellStyle = dataGridViewCellStyle25;
             this.Frame300Col.HeaderText = "Frame 300 Seed";
             this.Frame300Col.Name = "Frame300Col";
             this.Frame300Col.ReadOnly = true;
@@ -1408,8 +1340,8 @@
             // 
             // NewSaveCol
             // 
-            dataGridViewCellStyle25.Font = new System.Drawing.Font("Consolas", 9F);
-            this.NewSaveCol.DefaultCellStyle = dataGridViewCellStyle25;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("Consolas", 9F);
+            this.NewSaveCol.DefaultCellStyle = dataGridViewCellStyle26;
             this.NewSaveCol.HeaderText = "New Save Parameter";
             this.NewSaveCol.Name = "NewSaveCol";
             this.NewSaveCol.ReadOnly = true;
@@ -1445,6 +1377,141 @@
             this.MT_StopButton.Text = "Stop";
             this.MT_StopButton.UseVisualStyleBackColor = true;
             this.MT_StopButton.Click += new System.EventHandler(this.MTStopButton_Click);
+            // 
+            // Nature_Label
+            // 
+            this.Nature_Label.AutoSize = true;
+            this.Nature_Label.Location = new System.Drawing.Point(23, 168);
+            this.Nature_Label.Name = "Nature_Label";
+            this.Nature_Label.Size = new System.Drawing.Size(49, 14);
+            this.Nature_Label.TabIndex = 49;
+            this.Nature_Label.Text = "Nature";
+            // 
+            // NaturesCBox
+            // 
+            this.NaturesCBox.BlankText = "Any";
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NaturesCBox.CheckBoxProperties = checkBoxProperties1;
+            this.NaturesCBox.DisplayMemberSingleItem = "";
+            this.NaturesCBox.DropDownHeight = 530;
+            this.NaturesCBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NaturesCBox.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.NaturesCBox.FormattingEnabled = true;
+            this.NaturesCBox.Items.AddRange(new object[] {
+            "Adamant",
+            "Bashful",
+            "Bold",
+            "Brave",
+            "Calm",
+            "Careful",
+            "Docile",
+            "Gentle",
+            "Hardy",
+            "Hasty",
+            "Impish",
+            "Jolly",
+            "Lax",
+            "Lonely",
+            "Mild",
+            "Modest",
+            "Naive",
+            "Naughty",
+            "Quiet",
+            "Quirky",
+            "Rash",
+            "Relaxed",
+            "Sassy",
+            "Serious",
+            "Timid"});
+            this.NaturesCBox.Location = new System.Drawing.Point(78, 165);
+            this.NaturesCBox.Name = "NaturesCBox";
+            this.NaturesCBox.Size = new System.Drawing.Size(100, 23);
+            this.NaturesCBox.TabIndex = 48;
+            // 
+            // PIDBox
+            // 
+            this.PIDBox.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PIDBox.Location = new System.Drawing.Point(78, 131);
+            this.PIDBox.Mask = "AAAAAAAA";
+            this.PIDBox.Name = "PIDBox";
+            this.PIDBox.Size = new System.Drawing.Size(63, 22);
+            this.PIDBox.TabIndex = 22;
+            this.PIDBox.Text = "00000000";
+            this.PIDBox.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.PIDBox.Value = ((uint)(0u));
+            // 
+            // CurrentTRV
+            // 
+            this.CurrentTRV.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.CurrentTRV.Location = new System.Drawing.Point(229, 226);
+            this.CurrentTRV.Mask = "A";
+            this.CurrentTRV.Name = "CurrentTRV";
+            this.CurrentTRV.Size = new System.Drawing.Size(15, 22);
+            this.CurrentTRV.TabIndex = 46;
+            this.CurrentTRV.Text = "0";
+            this.CurrentTRV.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CurrentTRV.Value = ((uint)(0u));
+            this.CurrentTRV.TextChanged += new System.EventHandler(this.CurrentTRV_TextChanged);
+            // 
+            // End_Seed
+            // 
+            this.End_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.End_Seed.Location = new System.Drawing.Point(227, 91);
+            this.End_Seed.Mask = "AAAAAAAA";
+            this.End_Seed.Name = "End_Seed";
+            this.End_Seed.Size = new System.Drawing.Size(62, 22);
+            this.End_Seed.TabIndex = 40;
+            this.End_Seed.Text = "FFFFFFFF";
+            this.End_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.End_Seed.Value = ((uint)(4294967295u));
+            // 
+            // Start_Seed
+            // 
+            this.Start_Seed.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Start_Seed.Location = new System.Drawing.Point(143, 91);
+            this.Start_Seed.Mask = "AAAAAAAA";
+            this.Start_Seed.Name = "Start_Seed";
+            this.Start_Seed.Size = new System.Drawing.Size(62, 22);
+            this.Start_Seed.TabIndex = 0;
+            this.Start_Seed.Text = "00000000";
+            this.Start_Seed.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Start_Seed.Value = ((uint)(0u));
+            // 
+            // Target
+            // 
+            this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Target.Location = new System.Drawing.Point(174, 177);
+            this.Target.Mask = "AAAAAAAA";
+            this.Target.Name = "Target";
+            this.Target.Size = new System.Drawing.Size(62, 22);
+            this.Target.TabIndex = 12;
+            this.Target.Text = "00000000";
+            this.Target.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Target.Value = ((uint)(0u));
+            // 
+            // CurrentSavePar
+            // 
+            this.CurrentSavePar.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.CurrentSavePar.Location = new System.Drawing.Point(215, 177);
+            this.CurrentSavePar.Mask = "AAAAAAAA";
+            this.CurrentSavePar.Name = "CurrentSavePar";
+            this.CurrentSavePar.Size = new System.Drawing.Size(62, 22);
+            this.CurrentSavePar.TabIndex = 16;
+            this.CurrentSavePar.Text = "00000000";
+            this.CurrentSavePar.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.CurrentSavePar.Value = ((uint)(0u));
+            // 
+            // Frame300
+            // 
+            this.Frame300.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Frame300.Location = new System.Drawing.Point(215, 124);
+            this.Frame300.Mask = "AAAAAAAA";
+            this.Frame300.Name = "Frame300";
+            this.Frame300.Size = new System.Drawing.Size(62, 22);
+            this.Frame300.TabIndex = 15;
+            this.Frame300.Text = "00000000";
+            this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.Frame300.Value = ((uint)(0u));
             // 
             // MTForm
             // 
@@ -1572,16 +1639,6 @@
         private HexBox Target;
         private HexBox CurrentSavePar;
         private HexBox Frame300;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SeedPIDCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn FramePIDCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PID_EC_Col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PSVPIDCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn PRVCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IVsPIDCol;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Count8Col;
         private System.Windows.Forms.Label ShiniesLabel;
         private System.Windows.Forms.NumericUpDown HordeShinies;
         private System.Windows.Forms.CheckBox AnyTSVBox;
@@ -1597,6 +1654,19 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SpeciesCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn PatternCol;
         private System.Windows.Forms.Label Game_Label_MT;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SeedPIDCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn FramePIDCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PID_EC_Col;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PSVPIDCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn PRVCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IVsPIDCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NatureCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Count8Col;
+        private System.Windows.Forms.Label Nature_Label;
+        private Controls.CheckBoxComboBox NaturesCBox;
     }
 }
 
