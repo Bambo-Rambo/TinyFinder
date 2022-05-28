@@ -420,12 +420,14 @@ namespace TinyFinder.Subforms.MT
             if (HA != 0)
                 Jumps[HA - 1]--;
 
-
             uint[] frameList = new uint[5];
             uint[] PList = new uint[5];
 
             uint CurrentPSV = PSV;
             uint Firstframe = Frame;
+
+            List<uint> ShinyList = new List<uint>();
+            byte count = 0;
 
             for (byte r = 0; r < 5; r++)
             {
@@ -464,20 +466,16 @@ namespace TinyFinder.Subforms.MT
                 frameList[r] = Frame;
                 PList[r] = CurrentPSV;
 
-                Frame += Jumps[r];
-            }
-
-            List<uint> ShinyList = new List<uint>();
-            byte count = 0;
-
-            for (byte i = 0; i < 5; i++)
-            {
-                if (PList[i] == PSV)
+                if (PList[r] == PSV)
                 {
                     count++;
-                    ShinyList.Add(frameList[i]);
+                    ShinyList.Add(frameList[r]);
                 }
+
+                Frame += Jumps[r];
+
             }
+
             if (count >= ShinyCount)
             {
                 string Jump = "";
