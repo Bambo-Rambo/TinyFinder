@@ -112,6 +112,9 @@ namespace TinyFinder.Subforms.MT
         private void SpecificTime_CheckedChanged(object sender, EventArgs e)
         {
             TargetTime.Enabled = SpecificTime.Checked;
+            SpecificDate.Enabled = !SpecificTime.Checked;
+            if (SpecificTime.Checked)
+                SpecificDate.Checked = true;
         }
 
         private void MTStopButton_Click(object sender, EventArgs e)
@@ -242,7 +245,7 @@ namespace TinyFinder.Subforms.MT
         private void DefaulPositions()
         {
             PID_Label.Location = new Point(24, 100); PIDBox.Location = new Point(78, 97);
-            Nature_Label.Location = new Point(24, 134); NaturesCBox.Location = new Point(78, 131);
+            Nature_Label.Location = new Point(24, 134); NaturesCBox.Location = new Point(78, 130);
         }
 
         private void SelectSlots()

@@ -517,23 +517,32 @@ namespace TinyFinder.Subforms.MT
             {
                 uint SavePar;
                 rng = new MersenneTwister_Fast(Frame300Seed);
-                for (uint i = 0; i < 2000; i++)
-                    rng.Nextuint();
-                for (uint i = 2000; i < 200000; i++)
+
+                for (uint frame = 0; frame < 200000; frame++)
                 {
                     SavePar = rng.Nextuint();
 
-                    //86400000 is the total MS in a day. For every 1000 added to the Save Par, the seconds are increased by 1
-                    //for (uint j = NewSavePar - 86400000; j <= NewSavePar; j += 1000) <- Slow
-
-                    if (SavePar >= NewSavePar - 86400000 && SavePar <= NewSavePar && ((SavePar - (NewSavePar - 86400000)) % 1000 == 0))
+                    if (SpecificDate.Checked)
                     {
-                        Invoke(new Action(() =>
-                        {
-                            Seed_DGV.Rows.Add(
-                                null, hex(Frame300Seed), i - SaveDelay, hex(SavePar), calc.Check_DST(Finaldate, (NewSavePar - SavePar) / 1000));
-                        }));
+                        //86400000 is the total MS in a day. For every 1000 added to the Save Par, the seconds are increased by 1
+
+                        //for (uint j = NewSavePar - 86400000; j <= NewSavePar; j += 1000)      <- Slow
+                                //if (SavePar == j)
+
+                        if (!(SavePar >= NewSavePar - 86400000 && SavePar <= NewSavePar && ((SavePar - (NewSavePar - 86400000)) % 1000 == 0)))
+                            continue;
                     }
+                    else
+                    {
+                        if (!((NewSavePar - SavePar) % 1000 == 0))
+                            continue;
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        Seed_DGV.Rows.Add(null, hex(Frame300Seed), frame - SaveDelay, hex(SavePar), calc.Check_DST(Finaldate, (NewSavePar - SavePar) / 1000));
+                    }));
+
                 }
                 Invoke(new Action(() => { Finished(); }));
             }
@@ -544,16 +553,15 @@ namespace TinyFinder.Subforms.MT
                 {
                     rng = new MersenneTwister_Fast(Frame300Seed);
 
-                    for (uint i = 0; i < 2000; i++)
+                    for (uint frame = 0; frame < 2000; frame++)
                         rng.Nextuint();
-                    for (uint i = 2000; i < 10000; i++)
+                    for (uint frame = 2000; frame < 10000; frame++)
                     {
                         if (rng.Nextuint() == NewSavePar)
                         {
                             Invoke(new Action(() =>
                             {
-                                Seed_DGV.Rows.Add(
-                                    calc.Check_DST(Finaldate, SecondsAdd), hex(Frame300Seed), i - SaveDelay, hex(NewSavePar), null);
+                                Seed_DGV.Rows.Add(calc.Check_DST(Finaldate, SecondsAdd), hex(Frame300Seed), frame - SaveDelay, hex(NewSavePar), null);
                             }));
                         }
                     }

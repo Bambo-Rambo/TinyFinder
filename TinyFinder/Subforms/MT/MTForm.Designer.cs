@@ -74,6 +74,7 @@
             this.SpeciesCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PatternCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PrefGroup = new System.Windows.Forms.GroupBox();
+            this.Nature_Label = new System.Windows.Forms.Label();
             this.FastBox = new System.Windows.Forms.CheckBox();
             this.ShiniesLabel = new System.Windows.Forms.Label();
             this.HordeShinies = new System.Windows.Forms.NumericUpDown();
@@ -134,7 +135,6 @@
             this.TargetTime = new System.Windows.Forms.TextBox();
             this.SpecificTime = new System.Windows.Forms.CheckBox();
             this.TargetDate = new System.Windows.Forms.TextBox();
-            this.RTC_Label = new System.Windows.Forms.Label();
             this.TargetSeed_Label = new System.Windows.Forms.Label();
             this.SettingsGroup = new System.Windows.Forms.GroupBox();
             this.Game_Label_MT = new System.Windows.Forms.Label();
@@ -150,7 +150,6 @@
             this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MT_SearchButton = new System.Windows.Forms.Button();
             this.MT_StopButton = new System.Windows.Forms.Button();
-            this.Nature_Label = new System.Windows.Forms.Label();
             this.NaturesCBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.PIDBox = new TinyFinder.HexBox();
             this.CurrentTRV = new TinyFinder.HexBox();
@@ -159,6 +158,7 @@
             this.Target = new TinyFinder.HexBox();
             this.CurrentSavePar = new TinyFinder.HexBox();
             this.Frame300 = new TinyFinder.HexBox();
+            this.SpecificDate = new System.Windows.Forms.CheckBox();
             this.SearchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EC_DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HORDE_DGV)).BeginInit();
@@ -416,6 +416,15 @@
             this.PrefGroup.TabIndex = 31;
             this.PrefGroup.TabStop = false;
             this.PrefGroup.Text = "Preferences";
+            // 
+            // Nature_Label
+            // 
+            this.Nature_Label.AutoSize = true;
+            this.Nature_Label.Location = new System.Drawing.Point(23, 168);
+            this.Nature_Label.Name = "Nature_Label";
+            this.Nature_Label.Size = new System.Drawing.Size(49, 14);
+            this.Nature_Label.TabIndex = 49;
+            this.Nature_Label.Text = "Nature";
             // 
             // FastBox
             // 
@@ -973,7 +982,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 14);
             this.label1.TabIndex = 42;
-            this.label1.Text = "Category";
+            this.label1.Text = "RNG Type";
             // 
             // Gen6Categories
             // 
@@ -987,7 +996,7 @@
             "PID Reroll",
             "PID Reroll  =  EC",
             "Horde"});
-            this.Gen6Categories.Location = new System.Drawing.Point(103, 45);
+            this.Gen6Categories.Location = new System.Drawing.Point(103, 44);
             this.Gen6Categories.Name = "Gen6Categories";
             this.Gen6Categories.Size = new System.Drawing.Size(102, 23);
             this.Gen6Categories.TabIndex = 41;
@@ -1133,11 +1142,11 @@
             // PreferencesGroup
             // 
             this.PreferencesGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.PreferencesGroup.Controls.Add(this.SpecificDate);
             this.PreferencesGroup.Controls.Add(this.Target);
             this.PreferencesGroup.Controls.Add(this.TargetTime);
             this.PreferencesGroup.Controls.Add(this.SpecificTime);
             this.PreferencesGroup.Controls.Add(this.TargetDate);
-            this.PreferencesGroup.Controls.Add(this.RTC_Label);
             this.PreferencesGroup.Controls.Add(this.TargetSeed_Label);
             this.PreferencesGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.PreferencesGroup.Location = new System.Drawing.Point(6, 6);
@@ -1178,16 +1187,6 @@
             this.TargetDate.Size = new System.Drawing.Size(96, 22);
             this.TargetDate.TabIndex = 1;
             this.TargetDate.Text = "2022-01-01";
-            // 
-            // RTC_Label
-            // 
-            this.RTC_Label.AutoSize = true;
-            this.RTC_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.RTC_Label.Location = new System.Drawing.Point(51, 73);
-            this.RTC_Label.Name = "RTC_Label";
-            this.RTC_Label.Size = new System.Drawing.Size(84, 14);
-            this.RTC_Label.TabIndex = 2;
-            this.RTC_Label.Text = "Target Date";
             // 
             // TargetSeed_Label
             // 
@@ -1378,15 +1377,6 @@
             this.MT_StopButton.UseVisualStyleBackColor = true;
             this.MT_StopButton.Click += new System.EventHandler(this.MTStopButton_Click);
             // 
-            // Nature_Label
-            // 
-            this.Nature_Label.AutoSize = true;
-            this.Nature_Label.Location = new System.Drawing.Point(23, 168);
-            this.Nature_Label.Name = "Nature_Label";
-            this.Nature_Label.Size = new System.Drawing.Size(49, 14);
-            this.Nature_Label.TabIndex = 49;
-            this.Nature_Label.Text = "Nature";
-            // 
             // NaturesCBox
             // 
             this.NaturesCBox.BlankText = "Any";
@@ -1513,6 +1503,16 @@
             this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Frame300.Value = ((uint)(0u));
             // 
+            // SpecificDate
+            // 
+            this.SpecificDate.AutoSize = true;
+            this.SpecificDate.Location = new System.Drawing.Point(54, 71);
+            this.SpecificDate.Name = "SpecificDate";
+            this.SpecificDate.Size = new System.Drawing.Size(103, 18);
+            this.SpecificDate.TabIndex = 13;
+            this.SpecificDate.Text = "Target Date";
+            this.SpecificDate.UseVisualStyleBackColor = true;
+            // 
             // MTForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1623,7 +1623,6 @@
         private System.Windows.Forms.TextBox TargetTime;
         private System.Windows.Forms.CheckBox SpecificTime;
         private System.Windows.Forms.TextBox TargetDate;
-        private System.Windows.Forms.Label RTC_Label;
         private System.Windows.Forms.Label TargetSeed_Label;
         private System.Windows.Forms.GroupBox SettingsGroup;
         private System.Windows.Forms.RadioButton ORAS_MTButton;
@@ -1667,6 +1666,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Count8Col;
         private System.Windows.Forms.Label Nature_Label;
         private Controls.CheckBoxComboBox NaturesCBox;
+        private System.Windows.Forms.CheckBox SpecificDate;
     }
 }
 
