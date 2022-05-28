@@ -319,7 +319,6 @@ namespace TinyFinder
                     if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
                         OpenMTForm();
-                        mersenne.SetGame(XY_Button.Checked);
                         mersenne.SetDate(Searcher.Rows[e.RowIndex].Cells[0].Value.ToString());
                     }
                 }
@@ -411,6 +410,7 @@ namespace TinyFinder
                 mersenne = new MTForm();
             mersenne.Show();
             mersenne.Focus();
+            mersenne.SetGame(XY_Button.Checked);
         }
 
         private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
