@@ -40,6 +40,7 @@ namespace TinyFinder.Subforms.MT
             CurrentTRV.Value = (uint)Properties.Settings.Default.PRVs;
             Natures = data.GetNatures();
             DefaulPositions();
+            TargetDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
         }
         private void MTForm_FormClosing(object sender, FormClosingEventArgs e)
         {
