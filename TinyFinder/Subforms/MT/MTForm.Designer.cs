@@ -40,6 +40,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -51,12 +57,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
             this.SearchTab = new System.Windows.Forms.TabPage();
             this.EC_DGV = new System.Windows.Forms.DataGridView();
             this.EC_SeedCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -102,17 +102,6 @@
             this.MinDef = new System.Windows.Forms.NumericUpDown();
             this.MaxHP = new System.Windows.Forms.NumericUpDown();
             this.G6_DGV = new System.Windows.Forms.DataGridView();
-            this.SeedPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.FramePIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PID_EC_Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PSVPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.PRVCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IVsPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.NatureCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnownCol1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnownCol2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.UnownCol3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Count8Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SetGroup = new System.Windows.Forms.GroupBox();
             this.AnyTSVBox = new System.Windows.Forms.CheckBox();
             this.LabelOR = new System.Windows.Forms.Label();
@@ -132,6 +121,7 @@
             this.TabList = new System.Windows.Forms.TabControl();
             this.RNGTab = new System.Windows.Forms.TabPage();
             this.PreferencesGroup = new System.Windows.Forms.GroupBox();
+            this.SpecificDate = new System.Windows.Forms.CheckBox();
             this.TargetTime = new System.Windows.Forms.TextBox();
             this.SpecificTime = new System.Windows.Forms.CheckBox();
             this.TargetDate = new System.Windows.Forms.TextBox();
@@ -150,6 +140,8 @@
             this.NewDateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.MT_SearchButton = new System.Windows.Forms.Button();
             this.MT_StopButton = new System.Windows.Forms.Button();
+            this.HAPossible = new System.Windows.Forms.CheckBox();
+            this.CalcUnown = new System.Windows.Forms.CheckBox();
             this.NaturesCBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.PIDBox = new TinyFinder.HexBox();
             this.CurrentTRV = new TinyFinder.HexBox();
@@ -158,7 +150,18 @@
             this.Target = new TinyFinder.HexBox();
             this.CurrentSavePar = new TinyFinder.HexBox();
             this.Frame300 = new TinyFinder.HexBox();
-            this.SpecificDate = new System.Windows.Forms.CheckBox();
+            this.SeedPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.FramePIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PID_EC_Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PSVPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PRVCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IVsPIDCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NatureCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AbilityCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnownCol1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnownCol2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UnownCol3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Count8Col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SearchTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.EC_DGV)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HORDE_DGV)).BeginInit();
@@ -199,7 +202,7 @@
             this.SearchTab.Location = new System.Drawing.Point(4, 22);
             this.SearchTab.Name = "SearchTab";
             this.SearchTab.Padding = new System.Windows.Forms.Padding(3);
-            this.SearchTab.Size = new System.Drawing.Size(750, 645);
+            this.SearchTab.Size = new System.Drawing.Size(824, 666);
             this.SearchTab.TabIndex = 0;
             this.SearchTab.Text = "Seed Search";
             this.SearchTab.UseVisualStyleBackColor = true;
@@ -223,7 +226,8 @@
             this.EC_DGV.Name = "EC_DGV";
             this.EC_DGV.RowHeadersVisible = false;
             this.EC_DGV.RowHeadersWidth = 20;
-            this.EC_DGV.Size = new System.Drawing.Size(740, 343);
+            this.EC_DGV.RowTemplate.Height = 24;
+            this.EC_DGV.Size = new System.Drawing.Size(814, 364);
             this.EC_DGV.TabIndex = 47;
             this.EC_DGV.Visible = false;
             // 
@@ -296,7 +300,8 @@
             this.HORDE_DGV.Name = "HORDE_DGV";
             this.HORDE_DGV.RowHeadersVisible = false;
             this.HORDE_DGV.RowHeadersWidth = 20;
-            this.HORDE_DGV.Size = new System.Drawing.Size(740, 343);
+            this.HORDE_DGV.RowTemplate.Height = 24;
+            this.HORDE_DGV.Size = new System.Drawing.Size(814, 364);
             this.HORDE_DGV.TabIndex = 32;
             this.HORDE_DGV.Visible = false;
             // 
@@ -410,9 +415,9 @@
             this.PrefGroup.Controls.Add(this.MinDef);
             this.PrefGroup.Controls.Add(this.MaxHP);
             this.PrefGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PrefGroup.Location = new System.Drawing.Point(386, 6);
+            this.PrefGroup.Location = new System.Drawing.Point(443, 5);
             this.PrefGroup.Name = "PrefGroup";
-            this.PrefGroup.Size = new System.Drawing.Size(358, 242);
+            this.PrefGroup.Size = new System.Drawing.Size(375, 242);
             this.PrefGroup.TabIndex = 31;
             this.PrefGroup.TabStop = false;
             this.PrefGroup.Text = "Preferences";
@@ -789,6 +794,7 @@
             this.PRVCol,
             this.IVsPIDCol,
             this.NatureCol,
+            this.AbilityCol,
             this.UnownCol1,
             this.UnownCol2,
             this.UnownCol3,
@@ -797,113 +803,15 @@
             this.G6_DGV.Name = "G6_DGV";
             this.G6_DGV.RowHeadersVisible = false;
             this.G6_DGV.RowHeadersWidth = 20;
-            this.G6_DGV.Size = new System.Drawing.Size(740, 343);
+            this.G6_DGV.RowTemplate.Height = 24;
+            this.G6_DGV.Size = new System.Drawing.Size(814, 364);
             this.G6_DGV.TabIndex = 0;
-            // 
-            // SeedPIDCol
-            // 
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Consolas", 9F);
-            dataGridViewCellStyle13.Format = "X8";
-            this.SeedPIDCol.DefaultCellStyle = dataGridViewCellStyle13;
-            this.SeedPIDCol.HeaderText = "Seed";
-            this.SeedPIDCol.Name = "SeedPIDCol";
-            this.SeedPIDCol.ReadOnly = true;
-            // 
-            // FramePIDCol
-            // 
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.FramePIDCol.DefaultCellStyle = dataGridViewCellStyle14;
-            this.FramePIDCol.HeaderText = "Frame";
-            this.FramePIDCol.Name = "FramePIDCol";
-            this.FramePIDCol.ReadOnly = true;
-            this.FramePIDCol.Width = 80;
-            // 
-            // PID_EC_Col
-            // 
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 9F);
-            dataGridViewCellStyle15.Format = "X8";
-            this.PID_EC_Col.DefaultCellStyle = dataGridViewCellStyle15;
-            this.PID_EC_Col.HeaderText = "PID";
-            this.PID_EC_Col.Name = "PID_EC_Col";
-            this.PID_EC_Col.ReadOnly = true;
-            this.PID_EC_Col.Width = 80;
-            // 
-            // PSVPIDCol
-            // 
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PSVPIDCol.DefaultCellStyle = dataGridViewCellStyle16;
-            this.PSVPIDCol.HeaderText = "PSV";
-            this.PSVPIDCol.Name = "PSVPIDCol";
-            this.PSVPIDCol.ReadOnly = true;
-            this.PSVPIDCol.Width = 60;
-            // 
-            // PRVCol
-            // 
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.PRVCol.DefaultCellStyle = dataGridViewCellStyle17;
-            this.PRVCol.HeaderText = "PRV";
-            this.PRVCol.Name = "PRVCol";
-            this.PRVCol.ReadOnly = true;
-            this.PRVCol.Width = 50;
-            // 
-            // IVsPIDCol
-            // 
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.IVsPIDCol.DefaultCellStyle = dataGridViewCellStyle18;
-            this.IVsPIDCol.HeaderText = "IVs";
-            this.IVsPIDCol.Name = "IVsPIDCol";
-            this.IVsPIDCol.ReadOnly = true;
-            this.IVsPIDCol.Width = 150;
-            // 
-            // NatureCol
-            // 
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.NatureCol.DefaultCellStyle = dataGridViewCellStyle19;
-            this.NatureCol.HeaderText = "Nature";
-            this.NatureCol.Name = "NatureCol";
-            this.NatureCol.ReadOnly = true;
-            this.NatureCol.Width = 80;
-            // 
-            // UnownCol1
-            // 
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol1.DefaultCellStyle = dataGridViewCellStyle20;
-            this.UnownCol1.HeaderText = "Unown 1";
-            this.UnownCol1.Name = "UnownCol1";
-            this.UnownCol1.ReadOnly = true;
-            this.UnownCol1.Width = 60;
-            // 
-            // UnownCol2
-            // 
-            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol2.DefaultCellStyle = dataGridViewCellStyle21;
-            this.UnownCol2.HeaderText = "Unown 2";
-            this.UnownCol2.Name = "UnownCol2";
-            this.UnownCol2.ReadOnly = true;
-            this.UnownCol2.Width = 60;
-            // 
-            // UnownCol3
-            // 
-            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.UnownCol3.DefaultCellStyle = dataGridViewCellStyle22;
-            this.UnownCol3.HeaderText = "Unown 3";
-            this.UnownCol3.Name = "UnownCol3";
-            this.UnownCol3.ReadOnly = true;
-            this.UnownCol3.Width = 60;
-            // 
-            // Count8Col
-            // 
-            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.Count8Col.DefaultCellStyle = dataGridViewCellStyle23;
-            this.Count8Col.HeaderText = "8 Count";
-            this.Count8Col.Name = "Count8Col";
-            this.Count8Col.ReadOnly = true;
-            this.Count8Col.Visible = false;
-            this.Count8Col.Width = 50;
             // 
             // SetGroup
             // 
             this.SetGroup.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.SetGroup.Controls.Add(this.CalcUnown);
+            this.SetGroup.Controls.Add(this.HAPossible);
             this.SetGroup.Controls.Add(this.AnyTSVBox);
             this.SetGroup.Controls.Add(this.CurrentTRV);
             this.SetGroup.Controls.Add(this.LabelOR);
@@ -925,7 +833,7 @@
             this.SetGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.SetGroup.Location = new System.Drawing.Point(6, 6);
             this.SetGroup.Name = "SetGroup";
-            this.SetGroup.Size = new System.Drawing.Size(374, 287);
+            this.SetGroup.Size = new System.Drawing.Size(431, 287);
             this.SetGroup.TabIndex = 30;
             this.SetGroup.TabStop = false;
             this.SetGroup.Text = "Settings";
@@ -1014,7 +922,7 @@
             // NiceEC
             // 
             this.NiceEC.AutoSize = true;
-            this.NiceEC.Location = new System.Drawing.Point(227, 47);
+            this.NiceEC.Location = new System.Drawing.Point(227, 63);
             this.NiceEC.Name = "NiceEC";
             this.NiceEC.Size = new System.Drawing.Size(138, 18);
             this.NiceEC.TabIndex = 36;
@@ -1123,7 +1031,7 @@
             this.TabList.Location = new System.Drawing.Point(12, 12);
             this.TabList.Name = "TabList";
             this.TabList.SelectedIndex = 0;
-            this.TabList.Size = new System.Drawing.Size(758, 671);
+            this.TabList.Size = new System.Drawing.Size(832, 692);
             this.TabList.TabIndex = 29;
             // 
             // RNGTab
@@ -1134,7 +1042,7 @@
             this.RNGTab.Location = new System.Drawing.Point(4, 22);
             this.RNGTab.Name = "RNGTab";
             this.RNGTab.Padding = new System.Windows.Forms.Padding(3);
-            this.RNGTab.Size = new System.Drawing.Size(750, 645);
+            this.RNGTab.Size = new System.Drawing.Size(824, 666);
             this.RNGTab.TabIndex = 1;
             this.RNGTab.Text = "Seed RNG";
             this.RNGTab.UseVisualStyleBackColor = true;
@@ -1151,16 +1059,26 @@
             this.PreferencesGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.PreferencesGroup.Location = new System.Drawing.Point(6, 6);
             this.PreferencesGroup.Name = "PreferencesGroup";
-            this.PreferencesGroup.Size = new System.Drawing.Size(374, 287);
+            this.PreferencesGroup.Size = new System.Drawing.Size(431, 287);
             this.PreferencesGroup.TabIndex = 22;
             this.PreferencesGroup.TabStop = false;
             this.PreferencesGroup.Text = "Preferences";
+            // 
+            // SpecificDate
+            // 
+            this.SpecificDate.AutoSize = true;
+            this.SpecificDate.Location = new System.Drawing.Point(89, 71);
+            this.SpecificDate.Name = "SpecificDate";
+            this.SpecificDate.Size = new System.Drawing.Size(103, 18);
+            this.SpecificDate.TabIndex = 13;
+            this.SpecificDate.Text = "Target Date";
+            this.SpecificDate.UseVisualStyleBackColor = true;
             // 
             // TargetTime
             // 
             this.TargetTime.Enabled = false;
             this.TargetTime.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.TargetTime.Location = new System.Drawing.Point(174, 124);
+            this.TargetTime.Location = new System.Drawing.Point(209, 124);
             this.TargetTime.MaxLength = 9;
             this.TargetTime.Name = "TargetTime";
             this.TargetTime.Size = new System.Drawing.Size(96, 22);
@@ -1170,7 +1088,7 @@
             // SpecificTime
             // 
             this.SpecificTime.AutoSize = true;
-            this.SpecificTime.Location = new System.Drawing.Point(54, 126);
+            this.SpecificTime.Location = new System.Drawing.Point(89, 126);
             this.SpecificTime.Name = "SpecificTime";
             this.SpecificTime.Size = new System.Drawing.Size(103, 18);
             this.SpecificTime.TabIndex = 10;
@@ -1181,7 +1099,7 @@
             // TargetDate
             // 
             this.TargetDate.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.TargetDate.Location = new System.Drawing.Point(174, 69);
+            this.TargetDate.Location = new System.Drawing.Point(209, 69);
             this.TargetDate.MaxLength = 10;
             this.TargetDate.Name = "TargetDate";
             this.TargetDate.Size = new System.Drawing.Size(96, 22);
@@ -1192,7 +1110,7 @@
             // 
             this.TargetSeed_Label.AutoSize = true;
             this.TargetSeed_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.TargetSeed_Label.Location = new System.Drawing.Point(51, 180);
+            this.TargetSeed_Label.Location = new System.Drawing.Point(86, 180);
             this.TargetSeed_Label.Name = "TargetSeed_Label";
             this.TargetSeed_Label.Size = new System.Drawing.Size(84, 14);
             this.TargetSeed_Label.TabIndex = 9;
@@ -1209,9 +1127,9 @@
             this.SettingsGroup.Controls.Add(this.Frame300_Label);
             this.SettingsGroup.Controls.Add(this.SavePar_Label);
             this.SettingsGroup.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.SettingsGroup.Location = new System.Drawing.Point(386, 6);
+            this.SettingsGroup.Location = new System.Drawing.Point(443, 5);
             this.SettingsGroup.Name = "SettingsGroup";
-            this.SettingsGroup.Size = new System.Drawing.Size(358, 242);
+            this.SettingsGroup.Size = new System.Drawing.Size(375, 242);
             this.SettingsGroup.TabIndex = 21;
             this.SettingsGroup.TabStop = false;
             this.SettingsGroup.Text = "Settings";
@@ -1312,7 +1230,8 @@
             this.Seed_DGV.RowHeadersDefaultCellStyle = dataGridViewCellStyle28;
             this.Seed_DGV.RowHeadersVisible = false;
             this.Seed_DGV.RowHeadersWidth = 20;
-            this.Seed_DGV.Size = new System.Drawing.Size(740, 343);
+            this.Seed_DGV.RowTemplate.Height = 24;
+            this.Seed_DGV.Size = new System.Drawing.Size(814, 364);
             this.Seed_DGV.TabIndex = 19;
             // 
             // DateCol
@@ -1357,9 +1276,9 @@
             // MT_SearchButton
             // 
             this.MT_SearchButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.MT_SearchButton.Location = new System.Drawing.Point(401, 287);
+            this.MT_SearchButton.Location = new System.Drawing.Point(459, 284);
             this.MT_SearchButton.Name = "MT_SearchButton";
-            this.MT_SearchButton.Size = new System.Drawing.Size(178, 39);
+            this.MT_SearchButton.Size = new System.Drawing.Size(187, 42);
             this.MT_SearchButton.TabIndex = 30;
             this.MT_SearchButton.Text = "Search";
             this.MT_SearchButton.UseVisualStyleBackColor = true;
@@ -1369,13 +1288,33 @@
             // 
             this.MT_StopButton.Enabled = false;
             this.MT_StopButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.MT_StopButton.Location = new System.Drawing.Point(583, 287);
+            this.MT_StopButton.Location = new System.Drawing.Point(648, 284);
             this.MT_StopButton.Name = "MT_StopButton";
-            this.MT_StopButton.Size = new System.Drawing.Size(178, 39);
+            this.MT_StopButton.Size = new System.Drawing.Size(187, 42);
             this.MT_StopButton.TabIndex = 31;
             this.MT_StopButton.Text = "Stop";
             this.MT_StopButton.UseVisualStyleBackColor = true;
             this.MT_StopButton.Click += new System.EventHandler(this.MTStopButton_Click);
+            // 
+            // HAPossible
+            // 
+            this.HAPossible.AutoSize = true;
+            this.HAPossible.Location = new System.Drawing.Point(227, 181);
+            this.HAPossible.Name = "HAPossible";
+            this.HAPossible.Size = new System.Drawing.Size(103, 18);
+            this.HAPossible.TabIndex = 48;
+            this.HAPossible.Text = "HA Possible";
+            this.HAPossible.UseVisualStyleBackColor = true;
+            // 
+            // CalcUnown
+            // 
+            this.CalcUnown.AutoSize = true;
+            this.CalcUnown.Location = new System.Drawing.Point(227, 46);
+            this.CalcUnown.Name = "CalcUnown";
+            this.CalcUnown.Size = new System.Drawing.Size(187, 18);
+            this.CalcUnown.TabIndex = 49;
+            this.CalcUnown.Text = "Calculate Unown Form(s)";
+            this.CalcUnown.UseVisualStyleBackColor = true;
             // 
             // NaturesCBox
             // 
@@ -1433,7 +1372,7 @@
             // CurrentTRV
             // 
             this.CurrentTRV.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.CurrentTRV.Location = new System.Drawing.Point(229, 226);
+            this.CurrentTRV.Location = new System.Drawing.Point(227, 226);
             this.CurrentTRV.Mask = "A";
             this.CurrentTRV.Name = "CurrentTRV";
             this.CurrentTRV.Size = new System.Drawing.Size(15, 22);
@@ -1470,7 +1409,7 @@
             // Target
             // 
             this.Target.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Target.Location = new System.Drawing.Point(174, 177);
+            this.Target.Location = new System.Drawing.Point(209, 177);
             this.Target.Mask = "AAAAAAAA";
             this.Target.Name = "Target";
             this.Target.Size = new System.Drawing.Size(62, 22);
@@ -1503,26 +1442,127 @@
             this.Frame300.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.Frame300.Value = ((uint)(0u));
             // 
-            // SpecificDate
+            // SeedPIDCol
             // 
-            this.SpecificDate.AutoSize = true;
-            this.SpecificDate.Location = new System.Drawing.Point(54, 71);
-            this.SpecificDate.Name = "SpecificDate";
-            this.SpecificDate.Size = new System.Drawing.Size(103, 18);
-            this.SpecificDate.TabIndex = 13;
-            this.SpecificDate.Text = "Target Date";
-            this.SpecificDate.UseVisualStyleBackColor = true;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Consolas", 9F);
+            dataGridViewCellStyle13.Format = "X8";
+            this.SeedPIDCol.DefaultCellStyle = dataGridViewCellStyle13;
+            this.SeedPIDCol.HeaderText = "Seed";
+            this.SeedPIDCol.Name = "SeedPIDCol";
+            this.SeedPIDCol.ReadOnly = true;
+            // 
+            // FramePIDCol
+            // 
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.FramePIDCol.DefaultCellStyle = dataGridViewCellStyle14;
+            this.FramePIDCol.HeaderText = "Frame";
+            this.FramePIDCol.Name = "FramePIDCol";
+            this.FramePIDCol.ReadOnly = true;
+            this.FramePIDCol.Width = 80;
+            // 
+            // PID_EC_Col
+            // 
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Consolas", 9F);
+            dataGridViewCellStyle15.Format = "X8";
+            this.PID_EC_Col.DefaultCellStyle = dataGridViewCellStyle15;
+            this.PID_EC_Col.HeaderText = "PID";
+            this.PID_EC_Col.Name = "PID_EC_Col";
+            this.PID_EC_Col.ReadOnly = true;
+            this.PID_EC_Col.Width = 80;
+            // 
+            // PSVPIDCol
+            // 
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PSVPIDCol.DefaultCellStyle = dataGridViewCellStyle16;
+            this.PSVPIDCol.HeaderText = "PSV";
+            this.PSVPIDCol.Name = "PSVPIDCol";
+            this.PSVPIDCol.ReadOnly = true;
+            this.PSVPIDCol.Width = 60;
+            // 
+            // PRVCol
+            // 
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.PRVCol.DefaultCellStyle = dataGridViewCellStyle17;
+            this.PRVCol.HeaderText = "PRV";
+            this.PRVCol.Name = "PRVCol";
+            this.PRVCol.ReadOnly = true;
+            this.PRVCol.Width = 50;
+            // 
+            // IVsPIDCol
+            // 
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.IVsPIDCol.DefaultCellStyle = dataGridViewCellStyle18;
+            this.IVsPIDCol.HeaderText = "IVs";
+            this.IVsPIDCol.Name = "IVsPIDCol";
+            this.IVsPIDCol.ReadOnly = true;
+            this.IVsPIDCol.Width = 150;
+            // 
+            // NatureCol
+            // 
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.NatureCol.DefaultCellStyle = dataGridViewCellStyle19;
+            this.NatureCol.HeaderText = "Nature";
+            this.NatureCol.Name = "NatureCol";
+            this.NatureCol.ReadOnly = true;
+            this.NatureCol.Width = 80;
+            // 
+            // AbilityCol
+            // 
+            this.AbilityCol.HeaderText = "Ability";
+            this.AbilityCol.Name = "AbilityCol";
+            this.AbilityCol.ReadOnly = true;
+            this.AbilityCol.Width = 60;
+            // 
+            // UnownCol1
+            // 
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol1.DefaultCellStyle = dataGridViewCellStyle20;
+            this.UnownCol1.HeaderText = "Unown 1";
+            this.UnownCol1.Name = "UnownCol1";
+            this.UnownCol1.ReadOnly = true;
+            this.UnownCol1.Visible = false;
+            this.UnownCol1.Width = 60;
+            // 
+            // UnownCol2
+            // 
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol2.DefaultCellStyle = dataGridViewCellStyle21;
+            this.UnownCol2.HeaderText = "Unown 2";
+            this.UnownCol2.Name = "UnownCol2";
+            this.UnownCol2.ReadOnly = true;
+            this.UnownCol2.Visible = false;
+            this.UnownCol2.Width = 60;
+            // 
+            // UnownCol3
+            // 
+            dataGridViewCellStyle22.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.UnownCol3.DefaultCellStyle = dataGridViewCellStyle22;
+            this.UnownCol3.HeaderText = "Unown 3";
+            this.UnownCol3.Name = "UnownCol3";
+            this.UnownCol3.ReadOnly = true;
+            this.UnownCol3.Visible = false;
+            this.UnownCol3.Width = 60;
+            // 
+            // Count8Col
+            // 
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.Count8Col.DefaultCellStyle = dataGridViewCellStyle23;
+            this.Count8Col.HeaderText = "8 Count";
+            this.Count8Col.Name = "Count8Col";
+            this.Count8Col.ReadOnly = true;
+            this.Count8Col.Visible = false;
+            this.Count8Col.Width = 50;
             // 
             // MTForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(782, 695);
+            this.ClientSize = new System.Drawing.Size(856, 716);
             this.Controls.Add(this.MT_StopButton);
             this.Controls.Add(this.MT_SearchButton);
             this.Controls.Add(this.TabList);
-            this.MinimumSize = new System.Drawing.Size(798, 734);
+            this.MinimumSize = new System.Drawing.Size(872, 755);
             this.Name = "MTForm";
             this.Text = "MT RNG";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MTForm_FormClosing);
@@ -1653,6 +1693,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SpeciesCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn PatternCol;
         private System.Windows.Forms.Label Game_Label_MT;
+        private System.Windows.Forms.Label Nature_Label;
+        private Controls.CheckBoxComboBox NaturesCBox;
+        private System.Windows.Forms.CheckBox SpecificDate;
+        private System.Windows.Forms.CheckBox HAPossible;
+        private System.Windows.Forms.CheckBox CalcUnown;
         private System.Windows.Forms.DataGridViewTextBoxColumn SeedPIDCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FramePIDCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn PID_EC_Col;
@@ -1660,13 +1705,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn PRVCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn IVsPIDCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn NatureCol;
+        private System.Windows.Forms.DataGridViewTextBoxColumn AbilityCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol1;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol2;
         private System.Windows.Forms.DataGridViewTextBoxColumn UnownCol3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count8Col;
-        private System.Windows.Forms.Label Nature_Label;
-        private Controls.CheckBoxComboBox NaturesCBox;
-        private System.Windows.Forms.CheckBox SpecificDate;
     }
 }
 

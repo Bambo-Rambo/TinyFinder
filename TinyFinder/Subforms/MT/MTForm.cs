@@ -21,7 +21,7 @@ namespace TinyFinder.Subforms.MT
         byte Min_hp, Min_atk, Min_def, Min_spA, Min_spD, Min_spe, Max_hp, Max_atk, Max_def, Max_spA, Max_spD, Max_spe;
 
         byte Category, ShininessType;
-        bool Fast, AnyTSV, EC;
+        bool Fast, AnyTSV, EC, PossibleHA;
         string[] Natures;
         char UnownLetter1, UnownLetter2, UnownLetter3;
 
@@ -58,10 +58,12 @@ namespace TinyFinder.Subforms.MT
 
             NiceEC.Visible = Category == 4;
 
+            HAPossible.Visible = Category < 2;
+
             PID_Label.Visible = PIDBox.Visible = Category > 0 && Category < 4;
             PID_Label.Text = Category == 4 ? "PID/EC" : Category == 2 ? "EC" : "PID";
 
-            Nature_Label.Visible = NaturesCBox.Visible = Category != 2 && Category != 5;
+            CalcUnown.Visible = Nature_Label.Visible = NaturesCBox.Visible = Category != 2 && Category != 5;
 
             HP_Label.Enabled = ATK_Label.Enabled = DEF_Label.Enabled = SPA_Label.Enabled = SPD_Label.Enabled = SPE_Label.Enabled =
                 MinHP.Enabled = MinAtk.Enabled = MinDef.Enabled = MinSpA.Enabled = MinSpD.Enabled = MinSpe.Enabled =
@@ -155,13 +157,17 @@ namespace TinyFinder.Subforms.MT
 
                     if (Category != 5)
                     {
-                        PID_EC_Col.HeaderText = PID_Label.Text;
-                        EC = Category == 2;
-                        Count8Col.Visible = Category == 4;
                         G6_DGV.Rows.Clear();
                         EC_DGV.Rows.Clear();
 
+                        PID_EC_Col.HeaderText = PID_Label.Text;
+                        UnownCol1.Visible = UnownCol2.Visible = UnownCol3.Visible = CalcUnown.Checked;
+                        Count8Col.Visible = Category == 4;
+
+                        EC = Category == 2;
+                        PossibleHA = HAPossible.Checked;
                         Desired_PID = PIDBox.Value;
+
                         Min_hp = (byte)MinHP.Value; Max_hp = (byte)MaxHP.Value;
                         Min_atk = (byte)MinAtk.Value; Max_atk = (byte)MaxAtk.Value;
                         Min_def = (byte)MinDef.Value; Max_def = (byte)MaxDef.Value;

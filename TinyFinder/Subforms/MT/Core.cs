@@ -15,7 +15,7 @@ namespace TinyFinder.Subforms.MT
 
 
         #region Functions
-        public bool FindIVsNature(int[] IVs, ref string Nature, uint[] PIDList, uint frame)
+        public bool FindIVsNature(int[] IVs, ref string Nature, ref byte Ability, uint[] PIDList, uint frame)
         {
             for (int j = IVcount; j > 0;)
             {
@@ -38,10 +38,16 @@ namespace TinyFinder.Subforms.MT
             {
                 if (SelectedNatures.Contains((int)rand(PIDList[frame + 2], 25)) || SelectedNatures.Count == 0)
                 {
+                    Ability = (byte)((PossibleHA ? rand(PIDList[frame + 1], 3) : PIDList[frame + 1] >> 31) + 1);
                     Nature = Natures[(int)rand(PIDList[frame + 2], 25)];
-                    UnownLetter3 = FindUnown((byte)rand(PIDList[frame + 1], 28));
-                    UnownLetter2 = FindUnown((byte)rand(PIDList[frame + 2], 28));
-                    UnownLetter1 = FindUnown((byte)rand(PIDList[frame + 3], 28));
+
+                    if (CalcUnown.Checked)
+                    {
+                        UnownLetter3 = FindUnown((byte)rand(PIDList[frame + 1], 28));
+                        UnownLetter2 = FindUnown((byte)rand(PIDList[frame + 2], 28));
+                        UnownLetter1 = FindUnown((byte)rand(PIDList[frame + 3], 28));
+                    }
+                    
                     return true;
                 }
             }
@@ -60,10 +66,11 @@ namespace TinyFinder.Subforms.MT
                             IVs[0] <= Max_hp && IVs[1] <= Max_atk && IVs[2] <= Max_def && IVs[3] <= Max_spA && IVs[4] <= Max_spD && IVs[5] <= Max_spe;
         }
 
-        void AddToListPID(uint seed, uint frame, uint pid, uint psv, byte prv, int[] IVs, string Nature, char Unown1, char Unown2, char Unown3)
+        void AddToListPID(uint seed, uint frame, uint pid, uint psv, byte prv, int[] IVs, string Nature, byte Ability, char Unown1, char Unown2, char Unown3)
         {
+            string Ab = Ability == 3 ? "HA" : Ability.ToString();
             string IVList = string.Join(" / ", IVs.Select(v => v.ToString().PadLeft(2, '0')));
-            Invoke(new Action(() => { G6_DGV.Rows.Add(seed, frame, pid, psv, prv.ToString("X"), IVList, Nature, Unown1, Unown2, Unown3, Count8); }));
+            Invoke(new Action(() => { G6_DGV.Rows.Add(seed, frame, pid, psv, prv.ToString("X"), IVList, Nature, Ab, Unown1, Unown2, Unown3, Count8); }));
         }
         void AddToListEC(uint Seed, uint Frame, uint EC, int[] IVs1, int[] IVs2)
         {
@@ -83,6 +90,7 @@ namespace TinyFinder.Subforms.MT
             int[] IVs;
             uint[] PIDList = new uint[Max + 20];
             string Nature = "";
+            byte Ability = 0;
 
             while (IVSeed < EndSeed)
             {
@@ -97,20 +105,20 @@ namespace TinyFinder.Subforms.MT
                     PIDList[frame + 20] = mt.Nextuint();
                     Current_PSV = GetPSV(PIDList[frame]);
 
-                    if (TSV == Current_PSV && FindIVsNature(IVs = new int[6], ref Nature, PIDList, frame))
+                    if (TSV == Current_PSV && FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
                     {
                         byte Current_TRV = GetPRV(PIDList[frame]);
                         if (ShininessType != 3)
                         {
                             if ((ShininessType == 2 && Current_TRV == TRV) || (ShininessType == 1 && Current_TRV != TRV) || ShininessType == 0)
-                                AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                                AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                         }
                         else
-                            AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                            AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                     }
                     else if (ShininessType == 0)
-                        if (FindIVsNature(IVs = new int[6], ref Nature, PIDList, frame))
-                            AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, GetPRV(PIDList[frame]), IVs, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                        if (FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
+                            AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, GetPRV(PIDList[frame]), IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                 }
                 IVSeed += step;
             }
@@ -125,6 +133,7 @@ namespace TinyFinder.Subforms.MT
             MersenneTwister_Fast mt;
             uint[] PIDList = new uint[Max + 20];
             string Nature = "";
+            byte Ability = 0;
 
             while (PIDSeed < EndSeed)
             {
@@ -142,13 +151,13 @@ namespace TinyFinder.Subforms.MT
                     {
                         uint ActualFrame = EC ? frame + 1 : frame;
                         int[] IVs1 = new int[6];
-                        if (!EC && FindIVsNature(IVs1, ref Nature, PIDList, ActualFrame))
-                            AddToListPID(PIDSeed, ActualFrame, Desired_PID, GetPSV(PIDList[ActualFrame]), GetPRV(PIDList[ActualFrame]), IVs1, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                        if (!EC && FindIVsNature(IVs1, ref Nature, ref Ability, PIDList, ActualFrame))
+                            AddToListPID(PIDSeed, ActualFrame, Desired_PID, GetPSV(PIDList[ActualFrame]), GetPRV(PIDList[ActualFrame]), IVs1, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                         else if (EC)
                         {
                             SelectedNatures.Clear();
                             int[] IVs2 = new int[6];
-                            if (FindIVsNature(IVs1, ref Nature, PIDList, ActualFrame) | FindIVsNature(IVs2, ref Nature , PIDList, ActualFrame + 2))  //Both IVs should be calculated even if the first matches
+                            if (FindIVsNature(IVs1, ref Nature, ref Ability, PIDList, ActualFrame) | FindIVsNature(IVs2, ref Nature , ref Ability, PIDList, ActualFrame + 2))  //Both IVs should be calculated even if the first matches
                                 AddToListEC(PIDSeed, ActualFrame, PIDList[frame], IVs1, IVs2);
                         }
                     }
@@ -168,6 +177,7 @@ namespace TinyFinder.Subforms.MT
             uint[] PIDList = new uint[Max + 20];
             uint PidLow = Desired_PID << 16;
             string Nature = "";
+            byte Ability = 0;
 
             while (PIDSeed < EndSeed)
             {
@@ -181,8 +191,8 @@ namespace TinyFinder.Subforms.MT
                 {
                     PIDList[frame + 20] = mt.Nextuint();
 
-                    if (PIDList[frame] << 16 == PidLow && FindIVsNature(IVs = new int[6], ref Nature, PIDList, frame))
-                        AddToListPID(PIDSeed, frame, Desired_PID, GetPSV(Desired_PID), GetPRV(Desired_PID), IVs, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                    if (PIDList[frame] << 16 == PidLow && FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
+                        AddToListPID(PIDSeed, frame, Desired_PID, GetPSV(Desired_PID), GetPRV(Desired_PID), IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                 }
                 PIDSeed += step;
             }
@@ -249,16 +259,17 @@ namespace TinyFinder.Subforms.MT
         }
         private void FoundEC(uint EC_Seed, MersenneTwister_Fast mt, uint frame, uint[] PIDList, string ECstring)
         {
-            string Nature = "";
             int[] IVs = new int[6];
-            if (FindIVsNature(IVs, ref Nature, PIDList, frame + 1))
+            string Nature = "";
+            byte Ability = 0;
+            if (FindIVsNature(IVs, ref Nature, ref Ability, PIDList, frame + 1))
             {
                 Count8 = 0;
                 for (int digit = 0; digit < 8; digit++)
                     if (ECstring[digit].Equals('8'))
                         Count8++;
 
-                AddToListPID(EC_Seed, frame + 1, PIDList[frame], GetPSV(PIDList[frame]), GetPRV(PIDList[frame]), IVs, Nature, UnownLetter1, UnownLetter2, UnownLetter3);
+                AddToListPID(EC_Seed, frame + 1, PIDList[frame], GetPSV(PIDList[frame]), GetPRV(PIDList[frame]), IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
             }
         }
         #endregion
