@@ -1,5 +1,5 @@
 version: 0.9.2{build}
-image: Visual Studio 2019
+image: Visual Studio 2022
 configuration: Release
 build:
   verbosity: minimal
