@@ -22,7 +22,7 @@
             tinywild.nextState(temp);
             rand100 = tinywild.Rand(temp, 100);     //If (rand100 < 5) -> Horde
 
-            if (CanStepHorde)                          //+1 to avoid using the same rand100 for Horde trigger and Sync
+            if (CanStepHorde)                       //+1 to avoid using the same rand100 for Horde trigger and Sync
                 tinywild.nextState(temp);           //Every horde, triggered by step, would be synced otherwise
 
             Sync = tinywild.Rand(temp, 100) < 50;

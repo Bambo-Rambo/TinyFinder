@@ -21,6 +21,7 @@ namespace TinyFinder
         byte MethodUsed;
         bool Calibrated = false, Working;
         int Rand100Column;
+        int OriginalSpeciesCount;
 
         struct PatchSpot
         {
@@ -31,7 +32,7 @@ namespace TinyFinder
         PatchSpot element = new PatchSpot();
         List<PatchSpot> GPatchSpots = new List<PatchSpot>();
         List<PatchSpot> SPatchSpots = new List<PatchSpot>();
-
+        object[,] SlotSpecies;
         private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
         private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
 
@@ -43,6 +44,7 @@ namespace TinyFinder
         #region GUI Events
         private void Form1_Load(object sender, EventArgs e)
         {
+            Generator.Size = new Size(1121, 315);
             XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
@@ -104,20 +106,31 @@ namespace TinyFinder
         private void year_ValueChanged(object sender, EventArgs e)
         {
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-            TinyChanged(); //Same effect
+            TinyChanged();
         }
 
         private void party_ValueChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 7)
+            if (Methods.SelectedIndex == 7)                         //Remove slot 3 if the user hasn't unlocked it
+            {
+                for (int i = 0; i < OriginalSpeciesCount; i++)
+                    if ((int)SlotSpecies[i, 1] == 3)
+                    {
+                        if (party.Value == 2)
+                            Species.Items.Remove(SlotSpecies[i, 0].ToString());
+                        else
+                            Species.Items.Add(SlotSpecies[i, 0].ToString());
+                    }
                 ManageSlots(7);
+            }
+                
         }
         private void ratio_ValueChanged(object sender, EventArgs e)
         {
             if (Methods.SelectedIndex == 6 && XY_Button.Checked)
             {
                 SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = ratio.Value == 0;
-                BonusMusicBox.Enabled = BagBox.Enabled = isRadar1();
+                BonusMusicBox.Enabled = isRadar1();
             }
         }
 
@@ -192,7 +205,12 @@ namespace TinyFinder
         {
             ManageSlots(6);
         }
+        private void Species_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            for (byte i = 1; i <= party.Value; i++)
+                SlotsComboBox.CheckBoxItems[i].Checked = (int)SlotSpecies[Species.SelectedIndex, 1] == i;   //The rest should be unchecked
 
+        }
         private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
 
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
@@ -294,9 +312,9 @@ namespace TinyFinder
 
         private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Right)
+            /*if (e.Button == MouseButtons.Right)
             {
-                /*try
+                try
                 {
                     if (MessageBox.Show("Set as Current State?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
@@ -306,8 +324,8 @@ namespace TinyFinder
                         t0.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
                     }
                 }
-                catch { }*/
-            }
+                catch { }
+            }*/
         }
         private void Searcher_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
         {
@@ -435,22 +453,25 @@ namespace TinyFinder
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
                 Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = ORAS_Button.Checked && Method == 4;
             Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
-            Location_Label.Visible = locations.Visible = Method == 1 || Method == 4;
+            Location_Label.Visible = locations.Visible = Method == 1 || Method == 2 || Method == 4;
 
             BonusMusicBox.Visible = Patches_Board.Visible = XY_Button.Checked && Method == 6;
-            BagBox.Visible = Method == 6 && XY_Button.Checked;
+            BagBox.Visible = BagBox.Checked = (Method == 6 && XY_Button.Checked) || Method == 2;
             LongGrassBox.Visible = Method == 1 && ORAS_Button.Checked;
             CaveBox.Visible = Method == 1 || Method == 4 || Method == 5;
+            CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
             SurfBox.Visible = Method == 5 || (Method == 6 && ORAS_Button.Checked);
             CharmBox.Visible = Method == 6 && ORAS_Button.Checked;
             Noise_Label.Visible = noise.Visible = ExclusiveBox.Visible = NavType_Label.Visible = NavType.Visible = NavFilters_Label.Visible = 
                 NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS_Button.Checked && Method == 6;
 
-            Party_Label.Visible = party.Visible = Method > 3 && Method < 8;
+            Species_Label.Visible = Species.Visible = Method == 7;
+
+            Party_Label.Visible = party.Visible = (Method > 3 && Method < 8) || Method == 2 ;
 
             Step_Label.Visible = Chain_Label.Visible = false;
 
-            CaveBox.Enabled = Location_Label.Enabled = locations.Enabled = Method == 1 || Method == 4 || Method == 5;
+            CaveBox.Enabled = Location_Label.Enabled = locations.Enabled = Method == 1 || Method == 2 || Method == 4 || Method == 5;
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
@@ -479,9 +500,10 @@ namespace TinyFinder
                 Flute1_Label.Location = new Point(16, 98);
                 Flute1.Location = new Point(75, 94);
                 SyncBox.Location = new Point(53, 148);
-                Party_Label.Location = new Point(230, 193);
+                Party_Label.Location = new Point(293, 193);
                 party.Minimum = Method == 7 ? 2 : 1; party.Maximum = Method == 7 ? 3 : 6; party.Value = party.Maximum;
                 Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
+                Species.Items.Clear();
 
                 if (Method == 1)
                 {
@@ -490,14 +512,35 @@ namespace TinyFinder
                     ManageRatio();
                 }
 
-                else if (Method == 2 || Method == 7)
+                else if (Method == 2)
+                {
+                    //SearchGen.SelectedIndex = 1;
+
                     ManageRatio();
+                    ManageLocations();
+
+                    /*CitraBox.Checked = true;
+                    locations.SelectedIndex = locations.Items.Count - 1;
+                    party.Value = 1;
+                    ratio.Value = 98;
+
+                    t3.Value = 0xF9F73858;
+                    t2.Value = 0x506ECCE9;
+                    t1.Value = 0x1E6C1C38;
+                    t0.Value = 0x947CDFA0;
+
+                    min.Value = 9;
+                    max.Value = 113;
+                    MainButton.PerformClick();*/
+
+
+                }
 
                 else if (Method == 4)
                 {
                     ManageLocations();
-                    Flute1_Label.Location = new Point(266, 55);
-                    Flute1.Location = new Point(334, 52);
+                    Flute1_Label.Location = new Point(245, 55);
+                    Flute1.Location = new Point(313, 52);
                     HASlot.SelectedIndex = 0;
                 }
 
@@ -516,24 +559,37 @@ namespace TinyFinder
                         ratio.Value = 0;    //Chain
                         party.Maximum = 999;
                         party.Value = 999;
-                        Party_Label.Location = new Point(185, 194);
+                        Party_Label.Location = new Point(248, 194);
                         Slots_Label.Location = new Point(9, 93);
                         SlotsComboBox.Location = new Point(71, 89);
-                        Flute1_Label.Location = new Point(254, 140);
-                        Flute1.Location = new Point(341, 137);
+                        Flute1_Label.Location = new Point(224, 140);
+                        Flute1.Location = new Point(311, 137);
                     }
+                }
+
+                else if (Method == 7)
+                {
+                    Slots_Label.Location = new Point(13, 93);
+                    SlotsComboBox.Location = new Point(75, 89);
+                    ManageRatio();
+                    SlotSpecies = data.GetFSSlots();
+                    OriginalSpeciesCount = SlotSpecies.GetLength(0);
+                    for (byte i = 0; i < SlotSpecies.GetLength(0); i++)
+                        Species.Items.Add(SlotSpecies[i, 0]);
                 }
             }
         }
 
         private void DefaultChanges()
         {
-            BonusMusicBox.Location = new Point(237, 80);
-            BagBox.Location = new Point(237, 120);
+            BonusMusicBox.Location = new Point(300, 80);
+            BagBox.Location = new Point(300, 115);
 
-            SurfBox.Location = new Point(237, 40);
-            CharmBox.Location = new Point(237, 80);
-            ExclusiveBox.Location = new Point(237, 120);
+            CitraBox.Location = new Point(300, 80);
+
+            SurfBox.Location = new Point(300, 40);
+            CharmBox.Location = new Point(300, 80);
+            ExclusiveBox.Location = new Point(300, 120);
 
             TID_Label.Location = new Point(109, 79);
             tid.Location = new Point(139, 77);
@@ -543,15 +599,18 @@ namespace TinyFinder
             HA_Label.Location = new Point(16, 98);
             HASlot.Location = new Point(75, 94);
 
-            Patches_Board.Location = new Point(205, 20);
+            Patches_Board.Location = new Point(242, 38);
             Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
 
             NavType_Label.Location = new Point(9, 45);
             NavType.Location = new Point(71, 41);
             NavFilters_Label.Location = new Point(9, 140);
             NavFilters.Location = new Point(71, 137);
-            Potential_Label.Location = new Point(254, 93);
-            Potential.Location = new Point(341, 89);
+            Potential_Label.Location = new Point(224, 93);
+            Potential.Location = new Point(311, 89);
+
+            Species_Label.Location = new Point(13, 46);
+            Species.Location = new Point(75, 42);
         }
 
         private void ManageSlots(byte method)
@@ -599,11 +658,22 @@ namespace TinyFinder
                     ComboBoxHeight = 90;
                     break;
             }
-            //SlotsComboBox.Text = "";
+
+            //SlotsComboBox.Text = ""; <- This doesn't work
+            //Bad Solution which works
+            /*if (SlotsComboBox.Items.Count > 0)
+                for (byte c = 1; c < SlotsComboBox.Items.Count; c++)
+                {
+                    SlotsComboBox.CheckBoxItems[c].Checked = true;
+                    SlotsComboBox.CheckBoxItems[c].Checked = false;
+                }*/
+
+
             SlotsComboBox.Items.Clear();
             SlotsComboBox.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
                 SlotsComboBox.Items.AddRange(new object[] { add });
+            
         }
 
         private void ManageRatio()
@@ -665,6 +735,12 @@ namespace TinyFinder
                     table.Columns.Add("Ratio", typeof(byte));
                     table.Columns.Add("Sync", typeof(string));
                     table.Columns.Add("Slot", typeof(byte));
+                    if (method == 2)
+                    {
+                        table.Columns.Add("Delay", typeof(ushort));
+                        table.Columns.Add("Timeline", typeof(string));
+                    }
+                        
                 }
                 else if (method == 4)
                 {
@@ -782,6 +858,12 @@ namespace TinyFinder
                 Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width =
                     Generator.Columns["Slot"].Width = 50;
                 //Generator.Columns["Item"].Width = 50;
+                if (Equals(method, "Fishing"))
+                {
+                    Generator.Columns["Delay"].Width = 50;
+                    Generator.Columns["Timeline"].Width = 300;
+                }
+                    
                 if (ORAS_Button.Checked)
                     Generator.Columns["Flute"].Width = 50;
             }
@@ -822,6 +904,11 @@ namespace TinyFinder
                     Searcher.Columns.Add("ratio", "Ratio"); Searcher.Columns["ratio"].Width = 50;
                     Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
                     Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
+                    if (method == 2)
+                    {
+                        Searcher.Columns.Add("delay", "Delay"); Searcher.Columns["delay"].Width = 50;
+                        Searcher.Columns.Add("timeline", "Timeline"); Searcher.Columns["timeline"].Width = 300;
+                    }
                 }
                 else if (method == 4)
                 {
@@ -907,7 +994,13 @@ namespace TinyFinder
                 {
                     if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
                         (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
-                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    {
+                        if (MethodUsed == 2 && Convert.ToInt32(view.Rows[row].Cells["Rand(100)"].Value) == 100)
+                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightCoral;
+                        else
+                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    }
+                        
                 }
                 else if (MethodUsed == 3)
                 {
@@ -944,6 +1037,7 @@ namespace TinyFinder
         {
             CellFormatting(Searcher, e.RowIndex, 6, Rand100Column + 5);
         }
+
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             CellFormatting(Generator, e.RowIndex, 1, Rand100Column);

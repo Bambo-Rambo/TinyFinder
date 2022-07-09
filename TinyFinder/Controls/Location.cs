@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace TinyFinder
 {
@@ -14,5 +13,10 @@ namespace TinyFinder
         public byte ratio;
         public bool Tall_Grass;
         public byte Bag_Advances;
+
+        public int CitraDelayRand;
+        public int ConsoleDelayRand;
+        public int CitraORASCorr;
+        public int ConsoleORASCorr;
     }
 }

@@ -29,12 +29,12 @@ namespace TinyFinder
         /// </summary>
         private void InitializeComponent()
         {
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Searcher = new System.Windows.Forms.DataGridView();
             this.s_Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -61,6 +61,7 @@ namespace TinyFinder
             this.Min_Label = new System.Windows.Forms.Label();
             this.Max_Label = new System.Windows.Forms.Label();
             this.Settings_Box = new System.Windows.Forms.GroupBox();
+            this.CitraBox = new System.Windows.Forms.CheckBox();
             this.Noise_Label = new System.Windows.Forms.Label();
             this.noise = new System.Windows.Forms.NumericUpDown();
             this.BagBox = new System.Windows.Forms.CheckBox();
@@ -82,6 +83,8 @@ namespace TinyFinder
             this.Party_Label = new System.Windows.Forms.Label();
             this.party = new System.Windows.Forms.NumericUpDown();
             this.Filters_Box = new System.Windows.Forms.GroupBox();
+            this.Species = new System.Windows.Forms.ComboBox();
+            this.Species_Label = new System.Windows.Forms.Label();
             this.StopButton = new System.Windows.Forms.Button();
             this.ΙgnoreFilters = new System.Windows.Forms.CheckBox();
             this.Potential_Label = new System.Windows.Forms.Label();
@@ -89,7 +92,6 @@ namespace TinyFinder
             this.NavFilters_Label = new System.Windows.Forms.Label();
             this.NavType = new System.Windows.Forms.ComboBox();
             this.NavType_Label = new System.Windows.Forms.Label();
-            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.Patches_Board = new System.Windows.Forms.Label();
             this.Flute3_Label = new System.Windows.Forms.Label();
             this.Flute5_Label = new System.Windows.Forms.Label();
@@ -105,7 +107,6 @@ namespace TinyFinder
             this.Flute2_Label = new System.Windows.Forms.Label();
             this.HASlot = new System.Windows.Forms.ComboBox();
             this.Slots_Label = new System.Windows.Forms.Label();
-            this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.SID_Label = new System.Windows.Forms.Label();
             this.TID_Label = new System.Windows.Forms.Label();
             this.sid = new System.Windows.Forms.NumericUpDown();
@@ -117,10 +118,6 @@ namespace TinyFinder
             this.Tiny2_Label = new System.Windows.Forms.Label();
             this.Tiny3_Label = new System.Windows.Forms.Label();
             this.Date_Label = new System.Windows.Forms.Label();
-            this.t3 = new TinyFinder.HexBox();
-            this.t2 = new TinyFinder.HexBox();
-            this.t0 = new TinyFinder.HexBox();
-            this.t1 = new TinyFinder.HexBox();
             this.Generator = new System.Windows.Forms.DataGridView();
             this.g_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -149,6 +146,14 @@ namespace TinyFinder
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.ThreadCount = new System.Windows.Forms.NumericUpDown();
             this.Threads_Label = new System.Windows.Forms.Label();
+            this.FishingFrame = new System.Windows.Forms.NumericUpDown();
+            this.FinalFR_Label = new System.Windows.Forms.Label();
+            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
+            this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
+            this.t3 = new TinyFinder.HexBox();
+            this.t2 = new TinyFinder.HexBox();
+            this.t0 = new TinyFinder.HexBox();
+            this.t1 = new TinyFinder.HexBox();
             ((System.ComponentModel.ISupportInitialize)(this.Searcher)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
@@ -173,6 +178,7 @@ namespace TinyFinder
             this.Gen.SuspendLayout();
             this.Tools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // Searcher
@@ -203,7 +209,7 @@ namespace TinyFinder
             this.Searcher.RowHeadersVisible = false;
             this.Searcher.RowTemplate.Height = 25;
             this.Searcher.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.Searcher.Size = new System.Drawing.Size(1121, 316);
+            this.Searcher.Size = new System.Drawing.Size(1121, 315);
             this.Searcher.TabIndex = 0;
             this.Searcher.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Searcher_CellFormatting);
             this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
@@ -289,7 +295,7 @@ namespace TinyFinder
             // MainButton
             // 
             this.MainButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MainButton.Location = new System.Drawing.Point(38, 205);
+            this.MainButton.Location = new System.Drawing.Point(14, 209);
             this.MainButton.Name = "MainButton";
             this.MainButton.Size = new System.Drawing.Size(175, 38);
             this.MainButton.TabIndex = 5;
@@ -335,9 +341,9 @@ namespace TinyFinder
             "Radar",
             "Friend Safari",
             "Swooping"});
-            this.Methods.Location = new System.Drawing.Point(94, 57);
+            this.Methods.Location = new System.Drawing.Point(92, 57);
             this.Methods.Name = "Methods";
-            this.Methods.Size = new System.Drawing.Size(121, 22);
+            this.Methods.Size = new System.Drawing.Size(175, 22);
             this.Methods.TabIndex = 8;
             this.Methods.SelectedIndexChanged += new System.EventHandler(this.Methods_SelectedIndexChanged);
             // 
@@ -393,7 +399,7 @@ namespace TinyFinder
             // 
             // min
             // 
-            this.min.Location = new System.Drawing.Point(97, 192);
+            this.min.Location = new System.Drawing.Point(102, 191);
             this.min.Maximum = new decimal(new int[] {
             250000,
             0,
@@ -406,7 +412,7 @@ namespace TinyFinder
             // 
             // max
             // 
-            this.max.Location = new System.Drawing.Point(97, 227);
+            this.max.Location = new System.Drawing.Point(102, 226);
             this.max.Maximum = new decimal(new int[] {
             3000000,
             0,
@@ -437,6 +443,9 @@ namespace TinyFinder
             // Settings_Box
             // 
             this.Settings_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Settings_Box.Controls.Add(this.FishingFrame);
+            this.Settings_Box.Controls.Add(this.FinalFR_Label);
+            this.Settings_Box.Controls.Add(this.CitraBox);
             this.Settings_Box.Controls.Add(this.Noise_Label);
             this.Settings_Box.Controls.Add(this.noise);
             this.Settings_Box.Controls.Add(this.BagBox);
@@ -469,15 +478,25 @@ namespace TinyFinder
             this.Settings_Box.Font = new System.Drawing.Font("Consolas", 9F);
             this.Settings_Box.Location = new System.Drawing.Point(316, 63);
             this.Settings_Box.Name = "Settings_Box";
-            this.Settings_Box.Size = new System.Drawing.Size(381, 267);
+            this.Settings_Box.Size = new System.Drawing.Size(437, 267);
             this.Settings_Box.TabIndex = 17;
             this.Settings_Box.TabStop = false;
             this.Settings_Box.Text = "Step 2 - Settings";
             // 
+            // CitraBox
+            // 
+            this.CitraBox.AutoSize = true;
+            this.CitraBox.Location = new System.Drawing.Point(300, 134);
+            this.CitraBox.Name = "CitraBox";
+            this.CitraBox.Size = new System.Drawing.Size(61, 18);
+            this.CitraBox.TabIndex = 45;
+            this.CitraBox.Text = "Citra";
+            this.CitraBox.UseVisualStyleBackColor = true;
+            // 
             // Noise_Label
             // 
             this.Noise_Label.AutoSize = true;
-            this.Noise_Label.Location = new System.Drawing.Point(230, 158);
+            this.Noise_Label.Location = new System.Drawing.Point(293, 158);
             this.Noise_Label.Name = "Noise_Label";
             this.Noise_Label.Size = new System.Drawing.Size(42, 14);
             this.Noise_Label.TabIndex = 44;
@@ -486,7 +505,7 @@ namespace TinyFinder
             // 
             // noise
             // 
-            this.noise.Location = new System.Drawing.Point(284, 156);
+            this.noise.Location = new System.Drawing.Point(347, 156);
             this.noise.Maximum = new decimal(new int[] {
             10,
             0,
@@ -499,7 +518,8 @@ namespace TinyFinder
             // BagBox
             // 
             this.BagBox.AutoSize = true;
-            this.BagBox.Location = new System.Drawing.Point(237, 24);
+            this.BagBox.Enabled = false;
+            this.BagBox.Location = new System.Drawing.Point(300, 24);
             this.BagBox.Name = "BagBox";
             this.BagBox.Size = new System.Drawing.Size(110, 18);
             this.BagBox.TabIndex = 42;
@@ -510,7 +530,7 @@ namespace TinyFinder
             // CharmBox
             // 
             this.CharmBox.AutoSize = true;
-            this.CharmBox.Location = new System.Drawing.Point(237, 102);
+            this.CharmBox.Location = new System.Drawing.Point(300, 102);
             this.CharmBox.Name = "CharmBox";
             this.CharmBox.Size = new System.Drawing.Size(103, 18);
             this.CharmBox.TabIndex = 41;
@@ -522,7 +542,7 @@ namespace TinyFinder
             // 
             this.LongGrassBox.AutoSize = true;
             this.LongGrassBox.Enabled = false;
-            this.LongGrassBox.Location = new System.Drawing.Point(237, 56);
+            this.LongGrassBox.Location = new System.Drawing.Point(300, 56);
             this.LongGrassBox.Name = "LongGrassBox";
             this.LongGrassBox.Size = new System.Drawing.Size(96, 18);
             this.LongGrassBox.TabIndex = 40;
@@ -533,7 +553,7 @@ namespace TinyFinder
             // Horde_Turn
             // 
             this.Horde_Turn.AutoSize = true;
-            this.Horde_Turn.Location = new System.Drawing.Point(237, 40);
+            this.Horde_Turn.Location = new System.Drawing.Point(300, 40);
             this.Horde_Turn.Name = "Horde_Turn";
             this.Horde_Turn.Size = new System.Drawing.Size(131, 18);
             this.Horde_Turn.TabIndex = 39;
@@ -546,7 +566,7 @@ namespace TinyFinder
             // 
             this.Chain_Label.AutoSize = true;
             this.Chain_Label.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Chain_Label.Location = new System.Drawing.Point(54, 167);
+            this.Chain_Label.Location = new System.Drawing.Point(236, 184);
             this.Chain_Label.Name = "Chain_Label";
             this.Chain_Label.Size = new System.Drawing.Size(16, 25);
             this.Chain_Label.TabIndex = 38;
@@ -557,7 +577,7 @@ namespace TinyFinder
             // 
             this.Step_Label.AutoSize = true;
             this.Step_Label.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Step_Label.Location = new System.Drawing.Point(34, 167);
+            this.Step_Label.Location = new System.Drawing.Point(216, 184);
             this.Step_Label.Name = "Step_Label";
             this.Step_Label.Size = new System.Drawing.Size(16, 25);
             this.Step_Label.TabIndex = 37;
@@ -567,7 +587,7 @@ namespace TinyFinder
             // ExclusiveBox
             // 
             this.ExclusiveBox.AutoSize = true;
-            this.ExclusiveBox.Location = new System.Drawing.Point(237, 118);
+            this.ExclusiveBox.Location = new System.Drawing.Point(300, 118);
             this.ExclusiveBox.Name = "ExclusiveBox";
             this.ExclusiveBox.Size = new System.Drawing.Size(96, 18);
             this.ExclusiveBox.TabIndex = 36;
@@ -579,7 +599,7 @@ namespace TinyFinder
             // SurfBox
             // 
             this.SurfBox.AutoSize = true;
-            this.SurfBox.Location = new System.Drawing.Point(237, 87);
+            this.SurfBox.Location = new System.Drawing.Point(300, 87);
             this.SurfBox.Name = "SurfBox";
             this.SurfBox.Size = new System.Drawing.Size(54, 18);
             this.SurfBox.TabIndex = 35;
@@ -591,17 +611,18 @@ namespace TinyFinder
             // locations
             // 
             this.locations.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.locations.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.locations.FormattingEnabled = true;
-            this.locations.Location = new System.Drawing.Point(94, 96);
+            this.locations.Location = new System.Drawing.Point(92, 92);
             this.locations.Name = "locations";
-            this.locations.Size = new System.Drawing.Size(121, 22);
+            this.locations.Size = new System.Drawing.Size(175, 22);
             this.locations.TabIndex = 20;
             this.locations.SelectedIndexChanged += new System.EventHandler(this.location_SelectedIndexChanged);
             // 
             // Location_Label
             // 
             this.Location_Label.AutoSize = true;
-            this.Location_Label.Location = new System.Drawing.Point(6, 100);
+            this.Location_Label.Location = new System.Drawing.Point(6, 96);
             this.Location_Label.Name = "Location_Label";
             this.Location_Label.Size = new System.Drawing.Size(63, 14);
             this.Location_Label.TabIndex = 19;
@@ -624,15 +645,15 @@ namespace TinyFinder
             "October",
             "November",
             "December"});
-            this.Months.Location = new System.Drawing.Point(94, 135);
+            this.Months.Location = new System.Drawing.Point(92, 127);
             this.Months.Name = "Months";
-            this.Months.Size = new System.Drawing.Size(121, 22);
+            this.Months.Size = new System.Drawing.Size(175, 22);
             this.Months.TabIndex = 18;
             // 
             // Month_Label
             // 
             this.Month_Label.AutoSize = true;
-            this.Month_Label.Location = new System.Drawing.Point(6, 138);
+            this.Month_Label.Location = new System.Drawing.Point(6, 130);
             this.Month_Label.Name = "Month_Label";
             this.Month_Label.Size = new System.Drawing.Size(42, 14);
             this.Month_Label.TabIndex = 17;
@@ -641,7 +662,7 @@ namespace TinyFinder
             // Rate_Label
             // 
             this.Rate_Label.AutoSize = true;
-            this.Rate_Label.Location = new System.Drawing.Point(230, 228);
+            this.Rate_Label.Location = new System.Drawing.Point(293, 228);
             this.Rate_Label.Name = "Rate_Label";
             this.Rate_Label.Size = new System.Drawing.Size(35, 14);
             this.Rate_Label.TabIndex = 34;
@@ -651,7 +672,7 @@ namespace TinyFinder
             // BonusMusicBox
             // 
             this.BonusMusicBox.AutoSize = true;
-            this.BonusMusicBox.Location = new System.Drawing.Point(237, 8);
+            this.BonusMusicBox.Location = new System.Drawing.Point(300, 8);
             this.BonusMusicBox.Name = "BonusMusicBox";
             this.BonusMusicBox.Size = new System.Drawing.Size(103, 18);
             this.BonusMusicBox.TabIndex = 29;
@@ -661,7 +682,7 @@ namespace TinyFinder
             // 
             // ratio
             // 
-            this.ratio.Location = new System.Drawing.Point(284, 226);
+            this.ratio.Location = new System.Drawing.Point(347, 226);
             this.ratio.Maximum = new decimal(new int[] {
             99,
             0,
@@ -686,7 +707,7 @@ namespace TinyFinder
             // CaveBox
             // 
             this.CaveBox.AutoSize = true;
-            this.CaveBox.Location = new System.Drawing.Point(237, 72);
+            this.CaveBox.Location = new System.Drawing.Point(300, 72);
             this.CaveBox.Name = "CaveBox";
             this.CaveBox.Size = new System.Drawing.Size(54, 18);
             this.CaveBox.TabIndex = 28;
@@ -698,7 +719,7 @@ namespace TinyFinder
             // Party_Label
             // 
             this.Party_Label.AutoSize = true;
-            this.Party_Label.Location = new System.Drawing.Point(230, 193);
+            this.Party_Label.Location = new System.Drawing.Point(293, 193);
             this.Party_Label.Name = "Party_Label";
             this.Party_Label.Size = new System.Drawing.Size(42, 14);
             this.Party_Label.TabIndex = 31;
@@ -707,7 +728,7 @@ namespace TinyFinder
             // 
             // party
             // 
-            this.party.Location = new System.Drawing.Point(284, 191);
+            this.party.Location = new System.Drawing.Point(347, 191);
             this.party.Maximum = new decimal(new int[] {
             6,
             0,
@@ -732,6 +753,8 @@ namespace TinyFinder
             // Filters_Box
             // 
             this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Filters_Box.Controls.Add(this.Species);
+            this.Filters_Box.Controls.Add(this.Species_Label);
             this.Filters_Box.Controls.Add(this.StopButton);
             this.Filters_Box.Controls.Add(this.ΙgnoreFilters);
             this.Filters_Box.Controls.Add(this.Potential_Label);
@@ -762,17 +785,41 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.sid);
             this.Filters_Box.Controls.Add(this.tid);
             this.Filters_Box.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Filters_Box.Location = new System.Drawing.Point(703, 63);
+            this.Filters_Box.Location = new System.Drawing.Point(759, 63);
             this.Filters_Box.Name = "Filters_Box";
-            this.Filters_Box.Size = new System.Drawing.Size(439, 267);
+            this.Filters_Box.Size = new System.Drawing.Size(383, 267);
             this.Filters_Box.TabIndex = 18;
             this.Filters_Box.TabStop = false;
             this.Filters_Box.Text = "Step 3 - Preferences";
             // 
+            // Species
+            // 
+            this.Species.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Species.Enabled = false;
+            this.Species.Location = new System.Drawing.Point(95, 127);
+            this.Species.Name = "Species";
+            this.Species.Size = new System.Drawing.Size(110, 22);
+            this.Species.Sorted = true;
+            this.Species.TabIndex = 48;
+            this.Species.Visible = false;
+            this.Species.SelectedIndexChanged += new System.EventHandler(this.Species_SelectedIndexChanged);
+            // 
+            // Species_Label
+            // 
+            this.Species_Label.AutoSize = true;
+            this.Species_Label.Enabled = false;
+            this.Species_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Species_Label.Location = new System.Drawing.Point(33, 130);
+            this.Species_Label.Name = "Species_Label";
+            this.Species_Label.Size = new System.Drawing.Size(56, 14);
+            this.Species_Label.TabIndex = 26;
+            this.Species_Label.Text = "Species";
+            this.Species_Label.Visible = false;
+            // 
             // StopButton
             // 
             this.StopButton.Enabled = false;
-            this.StopButton.Location = new System.Drawing.Point(220, 205);
+            this.StopButton.Location = new System.Drawing.Point(196, 209);
             this.StopButton.Name = "StopButton";
             this.StopButton.Size = new System.Drawing.Size(175, 38);
             this.StopButton.TabIndex = 52;
@@ -784,7 +831,7 @@ namespace TinyFinder
             // 
             this.ΙgnoreFilters.AutoSize = true;
             this.ΙgnoreFilters.Enabled = false;
-            this.ΙgnoreFilters.Location = new System.Drawing.Point(310, 10);
+            this.ΙgnoreFilters.Location = new System.Drawing.Point(258, 10);
             this.ΙgnoreFilters.Name = "ΙgnoreFilters";
             this.ΙgnoreFilters.Size = new System.Drawing.Size(124, 18);
             this.ΙgnoreFilters.TabIndex = 51;
@@ -794,7 +841,7 @@ namespace TinyFinder
             // Potential_Label
             // 
             this.Potential_Label.AutoSize = true;
-            this.Potential_Label.Location = new System.Drawing.Point(129, 55);
+            this.Potential_Label.Location = new System.Drawing.Point(108, 55);
             this.Potential_Label.Name = "Potential_Label";
             this.Potential_Label.Size = new System.Drawing.Size(70, 14);
             this.Potential_Label.TabIndex = 50;
@@ -802,7 +849,7 @@ namespace TinyFinder
             // 
             // Potential
             // 
-            this.Potential.Location = new System.Drawing.Point(205, 53);
+            this.Potential.Location = new System.Drawing.Point(184, 53);
             this.Potential.Maximum = new decimal(new int[] {
             3,
             0,
@@ -815,7 +862,7 @@ namespace TinyFinder
             // NavFilters_Label
             // 
             this.NavFilters_Label.AutoSize = true;
-            this.NavFilters_Label.Location = new System.Drawing.Point(9, 168);
+            this.NavFilters_Label.Location = new System.Drawing.Point(33, 168);
             this.NavFilters_Label.Name = "NavFilters_Label";
             this.NavFilters_Label.Size = new System.Drawing.Size(56, 14);
             this.NavFilters_Label.TabIndex = 48;
@@ -828,7 +875,7 @@ namespace TinyFinder
             this.NavType.Items.AddRange(new object[] {
             "Normal",
             "DexNav"});
-            this.NavType.Location = new System.Drawing.Point(71, 91);
+            this.NavType.Location = new System.Drawing.Point(95, 91);
             this.NavType.Name = "NavType";
             this.NavType.Size = new System.Drawing.Size(110, 22);
             this.NavType.TabIndex = 47;
@@ -837,48 +884,27 @@ namespace TinyFinder
             // NavType_Label
             // 
             this.NavType_Label.AutoSize = true;
-            this.NavType_Label.Location = new System.Drawing.Point(9, 95);
+            this.NavType_Label.Location = new System.Drawing.Point(33, 95);
             this.NavType_Label.Name = "NavType_Label";
             this.NavType_Label.Size = new System.Drawing.Size(35, 14);
             this.NavType_Label.TabIndex = 46;
             this.NavType_Label.Text = "Type";
             // 
-            // NavFilters
-            // 
-            this.NavFilters.BlankText = null;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
-            this.NavFilters.DisplayMemberSingleItem = "";
-            this.NavFilters.DropDownHeight = 140;
-            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.NavFilters.FormattingEnabled = true;
-            this.NavFilters.Items.AddRange(new object[] {
-            "Shiny",
-            "HA",
-            "Egg Move",
-            "Level Boost",
-            "Sync"});
-            this.NavFilters.Location = new System.Drawing.Point(71, 164);
-            this.NavFilters.Name = "NavFilters";
-            this.NavFilters.Size = new System.Drawing.Size(110, 22);
-            this.NavFilters.TabIndex = 25;
-            this.NavFilters.Visible = false;
-            // 
             // Patches_Board
             // 
             this.Patches_Board.AutoSize = true;
-            this.Patches_Board.Font = new System.Drawing.Font("Consolas", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.Patches_Board.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.Patches_Board.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.Patches_Board.Location = new System.Drawing.Point(256, 18);
+            this.Patches_Board.Location = new System.Drawing.Point(235, 18);
             this.Patches_Board.Name = "Patches_Board";
-            this.Patches_Board.Size = new System.Drawing.Size(18, 19);
+            this.Patches_Board.Size = new System.Drawing.Size(16, 18);
             this.Patches_Board.TabIndex = 45;
             this.Patches_Board.Text = ".";
             // 
             // Flute3_Label
             // 
             this.Flute3_Label.AutoSize = true;
-            this.Flute3_Label.Location = new System.Drawing.Point(266, 112);
+            this.Flute3_Label.Location = new System.Drawing.Point(245, 112);
             this.Flute3_Label.Name = "Flute3_Label";
             this.Flute3_Label.Size = new System.Drawing.Size(56, 14);
             this.Flute3_Label.TabIndex = 38;
@@ -888,7 +914,7 @@ namespace TinyFinder
             // Flute5_Label
             // 
             this.Flute5_Label.AutoSize = true;
-            this.Flute5_Label.Location = new System.Drawing.Point(266, 171);
+            this.Flute5_Label.Location = new System.Drawing.Point(245, 171);
             this.Flute5_Label.Name = "Flute5_Label";
             this.Flute5_Label.Size = new System.Drawing.Size(56, 14);
             this.Flute5_Label.TabIndex = 42;
@@ -898,7 +924,7 @@ namespace TinyFinder
             // Flute1_Label
             // 
             this.Flute1_Label.AutoSize = true;
-            this.Flute1_Label.Location = new System.Drawing.Point(266, 55);
+            this.Flute1_Label.Location = new System.Drawing.Point(245, 55);
             this.Flute1_Label.Name = "Flute1_Label";
             this.Flute1_Label.Size = new System.Drawing.Size(42, 14);
             this.Flute1_Label.TabIndex = 36;
@@ -908,7 +934,7 @@ namespace TinyFinder
             // SyncBox
             // 
             this.SyncBox.AutoSize = true;
-            this.SyncBox.Location = new System.Drawing.Point(196, 127);
+            this.SyncBox.Location = new System.Drawing.Point(111, 72);
             this.SyncBox.Name = "SyncBox";
             this.SyncBox.Size = new System.Drawing.Size(54, 18);
             this.SyncBox.TabIndex = 33;
@@ -918,7 +944,7 @@ namespace TinyFinder
             // 
             // Flute5
             // 
-            this.Flute5.Location = new System.Drawing.Point(334, 167);
+            this.Flute5.Location = new System.Drawing.Point(313, 167);
             this.Flute5.Maximum = new decimal(new int[] {
             4,
             0,
@@ -931,7 +957,7 @@ namespace TinyFinder
             // 
             // Flute1
             // 
-            this.Flute1.Location = new System.Drawing.Point(334, 52);
+            this.Flute1.Location = new System.Drawing.Point(313, 52);
             this.Flute1.Maximum = new decimal(new int[] {
             4,
             0,
@@ -944,7 +970,7 @@ namespace TinyFinder
             // 
             // Flute3
             // 
-            this.Flute3.Location = new System.Drawing.Point(334, 110);
+            this.Flute3.Location = new System.Drawing.Point(313, 110);
             this.Flute3.Maximum = new decimal(new int[] {
             4,
             0,
@@ -958,7 +984,7 @@ namespace TinyFinder
             // Flute4_Label
             // 
             this.Flute4_Label.AutoSize = true;
-            this.Flute4_Label.Location = new System.Drawing.Point(266, 142);
+            this.Flute4_Label.Location = new System.Drawing.Point(245, 142);
             this.Flute4_Label.Name = "Flute4_Label";
             this.Flute4_Label.Size = new System.Drawing.Size(56, 14);
             this.Flute4_Label.TabIndex = 40;
@@ -967,7 +993,7 @@ namespace TinyFinder
             // 
             // Flute4
             // 
-            this.Flute4.Location = new System.Drawing.Point(334, 138);
+            this.Flute4.Location = new System.Drawing.Point(313, 138);
             this.Flute4.Maximum = new decimal(new int[] {
             4,
             0,
@@ -981,7 +1007,7 @@ namespace TinyFinder
             // HA_Label
             // 
             this.HA_Label.AutoSize = true;
-            this.HA_Label.Location = new System.Drawing.Point(126, 27);
+            this.HA_Label.Location = new System.Drawing.Point(105, 27);
             this.HA_Label.Name = "HA_Label";
             this.HA_Label.Size = new System.Drawing.Size(21, 14);
             this.HA_Label.TabIndex = 27;
@@ -990,7 +1016,7 @@ namespace TinyFinder
             // 
             // Flute2
             // 
-            this.Flute2.Location = new System.Drawing.Point(334, 81);
+            this.Flute2.Location = new System.Drawing.Point(313, 81);
             this.Flute2.Maximum = new decimal(new int[] {
             4,
             0,
@@ -1004,7 +1030,7 @@ namespace TinyFinder
             // Flute2_Label
             // 
             this.Flute2_Label.AutoSize = true;
-            this.Flute2_Label.Location = new System.Drawing.Point(266, 84);
+            this.Flute2_Label.Location = new System.Drawing.Point(245, 84);
             this.Flute2_Label.Name = "Flute2_Label";
             this.Flute2_Label.Size = new System.Drawing.Size(56, 14);
             this.Flute2_Label.TabIndex = 38;
@@ -1024,7 +1050,7 @@ namespace TinyFinder
             "3",
             "4",
             "5"});
-            this.HASlot.Location = new System.Drawing.Point(154, 24);
+            this.HASlot.Location = new System.Drawing.Point(133, 24);
             this.HASlot.Name = "HASlot";
             this.HASlot.Size = new System.Drawing.Size(96, 22);
             this.HASlot.TabIndex = 26;
@@ -1033,32 +1059,17 @@ namespace TinyFinder
             // Slots_Label
             // 
             this.Slots_Label.AutoSize = true;
-            this.Slots_Label.Location = new System.Drawing.Point(9, 132);
+            this.Slots_Label.Location = new System.Drawing.Point(33, 132);
             this.Slots_Label.Name = "Slots_Label";
             this.Slots_Label.Size = new System.Drawing.Size(42, 14);
             this.Slots_Label.TabIndex = 25;
             this.Slots_Label.Text = "Slots";
             this.Slots_Label.Visible = false;
             // 
-            // SlotsComboBox
-            // 
-            this.SlotsComboBox.BlankText = "Any";
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SlotsComboBox.CheckBoxProperties = checkBoxProperties2;
-            this.SlotsComboBox.DisplayMemberSingleItem = "";
-            this.SlotsComboBox.DropDownHeight = 310;
-            this.SlotsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SlotsComboBox.FormattingEnabled = true;
-            this.SlotsComboBox.Location = new System.Drawing.Point(71, 127);
-            this.SlotsComboBox.Name = "SlotsComboBox";
-            this.SlotsComboBox.Size = new System.Drawing.Size(110, 22);
-            this.SlotsComboBox.TabIndex = 24;
-            this.SlotsComboBox.Visible = false;
-            // 
             // SID_Label
             // 
             this.SID_Label.AutoSize = true;
-            this.SID_Label.Location = new System.Drawing.Point(9, 54);
+            this.SID_Label.Location = new System.Drawing.Point(5, 54);
             this.SID_Label.Name = "SID_Label";
             this.SID_Label.Size = new System.Drawing.Size(28, 14);
             this.SID_Label.TabIndex = 23;
@@ -1067,7 +1078,7 @@ namespace TinyFinder
             // TID_Label
             // 
             this.TID_Label.AutoSize = true;
-            this.TID_Label.Location = new System.Drawing.Point(9, 27);
+            this.TID_Label.Location = new System.Drawing.Point(5, 27);
             this.TID_Label.Name = "TID_Label";
             this.TID_Label.Size = new System.Drawing.Size(28, 14);
             this.TID_Label.TabIndex = 22;
@@ -1075,7 +1086,7 @@ namespace TinyFinder
             // 
             // sid
             // 
-            this.sid.Location = new System.Drawing.Point(38, 52);
+            this.sid.Location = new System.Drawing.Point(34, 52);
             this.sid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1087,7 +1098,7 @@ namespace TinyFinder
             // 
             // tid
             // 
-            this.tid.Location = new System.Drawing.Point(38, 24);
+            this.tid.Location = new System.Drawing.Point(34, 24);
             this.tid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1182,58 +1193,6 @@ namespace TinyFinder
             this.Date_Label.TabIndex = 13;
             this.Date_Label.Text = "message";
             // 
-            // t3
-            // 
-            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t3.Location = new System.Drawing.Point(126, 100);
-            this.t3.Mask = "AAAAAAAA";
-            this.t3.Name = "t3";
-            this.t3.Size = new System.Drawing.Size(63, 23);
-            this.t3.TabIndex = 1;
-            this.t3.Text = "00000000";
-            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t3.Value = ((uint)(0u));
-            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
-            // 
-            // t2
-            // 
-            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t2.Location = new System.Drawing.Point(126, 132);
-            this.t2.Mask = "AAAAAAAA";
-            this.t2.Name = "t2";
-            this.t2.Size = new System.Drawing.Size(63, 23);
-            this.t2.TabIndex = 2;
-            this.t2.Text = "00000000";
-            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t2.Value = ((uint)(0u));
-            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
-            // 
-            // t0
-            // 
-            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t0.Location = new System.Drawing.Point(126, 193);
-            this.t0.Mask = "AAAAAAAA";
-            this.t0.Name = "t0";
-            this.t0.Size = new System.Drawing.Size(63, 23);
-            this.t0.TabIndex = 4;
-            this.t0.Text = "00000000";
-            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t0.Value = ((uint)(0u));
-            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
-            // 
-            // t1
-            // 
-            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t1.Location = new System.Drawing.Point(126, 162);
-            this.t1.Mask = "AAAAAAAA";
-            this.t1.Name = "t1";
-            this.t1.Size = new System.Drawing.Size(63, 23);
-            this.t1.TabIndex = 3;
-            this.t1.Text = "00000000";
-            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t1.Value = ((uint)(0u));
-            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
-            // 
             // Generator
             // 
             this.Generator.AllowUserToAddRows = false;
@@ -1259,7 +1218,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1121, 316);
+            this.Generator.Size = new System.Drawing.Size(1121, 499);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1521,6 +1480,115 @@ namespace TinyFinder
             this.Threads_Label.TabIndex = 22;
             this.Threads_Label.Text = "Threads";
             // 
+            // FishingFrame
+            // 
+            this.FishingFrame.Location = new System.Drawing.Point(102, 156);
+            this.FishingFrame.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.FishingFrame.Name = "FishingFrame";
+            this.FishingFrame.Size = new System.Drawing.Size(65, 22);
+            this.FishingFrame.TabIndex = 49;
+            // 
+            // FinalFR_Label
+            // 
+            this.FinalFR_Label.AutoSize = true;
+            this.FinalFR_Label.Location = new System.Drawing.Point(6, 158);
+            this.FinalFR_Label.Name = "FinalFR_Label";
+            this.FinalFR_Label.Size = new System.Drawing.Size(84, 14);
+            this.FinalFR_Label.TabIndex = 48;
+            this.FinalFR_Label.Text = "Final Frame";
+            // 
+            // NavFilters
+            // 
+            this.NavFilters.BlankText = null;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
+            this.NavFilters.DisplayMemberSingleItem = "";
+            this.NavFilters.DropDownHeight = 140;
+            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NavFilters.FormattingEnabled = true;
+            this.NavFilters.Items.AddRange(new object[] {
+            "Shiny",
+            "HA",
+            "Egg Move",
+            "Level Boost",
+            "Sync"});
+            this.NavFilters.Location = new System.Drawing.Point(95, 164);
+            this.NavFilters.Name = "NavFilters";
+            this.NavFilters.Size = new System.Drawing.Size(110, 22);
+            this.NavFilters.TabIndex = 25;
+            this.NavFilters.Visible = false;
+            // 
+            // SlotsComboBox
+            // 
+            this.SlotsComboBox.BlankText = "Any";
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SlotsComboBox.CheckBoxProperties = checkBoxProperties2;
+            this.SlotsComboBox.DisplayMemberSingleItem = "";
+            this.SlotsComboBox.DropDownHeight = 310;
+            this.SlotsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SlotsComboBox.FormattingEnabled = true;
+            this.SlotsComboBox.Location = new System.Drawing.Point(95, 127);
+            this.SlotsComboBox.Name = "SlotsComboBox";
+            this.SlotsComboBox.Size = new System.Drawing.Size(110, 22);
+            this.SlotsComboBox.TabIndex = 24;
+            this.SlotsComboBox.Visible = false;
+            // 
+            // t3
+            // 
+            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t3.Location = new System.Drawing.Point(126, 100);
+            this.t3.Mask = "AAAAAAAA";
+            this.t3.Name = "t3";
+            this.t3.Size = new System.Drawing.Size(63, 23);
+            this.t3.TabIndex = 1;
+            this.t3.Text = "00000000";
+            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t3.Value = ((uint)(0u));
+            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
+            // 
+            // t2
+            // 
+            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t2.Location = new System.Drawing.Point(126, 132);
+            this.t2.Mask = "AAAAAAAA";
+            this.t2.Name = "t2";
+            this.t2.Size = new System.Drawing.Size(63, 23);
+            this.t2.TabIndex = 2;
+            this.t2.Text = "00000000";
+            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t2.Value = ((uint)(0u));
+            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
+            // 
+            // t0
+            // 
+            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t0.Location = new System.Drawing.Point(126, 193);
+            this.t0.Mask = "AAAAAAAA";
+            this.t0.Name = "t0";
+            this.t0.Size = new System.Drawing.Size(63, 23);
+            this.t0.TabIndex = 4;
+            this.t0.Text = "00000000";
+            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t0.Value = ((uint)(0u));
+            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
+            // 
+            // t1
+            // 
+            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t1.Location = new System.Drawing.Point(126, 162);
+            this.t1.Mask = "AAAAAAAA";
+            this.t1.Name = "t1";
+            this.t1.Size = new System.Drawing.Size(63, 23);
+            this.t1.TabIndex = 3;
+            this.t1.Text = "00000000";
+            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t1.Value = ((uint)(0u));
+            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -1569,6 +1637,7 @@ namespace TinyFinder
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1690,6 +1759,11 @@ namespace TinyFinder
         private System.Windows.Forms.NumericUpDown ThreadCount;
         private System.Windows.Forms.Label Threads_Label;
         private System.Windows.Forms.ToolStripMenuItem MTSeedGuide;
+        private System.Windows.Forms.ComboBox Species;
+        private System.Windows.Forms.Label Species_Label;
+        private System.Windows.Forms.CheckBox CitraBox;
+        private System.Windows.Forms.NumericUpDown FishingFrame;
+        private System.Windows.Forms.Label FinalFR_Label;
     }
 }
 

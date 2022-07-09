@@ -155,8 +155,20 @@ namespace TinyFinder
                     
                     Rand100Column = XY_Button.Checked && !DateSearcher ? 4 : 5;    //Searcher has the flute column for both XY and ORAS
                                                                                    //Generator has it only for ORAS
-                    if (DateSearcher) new Thread(() => WildSearch(state)).Start();
-                    else WildSearch(state);
+                    if (DateSearcher) new Thread(() =>
+                    {
+                        if (MethodUsed == 2)
+                            FishingSearch(state);
+                        else
+                            WildSearch(state);
+                    }).Start();
+                    else 
+                    {
+                        if (MethodUsed == 2)
+                            FishingSearch(state);
+                        else
+                            WildSearch(state);
+                    };
                     break;
 
                 case 3:     //Rock Smash
@@ -402,6 +414,89 @@ namespace TinyFinder
                 table.Rows.Add(index, wild.encounter, wild.Sync.ToString(), wild.slot, wild.rand100,
                     hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
+        #endregion
+
+
+        #region Fishing
+        public void FishingSearch(uint[] CurrentState)
+        {
+            Fishing fish = new Fishing();
+            Invoke(new Action(() =>
+            {
+                fish = new Fishing()
+                {
+                    Ratio_Fishing = (byte)ratio.Value,
+                    ORAS_Fishing = ORAS_Button.Checked,
+                    party = (byte)party.Value,
+                    TargetFrame = (int)FishingFrame.Value,
+                    Advances = (byte)(party.Value * 3 + (BagBox.Checked ? Locations[locations.SelectedIndex].Bag_Advances : 0)),    //Searcher not working
+                    SystemDelay = (ushort)(CitraBox.Checked ? 1 : 0),  //14/18 for 3ds?
+
+                    DelayRand = CitraBox.Checked ? Locations[locations.SelectedIndex].CitraDelayRand : Locations[locations.SelectedIndex].ConsoleDelayRand,
+
+                    GameCorrection = XY_Button.Checked ? (CitraBox.Checked ? 144 : 146) :
+                (CitraBox.Checked ? Locations[locations.SelectedIndex].CitraORASCorr : Locations[locations.SelectedIndex].ConsoleORASCorr),
+                };
+            }));
+
+            List<BlinkIndex> BlinkList;
+            uint[] StoreSeed = new uint[4];
+            uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
+
+            if (DateSearcher)
+                CurrentState = tiny.init(TinySeed, 1);
+            do
+            {
+                uint[] TempState = new uint[4];
+                CurrentState.CopyTo(TempState, 0);
+                BlinkList = fish.SetBlinks(TempState, fish.Advances, Max);
+
+                CurrentState.CopyTo(StoreSeed, 0);
+                for (uint Index = 0; Index < Min; Index++)
+                    tiny.nextState(CurrentState);
+                for (uint Index = Min; Index <= Max; Index++)
+                {
+                    fish.SetTimeLine(CurrentState, BlinkList, Index);
+                    if (!ΙgnoreFilters.Checked)
+                    {
+                        if (fish.trigger && (Slots.Contains(fish.slot) || SlotCount == 0) && (fish.Sync || !SyncBox.Checked))
+                        {
+                            if (XY_Button.Checked || Flute1.Value == fish.flute || Flute1.Value == 0)
+                            {
+                                if (DateSearcher)
+                                    ShowFishingSrch(fish, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
+                                else
+                                    ShowFishingGen(table, fish, CurrentState, Index);
+                            }
+                        }
+                    }
+                    else
+                        ShowFishingGen(table, fish, CurrentState, Index);
+
+                    tiny.nextState(CurrentState);
+                }
+                TotalSeconds++; TinySeed += 1000;
+                CurrentState = tiny.init(TinySeed, 1);
+            } while (Working);
+        }
+        private void ShowFishingSrch(Fishing fish, string date, uint[] store_seed, uint index)
+        {
+            Invoke(new Action(() =>
+            {
+                Searcher.Rows.Add(date, hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
+                index, fish.encounter, fish.Sync, fish.slot, fish.ActualDelay, fish.timeline, fish.flute, fish.rand100);
+            }));
+        }
+        private void ShowFishingGen(DataTable table, Fishing fish, uint[] state, uint index)
+        {
+            if (ORAS_Button.Checked)
+                table.Rows.Add(index, fish.encounter, fish.Sync.ToString(), fish.slot, fish.ActualDelay, fish.timeline, fish.flute, fish.rand100,
+                    hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+            else
+                table.Rows.Add(index, fish.encounter, fish.Sync.ToString(), fish.slot, fish.ActualDelay, fish.timeline, fish.rand100,
+                    hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
+        }
+
         #endregion
 
 
