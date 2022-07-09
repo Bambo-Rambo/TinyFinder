@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculate.cs" />
+    <Compile Include="Controls\BlinkIndex.cs" />
     <Compile Include="Controls\CheckBoxComboBox\CheckBoxComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -98,6 +99,7 @@
     <Compile Include="Main\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Methods\Fishing.cs" />
     <Compile Include="Methods\ID.cs" />
     <Compile Include="Methods\DexNav.cs" />
     <Compile Include="Methods\HoneyWild.cs" />
