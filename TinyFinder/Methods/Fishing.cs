@@ -16,43 +16,12 @@ namespace TinyFinder
         public ushort SystemDelay, ActualDelay;
         public int DelayRand, GameCorrection, TargetFrame;
         public string timeline;
-        public bool TwoBlinks = false, ORAS_Fishing;
+        public bool TwoBlinks, ORAS_Fishing;
 
         public static int getcooldown1(uint rand) => (int)((rand * 60ul) >> 32) * 2 + 124;
         public static int getcooldown2(uint rand) => rand > 0x55555555 ? 12 : 20;
 
-        public List<BlinkIndex> SetBlinks(uint[] current, byte advances, uint Max)
-        {
-            List<BlinkIndex> list = new List<BlinkIndex>();
-            BlinkIndex index;
-
-            current.CopyTo(temp, 0);
-
-            for (uint i = 0; i < advances; i++)
-                tinyfishing.nextState(temp);
-            for (uint i = 0; i <= Max + 20; i++)
-            {
-                index = new BlinkIndex();
-                if (tinyfishing.temper(temp) > 0x55555555 || TwoBlinks)
-                {
-                    index.IsLongBlink = true;
-                    TwoBlinks = false;
-                }
-                else
-                {
-                    index.IsLongBlink = false;
-                    TwoBlinks = true;
-                }
-                index.LongBlinkDur = getcooldown1(tinyfishing.temper(temp));
-                index.ShortBlinkDur = getcooldown2(tinyfishing.temper(temp));
-
-                list.Add(index);
-                tinyfishing.nextState(temp);
-            }
-            return list;
-        }
-
-        public void SetTimeLine(uint[] current, List<BlinkIndex> list, uint CurrentIndex)
+        public void SetTimeLine(uint[] current)
         {
             current.CopyTo(temp, 0);
             List<int> Path = new List<int>();
@@ -67,80 +36,40 @@ namespace TinyFinder
 
             uint FirstRand = tinyfishing.temper(temp);
 
-            //Initially, TotalFrames is the frame when the first blink happens after pressing A to use the rod
-            int TotalFrames = getcooldown1(FirstRand) + DelayRand - GameCorrection;     //DelayRand is the frame where the delay is calculated for each location
-                                                                                        //GameCorrection is 144/146 for XY, custom for ORAS
+            int TotalFrames = getcooldown1(FirstRand) + DelayRand - GameCorrection;
+
             Path.Add(TargetFrame + TotalFrames);
 
-            tinyfishing.nextState(temp);                                                //1 - Always occurs 212 (caves) / 228 (outside) frames after using the rod
+            tinyfishing.nextState(temp);
             counter++;
-
-            if (TotalFrames < DelayRand)        //If blink happens before delay rand call, the actual delay is obviously affected
-            {
-                tinyfishing.nextState(temp);
-                tinyfishing.nextState(temp);
-
-                /*rand100 = tinyfishing.Rand(temp, 100);
-                int Index = (int)(CurrentIndex + 2);
-                if (!list.ElementAt(Index - 1).IsLongBlink)
-                {
-                    tinyfishing.nextState(temp);
-
-                    TotalFrames += list.ElementAt(Index).ShortBlinkDur;
-
-                    counter++;
-                    Index++;
-
-                    //Path.Add(TargetFrame + TotalFrames);
-                }
-
-                ActualDelay = (ushort)(tinyfishing.Rand(temp, 7) * 30 + 60 + SystemDelay + DelayRand - 2);
-
-                
-                while (TotalFrames < ActualDelay)
-                {
-                    if (list.ElementAt(Index - 2).IsLongBlink)
-                    {
-                        TotalFrames += list.ElementAt(Index).LongBlinkDur;
-                        counter += 2;
-                        Index += 2;
-
-                        Path.Add(TargetFrame + TotalFrames);
-                    }
-                    else
-                    {
-                        TotalFrames += list.ElementAt(Index).ShortBlinkDur;
-                        counter++;
-                        Index++;
-
-                        Path.Add(TargetFrame + TotalFrames);
-                    }
-                }*/
-            }
 
             rand100 = tinyfishing.Rand(temp, 100);
 
-            //ActualDelay = (ushort)(tinyfishing.Rand(temp, 7) * 30 + 60 + SystemDelay + BagDelay + 144); //+4 for azure bay only??
             ActualDelay = (ushort)(tinyfishing.Rand(temp, 7) * 30 + 60 + SystemDelay + DelayRand - 2);
 
-            int Index = (int)(CurrentIndex + 3);
+            TwoBlinks = false;
             while (TotalFrames < ActualDelay)
             {
-                if (list.ElementAt(Index - 1).IsLongBlink)
+                tinyfishing.nextState(temp);
+                if (tinyfishing.temper(temp) > 0x55555555 || TwoBlinks)
                 {
-                    TotalFrames += list.ElementAt(Index).LongBlinkDur;
+                    if (!TwoBlinks)
+                        tinyfishing.nextState(temp);
+
+                    TotalFrames += getcooldown1(tinyfishing.temper(temp));
                     counter += 2;
-                    Index += 2;
 
                     Path.Add(TargetFrame + TotalFrames);
+                    TwoBlinks = false;
                 }
                 else
                 {
-                    TotalFrames += list.ElementAt(Index).ShortBlinkDur;
+                    tinyfishing.nextState(temp);
+                    TotalFrames += getcooldown2(tinyfishing.temper(temp));
                     counter++;
-                    Index++;
 
                     Path.Add(TargetFrame + TotalFrames);
+                    TwoBlinks = true;
                 }
             }
 
@@ -150,7 +79,7 @@ namespace TinyFinder
                 ratio = Ratio_Fishing,
                 oras = ORAS_Fishing,
                 slotType = 3,
-                NPC = (byte)counter,   //It is used for TinyMT advances here
+                NPC = (byte)counter,   //counter is the number of advances due to blinks
                 CanStepHorde = false,
                 XY_TallGrass = false,
             };

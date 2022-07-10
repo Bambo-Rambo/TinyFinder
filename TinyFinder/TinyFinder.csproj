@@ -65,7 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Calculate.cs" />
-    <Compile Include="Controls\BlinkIndex.cs" />
     <Compile Include="Controls\CheckBoxComboBox\CheckBoxComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>

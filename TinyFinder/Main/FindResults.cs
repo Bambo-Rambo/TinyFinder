@@ -439,7 +439,6 @@ namespace TinyFinder
                 };
             }));
 
-            List<BlinkIndex> BlinkList;
             uint[] StoreSeed = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
 
@@ -447,16 +446,12 @@ namespace TinyFinder
                 CurrentState = tiny.init(TinySeed, 1);
             do
             {
-                uint[] TempState = new uint[4];
-                CurrentState.CopyTo(TempState, 0);
-                BlinkList = fish.SetBlinks(TempState, fish.Advances, Max);
-
                 CurrentState.CopyTo(StoreSeed, 0);
                 for (uint Index = 0; Index < Min; Index++)
                     tiny.nextState(CurrentState);
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    fish.SetTimeLine(CurrentState, BlinkList, Index);
+                    fish.SetTimeLine(CurrentState);
                     if (!ΙgnoreFilters.Checked)
                     {
                         if (fish.trigger && (Slots.Contains(fish.slot) || SlotCount == 0) && (fish.Sync || !SyncBox.Checked))

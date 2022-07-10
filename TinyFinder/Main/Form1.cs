@@ -519,6 +519,7 @@ namespace TinyFinder
                     ManageRatio();
                     ManageLocations();
 
+                    //For faster check
                     /*CitraBox.Checked = true;
                     locations.SelectedIndex = locations.Items.Count - 1;
                     party.Value = 1;
@@ -532,8 +533,6 @@ namespace TinyFinder
                     min.Value = 9;
                     max.Value = 113;
                     MainButton.PerformClick();*/
-
-
                 }
 
                 else if (Method == 4)
