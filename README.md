@@ -1,27 +1,28 @@
 # TinyFinder
 
-Windows forms app mainly for assisting with TinyMT RNG in gen 6 games.
+Windows forms app for assisting with RNG abuse (mainly TinyMT) in Pokemon gen 6 games.
 
-It is a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
+It aims to be a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
 
-It also provides a MT seed searcher for various things (specific PID/EC search, multi shiny hordes etc) as well as a Time Finder for both MT and TinyMT.
+Also provides a MT seed searcher for various things (specific PID/EC search, multi shiny hordes etc) as well as Time Finder for both MT and TinyMT initial seed manipulation.
 
 ### TinyMT differences from 3DS RNG Tool
 
-* Index search by date (Citra only - specifically useful for ID, DexNav and Radar RNG)
+* Index search by date (Citra only - mainly useful for ID, DexNav and Radar RNG)
 * Index filtering
 * DexNav RNG support (Egg moves are not predicted)
-* Complete Normal Wild RNG support for every location. Indexes that would generate hordes instead, are not shown. The NPC influence is accounted for, as well.
+* Complete Normal Wild RNG support for every location. Indexes that would generate hordes instead, are not shown. The NPC influence is accounted for, as well
 * Complete Horde RNG support for every location, including caves, 
-either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass). 
-The NPC influence is accounted for, as well.
+either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass).
+The NPC influence is accounted for, as well
+* Fishing RNG with predicted delay and option to use the rod from bag calculating the future character blinks (no timeline needed and every index is hittable)
 * Honey Wild RNG support for places that don't generate hordes
 * Allow Poke Radar usage from the bag instead of the Y menu (no timeline needed and every index is hittable)
 * XY Victory Road swooping encounters (Sync is calculated differently)
 * Minor performance improvements (no lag when scrolling through the indexes etc)
-* TinyMT Timeline calibration is not implemented at all. 
-While it is required for XY ID RNG, nature sync for stationaries, fishing and rock smash, other methods including: 
-wild, hordes, dexnav, radar etc, can be done way faster using the bag method (see [RNG Guides](https://github.com/Bambo-Rambo/RNG-Guides)).
+* TinyMT Timeline calibration is not implemented. 
+While it is required for XY ID RNG, nature sync for stationaries, and rock smash, other methods including: 
+wild, hordes, dexnav, radar, fishing etc, can be done way faster using the bag method (see [RNG Guides](https://github.com/Bambo-Rambo/RNG-Guides)).
 Index filtering can still be used for fishing and rock smash to avoid scrolling in 3DS RNG Tool.
 *  Held item chance calculation is not implemented
 
@@ -29,8 +30,9 @@ Index filtering can still be used for fishing and rock smash to avoid scrolling 
 ### Step 1 - Calibration
 
 If using the Date Searcher, you need to set the Citra RTC to 20xx-01-01 13:00:00 (Fixed Mode) and use CitraRNG to read the initial TinyMT state.
-**The date must be 20xx-01-01 13:00:00 no matter what.** You can calibrate using a year of your choice but the month must be **JANUARY.** Not to be confused with the month selection in *Settings* which searches for results in the desired month of your choice.
-You can see the calibration screens in the following images. The first 2 are for ID RNG while the other 2 for every other method. 
+**The date must be 20xx-01-01 13:00:00 no matter what.** You can calibrate using a year of your choice but the month must be **JANUARY.** Not to be confused with the month selection in *Settings* which searches for results in the selected month.
+
+The calibration screens can be seen in the following images. The first 2 are for ID RNG while the other 2 for every other method. 
 
 **Do NOT advance to a later screen in any case otherwise the program won't be able to calibrate.**
 
