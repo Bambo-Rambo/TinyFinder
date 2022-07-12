@@ -47,7 +47,7 @@ namespace TinyFinder
             t3.Text = t2.Text = t1.Text = t0.Text = "";     //Faster copy paste for Citra
             Generator.Size = new Size(1121, 315);           //Size breaks for some reason
 
-            ORAS_Button.Checked = true;
+            XY_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
 
