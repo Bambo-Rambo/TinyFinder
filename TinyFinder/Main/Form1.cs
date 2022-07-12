@@ -19,7 +19,7 @@ namespace TinyFinder
         NTRHelper ntrhelper;
         MTForm mersenne;
         byte MethodUsed;
-        bool Calibrated = false, Working;
+        bool Calibrated = false, Working, filters;
         int Rand100Column;
         int OriginalSpeciesCount;
 
@@ -44,8 +44,10 @@ namespace TinyFinder
         #region GUI Events
         private void Form1_Load(object sender, EventArgs e)
         {
-            Generator.Size = new Size(1121, 315);
-            XY_Button.Checked = true;
+            t3.Text = t2.Text = t1.Text = t0.Text = "";     //Faster copy paste for Citra
+            Generator.Size = new Size(1121, 315);           //Size breaks for some reason
+
+            ORAS_Button.Checked = true;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
 
@@ -59,7 +61,8 @@ namespace TinyFinder
         //Main Event (Search Button)
         private void MainButton_Click(object sender, EventArgs e)
         {
-            MainButton.Enabled = false;
+            MainButton.Enabled = SearchGen.SelectedIndex == 0;
+            filters = sender == IgnoreFiltersButton;
             StartSearch();
         }
         private void StopButton_Click(object sender, EventArgs e)
@@ -217,7 +220,7 @@ namespace TinyFinder
         {
             bool DateSearcher = SearchGen.SelectedIndex == 0;
             Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = DateSearcher;
-            ntr.Enabled = updateBTN.Visible = ΙgnoreFilters.Enabled = !DateSearcher;
+            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = !DateSearcher;
             Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
             Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
@@ -226,8 +229,6 @@ namespace TinyFinder
 
             if (DateSearcher)
             {
-                ΙgnoreFilters.Checked = false;
-
                 Step_Label.Visible = Chain_Label.Visible = false;
                 min.Value = min.Minimum = XY_Button.Checked ? 35 :
                                           (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
@@ -514,25 +515,8 @@ namespace TinyFinder
 
                 else if (Method == 2)
                 {
-                    //SearchGen.SelectedIndex = 1;
-
                     ManageRatio();
                     ManageLocations();
-
-                    //For faster check
-                    /*CitraBox.Checked = true;
-                    locations.SelectedIndex = locations.Items.Count - 1;
-                    party.Value = 1;
-                    ratio.Value = 98;
-
-                    t3.Value = 0xF9F73858;
-                    t2.Value = 0x506ECCE9;
-                    t1.Value = 0x1E6C1C38;
-                    t0.Value = 0x947CDFA0;
-
-                    min.Value = 9;
-                    max.Value = 113;
-                    MainButton.PerformClick();*/
                 }
 
                 else if (Method == 4)
@@ -668,7 +652,7 @@ namespace TinyFinder
                 }*/
 
 
-            SlotsComboBox.Items.Clear();
+                    SlotsComboBox.Items.Clear();
             SlotsComboBox.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
                 SlotsComboBox.Items.AddRange(new object[] { add });
@@ -994,12 +978,8 @@ namespace TinyFinder
                     if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
                         (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
                     {
-                        if (MethodUsed == 2 && Convert.ToInt32(view.Rows[row].Cells["Rand(100)"].Value) == 100)
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightCoral;
-                        else
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                    }
-                        
+                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    }  
                 }
                 else if (MethodUsed == 3)
                 {

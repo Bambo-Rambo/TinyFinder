@@ -61,6 +61,8 @@ namespace TinyFinder
             this.Min_Label = new System.Windows.Forms.Label();
             this.Max_Label = new System.Windows.Forms.Label();
             this.Settings_Box = new System.Windows.Forms.GroupBox();
+            this.FishingFrame = new System.Windows.Forms.NumericUpDown();
+            this.FinalFR_Label = new System.Windows.Forms.Label();
             this.CitraBox = new System.Windows.Forms.CheckBox();
             this.Noise_Label = new System.Windows.Forms.Label();
             this.noise = new System.Windows.Forms.NumericUpDown();
@@ -83,10 +85,10 @@ namespace TinyFinder
             this.Party_Label = new System.Windows.Forms.Label();
             this.party = new System.Windows.Forms.NumericUpDown();
             this.Filters_Box = new System.Windows.Forms.GroupBox();
+            this.IgnoreFiltersButton = new System.Windows.Forms.Button();
             this.Species = new System.Windows.Forms.ComboBox();
             this.Species_Label = new System.Windows.Forms.Label();
             this.StopButton = new System.Windows.Forms.Button();
-            this.ΙgnoreFilters = new System.Windows.Forms.CheckBox();
             this.Potential_Label = new System.Windows.Forms.Label();
             this.Potential = new System.Windows.Forms.NumericUpDown();
             this.NavFilters_Label = new System.Windows.Forms.Label();
@@ -146,8 +148,6 @@ namespace TinyFinder
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.ThreadCount = new System.Windows.Forms.NumericUpDown();
             this.Threads_Label = new System.Windows.Forms.Label();
-            this.FishingFrame = new System.Windows.Forms.NumericUpDown();
-            this.FinalFR_Label = new System.Windows.Forms.Label();
             this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.t3 = new TinyFinder.HexBox();
@@ -159,6 +159,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.min)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.max)).BeginInit();
             this.Settings_Box.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.noise)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
@@ -178,7 +179,6 @@ namespace TinyFinder
             this.Gen.SuspendLayout();
             this.Tools.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // Searcher
@@ -483,10 +483,31 @@ namespace TinyFinder
             this.Settings_Box.TabStop = false;
             this.Settings_Box.Text = "Step 2 - Settings";
             // 
+            // FishingFrame
+            // 
+            this.FishingFrame.Location = new System.Drawing.Point(102, 156);
+            this.FishingFrame.Maximum = new decimal(new int[] {
+            10000000,
+            0,
+            0,
+            0});
+            this.FishingFrame.Name = "FishingFrame";
+            this.FishingFrame.Size = new System.Drawing.Size(65, 22);
+            this.FishingFrame.TabIndex = 49;
+            // 
+            // FinalFR_Label
+            // 
+            this.FinalFR_Label.AutoSize = true;
+            this.FinalFR_Label.Location = new System.Drawing.Point(6, 158);
+            this.FinalFR_Label.Name = "FinalFR_Label";
+            this.FinalFR_Label.Size = new System.Drawing.Size(84, 14);
+            this.FinalFR_Label.TabIndex = 48;
+            this.FinalFR_Label.Text = "Final Frame";
+            // 
             // CitraBox
             // 
             this.CitraBox.AutoSize = true;
-            this.CitraBox.Location = new System.Drawing.Point(300, 134);
+            this.CitraBox.Location = new System.Drawing.Point(300, 120);
             this.CitraBox.Name = "CitraBox";
             this.CitraBox.Size = new System.Drawing.Size(61, 18);
             this.CitraBox.TabIndex = 45;
@@ -530,7 +551,7 @@ namespace TinyFinder
             // CharmBox
             // 
             this.CharmBox.AutoSize = true;
-            this.CharmBox.Location = new System.Drawing.Point(300, 102);
+            this.CharmBox.Location = new System.Drawing.Point(300, 88);
             this.CharmBox.Name = "CharmBox";
             this.CharmBox.Size = new System.Drawing.Size(103, 18);
             this.CharmBox.TabIndex = 41;
@@ -587,7 +608,7 @@ namespace TinyFinder
             // ExclusiveBox
             // 
             this.ExclusiveBox.AutoSize = true;
-            this.ExclusiveBox.Location = new System.Drawing.Point(300, 118);
+            this.ExclusiveBox.Location = new System.Drawing.Point(300, 104);
             this.ExclusiveBox.Name = "ExclusiveBox";
             this.ExclusiveBox.Size = new System.Drawing.Size(96, 18);
             this.ExclusiveBox.TabIndex = 36;
@@ -599,7 +620,7 @@ namespace TinyFinder
             // SurfBox
             // 
             this.SurfBox.AutoSize = true;
-            this.SurfBox.Location = new System.Drawing.Point(300, 87);
+            this.SurfBox.Location = new System.Drawing.Point(356, 72);
             this.SurfBox.Name = "SurfBox";
             this.SurfBox.Size = new System.Drawing.Size(54, 18);
             this.SurfBox.TabIndex = 35;
@@ -753,10 +774,10 @@ namespace TinyFinder
             // Filters_Box
             // 
             this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Filters_Box.Controls.Add(this.IgnoreFiltersButton);
             this.Filters_Box.Controls.Add(this.Species);
             this.Filters_Box.Controls.Add(this.Species_Label);
             this.Filters_Box.Controls.Add(this.StopButton);
-            this.Filters_Box.Controls.Add(this.ΙgnoreFilters);
             this.Filters_Box.Controls.Add(this.Potential_Label);
             this.Filters_Box.Controls.Add(this.Potential);
             this.Filters_Box.Controls.Add(this.NavFilters_Label);
@@ -792,6 +813,18 @@ namespace TinyFinder
             this.Filters_Box.TabStop = false;
             this.Filters_Box.Text = "Step 3 - Preferences";
             // 
+            // IgnoreFiltersButton
+            // 
+            this.IgnoreFiltersButton.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            this.IgnoreFiltersButton.Location = new System.Drawing.Point(196, 209);
+            this.IgnoreFiltersButton.Name = "IgnoreFiltersButton";
+            this.IgnoreFiltersButton.Size = new System.Drawing.Size(175, 38);
+            this.IgnoreFiltersButton.TabIndex = 23;
+            this.IgnoreFiltersButton.Text = "Ignore Filters";
+            this.IgnoreFiltersButton.UseVisualStyleBackColor = true;
+            this.IgnoreFiltersButton.Visible = false;
+            this.IgnoreFiltersButton.Click += new System.EventHandler(this.MainButton_Click);
+            // 
             // Species
             // 
             this.Species.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -826,17 +859,6 @@ namespace TinyFinder
             this.StopButton.Text = "Stop";
             this.StopButton.UseVisualStyleBackColor = true;
             this.StopButton.Click += new System.EventHandler(this.StopButton_Click);
-            // 
-            // ΙgnoreFilters
-            // 
-            this.ΙgnoreFilters.AutoSize = true;
-            this.ΙgnoreFilters.Enabled = false;
-            this.ΙgnoreFilters.Location = new System.Drawing.Point(258, 10);
-            this.ΙgnoreFilters.Name = "ΙgnoreFilters";
-            this.ΙgnoreFilters.Size = new System.Drawing.Size(124, 18);
-            this.ΙgnoreFilters.TabIndex = 51;
-            this.ΙgnoreFilters.Text = "Ignore Filters";
-            this.ΙgnoreFilters.UseVisualStyleBackColor = true;
             // 
             // Potential_Label
             // 
@@ -1218,7 +1240,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1121, 499);
+            this.Generator.Size = new System.Drawing.Size(1121, 511);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1480,27 +1502,6 @@ namespace TinyFinder
             this.Threads_Label.TabIndex = 22;
             this.Threads_Label.Text = "Threads";
             // 
-            // FishingFrame
-            // 
-            this.FishingFrame.Location = new System.Drawing.Point(102, 156);
-            this.FishingFrame.Maximum = new decimal(new int[] {
-            10000000,
-            0,
-            0,
-            0});
-            this.FishingFrame.Name = "FishingFrame";
-            this.FishingFrame.Size = new System.Drawing.Size(65, 22);
-            this.FishingFrame.TabIndex = 49;
-            // 
-            // FinalFR_Label
-            // 
-            this.FinalFR_Label.AutoSize = true;
-            this.FinalFR_Label.Location = new System.Drawing.Point(6, 158);
-            this.FinalFR_Label.Name = "FinalFR_Label";
-            this.FinalFR_Label.Size = new System.Drawing.Size(84, 14);
-            this.FinalFR_Label.TabIndex = 48;
-            this.FinalFR_Label.Text = "Final Frame";
-            // 
             // NavFilters
             // 
             this.NavFilters.BlankText = null;
@@ -1615,6 +1616,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.max)).EndInit();
             this.Settings_Box.ResumeLayout(false);
             this.Settings_Box.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.noise)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
@@ -1637,7 +1639,6 @@ namespace TinyFinder
             this.Tools.ResumeLayout(false);
             this.Tools.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ThreadCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1721,7 +1722,6 @@ namespace TinyFinder
         private System.Windows.Forms.ToolStripMenuItem ntr;
         private System.Windows.Forms.ToolStripMenuItem profiles;
         private System.Windows.Forms.ToolStripMenuItem profilemanager;
-        private System.Windows.Forms.CheckBox ΙgnoreFilters;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny3;
         private System.Windows.Forms.DataGridViewTextBoxColumn s_Tiny2;
@@ -1764,6 +1764,7 @@ namespace TinyFinder
         private System.Windows.Forms.CheckBox CitraBox;
         private System.Windows.Forms.NumericUpDown FishingFrame;
         private System.Windows.Forms.Label FinalFR_Label;
+        private System.Windows.Forms.Button IgnoreFiltersButton;
     }
 }
 

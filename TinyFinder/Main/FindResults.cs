@@ -333,7 +333,7 @@ namespace TinyFinder
                     else if (!DateSearcher)
                     {
                         id.results(state);
-                        if ((id.trainerID == tid && id.secretID == sid) || ΙgnoreFilters.Checked)
+                        if ((id.trainerID == tid && id.secretID == sid) || filters)
                         {
                             table.Rows.Add(Index, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
                                 id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
@@ -375,7 +375,7 @@ namespace TinyFinder
                 for (uint Index = Min; Index <= Max; Index++)
                 {
                     wild.results(CurrentState);
-                    if (!ΙgnoreFilters.Checked)
+                    if (!filters)
                     {
                         if (wild.trigger && (Slots.Contains(wild.slot) || SlotCount == 0) && (wild.Sync || !SyncBox.Checked))
                         {
@@ -452,7 +452,7 @@ namespace TinyFinder
                 for (uint Index = Min; Index <= Max; Index++)
                 {
                     fish.SetTimeLine(CurrentState);
-                    if (!ΙgnoreFilters.Checked)
+                    if (!filters)
                     {
                         if (fish.trigger && (Slots.Contains(fish.slot) || SlotCount == 0) && (fish.Sync || !SyncBox.Checked))
                         {
@@ -517,7 +517,7 @@ namespace TinyFinder
                     smash.RockSmash(CurrentState);
                     if ((smash.encounter == 0 && (Slots.Contains(smash.slot) || SlotCount == 0) && (smash.Sync || !SyncBox.Checked)
                             &&
-                            (XY_Button.Checked || Flute1.Value == smash.flute || Flute1.Value == 0)) || ΙgnoreFilters.Checked)
+                            (XY_Button.Checked || Flute1.Value == smash.flute || Flute1.Value == 0)) || filters)
                     {
                         if (DateSearcher)
                             ShowSmashSrch(smash, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
@@ -562,7 +562,7 @@ namespace TinyFinder
                 NPC = NPC_Influence,
                 XY_TallGrass = Is_XY_TallGrass,
                 trigger = !Horde_Turn.Checked,
-                Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
+                Trigger_only = DateSearcher || !filters,
             };
             uint[] StoreSeed = new uint[4], StateHit = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
@@ -586,7 +586,7 @@ namespace TinyFinder
                     else
                         horde.HordeHoney(StateHit);
 
-                    if (!ΙgnoreFilters.Checked)
+                    if (!filters)
                     {
                         if ((Slots.Contains(horde.slot) || SlotCount == 0) && horde.trigger)
                             if (((Enumerable.Range(2, 6).Contains(DesiredHA)
@@ -646,7 +646,7 @@ namespace TinyFinder
                 {
                     for (byte f = 0; f < 5; f++)
                     {
-                        if (fluteArray[f] == horde.flutes[f] || fluteArray[f] == 0 || ΙgnoreFilters.Checked)
+                        if (fluteArray[f] == horde.flutes[f] || fluteArray[f] == 0 || filters)
                             FluteHordeCount++;
                     }
                     if (FluteHordeCount == 5)
@@ -698,7 +698,7 @@ namespace TinyFinder
                         && 
                         (honey.Sync || !SyncBox.Checked)
                         &&
-                        (XY_Button.Checked || Flute1.Value == honey.flute || Flute1.Value == 0)) || ΙgnoreFilters.Checked)
+                        (XY_Button.Checked || Flute1.Value == honey.flute || Flute1.Value == 0)) || filters)
                     {
                         if (DateSearcher)
                             ShowHoneySrch(honey, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
@@ -760,7 +760,7 @@ namespace TinyFinder
                 for (uint Index = Min; Index <= Max; Index++)
                 {
                     radar.results(StateHit);
-                    if (!ΙgnoreFilters.Checked)
+                    if (!filters)
                     {
                         if (radar.Shiny || (radar.chain == 0 && (Slots.Contains(radar.slot) || SlotCount == 0) && (radar.sync || (!SyncBox.Checked))))
                         {
@@ -832,7 +832,7 @@ namespace TinyFinder
                 charm = CharmBox.Checked,
                 exclusives = ExclusiveBox.Checked,
                 slotType = SurfBox.Checked ? 1 : 0,
-                Trigger_only = DateSearcher || !ΙgnoreFilters.Checked,
+                Trigger_only = DateSearcher || !filters,
             };
 
             uint[] StoreSeed = new uint[4];
@@ -848,7 +848,7 @@ namespace TinyFinder
                 for (uint Index = Min; Index <= Max; Index++)
                 {
                     nav.results(CurrentState);
-                    if (!ΙgnoreFilters.Checked)
+                    if (!filters)
                     {
                         if (nav.trigger && (nav.shiny || !W_Shiny))
                             if (((!W_Exclusives && nav.EnctrType != 2) || (W_Exclusives && nav.EnctrType == 2))
@@ -916,7 +916,7 @@ namespace TinyFinder
                 for (uint Index = Min; Index <= Max; Index++)
                 {
                     swoop.Swooping(CurrentState);
-                    if (((Slots.Contains(swoop.slot) || SlotCount == 0) && (swoop.Sync || !SyncBox.Checked))    || ΙgnoreFilters.Checked)
+                    if (((Slots.Contains(swoop.slot) || SlotCount == 0) && (swoop.Sync || !SyncBox.Checked))    || filters)
                     {
                         if (DateSearcher)
                             ShowSwoopSrch(swoop, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
