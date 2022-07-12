@@ -652,7 +652,7 @@ namespace TinyFinder
                 }*/
 
 
-                    SlotsComboBox.Items.Clear();
+            SlotsComboBox.Items.Clear();
             SlotsComboBox.DropDownHeight = ComboBoxHeight;
             for (byte add = 1; add < SlotsCount; add++)
                 SlotsComboBox.Items.AddRange(new object[] { add });

@@ -109,7 +109,7 @@ namespace TinyFinder
 
             Wild fishing = new Wild()
             {
-                ratio = Ratio_Fishing,  // > 67 for cities???
+                ratio = Ratio_Fishing,
                 oras = ORAS_Fishing,
                 slotType = 3,
                 NPC = 0,
@@ -129,28 +129,6 @@ namespace TinyFinder
             Timeline.Sort();
             timeline = string.Join(" → ", Timeline.Take(Timeline.Count - 1)) + " (" + Timeline.LastOrDefault() + ")";
 
-        }
-
-        public void Findflute()
-        {
-            tinyfishing.nextState(temp);
-            if (tinyfishing.Rand(temp, 100) < 40)
-                flute = 1;
-            else if (tinyfishing.Rand(temp, 100) < 70)
-                flute = 2;
-            else if (tinyfishing.Rand(temp, 100) < 90)
-                flute = 3;
-            else flute = 4;
-
-            /*tinywild.nextState(temp);
-            tinywild.nextState(temp);
-            if (tinywild.Rand(temp, 100) < 50)
-                item = 50;
-            else if (tinywild.Rand(temp, 100) < 55)
-                item = 5;
-            else if (tinywild.Rand(temp, 100) < 56)
-                item = 1;
-            else item = 0;*/
         }
     }
 }

@@ -429,7 +429,7 @@ namespace TinyFinder
                     ORAS_Fishing = ORAS_Button.Checked,
                     party = (byte)party.Value,
                     TargetFrame = (int)FishingFrame.Value,
-                    Advances = (byte)(party.Value * 3 + (BagBox.Checked ? Locations[locations.SelectedIndex].Bag_Advances : 0)),    //Searcher not working
+                    Advances = (byte)(party.Value * 3 + (BagBox.Checked ? Locations[locations.SelectedIndex].Bag_Advances : 0)),
                     SystemDelay = (ushort)(CitraBox.Checked ? 1 : 0),  //14/18 for 3ds?
 
                     DelayRand = CitraBox.Checked ? Locations[locations.SelectedIndex].CitraDelayRand : Locations[locations.SelectedIndex].ConsoleDelayRand,
