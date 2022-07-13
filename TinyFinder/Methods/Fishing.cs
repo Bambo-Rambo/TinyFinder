@@ -43,7 +43,7 @@ namespace TinyFinder
 
             if (TotalFrames < DelayRand)                            //!!! First blink already happened BEFORE before delay rand call !!!
             {
-                if (tiny.temper(temp) > 0x55555555)          //Second blink (before delay) is long (Blink +2)
+                if (tiny.temper(temp) > 0x55555555)                 //Second blink (before delay) is long (Blink +2)
                 {
                     tiny.nextState(temp);
                     TotalFrames += getcooldown1(tiny.temper(temp));
@@ -63,7 +63,7 @@ namespace TinyFinder
 
                     if (TotalFrames < DelayRand)                                    //Delay rand was called AFTER the next blink
                     {                                                               //We know there was just a short blink, otherwise we wouldn't reach here
-                        TotalFrames += getcooldown1(tiny.temper(temp));      //so the next blink is long for sure
+                        TotalFrames += getcooldown1(tiny.temper(temp));             //so the next blink is long for sure
                         Timeline.Add(TargetFrame + TotalFrames);
                         tiny.nextState(temp);
 
@@ -88,7 +88,7 @@ namespace TinyFinder
             {
                 tiny.nextState(temp);
 
-                if (tiny.temper(temp) > 0x55555555 || ShortBlinkHappened)     //There can't be consecutive short (12/20) blinks
+                if (tiny.temper(temp) > 0x55555555 || ShortBlinkHappened)           //There can't be consecutive short (12/20) blinks
                 {
                     if (!ShortBlinkHappened)
                         tiny.nextState(temp);

@@ -61,7 +61,7 @@ namespace TinyFinder
         //Main Event (Search Button)
         private void MainButton_Click(object sender, EventArgs e)
         {
-            MainButton.Enabled = SearchGen.SelectedIndex == 0;
+            MainButton.Enabled = SearchGen.SelectedIndex == 1;
             filters = sender == IgnoreFiltersButton;
             StartSearch();
         }
