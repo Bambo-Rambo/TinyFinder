@@ -2,39 +2,39 @@
 {
     class HoneyWild
     {
-        public byte slot, flute, rand100, slotCase;
+        public byte slot, flute, rand100, slotType;
       //public byte item;
         public bool Sync, oras;
         public uint[] temp = new uint[4];
 
-        TinyMT tinyhoney = new TinyMT();
+        TinyMT tiny = new TinyMT();
         Data data = new Data();
 
-        public void results(uint[] current)
+        public void GenerateIndex(uint[] currentState)
         {
-            current.CopyTo(temp, 0);
+            currentState.CopyTo(temp, 0);
 
-            tinyhoney.nextState(temp);
-            rand100 = tinyhoney.Rand(temp, 100);
+            tiny.nextState(temp);
+            rand100 = tiny.Rand(temp, 100);
 
             /*Number of Bag advances calculated only once in FindResults.cs:        // 3 if Cave / ORAS underwater
                                                                                     // 27 if XY
             for (byte i = 0; i < Bag_advances + (3 * party); i++)                   // 15 if ORAS
               tinyhoney.nextState(temp);                                            // 6 if ORAS Magma/Aqua Hideout*/
 
-            Sync = tinyhoney.Rand(temp, 100) < 50;
+            Sync = tiny.Rand(temp, 100) < 50;
 
-            tinyhoney.nextState(temp);
-            slot = data.getSlot(tinyhoney.Rand(temp, 100), slotCase);
+            tiny.nextState(temp);
+            slot = data.getSlot(tiny.Rand(temp, 100), slotType);
 
             if (oras)
             {
-                tinyhoney.nextState(temp);
-                if (tinyhoney.Rand(temp, 100) < 40)
+                tiny.nextState(temp);
+                if (tiny.Rand(temp, 100) < 40)
                     flute = 1;
-                else if (tinyhoney.Rand(temp, 100) < 70)
+                else if (tiny.Rand(temp, 100) < 70)
                     flute = 2;
-                else if (tinyhoney.Rand(temp, 100) < 90)
+                else if (tiny.Rand(temp, 100) < 90)
                     flute = 3;
                 else flute = 4;
             }

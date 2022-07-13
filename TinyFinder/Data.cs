@@ -155,7 +155,7 @@ namespace TinyFinder
 
         public readonly static object[,] XY_Locations = new object[,]
         {
-            //Name, NPC Influene, Has Hordes, Ratio, Tall Grass
+            //Name, NPC Noise, Has Hordes, Ratio, Tall Grass
             { "Elsewhere", 0, false, 13, false, },
             { "Azure Bay", 0, true, 13, true, },
             { "Lost Hotel", 2, false, 1, false, },
@@ -184,7 +184,7 @@ namespace TinyFinder
 
         public readonly static object[,] ORAS_Locations = new object[,]
         {
-            //Name, NPC Influence, Has Hordes/Long Grass, Ratio
+            //Name, NPC Noise, Has Hordes/Long Grass, Ratio
             { "Elsewhere", 0, false, 13, },
             { "Mt Pyre Inside", 0, false, 7, },
             { "New Mauville", 0, false, 7, },
@@ -243,6 +243,7 @@ namespace TinyFinder
             { "Victory Road", 3, 212, 226, },                                                   //144?
         };
 
+        //Ratio for cities is at least 67??
         public readonly static object[,] FishingORASLocations = new object[,]
         {
             //Name, Bag Advances, CitraDelayRand, ConsoleDelayRand, Citra correction, Console correction

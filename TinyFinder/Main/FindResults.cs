@@ -13,7 +13,7 @@ namespace TinyFinder
         int Year;
         uint tinyInitSeed, seconds, initial = 0, Min, Max;
         byte searchMonth, SlotLimit, SlotCount;
-        byte NPC_Influence = 0, CurrentLocation = 0, advances = 0;
+        byte NPC_Noise = 0, CurrentLocation = 0, advances = 0;
         bool DateSearcher, HasHordes, Is_XY_TallGrass = false;
         string HordeFlutes;
 
@@ -119,14 +119,14 @@ namespace TinyFinder
             if (MethodUsed == 1 || (MethodUsed == 4 && Horde_Turn.Checked))     //Normal Wild / Moving Horde
             {
                 CurrentLocation = (byte)locations.SelectedIndex;
-                NPC_Influence = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
+                NPC_Noise = (byte)(CaveBox.Checked ? 0 : Convert.ToByte(Locations[CurrentLocation].NPC));
                 HasHordes = (XY_Button.Checked && (CaveBox.Checked || Locations[CurrentLocation].Has_Hordes))
                     || (ORAS_Button.Checked && LongGrassBox.Checked && !CaveBox.Checked);
                 Is_XY_TallGrass = XY_Button.Checked && !CaveBox.Checked && Locations[CurrentLocation].Tall_Grass;
             }
             else if (MethodUsed == 2 || MethodUsed == 7)                        //Fishing / Friend Safari have nothing
             {
-                NPC_Influence = 0;
+                NPC_Noise = 0;
                 HasHordes = Is_XY_TallGrass = false;
             }
 
@@ -332,7 +332,7 @@ namespace TinyFinder
                     }
                     else if (!DateSearcher)
                     {
-                        id.results(state);
+                        id.GenerateIndex(state);
                         if ((id.trainerID == tid && id.secretID == sid) || filters)
                         {
                             table.Rows.Add(Index, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
@@ -358,7 +358,7 @@ namespace TinyFinder
                 ratio = (byte)ratio.Value,
                 oras = ORAS_Button.Checked,
                 slotType = (byte)(MethodUsed == 1 ? 0 : MethodUsed == 2 ? 3 : MethodUsed == 7 && party.Value == 2 ? 1 : 2),
-                NPC = NPC_Influence,
+                Noise = NPC_Noise,
                 CanStepHorde = HasHordes,
                 XY_TallGrass = Is_XY_TallGrass,
             };
@@ -374,7 +374,7 @@ namespace TinyFinder
                     tiny.nextState(CurrentState);
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    wild.results(CurrentState);
+                    wild.GenerateIndex(CurrentState);
                     if (!filters)
                     {
                         if (wild.trigger && (Slots.Contains(wild.slot) || SlotCount == 0) && (wild.Sync || !SyncBox.Checked))
@@ -559,7 +559,7 @@ namespace TinyFinder
             {
                 oras = ORAS_Button.Checked,
                 ratio = (byte)ratio.Value,
-                NPC = NPC_Influence,
+                NPC = NPC_Noise,
                 XY_TallGrass = Is_XY_TallGrass,
                 trigger = !Horde_Turn.Checked,
                 Trigger_only = DateSearcher || !filters,
@@ -673,7 +673,7 @@ namespace TinyFinder
             HoneyWild honey = new HoneyWild()
             {
                 oras = ORAS_Button.Checked,
-                slotCase = (byte)(SurfBox.Checked ? 4 : 0),
+                slotType = (byte)(SurfBox.Checked ? 4 : 0),
             };
             uint[] StoreSeed = new uint[4], StateHit = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
@@ -693,7 +693,7 @@ namespace TinyFinder
                     tiny.nextState(StateHit);
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    honey.results(StateHit);
+                    honey.GenerateIndex(StateHit);
                     if (((Slots.Contains(honey.slot) || SlotCount == 0) 
                         && 
                         (honey.Sync || !SyncBox.Checked)
@@ -759,7 +759,7 @@ namespace TinyFinder
 
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    radar.results(StateHit);
+                    radar.GenerateIndex(StateHit);
                     if (!filters)
                     {
                         if (radar.Shiny || (radar.chain == 0 && (Slots.Contains(radar.slot) || SlotCount == 0) && (radar.sync || (!SyncBox.Checked))))
@@ -847,7 +847,7 @@ namespace TinyFinder
                     tiny.nextState(CurrentState);
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    nav.results(CurrentState);
+                    nav.GenerateIndex(CurrentState);
                     if (!filters)
                     {
                         if (nav.trigger && (nav.shiny || !W_Shiny))

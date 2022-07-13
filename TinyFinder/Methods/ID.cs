@@ -21,7 +21,7 @@ namespace TinyFinder
         }
 
         //Bad implementation, fix later
-        public void results(uint[] current)
+        public void GenerateIndex(uint[] current)
         {
             current.CopyTo(temp, 0);
             tiny.nextState(temp);

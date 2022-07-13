@@ -4,7 +4,7 @@ namespace TinyFinder
     class Radar
     {
         public Data data = new Data();
-        public static TinyMT tinyradar;
+        public static TinyMT tiny;
         public byte slot, rand100, music, chain, party; //public byte item;
         public bool sync, BonusMusic, boost;
         public uint[] temp = new uint[4];
@@ -12,7 +12,7 @@ namespace TinyFinder
         public Patch[] patches = new Patch[5];
         public char Music => music < 2 ? 'A' : music > 49 ? 'M' : '-';
         public bool Shiny => patches.Any(p => p.condition == 2);
-        private static byte Rand(uint[] array, ulong n) => (byte)((tinyradar.Nextuint(array) * n) >> 32);
+        private static byte Rand(uint[] array, ulong n) => (byte)((tiny.Nextuint(array) * n) >> 32);
 
         public string[] Overview
         {
@@ -27,20 +27,20 @@ namespace TinyFinder
             }
         }
 
-        public void results(uint[] current)
+        public void GenerateIndex(uint[] currentState)
         {
-            tinyradar = new TinyMT();
-            current.CopyTo(temp, 0);
+            tiny = new TinyMT();
+            currentState.CopyTo(temp, 0);
             rand100 = Rand(temp, 100);
             if (chain == 0)
             {
                 sync = rand100 < 50;
 
-                tinyradar.nextState(temp);
-                slot = data.getSlot(tinyradar.Rand(temp, 100), 0);
+                tiny.nextState(temp);
+                slot = data.getSlot(tiny.Rand(temp, 100), 0);
 
-                tinyradar.nextState(temp);
-                tinyradar.nextState(temp);
+                tiny.nextState(temp);
+                tiny.nextState(temp);
                 /*if (tinyradar.Rand(temp, 100) < 50)
                     item = 50;
                 else if (tinyradar.Rand(temp, 100) < 55)
@@ -50,8 +50,8 @@ namespace TinyFinder
                 else item = 0;*/
 
                 for (int i = 0; i < 3 * (party - 1); i++)
-                    tinyradar.nextState(temp);
-                music = tinyradar.Rand(temp, 100);
+                    tiny.nextState(temp);
+                music = tiny.Rand(temp, 100);
 
             }
             else
@@ -62,7 +62,7 @@ namespace TinyFinder
                 for (byte i = 0; i < Advances + (3 * party); i++)                       // 27 if using from Bag
                     tinyhoney.nextState(temp);                                          */
 
-                music = tinyradar.Rand(temp, 100);
+                music = tiny.Rand(temp, 100);
                 boost = BonusMusic && music >= 50;
 
                 byte ring = 0;
@@ -76,11 +76,11 @@ namespace TinyFinder
                     };
                     if (Rand(temp, 100) < GoodRate[ring])
                     {
-                        tinyradar.nextState(temp);
+                        tiny.nextState(temp);
                         ulong Chance = boost || chain >= 40 ? 100 : (ulong)(8100 - chain * 200);
 
-                        tinyradar.nextState(temp);
-                        patches[ring].condition = (byte)(tinyradar.temper(temp) * Chance <= uint.MaxValue ? 2 : 1);
+                        tiny.nextState(temp);
+                        patches[ring].condition = (byte)(tiny.temper(temp) * Chance <= uint.MaxValue ? 2 : 1);
                     }
                 }
                 // 1 empty patch

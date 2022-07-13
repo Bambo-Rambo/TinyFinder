@@ -11,16 +11,16 @@
         public string encounter;
         public uint[] temp = new uint[4];
 
-        private static TinyMT tinynav = new TinyMT();
-        private uint Rand(ulong n) => (uint)((tinynav.Nextuint(temp) * n) >> 32);
+        private static TinyMT tiny = new TinyMT();
+        private uint Rand(ulong n) => (uint)((tiny.Nextuint(temp) * n) >> 32);
 
-        public void results(uint[] current)
+        public void GenerateIndex(uint[] currentState)
         {
-            current.CopyTo(temp, 0);
+            currentState.CopyTo(temp, 0);
             rand100 = (byte)Rand(100);
 
             for (byte i = 0; i < noise; i++)
-                tinynav.nextState(temp);
+                tiny.nextState(temp);
 
             //The chance of hitting a successful index is 50%
             //The actual chance of generating a patch successfully, depends on your current tile along with the patch's exact location
@@ -75,7 +75,7 @@
             if (slot == 0)
                 slot++;
 
-            tinynav.nextState(temp);
+            tiny.nextState(temp);
 
             /*
              * The Grade's possible values are 6 (0-5) and depend on the current Search Level of the Pokemon
@@ -115,7 +115,7 @@
 
             eggMove = Rand(100) < EggMoveRate[Grade] || boost;
 
-            tinynav.nextState(temp); //Held Item, not calculated
+            tiny.nextState(temp); //Held Item, not calculated
 
             /*
              * The game does various RNG calls (checks) and compares the random generated number with the Target Value

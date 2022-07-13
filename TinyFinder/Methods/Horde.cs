@@ -6,24 +6,24 @@
         public bool sync, trigger, oras, XY_TallGrass, Trigger_only;
         public byte[] flutes = new byte[5]; //items = new byte[5];
         public uint[] temp = new uint[4];
-        public TinyMT tinyhorde = new TinyMT();
+        public TinyMT tiny = new TinyMT();
         public Data data = new Data();
 
-        public void HordeTurn(uint[] current)
+        public void HordeTurn(uint[] currentState)
         {
-            current.CopyTo(temp, 0);
+            currentState.CopyTo(temp, 0);
 
             for (byte i = 0; i < NPC; i++)          //NPC Influence taken into account before everything else
-                tinyhorde.nextState(temp);
+                tiny.nextState(temp);
 
-            tinyhorde.nextState(temp);
-            rand100 = tinyhorde.Rand(temp, 100);
+            tiny.nextState(temp);
+            rand100 = tiny.Rand(temp, 100);
 
-            tinyhorde.nextState(temp);              //+1 in order to avoid using the same rand100 for Horde trigger check and Sync
-            sync = tinyhorde.Rand(temp, 100) < 50;  //Every horde, triggered by step, would be synced otherwise
+            tiny.nextState(temp);              //+1 in order to avoid using the same rand100 for Horde trigger check and Sync
+            sync = tiny.Rand(temp, 100) < 50;  //Every horde, triggered by step, would be synced otherwise
 
-            tinyhorde.nextState(temp);
-            encounter = tinyhorde.Rand(temp, 100);
+            tiny.nextState(temp);
+            encounter = tiny.Rand(temp, 100);
 
             trigger =  rand100 < 5 && encounter < ratio;
 
@@ -31,54 +31,54 @@
                 return;
 
             if (XY_TallGrass)                       //Unknown reason
-                tinyhorde.nextState(temp);
+                tiny.nextState(temp);
 
-            results();
+            FinalizeIndex();
         }
 
         //(Sweet Scent is different - probably ignores the party number since it doesn't make use of memories)
-        public void HordeHoney(uint[] current)
+        public void HordeHoney(uint[] currentState2)
         {
-            current.CopyTo(temp, 0);
-            tinyhorde.nextState(temp);
-            rand100 = tinyhorde.Rand(temp, 100);
+            currentState2.CopyTo(temp, 0);
+            tiny.nextState(temp);
+            rand100 = tiny.Rand(temp, 100);
 
             /*Number of Bag advances calculated only once in FindResults.cs:        // 3 if Cave / ORAS underwater
                                                                                     // 27 if XY
             for (byte i = 0; i < Bag_advances + (3 * party); i++)                   // 15 if ORAS
               tinyhoney.nextState(temp);                                            */
 
-            sync = tinyhorde.Rand(temp, 100) < 50;
+            sync = tiny.Rand(temp, 100) < 50;
 
-            results();
+            FinalizeIndex();
         }
 
-        public void results()
+        public void FinalizeIndex()
         {
-            tinyhorde.nextState(temp);
-            slot = data.getSlot(tinyhorde.Rand(temp, 100), 3);
+            tiny.nextState(temp);
+            slot = data.getSlot(tiny.Rand(temp, 100), 3);
 
             HA = 0;
-            tinyhorde.nextState(temp);
-            if (tinyhorde.Rand(temp, 100) < 20)
+            tiny.nextState(temp);
+            if (tiny.Rand(temp, 100) < 20)
             {
-                tinyhorde.nextState(temp);
-                HA = (byte)(tinyhorde.Rand(temp, 5) + 1);
+                tiny.nextState(temp);
+                HA = (byte)(tiny.Rand(temp, 5) + 1);
             }
 
-            tinyhorde.nextState(temp);
+            tiny.nextState(temp);
             if (oras)
             {
                 for (byte i = 0; i < 5; i++)
                 {
-                    if (tinyhorde.Rand(temp, 100) < 40)
+                    if (tiny.Rand(temp, 100) < 40)
                         flutes[i] = 1;
-                    else if (tinyhorde.Rand(temp, 100) < 70)
+                    else if (tiny.Rand(temp, 100) < 70)
                         flutes[i] = 2;
-                    else if (tinyhorde.Rand(temp, 100) < 90)
+                    else if (tiny.Rand(temp, 100) < 90)
                         flutes[i] = 3;
                     else flutes[i] = 4;
-                    tinyhorde.nextState(temp);
+                    tiny.nextState(temp);
                 }
             }
 
