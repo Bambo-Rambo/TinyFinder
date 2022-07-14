@@ -1,31 +1,27 @@
 ﻿namespace TinyFinder
 {
     //https://github.com/wwwwwwzx/3DSRNGTool/blob/master/3DSRNGTool/Gen6/DexNav.cs
-    class DexNav
+    class DexNav : Index
     {
-        public bool sync, boost, HA, eggMove, shiny, trigger, charm, exclusives, Trigger_only;
+        public int TargetValue, CheckCount, index, EnctrType;    //EnctrType -> Normal/DexNav, slotType -> Land(12)/Water(5)
+        public byte levelBoost, potential;
         public sbyte right, down;
-        public byte levelBoost, flute, potential, rand100, noise, chain;
-        public int TargetValue, CheckCount, Index, slot, EnctrType, slotType;    //EnctrType -> Normal/DexNav, slotType -> Land(12)/Water(5)
-        public ushort searchlevel;
-        public string encounter;
-        public uint[] temp = new uint[4];
+        public bool boost, HA, eggMove, shiny, Trigger_only;
+        public string Type;
 
-        private static TinyMT tiny = new TinyMT();
-        private uint Rand(ulong n) => (uint)((tiny.Nextuint(temp) * n) >> 32);
-
-        public void GenerateIndex(uint[] currentState)
+        private uint RandUINT(int n) => (uint)((tiny.Nextuint(temp) * n) >> 32);
+        public void GenerateIndex(uint[] currentState, bool charm, ushort searchlevel, byte chain, bool exclusives)
         {
             currentState.CopyTo(temp, 0);
-            rand100 = (byte)Rand(100);
+            rand100 = RandCall(100);
 
-            for (byte i = 0; i < noise; i++)
-                tiny.nextState(temp);
+            for (byte i = 0; i < Noise; i++)
+                Advance();
 
             //The chance of hitting a successful index is 50%
             //The actual chance of generating a patch successfully, depends on your current tile along with the patch's exact location
             //(20 steps/turns required )
-            trigger = Rand(100) < 50;
+            trigger = RandCall(100) < 50;
             //rate = tinydexnav.Rand(temp, 100); //Apparently not necessary
 
             if (!trigger && Trigger_only)
@@ -33,49 +29,48 @@
 
             //The coordinates for a patch are generated inside the ring [-9, 9].
             //Currently unknown for caves, water and desert and varies for every tile
-            right = down = 0;
-            switch (Rand(4))
+            switch (RandCall(4))
             {
                 case 0:
-                    right = (sbyte)(-9 + Rand(18));
-                    down = (sbyte)-(-9 + Rand(3));
+                    right = (sbyte)(-9 + RandCall(18));
+                    down = (sbyte)-(-9 + RandCall(3));
                     break;
                 case 1:
-                    right = (sbyte)(-9 + Rand(3));
-                    down = (sbyte)-(-7 + Rand(14));
+                    right = (sbyte)(-9 + RandCall(3));
+                    down = (sbyte)-(-7 + RandCall(14));
                     break;
                 case 2:
-                    right = (sbyte)(7 + Rand(3));
-                    down = (sbyte)-(-7 + Rand(14));
+                    right = (sbyte)(7 + RandCall(3));
+                    down = (sbyte)-(-7 + RandCall(14));
                     break;
                 case 3:
-                    right = (sbyte)(-9 + Rand(18));
-                    down = (sbyte)-(7 + Rand(3));
+                    right = (sbyte)(-9 + RandCall(18));
+                    down = (sbyte)-(7 + RandCall(3));
                     break;
             }
 
             //If DexNav exclusives exist for the target encounter type (Grass or Surf), then a DexNav slot has 30% chance of occuring
-            EnctrType = Rand(100) < 30 && exclusives ? 2 : slotType;
-            encounter = EnctrType == 2 ? "DexNav" : "Normal";
+            EnctrType = RandCall(100) < 30 && exclusives ? 2 : slotType;
+            Type = EnctrType == 2 ? "DexNav" : "Normal";
 
             /*The special Boost has 4% chance of occuring unless the current chain length is [4, 9, 14, 19, 24 etc]
             In this case, it is guaranteed and improves the chances of getting forced shiny indexes as well as higher perfect IV counts
             When occurs, it also guarantees a +10 Level Boost, an egg move, as well as at least 1 perfect IV*/
-            boost = chain > 0 && (chain + 1) % 5 == 0 || Rand(100) < 4;
+            boost = chain > 0 && (chain + 1) % 5 == 0 || RandCall(100) < 4;
 
             //Self explanatory
-            sync = (byte)Rand(100) < 50;
+            Sync = RandCall(100) < 50;
 
             //The rarity of the slots is reversed. The last slot for a given encounter type (Normal Grass [12], Normal Surf [5] and DexNav [3]),
             //is the most common and has 30% chance of occuring. If it doesn't, the game checks the previous slot whose chance is 30% as well etc
             for (slot = SlotNum[EnctrType]; slot > 0; slot--)
-                if (Rand(100) < 30)
+                if (RandCall(100) < 30)
                     break;
             //Slot 2 is the most rare because a possible slot 0, becomes slot 1
             if (slot == 0)
                 slot++;
 
-            tiny.nextState(temp);
+            Advance();
 
             /*
              * The Grade's possible values are 6 (0-5) and depend on the current Search Level of the Pokemon
@@ -100,22 +95,22 @@
              * 3 => 20%
              * 4 => 10%
              */
-            flute = getFlute(Rand(100));
+            flute = getFlute(RandCall(100));
 
 
-            HA = Rand(100) < HARate[Grade];
+            HA = RandCall(100) < HARate[Grade];
 
-            //Index's final value will be the number of perfect IV count (max 3)
-            for (Index = 2; Index >= 0; Index--)
-                if (Rand(100) < IVRate[3 * Grade + Index])
+            //index's final value will be the number of perfect IV count (max 3)
+            for (index = 2; index >= 0; index--)
+                if (RandCall(100) < IVRate[3 * Grade + index])
                     break;
             //If boost has been triggered, +2 perfect IVs, otherwise +1
-            Index += boost ? 2 : 1;                     //This guarantees that the value will never be < 0
-            potential = (byte)(Index < 3 ? Index : 3);  //This guarantees that the value will never be > 3
+            index += boost ? 2 : 1;                     //This guarantees that the value will never be < 0
+            potential = (byte)(index < 3 ? index : 3);  //This guarantees that the value will never be > 3
 
-            eggMove = Rand(100) < EggMoveRate[Grade] || boost;
+            eggMove = RandCall(100) < EggMoveRate[Grade] || boost;
 
-            tiny.nextState(temp); //Held Item, not calculated
+            Advance(); //Held Item, not calculated
 
             /*
              * The game does various RNG calls (checks) and compares the random generated number with the Target Value
@@ -141,7 +136,7 @@
 
             for (int i = 0; i < CheckCount; i++)
             {
-                if (Rand(10000) < TargetValue * 0.01)
+                if (RandUINT(10000) < TargetValue * 0.01)
                 {
                     shiny = true;
                     return;                  //No more checks if a shiny index is found obviously
@@ -172,7 +167,7 @@
         }
 
         public static byte[] GradeRange = { 5, 10, 25, 50, 100 }; //These numbers refer to the current Search Level
-        public static sbyte[] SlotNum = { 12, 5, 3 }; // Grass / Surf / DexNav
+        public static byte[] SlotNum = { 12, 5, 3 }; // Grass / Surf / DexNav
         public static byte[] HARate = { 0, 0, 5, 15, 20, 25 }; // dword_7E6860[6]
         public static byte[] IVRate = // dword_7E6890[18]
         {

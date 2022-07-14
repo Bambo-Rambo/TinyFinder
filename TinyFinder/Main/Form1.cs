@@ -579,7 +579,7 @@ namespace TinyFinder
             SID_Label.Location = new Point(109, 118);
             sid.Location = new Point(139, 116);
 
-            HA_Label.Location = new Point(16, 98);
+            HA_Label.Location = new Point(13, 98);
             HASlot.Location = new Point(75, 94);
 
             Patches_Board.Location = new Point(242, 38);

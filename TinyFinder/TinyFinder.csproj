@@ -88,6 +88,7 @@
     <Compile Include="Controls\HexBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\Index.cs" />
     <Compile Include="Controls\Location.cs" />
     <Compile Include="Main\FindResults.cs">
       <SubType>Form</SubType>

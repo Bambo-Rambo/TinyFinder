@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace TinyFinder
 {
-    class ID
+    class ID : Index
     {
         public ushort trainerID, secretID, TSV;
         public uint randhex;
         public byte TRV;
-        public TinyMT tiny = new TinyMT();
-        public uint[] temp = new uint[4];
         public ID(ushort t, ushort s)
         {
             trainerID = t;
@@ -24,7 +20,7 @@ namespace TinyFinder
         public void GenerateIndex(uint[] current)
         {
             current.CopyTo(temp, 0);
-            tiny.nextState(temp);
+            Advance();
             randhex = tiny.temper(temp);
             trainerID = (ushort)randhex;
             secretID = (ushort)(randhex >> 16);
