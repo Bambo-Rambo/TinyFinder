@@ -223,24 +223,24 @@ namespace TinyFinder
         {
             //Name, Bag Advances, Frame in which the delay is decided (Delay Rand)
             { "Ambrette Town", 27, 228, 256, },                                                 //
-            { "Azure Bay", 27, 216, 242, },                                                     //146??
-            { "Couriway Town", 27, 216, 0, },                                                   //
+            { "Azure Bay", 27, 216, 242, },                                                     //146
+            { "Couriway Town", 27, 216, 236, },                                                 //
             { "Cyllage City", 27, 228, 256, },                                                  //
             { "Frost Cavern", 3, 194, 210, },                                                   //
             { "Laverre City", 27, 214, 242, },                                                  //
             { "Parfum Palace", 27, 198, 216, },                                                 //
-            //{ "Pokemon Village", 27, 198, 212, },  //Problematic                              //
+            { "Pokemon Village", 27, 198, 212, },                                               //146 for Citra
             { "Route 3", 27, 224, 246, },                                                       //144
             { "Route 8", 27, 228, 256, },                                                       //
             { "Route 12", 27, 216, 242, },                                                      //146
             { "Route 14", 27, 214, 242, },                                                      //
-            { "Route 15", 27, 204, 222, },                                                      //148?
+            { "Route 15", 27, 204, 222, },                                                      //144 for Citra     148 for 3ds?
             { "Route 16", 27, 204, 222, },                                                      //
-            { "Route 19", 27, 198, 218, },                                                      //144?
+            { "Route 19", 27, 198, 218, },                                                      //144
             { "Route 21", 27, 200, 216, },                                                      //
             { "Route 22", 27, 224, 244, },                                                      //
             { "Shalour City", 27, 208, 230, },                                                  //
-            { "Victory Road", 3, 212, 226, },                                                   //144?
+            { "Victory Road", 3, 212, 226, },                                                   //144 for Citra
         };
 
         //Ratio for cities is at least 67??
