@@ -56,13 +56,12 @@ namespace TinyFinder
         public uint FindSavePar(DateTime CitraRTC, uint CurrentSavePar, uint ActualSeed, uint TargetSeed)
         {
             //https://gist.github.com/zaksabeast/c2140499a1c8280602d63d08937d22f9
-            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            var epoch = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             ulong CurrentMS = Convert.ToUInt64((CitraRTC - epoch).TotalMilliseconds);
-            ulong TimeVar = CurrentMS - 946684800000;
 
-            uint ExpectedSeed = (uint)(CurrentSavePar + TimeVar) & 0xFFFFFFFF;
+            uint ExpectedSeed = (uint)(CurrentSavePar + CurrentMS) & 0xFFFFFFFF;
             uint Correction = ExpectedSeed - ActualSeed;
-            return (uint)(TargetSeed - TimeVar + Correction);
+            return (uint)(TargetSeed - CurrentMS + Correction);
         }
 
         public string Check_DST(DateTime date1, uint seconds)
