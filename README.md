@@ -1,5 +1,7 @@
 # TinyFinder
 
+### [Download the latest commit here](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/build/artifacts)
+
 Windows forms app for assisting with RNG abuse (mainly TinyMT) in Pokemon gen 6 games.
 
 It aims to be a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
