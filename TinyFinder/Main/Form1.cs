@@ -432,6 +432,16 @@ namespace TinyFinder
             mersenne.SetGame(XY_Button.Checked);
         }
 
+        private void TIDBOX_CheckedChanged(object sender, EventArgs e)
+        {
+            tid.Enabled = TIDBOX.Checked;
+        }
+
+        private void SIDBOX_CheckedChanged(object sender, EventArgs e)
+        {
+            sid.Enabled = SIDBOX.Checked;
+        }
+
         private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void TIDSIDGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
@@ -446,7 +456,7 @@ namespace TinyFinder
             Methods.SelectedIndex = Method;
             LongGrassBox.Checked = CaveBox.Checked = SurfBox.Checked = Horde_Turn.Checked = false;
 
-            TID_Label.Visible = SID_Label.Visible = tid.Visible = sid.Visible = Method == 0;
+            TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
             SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
             SyncBox.Visible = Method != 0 && !Equals(Methods.Text,"DexNav");
             Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS_Button.Checked;
@@ -574,9 +584,9 @@ namespace TinyFinder
             CharmBox.Location = new Point(300, 80);
             ExclusiveBox.Location = new Point(300, 120);
 
-            TID_Label.Location = new Point(109, 79);
+            TIDBOX.Location = new Point(75, 78);
             tid.Location = new Point(139, 77);
-            SID_Label.Location = new Point(109, 118);
+            SIDBOX.Location = new Point(75, 117);
             sid.Location = new Point(139, 116);
 
             HA_Label.Location = new Point(13, 98);

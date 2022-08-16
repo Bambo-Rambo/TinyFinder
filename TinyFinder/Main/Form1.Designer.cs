@@ -109,8 +109,6 @@ namespace TinyFinder
             this.Flute2_Label = new System.Windows.Forms.Label();
             this.HASlot = new System.Windows.Forms.ComboBox();
             this.Slots_Label = new System.Windows.Forms.Label();
-            this.SID_Label = new System.Windows.Forms.Label();
-            this.TID_Label = new System.Windows.Forms.Label();
             this.sid = new System.Windows.Forms.NumericUpDown();
             this.tid = new System.Windows.Forms.NumericUpDown();
             this.Calibr_Box = new System.Windows.Forms.GroupBox();
@@ -148,6 +146,8 @@ namespace TinyFinder
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.ThreadCount = new System.Windows.Forms.NumericUpDown();
             this.Threads_Label = new System.Windows.Forms.Label();
+            this.TIDBOX = new System.Windows.Forms.CheckBox();
+            this.SIDBOX = new System.Windows.Forms.CheckBox();
             this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.t3 = new TinyFinder.HexBox();
@@ -774,6 +774,8 @@ namespace TinyFinder
             // Filters_Box
             // 
             this.Filters_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Filters_Box.Controls.Add(this.SIDBOX);
+            this.Filters_Box.Controls.Add(this.TIDBOX);
             this.Filters_Box.Controls.Add(this.IgnoreFiltersButton);
             this.Filters_Box.Controls.Add(this.Species);
             this.Filters_Box.Controls.Add(this.Species_Label);
@@ -801,8 +803,6 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.HASlot);
             this.Filters_Box.Controls.Add(this.Slots_Label);
             this.Filters_Box.Controls.Add(this.SlotsComboBox);
-            this.Filters_Box.Controls.Add(this.SID_Label);
-            this.Filters_Box.Controls.Add(this.TID_Label);
             this.Filters_Box.Controls.Add(this.sid);
             this.Filters_Box.Controls.Add(this.tid);
             this.Filters_Box.Font = new System.Drawing.Font("Consolas", 9F);
@@ -863,7 +863,7 @@ namespace TinyFinder
             // Potential_Label
             // 
             this.Potential_Label.AutoSize = true;
-            this.Potential_Label.Location = new System.Drawing.Point(108, 55);
+            this.Potential_Label.Location = new System.Drawing.Point(125, 55);
             this.Potential_Label.Name = "Potential_Label";
             this.Potential_Label.Size = new System.Drawing.Size(70, 14);
             this.Potential_Label.TabIndex = 50;
@@ -871,7 +871,7 @@ namespace TinyFinder
             // 
             // Potential
             // 
-            this.Potential.Location = new System.Drawing.Point(184, 53);
+            this.Potential.Location = new System.Drawing.Point(195, 53);
             this.Potential.Maximum = new decimal(new int[] {
             3,
             0,
@@ -917,7 +917,7 @@ namespace TinyFinder
             this.Patches_Board.AutoSize = true;
             this.Patches_Board.Font = new System.Drawing.Font("Consolas", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.Patches_Board.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.Patches_Board.Location = new System.Drawing.Point(235, 18);
+            this.Patches_Board.Location = new System.Drawing.Point(271, 27);
             this.Patches_Board.Name = "Patches_Board";
             this.Patches_Board.Size = new System.Drawing.Size(16, 18);
             this.Patches_Board.TabIndex = 45;
@@ -956,7 +956,7 @@ namespace TinyFinder
             // SyncBox
             // 
             this.SyncBox.AutoSize = true;
-            this.SyncBox.Location = new System.Drawing.Point(111, 72);
+            this.SyncBox.Location = new System.Drawing.Point(310, 25);
             this.SyncBox.Name = "SyncBox";
             this.SyncBox.Size = new System.Drawing.Size(54, 18);
             this.SyncBox.TabIndex = 33;
@@ -1029,7 +1029,7 @@ namespace TinyFinder
             // HA_Label
             // 
             this.HA_Label.AutoSize = true;
-            this.HA_Label.Location = new System.Drawing.Point(105, 27);
+            this.HA_Label.Location = new System.Drawing.Point(126, 27);
             this.HA_Label.Name = "HA_Label";
             this.HA_Label.Size = new System.Drawing.Size(21, 14);
             this.HA_Label.TabIndex = 27;
@@ -1072,7 +1072,7 @@ namespace TinyFinder
             "3",
             "4",
             "5"});
-            this.HASlot.Location = new System.Drawing.Point(133, 24);
+            this.HASlot.Location = new System.Drawing.Point(150, 24);
             this.HASlot.Name = "HASlot";
             this.HASlot.Size = new System.Drawing.Size(96, 22);
             this.HASlot.TabIndex = 26;
@@ -1088,27 +1088,9 @@ namespace TinyFinder
             this.Slots_Label.Text = "Slots";
             this.Slots_Label.Visible = false;
             // 
-            // SID_Label
-            // 
-            this.SID_Label.AutoSize = true;
-            this.SID_Label.Location = new System.Drawing.Point(5, 54);
-            this.SID_Label.Name = "SID_Label";
-            this.SID_Label.Size = new System.Drawing.Size(28, 14);
-            this.SID_Label.TabIndex = 23;
-            this.SID_Label.Text = "SID";
-            // 
-            // TID_Label
-            // 
-            this.TID_Label.AutoSize = true;
-            this.TID_Label.Location = new System.Drawing.Point(5, 27);
-            this.TID_Label.Name = "TID_Label";
-            this.TID_Label.Size = new System.Drawing.Size(28, 14);
-            this.TID_Label.TabIndex = 22;
-            this.TID_Label.Text = "TID";
-            // 
             // sid
             // 
-            this.sid.Location = new System.Drawing.Point(34, 52);
+            this.sid.Location = new System.Drawing.Point(56, 52);
             this.sid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1120,7 +1102,7 @@ namespace TinyFinder
             // 
             // tid
             // 
-            this.tid.Location = new System.Drawing.Point(34, 24);
+            this.tid.Location = new System.Drawing.Point(56, 24);
             this.tid.Maximum = new decimal(new int[] {
             65535,
             0,
@@ -1240,7 +1222,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1121, 539);
+            this.Generator.Size = new System.Drawing.Size(1121, 543);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1502,6 +1484,30 @@ namespace TinyFinder
             this.Threads_Label.TabIndex = 22;
             this.Threads_Label.Text = "Threads";
             // 
+            // TIDBOX
+            // 
+            this.TIDBOX.AutoSize = true;
+            this.TIDBOX.Checked = true;
+            this.TIDBOX.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.TIDBOX.Location = new System.Drawing.Point(5, 25);
+            this.TIDBOX.Name = "TIDBOX";
+            this.TIDBOX.Size = new System.Drawing.Size(47, 18);
+            this.TIDBOX.TabIndex = 53;
+            this.TIDBOX.Text = "TID";
+            this.TIDBOX.UseVisualStyleBackColor = true;
+            // 
+            // SIDBOX
+            // 
+            this.SIDBOX.AutoSize = true;
+            this.SIDBOX.Checked = true;
+            this.SIDBOX.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.SIDBOX.Location = new System.Drawing.Point(5, 53);
+            this.SIDBOX.Name = "SIDBOX";
+            this.SIDBOX.Size = new System.Drawing.Size(47, 18);
+            this.SIDBOX.TabIndex = 54;
+            this.SIDBOX.Text = "SID";
+            this.SIDBOX.UseVisualStyleBackColor = true;
+            // 
             // NavFilters
             // 
             this.NavFilters.BlankText = null;
@@ -1667,8 +1673,6 @@ namespace TinyFinder
         private System.Windows.Forms.GroupBox Filters_Box;
         private System.Windows.Forms.GroupBox Calibr_Box;
         private System.Windows.Forms.Label Date_Label;
-        private System.Windows.Forms.Label SID_Label;
-        private System.Windows.Forms.Label TID_Label;
         private System.Windows.Forms.NumericUpDown sid;
         private System.Windows.Forms.NumericUpDown tid;
         private System.Windows.Forms.Label Tiny0_Label;
@@ -1765,6 +1769,8 @@ namespace TinyFinder
         private System.Windows.Forms.NumericUpDown FishingFrame;
         private System.Windows.Forms.Label FinalFR_Label;
         private System.Windows.Forms.Button IgnoreFiltersButton;
+        private System.Windows.Forms.CheckBox SIDBOX;
+        private System.Windows.Forms.CheckBox TIDBOX;
     }
 }
 

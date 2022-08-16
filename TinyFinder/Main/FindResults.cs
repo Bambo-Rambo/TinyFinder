@@ -305,47 +305,61 @@ namespace TinyFinder
 
 
         #region ID
-        public void IDSearch(ushort tid, ushort sid, uint Jump, uint[] state)
+        public void IDSearch(ushort tid, ushort sid, uint Jump, uint[] CurrentState)
         {
             ID id = new ID(tid, sid); TinyMT tiny = new TinyMT();
             uint[] StoreSeed = new uint[4];
             uint randID = id.randhex, TotalSeconds = seconds, TinySeed = tinyInitSeed;
+            bool fast = DateSearcher && TIDBOX.Checked && SIDBOX.Checked;
 
             if (DateSearcher)
-                state = tiny.init(TinySeed, 2);
+                CurrentState = tiny.init(TinySeed, 2);
             do
             {
-                state.CopyTo(StoreSeed, 0);
+                CurrentState.CopyTo(StoreSeed, 0);
                 for (uint Index = 0; Index < Min; Index++)
-                    tiny.nextState(state);
+                    tiny.nextState(CurrentState);
                 for (uint Index = Min; Index <= Max; Index++)
                 {
-                    if (randID == tiny.temper(state) && DateSearcher)
+                    if (randID == tiny.temper(CurrentState) && fast)
                     {
-                        Invoke(new Action(() =>
-                        {
-                            Searcher.Rows.Add(calc.secondsToDate(TotalSeconds, Year),
-                            hex(StoreSeed[3]), hex(StoreSeed[2]), hex(StoreSeed[1]), hex(StoreSeed[0]),
-                            Index - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                            id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
-                        }));
+                        ShowIDSrch(id, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index);
                     }
-                    else if (!DateSearcher)
+                    else if (!fast)
                     {
-                        id.GenerateIndex(state);
-                        if ((id.trainerID == tid && id.secretID == sid) || filters)
+                        id.GenerateIndex(CurrentState);
+                        if (((id.trainerID == tid || !TIDBOX.Checked) && (id.secretID == sid || !SIDBOX.Checked)) || filters)
                         {
-                            table.Rows.Add(Index, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
-                                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]),
-                                hex(state[1]), hex(state[0]));
+                            if (DateSearcher)
+                            {
+                                ShowIDSrch(id, calc.secondsToDate(TotalSeconds, Year), StoreSeed, Index + 1);
+                            }
+                            else
+                                ShowIDGen(table, id, CurrentState, Index);
                         }
                     }
-                    tiny.nextState(state);
+                    tiny.nextState(CurrentState);
                 }
                 TotalSeconds += Jump; TinySeed += 1000 * Jump;
-                state = tiny.init(TinySeed, 2);
+                CurrentState = tiny.init(TinySeed, 2);
             }
             while (Working);
+        }
+
+        private void ShowIDSrch(ID id, string date, uint[] store_seed, uint index)
+        {
+            Invoke(new Action(() =>
+            {
+                Searcher.Rows.Add(date,
+                hex(store_seed[3]), hex(store_seed[2]), hex(store_seed[1]), hex(store_seed[0]),
+                index - 1, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'),
+                id.TSV.ToString().PadLeft(4, '0'), id.TRV.ToString("X"), hex(id.randhex));
+            }));
+        }
+        private void ShowIDGen(DataTable table, ID id, uint[] state, uint index)
+        {
+            table.Rows.Add(index, id.trainerID.ToString().PadLeft(5, '0'), id.secretID.ToString().PadLeft(5, '0'), id.TSV.ToString().PadLeft(4, '0'), 
+                id.TRV.ToString("X"), hex(id.randhex), hex(state[3]), hex(state[2]), hex(state[1]), hex(state[0]));
         }
         #endregion
 
