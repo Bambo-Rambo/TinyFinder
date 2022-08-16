@@ -1222,7 +1222,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1121, 543);
+            this.Generator.Size = new System.Drawing.Size(1121, 545);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1495,6 +1495,7 @@ namespace TinyFinder
             this.TIDBOX.TabIndex = 53;
             this.TIDBOX.Text = "TID";
             this.TIDBOX.UseVisualStyleBackColor = true;
+            this.TIDBOX.CheckedChanged += new System.EventHandler(this.TIDBOX_CheckedChanged_1);
             // 
             // SIDBOX
             // 
@@ -1507,6 +1508,7 @@ namespace TinyFinder
             this.SIDBOX.TabIndex = 54;
             this.SIDBOX.Text = "SID";
             this.SIDBOX.UseVisualStyleBackColor = true;
+            this.SIDBOX.CheckedChanged += new System.EventHandler(this.SIDBOX_CheckedChanged);
             // 
             // NavFilters
             // 

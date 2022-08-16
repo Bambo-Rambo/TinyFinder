@@ -432,11 +432,10 @@ namespace TinyFinder
             mersenne.SetGame(XY_Button.Checked);
         }
 
-        private void TIDBOX_CheckedChanged(object sender, EventArgs e)
+        private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
         {
             tid.Enabled = TIDBOX.Checked;
         }
-
         private void SIDBOX_CheckedChanged(object sender, EventArgs e)
         {
             sid.Enabled = SIDBOX.Checked;
@@ -1021,6 +1020,7 @@ namespace TinyFinder
             }
             catch { } //???
         }
+        
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
