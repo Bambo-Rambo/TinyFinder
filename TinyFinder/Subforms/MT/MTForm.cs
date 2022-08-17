@@ -15,13 +15,21 @@ namespace TinyFinder.Subforms.MT
         Data data = new Data();
         List<int> SelectedNatures = new List<int>();
 
+        bool[] DefaultIVs;
         int IVcount, ShinyCount = 0;
         uint StartSeed, EndSeed, Min, Max, TSV, Desired_PID;
         byte TRV, Count8 = 0;
         byte Min_hp, Min_atk, Min_def, Min_spA, Min_spD, Min_spe, Max_hp, Max_atk, Max_def, Max_spA, Max_spD, Max_spe;
 
         byte Category, ShininessType;
-        bool Fast, AnyTSV, EC, PossibleHA;
+        bool Fast, AnyTSV, EC, PossibleHA, SpecificIV, LockedAbility;
+
+        private void IVSetting_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            PerfectIVs.Visible = IVSetting.SelectedIndex == 0;
+            IVList.Visible = IVSetting.SelectedIndex == 1;
+        }
+
         string[] Natures;
         char UnownLetter1, UnownLetter2, UnownLetter3;
 
@@ -36,11 +44,14 @@ namespace TinyFinder.Subforms.MT
             DoubleBuffer(EC_DGV);
             DoubleBuffer(Seed_DGV);
             Gen6Categories.SelectedIndex = 0; ShinyType.SelectedIndex = 3;
+            IVSetting.SelectedIndex = 0;
             CurrentTSV.Value = (uint)Properties.Settings.Default.PSVs;
             CurrentTRV.Value = (uint)Properties.Settings.Default.PRVs;
             Natures = data.GetNatures();
             DefaulPositions();
             TargetDate.Text = DateTime.Now.ToString("yyyy-MM-dd");
+            AbilityLocked.Location = new Point(275, 219);
+            HAPossible.Location = new Point(275, 238);
         }
         private void MTForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -58,17 +69,22 @@ namespace TinyFinder.Subforms.MT
 
             NiceEC.Visible = Category == 4;
 
-            HAPossible.Visible = Category < 2;
+            AbilityLocked.Visible = HAPossible.Visible = Category < 2;
 
             PID_Label.Visible = PIDBox.Visible = Category > 0 && Category < 4;
             PID_Label.Text = Category == 4 ? "PID/EC" : Category == 2 ? "EC" : "PID";
 
-            CalcUnown.Visible = Nature_Label.Visible = NaturesCBox.Visible = Category != 2 && Category != 5;
+            ShowUnown.Visible = Nature_Label.Visible = NaturesCBox.Visible = Category != 2 && Category != 5;
 
             HP_Label.Enabled = ATK_Label.Enabled = DEF_Label.Enabled = SPA_Label.Enabled = SPD_Label.Enabled = SPE_Label.Enabled =
                 MinHP.Enabled = MinAtk.Enabled = MinDef.Enabled = MinSpA.Enabled = MinSpD.Enabled = MinSpe.Enabled =
                 MaxHP.Enabled = MaxAtk.Enabled = MaxDef.Enabled = MaxSpA.Enabled = MaxSpD.Enabled = MaxSpe.Enabled =
-                Set_Label.Enabled = SettingsIVs.Enabled = PerfectIV_Label.Visible = PerfectIVs.Visible = Category != 5;
+                Set_Label.Enabled = SettingsIVs.Enabled = IVType_Label.Visible = 
+                IVSetting.Visible = PerfectIV_Label.Visible = PerfectIVs.Visible = Category != 5;
+
+            IVType_Label.Enabled = IVSetting.Enabled = Category < 2;
+            if (Category >= 2)
+                IVSetting.SelectedIndex = 0;
 
             EC_DGV.Visible = Category == 2;
             HORDE_DGV.Visible = ShiniesLabel.Visible = HordeShinies.Visible = AnyTSVBox.Visible = FastBox.Visible = Category == 5;
@@ -152,7 +168,7 @@ namespace TinyFinder.Subforms.MT
                 {
                     StartSeed = Start_Seed.Value; EndSeed = End_Seed.Value;
                     Min = (uint)MinFrame.Value; Max = (uint)MaxFrame.Value;
-                    IVcount = (int)PerfectIVs.Value;
+                    IVcount = IVSetting.SelectedIndex == 0 ? (int)PerfectIVs.Value : 0;
                     ShininessType = (byte)ShinyType.SelectedIndex;
 
                     if (Category != 5)
@@ -161,12 +177,23 @@ namespace TinyFinder.Subforms.MT
                         EC_DGV.Rows.Clear();
 
                         PID_EC_Col.HeaderText = PID_Label.Text;
-                        UnownCol1.Visible = UnownCol2.Visible = UnownCol3.Visible = CalcUnown.Checked;
+                        AbilityCol.Visible = !AbilityLocked.Checked;
+                        UnownCol1.Visible = UnownCol2.Visible = UnownCol3.Visible = ShowUnown.Checked;
                         Count8Col.Visible = Category == 4;
 
                         EC = Category == 2;
-                        PossibleHA = HAPossible.Checked;
+                        LockedAbility = AbilityLocked.Checked && Category < 2;
+                        PossibleHA = HAPossible.Checked && Category < 2;
                         Desired_PID = PIDBox.Value;
+
+                        SpecificIV = IVSetting.SelectedIndex == 1;
+                        DefaultIVs = new bool[6];
+                        if (Category < 2)
+                        {
+                            for (byte i = 1; i < 7; i++)
+                                    if (IVList.CheckBoxItems[i].Checked)
+                                        DefaultIVs[i - 1] = true;
+                        }
 
                         Min_hp = (byte)MinHP.Value; Max_hp = (byte)MaxHP.Value;
                         Min_atk = (byte)MinAtk.Value; Max_atk = (byte)MaxAtk.Value;

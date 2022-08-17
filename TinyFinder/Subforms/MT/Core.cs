@@ -15,6 +15,15 @@ namespace TinyFinder.Subforms.MT
 
 
         #region Functions
+        public void IVPrepare(int[] IVs)    //Only when the user sets specific perfect IVs
+        {
+            if (SpecificIV)
+            {
+                for (byte i = 0; i < 6; i++)
+                    if (DefaultIVs[i])
+                        IVs[i] = 31;
+            }
+        }
         public bool FindIVsNature(int[] IVs, ref string Nature, ref byte Ability, uint[] PIDList, uint frame)
         {
             for (int j = IVcount; j > 0;)
@@ -36,12 +45,14 @@ namespace TinyFinder.Subforms.MT
 
             if (CheckIVs(IVs))
             {
-                if (SelectedNatures.Contains((int)rand(PIDList[frame + 2], 25)) || SelectedNatures.Count == 0)
+                if (SelectedNatures.Contains((int)rand(PIDList[frame + (LockedAbility ? 1 : 2)], 25)) || SelectedNatures.Count == 0)
                 {
-                    Ability = (byte)((PossibleHA ? rand(PIDList[frame + 1], 3) : PIDList[frame + 1] >> 31) + 1);
-                    Nature = Natures[(int)rand(PIDList[frame + 2], 25)];
+                    if (!LockedAbility)
+                        Ability = (byte)((PossibleHA ? rand(PIDList[frame + 1], 3) : PIDList[frame + 1] >> 31) + 1);
 
-                    if (CalcUnown.Checked)
+                    Nature = Natures[(int)rand(PIDList[frame + (LockedAbility ? 1 : 2)], 25)];
+
+                    if (ShowUnown.Checked)
                     {
                         UnownLetter3 = FindUnown((byte)rand(PIDList[frame + 1], 28));
                         UnownLetter2 = FindUnown((byte)rand(PIDList[frame + 2], 28));
@@ -62,8 +73,18 @@ namespace TinyFinder.Subforms.MT
         }
         private bool CheckIVs(int[] IVs)
         {
-            return IVs[0] >= Min_hp && IVs[1] >= Min_atk && IVs[2] >= Min_def && IVs[3] >= Min_spA && IVs[4] >= Min_spD && IVs[5] >= Min_spe &&
-                            IVs[0] <= Max_hp && IVs[1] <= Max_atk && IVs[2] <= Max_def && IVs[3] <= Max_spA && IVs[4] <= Max_spD && IVs[5] <= Max_spe;
+            return IVs[0] >= Min_hp 
+                && IVs[1] >= Min_atk 
+                && IVs[2] >= Min_def 
+                && IVs[3] >= Min_spA 
+                && IVs[4] >= Min_spD 
+                && IVs[5] >= Min_spe 
+                && IVs[0] <= Max_hp 
+                && IVs[1] <= Max_atk 
+                && IVs[2] <= Max_def 
+                && IVs[3] <= Max_spA 
+                && IVs[4] <= Max_spD 
+                && IVs[5] <= Max_spe;
         }
 
         void AddToListPID(uint seed, uint frame, uint pid, uint psv, byte prv, int[] IVs, string Nature, byte Ability, char Unown1, char Unown2, char Unown3)
@@ -80,7 +101,6 @@ namespace TinyFinder.Subforms.MT
         }
         #endregion
 
-
         #region IVs
         public void IVResearch(uint IVSeed, uint step)
         {
@@ -91,6 +111,7 @@ namespace TinyFinder.Subforms.MT
             uint[] PIDList = new uint[Max + 20];
             string Nature = "";
             byte Ability = 0;
+            
 
             while (IVSeed < EndSeed)
             {
@@ -105,20 +126,28 @@ namespace TinyFinder.Subforms.MT
                     PIDList[frame + 20] = mt.Nextuint();
                     Current_PSV = GetPSV(PIDList[frame]);
 
-                    if (TSV == Current_PSV && FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
+                    if (TSV == Current_PSV)             //Shiny found, proceed with the rest of the checks
                     {
-                        byte Current_TRV = GetPRV(PIDList[frame]);
-                        if (ShininessType != 3)
+                        IVPrepare(IVs = new int[6]);    //Only when the user sets specific perfect IVs
+                        if (FindIVsNature(IVs, ref Nature, ref Ability, PIDList, frame))
                         {
-                            if ((ShininessType == 2 && Current_TRV == TRV) || (ShininessType == 1 && Current_TRV != TRV) || ShininessType == 0)
+                            byte Current_TRV = GetPRV(PIDList[frame]);
+                            if (ShininessType != 3)
+                            {
+                                if ((ShininessType == 2 && Current_TRV == TRV) || (ShininessType == 1 && Current_TRV != TRV) || ShininessType == 0)
+                                    AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
+                            }
+                            else
                                 AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                         }
-                        else
-                            AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, Current_TRV, IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                     }
                     else if (ShininessType == 0)
+                    {
+                        IVPrepare(IVs = new int[6]);
                         if (FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
                             AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, GetPRV(PIDList[frame]), IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
+                    }
+                        
                 }
                 IVSeed += step;
             }
@@ -151,6 +180,8 @@ namespace TinyFinder.Subforms.MT
                     {
                         uint ActualFrame = EC ? frame + 1 : frame;
                         int[] IVs1 = new int[6];
+                        IVPrepare(IVs1);        //Only when the user sets specific perfect IVs
+
                         if (!EC && FindIVsNature(IVs1, ref Nature, ref Ability, PIDList, ActualFrame))
                             AddToListPID(PIDSeed, ActualFrame, Desired_PID, GetPSV(PIDList[ActualFrame]), GetPRV(PIDList[ActualFrame]), IVs1, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                         else if (EC)
@@ -512,7 +543,7 @@ namespace TinyFinder.Subforms.MT
             DateTime Finaldate = CitraRTC;
             uint SecondsAdd = Offset;
 
-            int SaveDelay = XY_MTButton.Checked ? 24 : 26;
+            int SaveDelay = XY_MTButton.Checked ? 24 : 26;  //23 : 25; for 3ds
             MersenneTwister_Fast rng;
 
 
