@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using TinyFinder.RNG;
 
 namespace TinyFinder.Subforms.MT
@@ -100,6 +101,7 @@ namespace TinyFinder.Subforms.MT
             Invoke(new Action(() => { EC_DGV.Rows.Add(Seed, Frame, EC, IVList1, IVList2); }));
         }
         #endregion
+
 
         #region IVs
         public void IVResearch(uint IVSeed, uint step)
@@ -536,7 +538,7 @@ namespace TinyFinder.Subforms.MT
         private void SeedResearch(uint SecondsAdvance, uint Offset)
         {
             uint Frame300Seed = Frame300.Value;
-            uint NewSavePar = calc.FindSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
+            uint RequiredSavePar = calc.FindSavePar(CitraRTC, CurrentSavePar.Value, Frame300Seed, Target.Value);
 
             Frame300Seed += Offset * 1000;  //Start seed will be different for each thread obviously
 
@@ -546,36 +548,27 @@ namespace TinyFinder.Subforms.MT
             int SaveDelay = XY_MTButton.Checked ? 24 : 26;  //23 : 25; for 3ds
             MersenneTwister_Fast rng;
 
-
             if (!SpecificTime.Checked)
             {
-                uint SavePar;
+                uint CurrentSavePar;
                 rng = new MersenneTwister_Fast(Frame300Seed);
 
                 for (uint frame = 0; frame < 200000; frame++)
                 {
-                    SavePar = rng.Nextuint();
+                    CurrentSavePar = rng.Nextuint();
 
-                    if (SpecificDate.Checked)
+                    if ((RequiredSavePar - CurrentSavePar) % 1000 == 0)     //If Save parameter works, check if the dates match unless the user doesn't care
                     {
-                        //86400000 is the total MS in a day. For every 1000 added to the Save Par, the seconds are increased by 1
+                        DateTime NewDate = Finaldate.AddSeconds((RequiredSavePar - CurrentSavePar) / 1000);
 
-                        //for (uint j = NewSavePar - 86400000; j <= NewSavePar; j += 1000)      <- Slow
-                                //if (SavePar == j)
-
-                        if (!(SavePar >= NewSavePar - 86400000 && SavePar <= NewSavePar && ((SavePar - (NewSavePar - 86400000)) % 1000 == 0)))
-                            continue;
+                        if ((Finaldate.Day == NewDate.Day && Finaldate.Month == NewDate.Month && Finaldate.Year == NewDate.Year) || !SpecificDate.Checked)
+                        {
+                            Invoke(new Action(() =>
+                            {
+                                Seed_DGV.Rows.Add(null, hex(Frame300Seed), frame - SaveDelay, hex(CurrentSavePar), calc.Check_DST(Finaldate, (RequiredSavePar - CurrentSavePar) / 1000));
+                            }));
+                        } 
                     }
-                    else
-                    {
-                        if (!((NewSavePar - SavePar) % 1000 == 0))
-                            continue;
-                    }
-
-                    Invoke(new Action(() =>
-                    {
-                        Seed_DGV.Rows.Add(null, hex(Frame300Seed), frame - SaveDelay, hex(SavePar), calc.Check_DST(Finaldate, (NewSavePar - SavePar) / 1000));
-                    }));
 
                 }
                 Invoke(new Action(() => { Finished(); }));
@@ -591,11 +584,11 @@ namespace TinyFinder.Subforms.MT
                         rng.Nextuint();
                     for (uint frame = 2000; frame < 10000; frame++)
                     {
-                        if (rng.Nextuint() == NewSavePar)
+                        if (rng.Nextuint() == RequiredSavePar)
                         {
                             Invoke(new Action(() =>
                             {
-                                Seed_DGV.Rows.Add(calc.Check_DST(Finaldate, SecondsAdd), hex(Frame300Seed), frame - SaveDelay, hex(NewSavePar), null);
+                                Seed_DGV.Rows.Add(calc.Check_DST(Finaldate, SecondsAdd), hex(Frame300Seed), frame - SaveDelay, hex(RequiredSavePar), null);
                             }));
                         }
                     }
