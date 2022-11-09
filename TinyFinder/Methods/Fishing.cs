@@ -1,46 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using TinyFinder.Main;
+using TinyFinder.Properties;
 
 namespace TinyFinder
 {
     internal class Fishing : Index
     {
-        public byte Advances;
-        public ushort ActualDelay;
-        public string timeline;
-        public bool ShortBlinkHappened;
-
         public static int getcooldown1(uint rand) => (int)((rand * 60ul) >> 32) * 2 + 124;      //Long Blink duration > 124
         public static int getcooldown2(uint rand) => rand > 0x55555555 ? 12 : 20;               //Short blink duration 12/20
+        public bool ShortBlinkHappened;
 
-        public uint[] FindStateHit(uint[] currentState, int TargetFrame, bool Citra, int DelayRand, int GameCorrection)
+        public Fishing(uint[] currentState, UISettings current)
         {
             currentState.CopyTo(temp, 0);
             List<int> Timeline = new List<int>();
-            Timeline.Add(TargetFrame + DelayRand);
+            Timeline.Add(current.targetFrame + current.delayRand);
 
             rand100 = CurrentRand(100);
 
-            for (byte i = 0; i < Advances; i++)
+            for (byte i = 0; i < current.advances; i++)
             {
                 Advance();
             }
 
             uint FirstRand = tiny.temper(temp);
-            int TotalFrames = getcooldown1(FirstRand) + DelayRand - GameCorrection;     //DelayRand is the frame where the delay is calculated for each location
-                                                                                        //GameCorrection is 144/146 for XY, custom for ORAS
-            Timeline.Add(TargetFrame + TotalFrames);
+
+            //DelayRand is the frame where the delay is calculated for each location
+            //GameCorrection is 144/146 for XY, custom for ORAS
+            int TotalFrames = getcooldown1(FirstRand) + current.delayRand - current.gameCorrection;     
+                                                                                                         
+            Timeline.Add(current.targetFrame + TotalFrames);
 
             Advance();
 
-            if (TotalFrames < DelayRand)                            //!!! First blink already happened BEFORE before delay rand call !!!
+            if (TotalFrames < current.delayRand)                    //!!! First blink already happened BEFORE before delay rand call !!!
             {
                 if (tiny.temper(temp) > 0x55555555)                 //Second blink (before delay) is long (Blink +2)
                 {
                     Advance();
                     TotalFrames += getcooldown1(tiny.temper(temp));
-                    Timeline.Add(TargetFrame + TotalFrames);
+                    Timeline.Add(current.targetFrame + TotalFrames);
 
                     Advance();
 
@@ -51,13 +53,13 @@ namespace TinyFinder
                     Advance();
 
                     TotalFrames += getcooldown2(tiny.temper(temp));
-                    Timeline.Add(TargetFrame + TotalFrames);
+                    Timeline.Add(current.targetFrame + TotalFrames);
                     Advance();
 
-                    if (TotalFrames < DelayRand)                                    //Delay rand was called AFTER the next blink
+                    if (TotalFrames < current.delayRand)                            //Delay rand was called AFTER the next blink
                     {                                                               //We know there was just a short blink, otherwise we wouldn't reach here
                         TotalFrames += getcooldown1(tiny.temper(temp));             //so the next blink is long for sure
-                        Timeline.Add(TargetFrame + TotalFrames);
+                        Timeline.Add(current.targetFrame + TotalFrames);
                         Advance();
 
                         ShortBlinkHappened = false;
@@ -74,8 +76,8 @@ namespace TinyFinder
             }
 
           //ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + SystemDelay + BagDelay + 144); //+4 for azure bay only??
-            ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + DelayRand - 2);
-            if (Citra)
+            ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + current.delayRand - 2);
+            if (current.citra)
                 ActualDelay++;
 
 
@@ -99,31 +101,21 @@ namespace TinyFinder
                     ShortBlinkHappened = true;
                 }
 
-                Timeline.Add(TargetFrame + TotalFrames);
+                Timeline.Add(current.targetFrame + TotalFrames);
             }
 
-            Timeline.Add(TargetFrame + ActualDelay);
+            Timeline.Add(current.targetFrame + ActualDelay);
             Timeline.Sort();
             timeline = string.Join(" → ", Timeline.Take(Timeline.Count - 1)) + " (" + Timeline.LastOrDefault() + ")";
 
-            return temp;
-        }
-
-        public void GenerateFishing(uint[] currentState, byte ratio, bool oras)
-        {
-            Wild fishing = new Wild()
-            {
-                slotType = 3,
-                Noise = 0,
-            };
-            fishing.GenerateIndex(currentState, ratio, oras, false, false);
-
+            Wild fishing = new Wild(temp, current);
             Sync = fishing.Sync;
             encounter = fishing.encounter;
             trigger = fishing.trigger;
             slot = fishing.slot;
-            if (oras)
+            if (current.oras)
                 flute = fishing.flute;
+            itemSlot = fishing.itemSlot;
         }
     }
 }

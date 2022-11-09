@@ -1,16 +1,48 @@
-﻿namespace TinyFinder
+﻿using TinyFinder.Main;
+
+namespace TinyFinder
 {
     class Wild : Index
     {
-        //Normal, Fishing, Friend Safari
-        //Rock Smash
-        //Swooping
-
-        //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
-        public void GenerateIndex(uint[] currentState, byte ratio, bool oras, bool MayStepHorde, bool XY_TallGrass)
+        public Wild(uint[] currentState, UISettings current)
         {
             currentState.CopyTo(temp, 0);
 
+            //slotType = current.sType;
+            switch (current.method)
+            {
+                case 1:                 // Normal Wild
+                    NormalWild(current.ratio, current.noise, current.oras, current.movingHordes, current.radarGrass, current.sType);
+                    break;
+
+                case 2:                 // Fishing
+
+                    NormalWild(current.ratio, 0, current.oras, false, false, 3);
+                    break;
+
+                case 3:                 // Rock Smash
+
+                    RockSmash(current.oras);
+                    break;
+
+                case 5:                 // Honey Wild
+                    HoneyWild(current.oras, current.advances, current.sType);
+                    break;
+
+                case 7:                 // Friend Safari
+                    NormalWild(current.ratio, 0, false, false, false, current.sType);
+                    break;
+
+                case 8:                 // Swooping
+
+                    Swooping();
+                    break;
+            }
+        }
+
+        //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
+        public void NormalWild(byte ratio, byte Noise, bool oras, bool MayStepHorde, bool RadarGrass, byte SlotType)
+        {
             for (byte i = 0; i < Noise; i++)                //NPC Noise taken into account before everything else
                 Advance();
 
@@ -22,25 +54,25 @@
             Sync = CurrentRand(100) < 50;
 
             encounter = RandCall(100);
-
             trigger = encounter < ratio && (!MayStepHorde || rand100 > 4);
 
-            if (XY_TallGrass)                               //Unknown reason
+            if (RadarGrass)
                 Advance();
 
-            slot = data.getSlot(RandCall(100), slotType);
+            slot = data.getSlot(RandCall(100), SlotType);
 
             if (oras)
                 flute = Findflute();
+
+            itemSlot = FindItem();
         }
 
-        public void RockSmash(uint[] currentState, bool oras)
+        public void RockSmash(bool oras)
         {
-            currentState.CopyTo(temp, 0);
-
             rand100 = RandCall(100);
 
             encounter = CurrentRand(3);
+            trigger = encounter == 0;       // 0 => Pokemon, 1 => item, 2 => nothing
 
             Sync = RandCall(100) < 50;
 
@@ -48,51 +80,40 @@
 
             if (oras)
                 flute = Findflute();
+
+            itemSlot = FindItem();
         }
 
-        public void Swooping(uint[] currentState)
+        public void HoneyWild(bool oras, byte advances, byte SlotType)
         {
-            currentState.CopyTo(temp, 0);
+            rand100 = RandCall(100);
 
+                                                      // 3 if Cave / ORAS underwater
+            for (byte i = 0; i < advances; i++)       // 27 if XY
+                Advance();                            // 15 if ORAS
+                                                      // 6 if ORAS Magma/Aqua Hideout
+
+            Sync = CurrentRand(100) < 50;
+
+            slot = data.getSlot(RandCall(100), SlotType);
+
+            if (oras)
+                flute = Findflute();
+
+            itemSlot = FindItem();
+        }
+
+        public void Swooping()
+        {
             rand100 = CurrentRand(100);
 
             slot = data.getSlot(RandCall(100), 0);
 
             Sync = RandCall(100) < 50;
 
+            itemSlot = FindItem();
         }
 
-        public byte Findflute()
-        {
-            Advance();
-
-            if (CurrentRand(100) < 40)
-                return 1;
-
-            else if (CurrentRand(100) < 70)
-                return 2;
-
-            else if (CurrentRand(100) < 90)
-                return 3;
-
-            else 
-                return 4;
-
-
-            /*Advance();
-              Advance();
-
-            if (CurrentRand(100) < 50)
-                item = 50;
-
-            else if (CurrentRand(100) < 55)
-                item = 5;
-
-            else if (CurrentRand(100) < 56)
-                item = 1;
-
-            else 
-                item = 0;*/
-        }
     }
+
 }

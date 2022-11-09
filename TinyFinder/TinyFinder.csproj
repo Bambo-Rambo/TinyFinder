@@ -90,6 +90,14 @@
     </Compile>
     <Compile Include="Controls\Index.cs" />
     <Compile Include="Controls\Location.cs" />
+    <Compile Include="Database\LocationsORAS.cs" />
+    <Compile Include="Database\LocationsXY.cs" />
+    <Compile Include="Database\Species.cs" />
+    <Compile Include="Database\SpeciesAS.cs" />
+    <Compile Include="Database\SpeciesOR.cs" />
+    <Compile Include="Database\SpeciesX.cs" />
+    <Compile Include="Database\SpeciesY.cs" />
+    <Compile Include="Main\UISettings.cs" />
     <Compile Include="Main\FindResults.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,10 +107,11 @@
     <Compile Include="Main\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Main\PrepareIndex.cs" />
+    <Compile Include="Main\SortRowsTinyMT.cs" />
     <Compile Include="Methods\Fishing.cs" />
     <Compile Include="Methods\ID.cs" />
     <Compile Include="Methods\DexNav.cs" />
-    <Compile Include="Methods\HoneyWild.cs" />
     <Compile Include="Methods\Horde.cs" />
     <Compile Include="RNG\MT.cs" />
     <Compile Include="Subforms\MT\Core.cs">

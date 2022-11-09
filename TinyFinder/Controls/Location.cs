@@ -1,22 +1,127 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace TinyFinder
 {
     class Location
     {
         public string Name;
         public byte NPC;
-        public bool Has_Hordes;
-        public byte ratio;
-        public bool Tall_Grass;
+        public byte Enc_Ratio;
         public byte Bag_Advances;
 
         public int CitraDelayRand;
         public int ConsoleDelayRand;
         public int CitraORASCorr;
         public int ConsoleORASCorr;
+
+        public ushort   [] GrassTable;
+        public ushort   [] LongTable;
+        public ushort   [] CaveTable;
+        public ushort   [] RideTable;
+        public int      [] WildLevel;
+
+        public ushort   [] RedTable;
+        public int      [] RedLevel;
+        public ushort   [] YellowTable;
+        public int      [] YellowLevel;
+        public ushort   [] PurpleTable;
+        public int      [] PurpleLevel;
+
+        public ushort   [] SwampTable;
+        public int      [] SwampLevel;
+
+        public ushort   [] HordeTable;
+        public ushort   [] HordeTable2;
+        public int      [] HordeLevel;
+
+        public ushort   [] SurfTable;
+        public int      [] SurfLevel;
+
+        public ushort   [] OldTable;
+        public int      [] OldLevel;
+
+        public ushort   [] GoodTable;
+        public int      [] GoodLevel;
+
+        public ushort   [] SuperTable;
+        public int      [] SuperLevel;
+
+        public ushort   [] SmashTable;
+        public int      [] SmashLevel;
+
+        public ushort   [] DexNavTable;
+        public int         DexNavLevel;
+
+        public ushort   [] SwoopingTable;
+        public int      [] SwoopingLevel;
+
+
+        public bool HasNormalWild()
+        {
+            return !(
+                GrassTable == null && 
+                LongTable == null && 
+                CaveTable == null && 
+                RedTable == null && 
+                YellowTable == null &&
+                PurpleTable == null &&
+                SwampTable == null && 
+                RideTable == null && 
+                SurfTable == null);
+        }
+
+        public bool HasMovingHordes()
+        {
+            return !(
+                GrassTable == null &&
+                LongTable == null &&
+                CaveTable == null &&
+                RedTable == null &&
+                YellowTable == null &&
+                PurpleTable == null) && HordeTable != null;
+        }
+
+        public bool HasHoneyWild()
+        {
+            if (SurfTable != null || SwampTable != null)
+                return true;
+
+            if (HordeTable == null && RideTable == null)
+            {
+                if (!(GrassTable == null &&
+                    LongTable == null &&
+                    CaveTable == null &&
+                    RedTable == null &&
+                    YellowTable == null &&
+                    PurpleTable == null))
+                    return true;
+            }
+            return false;
+        }
+
+        // Unused
+        public bool HasFishing()
+        {
+            return OldTable != null && GoodTable != null && SuperTable != null;
+        }
+
+        public bool HasRadar()
+        {
+            return !(
+                GrassTable == null  && 
+                RedTable == null && 
+                YellowTable == null && 
+                PurpleTable == null);
+        }
+
+        public bool HasDexNav()
+        {
+            return !(
+                GrassTable == null &&
+                LongTable == null &&
+                CaveTable == null &&
+                SurfTable == null &&
+                DexNavTable == null);
+        }
+
     }
 }

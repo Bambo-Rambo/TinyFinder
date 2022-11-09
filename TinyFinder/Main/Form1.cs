@@ -1,40 +1,61 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Reflection;
 using TinyFinder.Subforms.MT;
+using TinyFinder.Main;
+using System.Linq;
 
 namespace TinyFinder
 {
     public partial class Form1 : Form
     {
-        DataTable table;
-        HashSet<byte> Slots;
-        List<Location> Locations;
-        Calculate calc = new Calculate();
-        TinyMT tiny = new TinyMT();
+        private string DexToName(int dex) => Species.SpeciesList.ElementAt(dex).Name;
+        private string SelectedSpecies => SpeciesCombo.SelectedItem.ToString();
+        byte SelectedLocation => (byte)locationsComboBox.SelectedIndex;
+        Location CurrentLocation => listOfLocations.ElementAt(SelectedLocation);
+        private ushort[] GetWildTable => CurrentLocation.GrassTable;
+        private ushort[] GetCaveTable => CurrentLocation.CaveTable;
+        private ushort[] GetLongTable => CurrentLocation.LongTable;
+        private ushort[] GetRedTable => CurrentLocation.RedTable;
+        private ushort[] GetYellowTable => CurrentLocation.YellowTable;
+        private ushort[] GetPurpleTable => CurrentLocation.PurpleTable;
+        private ushort[] GetSwampTable => CurrentLocation.SwampTable;
+        private ushort[] GetHordeTable => CurrentLocation.HordeTable;
+        private ushort[] GetSurfTable => CurrentLocation.SurfTable;
+        private ushort[] GetOldTable => CurrentLocation.OldTable;
+        private ushort[] GetGoodTable => CurrentLocation.GoodTable;
+        private ushort[] GetSuperTable => CurrentLocation.SuperTable;
+        private ushort[] GetSmashTable => CurrentLocation.SmashTable;
+        private ushort[] GetNavTable => CurrentLocation.DexNavTable;
+        private ushort[] GetSwoopingTable => CurrentLocation.SwoopingTable;
+        private List<ushort> GetFSList => Species.getFSList();
+
+        bool MovingHordeOption => Method == 4 && EncounterType.SelectedIndex == 1;      // User selected moving horde method
+        private bool HasExclusives => GetNavTable != null;
+        bool ORAS => GameVersion.SelectedIndex > 1;
+        bool IsDexNav => Method == 6 && ORAS;
+        
+
+        private bool isRadar1 => Method == 6 && !ORAS && ratio.Value > 0;
+
+        bool Surfing => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Water");
+        bool LongGrass => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Long Grass");
+        bool Swampy => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Swamp");
+        byte Method => (byte)Methods.SelectedIndex;
+
+
         Data data = new Data();
         NTRHelper ntrhelper;
         MTForm mersenne;
-        byte MethodUsed;
-        bool Calibrated = false, Working, filters;
-        int Rand100Column;
-        int OriginalSpeciesCount;
+        Calculate calc = new Calculate();
 
-        struct PatchSpot
-        {
-            public uint RadarIndex;
-            public uint RadarState3;
-            public string[] RadarSpots;
-        }
-        PatchSpot element = new PatchSpot();
-        List<PatchSpot> GPatchSpots = new List<PatchSpot>();
-        List<PatchSpot> SPatchSpots = new List<PatchSpot>();
-        object[,] SlotSpecies;
-        private string hex(uint dec) => dec.ToString("X").PadLeft(8, '0');
-        private bool isRadar1() => XY_Button.Checked && Methods.SelectedIndex == 6 && ratio.Value > 0;
+        bool[] SelectedSlots;
+        bool AllowCellFormatting, ascending;
+        uint[] GeneratorState = new uint[4];
+
+        List<Location> listOfLocations;
 
         public Form1()
         {
@@ -44,35 +65,41 @@ namespace TinyFinder
         #region GUI Events
         private void Form1_Load(object sender, EventArgs e)
         {
-            t3.Text = t2.Text = t1.Text = t0.Text = "";     //Faster copy paste for Citra
-            Generator.Size = new Size(1121, 315);           //Size breaks for some reason
+            t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
+            Generator.Size = new Size(1170, 315);           // Size breaks for some reason
 
-            XY_Button.Checked = true;
+            SearchGen.SelectedIndex = 1;
+            GameVersion.SelectedIndex = 0;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
-            Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            //Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
 
             ThreadCount.Value = Properties.Settings.Default.CPUs == 0 ? Environment.ProcessorCount : Properties.Settings.Default.CPUs;
             ThreadCount.Maximum = Environment.ProcessorCount;
 
             DefaultChanges();
-            ManageControls(0);
+            Methods.SelectedIndex = 0;
         }
 
-        //Main Event (Search Button)
+        // Main Event (Search Button)
         private void MainButton_Click(object sender, EventArgs e)
         {
-            MainButton.Enabled = SearchGen.SelectedIndex == 1;
-            filters = sender == IgnoreFiltersButton;
-            StartSearch();
+            AllowCellFormatting = ascending = false;
+            MainButton.Enabled = IgnoreFiltersButton.Enabled = SearchGen.SelectedIndex == 1;
+            NoFilters = sender == IgnoreFiltersButton;
+            Prepare();
         }
         private void StopButton_Click(object sender, EventArgs e)
         {
             Finished();
         }
-        private void Finished() //For future use
+        private void Finished()
         {
+            if (DateSearcher)
+                for (uint i = 0; i < ThreadsUsed; i++)
+                    jobs[i].Abort();
+
             StopButton.Enabled = Working = false;
-            MainButton.Enabled = true;
+            MainButton.Enabled = IgnoreFiltersButton.Enabled = true;
             MainButton.Text = SearchGen.SelectedIndex == 0 ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
         }
         private void ThreadCount_ValueChanged(object sender, EventArgs e)
@@ -80,147 +107,473 @@ namespace TinyFinder
             Properties.Settings.Default.CPUs = (int)ThreadCount.Value;
             Properties.Settings.Default.Save();
         }
-        private void xyRadio_CheckedChanged(object sender, EventArgs e)
+
+        private void GameVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Methods.Items[6] = "Radar";
-            if (Methods.Items.Count == 7)
+            if (GameVersion.SelectedIndex <= 1)
             {
-                Methods.Items.Add("Friend Safari");
-                Methods.Items.Add("Swooping");
+                Methods.Items[6] = "Radar";
+                if (Methods.Items.Count != 9)
+                {
+                    Methods.Items.Add("Friend Safari");
+                    Methods.Items.Add("Swooping");
+                }
             }
-            ManageControls(0);
+            else
+            {
+                Methods.Items[6] = "DexNav";
+                Methods.Items.Remove("Friend Safari");
+                Methods.Items.Remove("Swooping");
+            }
+
+            Methods.SelectedIndex = 0;
+            ManageControls();
             if (mersenne != null)
-                mersenne.SetGame(XY_Button.Checked);
+                mersenne.SetGame(!ORAS);
         }
-        private void orasRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            Methods.Items.Remove("Friend Safari");
-            Methods.Items.Remove("Swooping");
-            Methods.Items[6] = "DexNav";
-            ManageControls(0);
-            if (mersenne != null)
-                mersenne.SetGame(XY_Button.Checked);
-        }
+
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ManageControls((byte)Methods.SelectedIndex);
+            ManageControls();
         }
 
         private void year_ValueChanged(object sender, EventArgs e)
         {
-            Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            if (SearchGen.SelectedIndex == 0)
+                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
             TinyChanged();
         }
 
         private void party_ValueChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 7)                         //Remove slot 3 if the user hasn't unlocked it
-            {
-                for (int i = 0; i < OriginalSpeciesCount; i++)
-                    if ((int)SlotSpecies[i, 1] == 3)
-                    {
-                        if (party.Value == 2)
-                            Species.Items.Remove(SlotSpecies[i, 0].ToString());
-                        else
-                            Species.Items.Add(SlotSpecies[i, 0].ToString());
-                    }
-                ManageSlots(7);
-            }
-                
+            if (CheckMethod("Friend Safari"))
+                ManageSlots();
         }
         private void ratio_ValueChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 6 && XY_Button.Checked)
+            Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !isRadar1;
+            BonusMusicBox.Enabled = isRadar1;
+        }
+
+        private void EncounterChanged_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageSpecies();
+            ManageRatio();
+
+            if (Method == 4)
             {
-                SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = ratio.Value == 0;
-                BonusMusicBox.Enabled = isRadar1();
+                Rate_Label.Visible = ratio.Visible = MovingHordeOption;
+                Party_Label.Visible = party.Visible = !MovingHordeOption;
             }
-        }
-
-        private void Horde_Turn_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Methods.SelectedIndex == 1 || Methods.SelectedIndex == 4)
-            {
-                CaveBox.Checked = false;
-                CaveBox.Enabled = !(Horde_Turn.Checked && ORAS_Button.Checked);
-                Rate_Label.Visible = ratio.Visible = Horde_Turn.Checked;
-                Party_Label.Visible = party.Visible = !Horde_Turn.Checked;
-                //Location_Label.Visible = locations.Visible = Horde_Turn.Checked;
-                Location_Label.Enabled = locations.Enabled = !CaveBox.Checked;
-                ManageLocations();
-                ManageRatio();
-                if (ORAS_Button.Checked)
-                {
-                    LongGrassBox.Visible = LongGrassBox.Checked = Horde_Turn.Checked;
-                    LongGrassBox.Enabled = false;
-                    ratio.Value = 13;
-                }
-            }
-        }
-
-        private void CaveBox_CheckedChanged(object sender, EventArgs e)
-        {
-            if (Methods.SelectedIndex == 1 && locations.Items.Count != 0)
-                LongGrassBox.Enabled = !CaveBox.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes
-                        && !(locations.SelectedIndex > 5 && locations.SelectedIndex < 9);
-
-            if (Location_Label.Visible)
-            {
-                Location_Label.Enabled = locations.Enabled = !CaveBox.Checked;
-                ManageRatio();
-            }
-        }
-
-        private void SurfBox_CheckedChanged(object sender, EventArgs e)
-        {
-            Location_Label.Visible = locations.Visible = Methods.SelectedIndex == 5 && SurfBox.Checked && ORAS_Button.Checked;
-            Location_Label.Enabled = locations.Enabled = Location_Label.Visible && !CaveBox.Checked;
-            ManageLocations();
-            ManageSlots((byte)Methods.SelectedIndex);
-        }
-
-        private void ExclusiveBox_CheckedChanged(object sender, EventArgs e)
-        {
-            NavType.Enabled = ExclusiveBox.Checked;
-            if (!ExclusiveBox.Checked)
-                NavType.SelectedIndex = 0;
         }
 
         private void location_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (Methods.SelectedIndex == 1)
+            EncounterType.Items.Clear();
+            if (Method == 1)
             {
-                LongGrassBox.Enabled = LongGrassBox.Checked = false;
-                if (ORAS_Button.Checked && Locations[(byte)locations.SelectedIndex].Has_Hordes)
+                if (GetWildTable != null)
+                    EncounterType.Items.Add("Grass");
+                if (GetCaveTable != null)
+                    EncounterType.Items.Add("Cave");
+                if (GetLongTable != null)
+                    EncounterType.Items.Add("Long Grass");
+                if (GetRedTable != null)
+                    EncounterType.Items.Add("Red Flowers");
+                if (GetYellowTable != null)
+                    EncounterType.Items.Add("Yellow Flowers");
+                if (GetPurpleTable != null)
+                    EncounterType.Items.Add("Purple Flowers");
+                if (GetSwampTable != null)
+                    EncounterType.Items.Add("Swamp");
+                if (CurrentLocation.RideTable != null)
+                    EncounterType.Items.Add("Riding");
+                if (GetSurfTable != null)
+                    EncounterType.Items.Add("Water");
+            }
+            else if (Method == 2)
+            {
+                EncounterType.Items.Add("Old Rod");
+                EncounterType.Items.Add("Good Rod");
+                EncounterType.Items.Add("Super Rod");
+            }
+            else if (Method == 4)
+            {
+                EncounterType.Items.Add("Honey");
+                if (!ORAS || (GetLongTable != null))
+                    EncounterType.Items.Add("Moving");
+            }
+            else if (Method == 5)
+            {
+                if (GetHordeTable == null)
                 {
-                    LongGrassBox.Enabled = true;
-                    if (locations.SelectedIndex == 6 || locations.SelectedIndex == 7 || locations.SelectedIndex == 9)
-                    {
-                        LongGrassBox.Enabled = false;
-                        LongGrassBox.Checked = true;
-                    }
+                    if (GetWildTable != null)
+                        EncounterType.Items.Add("Grass");
+                    if (GetRedTable != null)
+                        EncounterType.Items.Add("Red Flowers");
+                    if (GetYellowTable != null)
+                        EncounterType.Items.Add("Yellow Flowers");
+                    if (GetPurpleTable != null)
+                        EncounterType.Items.Add("Purple Flowers");
+                    if (GetLongTable != null)
+                        EncounterType.Items.Add("Long Grass");
+                    if (GetCaveTable != null)
+                        EncounterType.Items.Add("Cave");
                 }
-                ManageRatio();
+                if (GetSwampTable != null)
+                    EncounterType.Items.Add("Swamp");
+                if (GetSurfTable != null)
+                    EncounterType.Items.Add("Water");
+            }
+            else if (Method == 6)
+            {
+                if (GetWildTable != null)
+                    EncounterType.Items.Add("Grass");
+                if (IsDexNav)
+                {
+                    if (GetCaveTable != null)
+                        EncounterType.Items.Add("Cave");
+                    if (GetLongTable != null)
+                        EncounterType.Items.Add("Long Grass");
+                    if (GetSurfTable != null)
+                        EncounterType.Items.Add("Water");
+                }
+                else
+                {
+                    if (GetLongTable != null)
+                        EncounterType.Items.Add("Long Grass");
+                    if (GetRedTable != null)
+                        EncounterType.Items.Add("Red Flowers");
+                    if (GetYellowTable != null)
+                        EncounterType.Items.Add("Yellow Flowers");
+                    if (GetPurpleTable != null)
+                        EncounterType.Items.Add("Purple Flowers");
+                }
+            }
+
+            if (EncounterType.Items.Count != 0)
+                EncounterType.SelectedIndex = Method == 2 ? 2 : 0;  // For fishing, Super rod is the default choice
+            else
+                ManageSpecies();
+
+            SetMin();
+        }
+
+        private void ManageRatio()
+        {
+            if (Method == 1 || MovingHordeOption)
+            {
+                if (Surfing)
+                    ratio.Value = 7;
+                else
+                {
+                    if (CurrentLocation.Enc_Ratio != 0)
+                        ratio.Value = CurrentLocation.Enc_Ratio;
+                    else
+                        ratio.Value = 13;
+                }
+            }
+            else if (Method == 2)
+                ratio.Value = 49;
+            else if (Method == 7)
+                ratio.Value = 13;
+        }
+
+        private void SetMin()
+        {
+            if (SearchGen.SelectedIndex == 1)
+                if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
+                    min.Value = CurrentLocation.Bag_Advances;
+        }
+
+        private void ManageSpecies()
+        {
+            SpeciesCombo.Items.Clear();
+
+            if (Method == 7)
+            {
+                foreach (int num in GetFSList)
+                    SpeciesCombo.Items.Add(DexToName(num));
+                SpeciesCombo.SelectedIndex = 0;
+                return;
+            }
+
+            SpeciesCombo.Items.Add("Any");
+            HashSet<ushort> SlotSpecies = new HashSet<ushort>(SlotTable());
+
+            if (IsDexNav && GetNavTable != null)
+            {
+                HashSet<ushort> navSpecies = new HashSet<ushort>(GetNavTable);
+                // Merge DexNav slots with water slots ONLY if every other table doesn't exit for a given location
+                if (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null))
+                {
+                    SlotSpecies.UnionWith(navSpecies);
+                }
+            }
+
+            foreach (int s in SlotSpecies)
+                SpeciesCombo.Items.Add(DexToName(s));
+
+            SpeciesCombo.SelectedIndex = 0;
+
+        }
+
+
+        private void Species_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Method != 7)
+            {
+                ManageSlots();
+                ushort[] tempTable;
+                if (IsDexNav && checkExclusives())
+                {
+                    tempTable = GetNavTable;
+                }
+                else
+                {
+                    tempTable = SlotTable();
+                }
+                for (int i = 1; i < SlotsComboBox.Items.Count; i++)
+                    SlotsComboBox.CheckBoxItems[i].Checked = DexToName(tempTable[i - 1]).Equals(SelectedSpecies);
             }
         }
 
-        private void NavType_SelectedIndexChanged(object sender, EventArgs e)
+        private void ExclusivesBox_CheckedChanged(object sender, EventArgs e)
         {
-            ManageSlots(6);
+            ManageSlots();
+            for (int i = 1; i < SlotsComboBox.Items.Count; i++)
+                SlotsComboBox.CheckBoxItems[i].Checked = DexToName(GetNavTable[i - 1]).Equals(SelectedSpecies);
         }
-        private void Species_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            for (byte i = 1; i <= party.Value; i++)
-                SlotsComboBox.CheckBoxItems[i].Checked = (int)SlotSpecies[Species.SelectedIndex, 1] == i;   //The rest should be unchecked
 
+        private bool checkExclusives()
+        {
+            if (GetNavTable != null)
+                for (int i = 0; i < 3; i++)
+                    if (DexToName(GetNavTable[i]).Equals(SelectedSpecies))
+                        return true;
+            return false;
         }
+
+        private ushort[] SlotTable()
+        {
+            if (Method == 3)
+                return GetSmashTable;
+            if (Method == 7)
+                return null;
+            if (Method == 8)
+                return GetSwoopingTable;
+            
+            /*{
+                ushort[] FSTable;
+                uint pointer = 0;
+                for (ushort i = 1; i < SpeciesList.Count; i++)
+                {
+                    if (SpeciesList.ElementAt(i).FS)
+                        FSTable[++pointer] = i;
+                }
+                return FSTable;
+            }*/
+
+            switch (EncounterType.SelectedItem.ToString())
+            {
+                case "Grass":
+                    return GetWildTable;
+                case "Cave":
+                    return GetCaveTable;
+                case "Red Flowers":
+                    return GetRedTable;
+                case "Yellow Flowers":
+                    return GetYellowTable;
+                case "Purple Flowers":
+                    return GetPurpleTable;
+
+                case "Water":
+                    return GetSurfTable;
+                case "Swamp":
+                    return GetSwampTable;
+                case "Riding":
+                    return CurrentLocation.RideTable;
+                case "Long Grass":
+                    return GetLongTable;
+
+                case "Old Rod":
+                    return GetOldTable;
+                case "Good Rod":
+                    return GetGoodTable;
+                case "Super Rod":
+                    return GetSuperTable;
+                case "Honey":
+                case "Moving":
+                    return GetHordeTable;
+                default:
+                    MessageBox.Show("Faulty Slot. Please Report this.");
+                    break;
+            }
+            
+            return null;
+        }
+
+        private int[] LevelTable()
+        {
+            if (Method == 3)
+                return CurrentLocation.SmashLevel;
+            else if (Method == 8)
+                return CurrentLocation.SwoopingLevel;
+            else if (Method == 7)
+                return null;
+
+            switch (EncounterType.SelectedItem.ToString())
+            {
+                case "Grass":
+                case "Cave":
+                case "Long Grass":
+                case "Riding":
+                    return CurrentLocation.WildLevel;
+                case "Red Flowers":
+                    return CurrentLocation.RedLevel;
+                case "Yellow Flowers":
+                    return CurrentLocation.YellowLevel;
+                case "Purple Flowers":
+                    return CurrentLocation.PurpleLevel;
+                case "Water":
+                    return CurrentLocation.SurfLevel;
+                case "Swamp":
+                    return CurrentLocation.SwampLevel;
+                case "Old Rod":
+                    return CurrentLocation.OldLevel;
+                case "Good Rod":
+                    return CurrentLocation.GoodLevel;
+                case "Super Rod":
+                    return CurrentLocation.SuperLevel;
+                case "Honey":
+                case "Moving":
+                    return CurrentLocation.HordeLevel;
+                default:
+                    MessageBox.Show("Faulty Level. Please Report this.");
+                    return null;
+            }
+        }
+
+        private void ManageLocations()
+        {
+            switch (GameVersion.SelectedIndex)
+            {
+                case 0:
+                    listOfLocations = SpeciesX.WildLocationsX();
+                    break;
+                case 1:
+                    listOfLocations = SpeciesY.WildLocationsY();
+                    break;
+                case 2:
+                    listOfLocations = SpeciesOR.WildLocationsOR();
+                    break;
+                case 3:
+                    listOfLocations = SpeciesAS.WildLocationsAS();
+                    break;
+            }
+
+            foreach (Location ll in listOfLocations)
+            {
+                if (ll.Bag_Advances == 0)
+                    MessageBox.Show("" + ll.Name);
+            }
+
+            locationsComboBox.Items.Clear();
+            foreach (Location temp in listOfLocations.ToList())
+            {
+                if (
+                (Method == 1                && !temp.HasNormalWild()) ||
+
+              //(Method == 2                && !temp.HasFishing()) ||
+                (Method == 2                && temp.ConsoleDelayRand == 0) ||   // <- Better
+
+                (Method == 3                && temp.SmashTable == null) ||
+
+                (Method == 4                && temp.HordeTable == null) ||
+
+                (Method == 5                && !temp.HasHoneyWild()) ||
+
+                (CheckMethod("Radar")       && !temp.HasRadar()) ||
+
+                (CheckMethod("DexNav")      && !temp.HasDexNav()) ||
+
+                (Method == 8                && temp.SwoopingTable == null))
+                {
+                    listOfLocations.Remove(temp);
+                    continue;
+                }
+                locationsComboBox.Items.Add(temp.Name);
+            }
+            locationsComboBox.SelectedIndex = 0;
+        }
+
+        private void ManageSlots()
+        {
+            //Default values for most methods
+            byte SlotsCount = 12;
+            ushort ComboBoxHeight = 310;
+            //
+
+            switch (Method)
+            {
+                case 3:     // Rock Smash
+                    SlotsCount = 5;
+                    ComboBoxHeight = 140;
+                    break;
+
+                case 1:     // Normal Wild
+                case 5:     // Honey Wild
+                //case 6:     // Radar / DexNav
+                    SlotsCount = (byte)(Surfing ? 5 : 12);
+                    ComboBoxHeight = (ushort)(Surfing ? 140 : 310);
+                    break;
+
+                case 6:     // DexNav
+
+                    if (IsDexNav && checkExclusives())
+                    {
+                        SlotsCount = 3;
+                        ComboBoxHeight = 90;
+                    }
+                    else
+                    {
+                        SlotsCount = (byte)(Surfing ? 5 : 12);
+                        ComboBoxHeight = (ushort)(Surfing ? 140 : 310);
+                    }
+                    break;
+                case 7:     // Friend Safari
+                    SlotsCount = (byte)(party.Value == 2 ? 2 : 3);
+                    ComboBoxHeight = (ushort)(party.Value == 2 ? 65 : 90);
+                    break;
+
+                case 2:     // Fishing
+                case 4:     // Horde
+                    SlotsCount = 3;
+                    ComboBoxHeight = 90;
+                    break;
+            }
+            AddSlots(SlotsCount, ComboBoxHeight);
+        }
+
+        private void AddSlots(byte count, ushort height)
+        {
+            // All slots need to be unchecked before being removed to clear the slot text in combobox
+            for (int i = 0; i < SlotsComboBox.Items.Count; i++)
+                SlotsComboBox.CheckBoxItems[i].Checked = false;
+            SlotsComboBox.Items.Clear();
+            SlotsComboBox.DropDownHeight = height;
+            for (byte add = 1; add < count + 1; add++)
+                SlotsComboBox.Items.AddRange(new object[] { add });
+        }
+
         private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
 
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool DateSearcher = SearchGen.SelectedIndex == 0;
-            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Threads_Label.Enabled = ThreadCount.Enabled = DateSearcher;
-            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = !DateSearcher;
+            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = 
+                Threads_Label.Enabled = ThreadCount.Enabled = DateRNGSeed.Visible = DateSearcher;
+            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
             Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
             Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
@@ -230,10 +583,10 @@ namespace TinyFinder
             if (DateSearcher)
             {
                 Step_Label.Visible = Chain_Label.Visible = false;
-                min.Value = min.Minimum = XY_Button.Checked ? 35 :
-                                          (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
-                                          (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
-                max.Value = (XY_Button.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
+                min.Value = min.Minimum = !ORAS ? 35 :
+                                          (ORAS && Method == 0) ? 11 :
+                                          (ORAS && Method != 0) ? 20 : 0;
+                max.Value = (!ORAS && Method == 6) ? 800 : 150;
 
             }
             else
@@ -269,90 +622,14 @@ namespace TinyFinder
             TinyChanged();
         }
 
-        private int getIndex(DataGridView view, List<PatchSpot> listSpot, int row, int IndexColumn, int State3Column)
-        {
-            //When sort the rows, it would show the spots for the clicked row numer not for the selected TinyMT index
-            //For a clicked row, we check the values of its index and Tiny[3]
-            //For Generator, the index value would be enough but for Searcher many rows can have the same index value and different TinyMT state
-            uint IndexValue = Convert.ToUInt32(view.Rows[row].Cells[IndexColumn].Value);
-            string Tiny3ValueHex = view.Rows[row].Cells[State3Column].Value.ToString();                 //The value of Tiny[3] for the clicked row in hex
-            uint Tiny3Value = uint.Parse(Tiny3ValueHex, System.Globalization.NumberStyles.HexNumber);   //Covert to unsigned dec number
-            int num = 0;
-            foreach (PatchSpot i in listSpot)
-            {
-                if (i.RadarState3 == Tiny3Value && i.RadarIndex == IndexValue)
-                    break;
-                num++;
-            }
-            return num;
-        }
-        private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (isRadar1())
-            {
-                try
-                {
-                    Patches_Board.Text = string.Join("\n", GPatchSpots[getIndex(Generator, GPatchSpots, e.RowIndex, 0, 4)].RadarSpots);
-                }
-                catch
-                { }     //Only occurs if click in the headers
-            }
-        }
-        private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (isRadar1())
-            {
-                try
-                {
-                    Patches_Board.Text = string.Join("\n", SPatchSpots[getIndex(Searcher, SPatchSpots, e.RowIndex, 5, 1)].RadarSpots);
-                }
-                catch
-                { }     //Only occurs if click in the headers
-            }
-        }
-
-        private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            /*if (e.Button == MouseButtons.Right)
-            {
-                try
-                {
-                    if (MessageBox.Show("Set as Current State?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        t3.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [3]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                        t2.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [2]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                        t1.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [1]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                        t0.Value = uint.Parse(Generator.Rows[e.RowIndex].Cells["Tiny [0]"].Value.ToString(), System.Globalization.NumberStyles.HexNumber);
-                    }
-                }
-                catch { }
-            }*/
-        }
-        private void Searcher_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Right && Searcher.Rows.Count > 0)
-            {
-                try
-                {
-                    Searcher.CurrentCell = Searcher.Rows[e.RowIndex].Cells[0];
-                    if (MessageBox.Show("RNG for specific seed with date?", "Message", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                    {
-                        OpenMTForm();
-                        mersenne.SetDate(Searcher.Rows[e.RowIndex].Cells[0].Value.ToString());
-                    }
-                }
-                catch { }   //Do nothing if the user clicks in a cell header
-            }
-        }
-
         private void updateBTN_Click(object sender, EventArgs e)
         {
             try
             {
                 NTRHelper.ntrclient.ReadTiny("TTT");
-                if (Methods.SelectedIndex == 6)
+                if (Method == 6)
                 {
-                    if (ORAS_Button.Checked)
+                    if (ORAS)
                     {
                         NTRHelper.ntrclient.ReadTiny("Step");
                         NTRHelper.ntrclient.ReadTiny("DexNavChain");
@@ -391,14 +668,12 @@ namespace TinyFinder
                     var steps = (uint[])info;
                     Step_Label.Visible = true;
                     Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
-                    Step_Label.Location = new Point(25, 100);
                     Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
                     break;
                 case "DexNavChain":
                     var chain = (uint[])info;
                     ratio.Value = chain[0];
                     Chain_Label.Visible = true;
-                    Chain_Label.Location = new Point(25, 140);
                     Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
                     break;
                 case "RadarChain":
@@ -429,7 +704,7 @@ namespace TinyFinder
                 mersenne = new MTForm();
             mersenne.Show();
             mersenne.Focus();
-            mersenne.SetGame(XY_Button.Checked);
+            mersenne.SetGame(!ORAS);
         }
 
         private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
@@ -450,51 +725,46 @@ namespace TinyFinder
         #endregion
 
         #region Manage Buttons and Slots
-        private void ManageControls(byte Method)
+        private void ManageControls()
         {
-            Methods.SelectedIndex = Method;
-            LongGrassBox.Checked = CaveBox.Checked = SurfBox.Checked = Horde_Turn.Checked = false;
-
             TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
             SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
-            SyncBox.Visible = Method != 0 && !Equals(Methods.Text,"DexNav");
-            Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS_Button.Checked;
-            HASlot.Visible = HA_Label.Visible = Horde_Turn.Visible = Method == 4;
+            SyncBox.Visible = Method != 0 && !CheckMethod("DexNav");
+            FluteOptionLabel.Visible = FluteOption.Visible = Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS;
+            HASlot.Visible = HA_Label.Visible = Method == 4;
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
-                Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = ORAS_Button.Checked && Method == 4;
+                Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = ORAS && Method == 4;
             Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
-            Location_Label.Visible = locations.Visible = Method == 1 || Method == 2 || Method == 4;
 
-            BonusMusicBox.Visible = Patches_Board.Visible = XY_Button.Checked && Method == 6;
-            BagBox.Visible = BagBox.Checked = (Method == 6 && XY_Button.Checked) || Method == 2;
-            LongGrassBox.Visible = Method == 1 && ORAS_Button.Checked;
-            CaveBox.Visible = Method == 1 || Method == 4 || Method == 5;
+            Location_Label.Visible = locationsComboBox.Visible = Method != 0 && Method != 7;
+            EncounterType.Visible = Method == 1 || Method == 2 || Method == 4 || Method == 5 || (Method == 6 && !isRadar1);
+
+            BonusMusicBox.Visible = Patches_Board.Visible = !ORAS && Method == 6;
+            BagBox.Visible = BagBox.Checked = (Method == 6 && !ORAS) || Method == 2;
+
             CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
-            SurfBox.Visible = Method == 5 || (Method == 6 && ORAS_Button.Checked);
-            CharmBox.Visible = Method == 6 && ORAS_Button.Checked;
-            Noise_Label.Visible = noise.Visible = ExclusiveBox.Visible = NavType_Label.Visible = NavType.Visible = NavFilters_Label.Visible = 
-                NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS_Button.Checked && Method == 6;
+            CharmBox.Visible = Method == 6 && ORAS;
+            Noise_Label.Visible = noise.Visible = NavFilters_Label.Visible = 
+                NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS && Method == 6;
 
-            Species_Label.Visible = Species.Visible = Method == 7;
+            Species_Label.Visible = SpeciesCombo.Visible = Method != 0;// && Method != 7;
 
             Party_Label.Visible = party.Visible = (Method > 3 && Method < 8) || Method == 2 ;
 
             Step_Label.Visible = Chain_Label.Visible = false;
 
-            CaveBox.Enabled = Location_Label.Enabled = locations.Enabled = Method == 1 || Method == 2 || Method == 4 || Method == 5;
-
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
-            Party_Label.Text = (Method == 6 && ORAS_Button.Checked) ? "Search Level" : Method == 7 ? "Slots" : "Party";
+            Party_Label.Text = (Method == 6 && ORAS) ? "Search Level" : Method == 7 ? "Slots" : "Party";
 
             ratio.Minimum = 1; ratio.Maximum = 99;
 
             if (SearchGen.SelectedIndex == 0)
             {
-                min.Value = min.Minimum = XY_Button.Checked ? 35 :
-                                          (ORAS_Button.Checked && Methods.SelectedIndex == 0) ? 11 :
-                                          (ORAS_Button.Checked && Methods.SelectedIndex != 0) ? 20 : 0;
-                max.Value = (XY_Button.Checked && Methods.SelectedIndex == 6) ? 800 : 150;
+                min.Value = min.Minimum = !ORAS ? 35 :
+                                          (ORAS && Method == 0) ? 11 :
+                                          (ORAS && Method != 0) ? 20 : 0;
+                max.Value = (!ORAS && Method == 6) ? 800 : 150;
             }
             else
             {
@@ -504,533 +774,294 @@ namespace TinyFinder
 
             if (Method != 0)
             {
-                ManageSlots((byte)Methods.SelectedIndex);
-                Slots_Label.Location = new Point(13, 46);
-                SlotsComboBox.Location = new Point(75, 42);
-                Flute1_Label.Location = new Point(16, 98);
-                Flute1.Location = new Point(75, 94);
+                ratio_ValueChanged(null, null);
+                SpeciesCombo.Items.Clear();
+                if (Method != 7)
+                    ManageLocations();
+
+                Species_Label.Location = new Point(13, 46); SpeciesCombo.Location = new Point(75, 42);
+                Slots_Label.Location = new Point(13, 93); SlotsComboBox.Location = new Point(75, 89);
+
+                Flute1_Label.Location = new Point(245, 45);
+                Flute1.Location = new Point(313, 42);
                 SyncBox.Location = new Point(53, 148);
-                Party_Label.Location = new Point(293, 193);
+                Party_Label.Location = new Point(332, 197);
                 party.Minimum = Method == 7 ? 2 : 1; party.Maximum = Method == 7 ? 3 : 6; party.Value = party.Maximum;
-                Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = SurfBox.Enabled = true;
-                Species.Items.Clear();
-
-                if (Method == 1)
+                Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = true;
+                
+                if (Method == 4)
                 {
-                    Location_Label.Enabled = locations.Enabled = true;
-                    ManageLocations();
-                    ManageRatio();
-                }
-
-                else if (Method == 2)
-                {
-                    ManageRatio();
-                    ManageLocations();
-                }
-
-                else if (Method == 4)
-                {
-                    ManageLocations();
                     Flute1_Label.Location = new Point(245, 55);
                     Flute1.Location = new Point(313, 52);
                     HASlot.SelectedIndex = 0;
+                    SyncBox.Location = new Point(35, 175);
                 }
-
                 else if (Method == 6)
                 {
                     ratio.Minimum = 0;
-                    if (XY_Button.Checked)
+                    if (!ORAS)
                     {
                         ratio.Value = 1;    //Chain
                         ratio.Maximum = 60;
-                        SyncBox.Enabled = SlotsComboBox.Enabled = !isRadar1();
+                        ratio_ValueChanged(null, null);
                     }
                     else
                     {
-                        NavType.SelectedIndex = 0;
                         ratio.Value = 0;    //Chain
                         party.Maximum = 999;
                         party.Value = 999;
-                        Party_Label.Location = new Point(248, 194);
-                        Slots_Label.Location = new Point(9, 93);
-                        SlotsComboBox.Location = new Point(71, 89);
-                        Flute1_Label.Location = new Point(224, 140);
+                        Party_Label.Location = new Point(284, 196);
+                        Slots_Label.Location = new Point(13, 93);
+                        SlotsComboBox.Location = new Point(75, 89);
+                        Flute1_Label.Location = new Point(220, 139);
                         Flute1.Location = new Point(311, 137);
                     }
                 }
-
                 else if (Method == 7)
                 {
-                    Slots_Label.Location = new Point(13, 93);
-                    SlotsComboBox.Location = new Point(75, 89);
+                    ManageSpecies();
                     ManageRatio();
-                    SlotSpecies = data.GetFSSlots();
-                    OriginalSpeciesCount = SlotSpecies.GetLength(0);
-                    for (byte i = 0; i < SlotSpecies.GetLength(0); i++)
-                        Species.Items.Add(SlotSpecies[i, 0]);
+                    if (SearchGen.SelectedIndex == 1)
+                        min.Value = 27;
                 }
             }
         }
 
         private void DefaultChanges()
         {
-            BonusMusicBox.Location = new Point(300, 80);
-            BagBox.Location = new Point(300, 115);
+            FluteOption.SelectedIndex = 0;
 
-            CitraBox.Location = new Point(300, 80);
-
-            SurfBox.Location = new Point(300, 40);
-            CharmBox.Location = new Point(300, 80);
-            ExclusiveBox.Location = new Point(300, 120);
+            BonusMusicBox.Location = new Point(335, 34);
+            CharmBox.Location = new Point(335, 34);
 
             TIDBOX.Location = new Point(75, 78);
             tid.Location = new Point(139, 77);
             SIDBOX.Location = new Point(75, 117);
             sid.Location = new Point(139, 116);
 
-            HA_Label.Location = new Point(13, 98);
-            HASlot.Location = new Point(75, 94);
+            HA_Label.Location = new Point(13, 140);
+            HASlot.Location = new Point(75, 137);
 
             Patches_Board.Location = new Point(242, 38);
             Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
 
-            NavType_Label.Location = new Point(9, 45);
-            NavType.Location = new Point(71, 41);
-            NavFilters_Label.Location = new Point(9, 140);
-            NavFilters.Location = new Point(71, 137);
-            Potential_Label.Location = new Point(224, 93);
+            Step_Label.Location = new Point(75, 119);
+            Chain_Label.Location = new Point(75, 149);
+
+            NavFilters_Label.Location = new Point(13, 140);
+            NavFilters.Location = new Point(75, 137);
+            Potential_Label.Location = new Point(220, 91);
             Potential.Location = new Point(311, 89);
 
-            Species_Label.Location = new Point(13, 46);
-            Species.Location = new Point(75, 42);
-        }
+            Searcher.AutoGenerateColumns = false;
+            Generator.AutoGenerateColumns = false;
 
-        private void ManageSlots(byte method)
-        {
-            //Default values for most methods
-            byte SlotsCount = 13;
-            ushort ComboBoxHeight = 310;
-            //
-
-            switch (method)
-            {
-                case 3:     //Rock Smash
-                    SlotsCount = 6;
-                    ComboBoxHeight = 140;
-                    break;
-
-                case 5:     //Honey Wild
-                    SlotsCount = (byte)(SurfBox.Checked ? 6 : 13);
-                    ComboBoxHeight = (ushort)(SurfBox.Checked ? 140 : 310);
-                    break;
-
-                case 6:     //DexNav
-                    if (ORAS_Button.Checked)
-                    {
-                        if (NavType.SelectedIndex == 1)
-                        {
-                            SlotsCount = 4;
-                            ComboBoxHeight = 90;
-                        }
-                        else if (SurfBox.Checked)
-                        {
-                            SlotsCount = 6;
-                            ComboBoxHeight = 140;
-                        }
-                    }
-                    break;
-                case 7:     //Friend Safari
-                    SlotsCount = (byte)(party.Value == 2 ? 3 : 4);
-                    ComboBoxHeight = (ushort)(party.Value == 2 ? 65 : 90);
-                    break;
-
-                case 2:     //Fishing
-                case 4:     //Horde
-                    SlotsCount = 4;
-                    ComboBoxHeight = 90;
-                    break;
-            }
-
-            //SlotsComboBox.Text = ""; <- This doesn't work
-            //Bad Solution which works
-            /*if (SlotsComboBox.Items.Count > 0)
-                for (byte c = 1; c < SlotsComboBox.Items.Count; c++)
-                {
-                    SlotsComboBox.CheckBoxItems[c].Checked = true;
-                    SlotsComboBox.CheckBoxItems[c].Checked = false;
-                }*/
-
-
-            SlotsComboBox.Items.Clear();
-            SlotsComboBox.DropDownHeight = ComboBoxHeight;
-            for (byte add = 1; add < SlotsCount; add++)
-                SlotsComboBox.Items.AddRange(new object[] { add });
-            
-        }
-
-        private void ManageRatio()
-        {
-            if (Methods.SelectedIndex == 1 || (Methods.SelectedIndex == 4 && Horde_Turn.Checked))
-            {
-                if (CaveBox.Checked)
-                    ratio.Value = 7;
-                else
-                {
-                    try
-                    {
-                        ratio.Value = Locations[(byte)locations.SelectedIndex].ratio;
-                    }
-                    catch
-                    {
-                        ratio.Value = 13;
-                    }
-                }
-            }
-            else if (Methods.SelectedIndex == 2)
-                ratio.Value = 49;
-            else if (Methods.SelectedIndex == 7)
-                ratio.Value = 13;
-        }
-
-        private void ManageLocations()
-        {
-            if (Location_Label.Visible)
-            {
-                Locations = data.SetLocations((byte)Methods.SelectedIndex, ORAS_Button.Checked, Horde_Turn.Checked);
-                locations.Items.Clear();
-                for (byte i = 0; i < Locations.Count; i++)
-                    locations.Items.Add(Locations[i].Name);
-                locations.SelectedIndex = 0;
-            }
-        }
-
-        #endregion
-
-        #region ManageDataGridviews
-        private void ManageGenColumns(ref DataTable table, byte method)
-        {
-            Generator.Columns.Clear();
-            table.Columns.Clear();
-            table.Columns.Add("Index", typeof(uint));
-            if (method == 0)
-            {
-                table.Columns.Add("TID", typeof(string));
-                table.Columns.Add("SID", typeof(string));
-                table.Columns.Add("TSV", typeof(string));
-                table.Columns.Add("TRV", typeof(string));
-                table.Columns.Add("Rand#", typeof(string));
-            }
-            else
-            {
-                if (method == 1 || method == 2 || method == 3 || method == 7)
-                {
-                    table.Columns.Add("Ratio", typeof(byte));
-                    table.Columns.Add("Sync", typeof(string));
-                    table.Columns.Add("Slot", typeof(byte));
-                    if (method == 2)
-                    {
-                        table.Columns.Add("Delay", typeof(ushort));
-                        table.Columns.Add("Timeline", typeof(string));
-                    }
-                        
-                }
-                else if (method == 4)
-                {
-                    table.Columns.Add("Ratio", typeof(byte));
-                    table.Columns.Add("Sync", typeof(string));
-                    table.Columns.Add("Slot", typeof(byte));
-                    table.Columns.Add("HA", typeof(byte));
-                    if (ORAS_Button.Checked)
-                        table.Columns.Add("Flute", typeof(string));
-                }
-                else if (method == 5 || method == 8)
-                {
-                    table.Columns.Add("Sync", typeof(string));
-                    table.Columns.Add("Slot", typeof(byte));
-                }
-                else if (method == 6)
-                {
-                    if (XY_Button.Checked)
-                    {
-                        if (ratio.Value == 0)
-                        {
-                            table.Columns.Add("Sync", typeof(string));
-                            table.Columns.Add("Slot", typeof(byte));
-                        }
-                        else
-                        {
-                            table.Columns.Add("Shiny", typeof(string));
-                        }
-                        table.Columns.Add("Music", typeof(char));
-                    }
-                    else
-                    {
-                        table.Columns.Add("Right", typeof(sbyte));
-                        table.Columns.Add("Up", typeof(sbyte));
-                        table.Columns.Add("Success", typeof(string));
-                        table.Columns.Add("Type", typeof(string));
-                        table.Columns.Add("Sync", typeof(string));
-                        table.Columns.Add("Slot", typeof(byte));
-                        table.Columns.Add("Shiny", typeof(string));
-                        table.Columns.Add("Level", typeof(string));
-                        table.Columns.Add("HA", typeof(string));
-                        table.Columns.Add("Egg Move", typeof(string));
-                        table.Columns.Add("Potential", typeof(byte));
-                    }
-                }
-                if (method != 4)
-                    if (ORAS_Button.Checked)
-                        table.Columns.Add("Flute", typeof(byte));
-
-                /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
-                    table.Columns.Add("Item", typeof(string));
-
-                if (method == 6 && XY_Button.Checked && ratio.Value > 0)
-                    table.Columns.Remove("Item");*/
-
-                table.Columns.Add("Rand(100)", typeof(byte));
-            }
-            table.Columns.Add("Tiny [3]", typeof(string));
-            table.Columns.Add("Tiny [2]", typeof(string));
-            table.Columns.Add("Tiny [1]", typeof(string));
-            table.Columns.Add("Tiny [0]", typeof(string));
-
-        }
-
-        private void ManageGenerator(DataGridView Generator, DataTable table, string method)
-        {
-            Generator.DataSource = table;
-            Generator.Columns[0].Width = 60;
-            if (Equals(method, "ID"))
-            {
-                Generator.Columns["TID"].Width = Generator.Columns["SID"].Width = Generator.Columns["TSV"].Width = 50;
-                Generator.Columns["TRV"].Width = 35;
-                Generator.Columns["Rand#"].Width = 85;
-            }
-            else if (Equals(method, "Horde"))
-            {
-                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["HA"].Width = 50;
-                //Generator.Columns["Item"].Width = 150;
-                if (ORAS_Button.Checked)
-                    Generator.Columns["Flute"].Width = 75;
-                if (!Horde_Turn.Checked)
-                    Generator.Columns["Ratio"].Visible = false;
-            }
-            else if (Equals(method, "Honey Wild"))
-            {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50; // Generator.Columns["Item"].Width = 50;
-                if (ORAS_Button.Checked)
-                    Generator.Columns["Flute"].Width = 50;
-            }
-            else if (Equals(method, "Radar"))
-            {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Music"].Width = 50;
-                //Generator.Columns["Item"].Width = 50;
-            }
-            else if (Equals(method, "Radar1"))
-            {
-                Generator.Columns["Shiny"].Width = Generator.Columns["Music"].Width = 50;
-            }
-            else if (Equals(method, "DexNav"))
-            {
-                Generator.Columns["Right"].Width = Generator.Columns["Up"].Width = 40;
-                Generator.Columns["Success"].Width = 55;
-                Generator.Columns["Type"].Width = Generator.Columns["Potential"].Width = 60;
-                Generator.Columns["Level"].Width = 60;
-                Generator.Columns["Egg Move"].Width = 85;
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = Generator.Columns["Shiny"].Width =
-                    Generator.Columns["Flute"].Width = Generator.Columns["HA"].Width = 50;
-            }
-            else if (Equals(method, "Swooping"))
-            {
-                Generator.Columns["Sync"].Width = Generator.Columns["Slot"].Width = 50;// Generator.Columns["Item"].Width = 50;
-            }
-            else //Normal Wild, Fishing, Rock Smash, Friend Safari
-            {
-                Generator.Columns["Ratio"].Width = Generator.Columns["Sync"].Width =
-                    Generator.Columns["Slot"].Width = 50;
-                //Generator.Columns["Item"].Width = 50;
-                if (Equals(method, "Fishing"))
-                {
-                    Generator.Columns["Delay"].Width = 50;
-                    Generator.Columns["Timeline"].Width = 300;
-                }
-                    
-                if (ORAS_Button.Checked)
-                    Generator.Columns["Flute"].Width = 50;
-            }
-            Generator.Columns["Tiny [3]"].DefaultCellStyle.Font = Generator.Columns["Tiny [2]"].DefaultCellStyle.Font =
-                Generator.Columns["Tiny [1]"].DefaultCellStyle.Font = Generator.Columns["Tiny [0]"].DefaultCellStyle.Font = new Font("Consolas", 9);
-            Generator.Columns["Tiny [3]"].Width = Generator.Columns["Tiny [2]"].Width = 
-                Generator.Columns["Tiny [1]"].Width = Generator.Columns["Tiny [0]"].Width = 75;
-
-            if (!Equals(method, "ID"))
-                Generator.Columns["Rand(100)"].Width = 70;
-
+            DoubleBuffered(Searcher);
             DoubleBuffered(Generator);
         }
 
-        private void ManageSearcher(ref DataGridView Searcher, byte method)
+        public bool CheckMethod(string m)
         {
-            Searcher.Columns.Clear();
-            Searcher.Columns.Add("date", "Date"); Searcher.Columns["date"].Width = 120;
-            Searcher.Columns.Add("tiny3", "Tiny [3]"); Searcher.Columns["tiny3"].Width = 75;
-            Searcher.Columns.Add("tiny2", "Tiny [2]"); Searcher.Columns["tiny2"].Width = 75;
-            Searcher.Columns.Add("tiny1", "Tiny [1]"); Searcher.Columns["tiny1"].Width = 75;
-            Searcher.Columns.Add("tiny0", "Tiny [0]"); Searcher.Columns["tiny0"].Width = 75;
-            Searcher.Columns["tiny3"].DefaultCellStyle.Font = Searcher.Columns["tiny2"].DefaultCellStyle.Font =
-                Searcher.Columns["tiny1"].DefaultCellStyle.Font = Searcher.Columns["tiny0"].DefaultCellStyle.Font = new Font("Consolas", 9);
-            Searcher.Columns.Add("index", "Index"); Searcher.Columns["index"].Width = 60;
-            if (method == 0)
-            {
-                Searcher.Columns.Add("tid", "TID"); Searcher.Columns["tid"].Width = 50;
-                Searcher.Columns.Add("sid", "SID"); Searcher.Columns["sid"].Width = 50;
-                Searcher.Columns.Add("tsv", "TSV"); Searcher.Columns["tsv"].Width = 50;
-                Searcher.Columns.Add("trv", "TRV"); Searcher.Columns["trv"].Width = 35;
-                Searcher.Columns.Add("rand", "Rand#"); Searcher.Columns["rand"].Width = 80;
-            }
-            else
-            {
-                if (method == 1 || method == 2 || method == 3 || method == 7)
-                {
-                    Searcher.Columns.Add("ratio", "Ratio"); Searcher.Columns["ratio"].Width = 50;
-                    Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
-                    Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                    if (method == 2)
-                    {
-                        Searcher.Columns.Add("delay", "Delay"); Searcher.Columns["delay"].Width = 50;
-                        Searcher.Columns.Add("timeline", "Timeline"); Searcher.Columns["timeline"].Width = 300;
-                    }
-                }
-                else if (method == 4)
-                {
-                    Searcher.Columns.Add("ratio", "Ratio"); Searcher.Columns["ratio"].Width = 50;
-                    Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
-                    Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                    Searcher.Columns.Add("ha", "HA"); Searcher.Columns["ha"].Width = 30;
-                    if (!Horde_Turn.Checked)
-                        Searcher.Columns["ratio"].Visible = false;
-                }
-                else if (method == 5 || method == 8)
-                {
-                    Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
-                    Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                }
-                else if (method == 6)
-                {
-                    if (XY_Button.Checked)
-                    {
-                        if (ratio.Value == 0)
-                        {
-                            Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
-                            Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                        }
-                        else
-                        {
-                            Searcher.Columns.Add("Shiny", "Shiny"); Searcher.Columns["Shiny"].Width = 50;
-                        }
-                        Searcher.Columns.Add("music", "Music"); Searcher.Columns["music"].Width = 50;
-                    }
-                    else
-                    {
-                        Searcher.Columns.Add("x", "Right"); Searcher.Columns["x"].Width = 40;
-                        Searcher.Columns.Add("y", "Up"); Searcher.Columns["y"].Width = 40;
-                        Searcher.Columns.Add("success", "Success"); Searcher.Columns["success"].Width = 55;
-                        Searcher.Columns.Add("type", "Type"); Searcher.Columns["type"].Width = 60;
-                        Searcher.Columns.Add("sync", "Sync"); Searcher.Columns["sync"].Width = 50;
-                        Searcher.Columns.Add("slot", "Slot"); Searcher.Columns["slot"].Width = 50;
-                        Searcher.Columns.Add("shiny", "Shiny"); Searcher.Columns["shiny"].Width = 50;
-                        Searcher.Columns.Add("lvlBoost", "Level"); Searcher.Columns["lvlBoost"].Width = 45;
-                        Searcher.Columns.Add("ha", "HA"); Searcher.Columns["ha"].Width = 40;
-                        Searcher.Columns.Add("eggmove", "Egg Move"); Searcher.Columns["eggmove"].Width = 85;
-                        Searcher.Columns.Add("potential", "Potential"); Searcher.Columns["potential"].Width = 60;
-                    }
-                }
-                Searcher.Columns.Add("flute", "Flute"); Searcher.Columns["flute"].Width = 70;
-                if (XY_Button.Checked)
-                    Searcher.Columns["flute"].Visible = false;
-
-                /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
-                    Searcher.Columns.Add("item", "Item");*/
-                if (method != 4)
-                {
-                    /*if (method != 6 || (method == 6 && !ORAS_Button.Checked))
-                        Searcher.Columns["item"].Width = 50;*/
-                    Searcher.Columns["flute"].Width = 50;
-                }
-                else
-                {
-                    Searcher.Columns["flute"].Width = 70;
-                  //Searcher.Columns["item"].Width = 150;
-                }
-
-                /*if (method == 6 && XY_Button.Checked && ratio.Value > 0)
-                    Searcher.Columns["item"].Visible = false;*/
-
-                Searcher.Columns.Add("Rand(100)", "Rand(100)"); Searcher.Columns["Rand(100)"].Width = 70;
-                DoubleBuffered(Searcher);
-            }
+            return Methods.SelectedItem.ToString().Equals(m);
         }
 
-        private new void DoubleBuffered(DataGridView view)
+        
+        #endregion
+
+        #region ManageDataGridviews
+        
+        private void ManageColumns(DataGridView dgv, byte method)
         {
-            Type dgvType = view.GetType();
+            string L = dgv == Generator ? "G" : "S";
+            dgv.Columns[L + "_TID"].Visible = dgv.Columns[L + "_SID"].Visible = 
+                dgv.Columns[L + "_TSV"].Visible = dgv.Columns[L + "_TRV"].Visible = 
+                dgv.Columns[L + "_RandHex"].Visible = method == 0;
+
+            dgv.Columns[L + "_Right"].Visible = dgv.Columns[L + "_Up"].Visible =
+                dgv.Columns[L + "_Type"].Visible =
+                dgv.Columns[L + "_HA_DexNav"].Visible =
+                dgv.Columns[L + "_Potential"].Visible =
+                dgv.Columns[L + "_EggMove"].Visible = IsDexNav;
+
+            dgv.Columns[L + "_Ratio"].Visible = (method >= 1 && method <= 3) || method == 7 || MovingHordeOption;
+            dgv.Columns[L + "_Slot"].Visible = dgv.Columns[L + "_Sync"].Visible = dgv.Columns[L + "_Item"].Visible =
+                dgv.Columns[L + "_Level"].Visible = dgv.Columns[L + "_SpeciesInfo"].Visible = method != 0 && !isRadar1;
+
+            dgv.Columns[L + "_Delay"].Visible = dgv.Columns[L + "_Timeline"].Visible = method == 2;
+            dgv.Columns[L + "_HA_Horde"].Visible = method == 4;
+            dgv.Columns[L + "_Music"].Visible = !ORAS && method == 6;
+            dgv.Columns[L + "_Shiny"].Visible = IsDexNav || isRadar1;
+            //dgv.Columns[L + "_Flute"].Visible = IsORAS && method != 0 && method != 4;
+            //dgv.Columns[L + "_Flutes"].Visible = IsORAS && method == 4;
+            //dgv.Columns[L + "_Rand100"].Visible = method != 0;
+
+            dgv.Columns[L + "_Level"].Width = method == 4 ? 100 : 60;
+            dgv.Columns[L + "_Item"].Width = method == 4 ? 200 : 110;
+
+            AllowCellFormatting = true;
+        }
+
+        private new void DoubleBuffered(DataGridView dgv)
+        {
+            Type dgvType = dgv.GetType();
             PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
-            pi.SetValue(view, true, null);
+            pi.SetValue(dgv, true, null);
         }
-        private void CellFormatting(DataGridView view, int row, int baseCell, int randCell)
+        private void CellFormatting(DataGridView dgv, int row, string L)
         {
-            try
+            if (AllowCellFormatting)
             {
                 if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
                 {
-                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value &&
-                        (!HasHordes || (HasHordes && Convert.ToByte(view.Rows[row].Cells[randCell].Value) > 4)))
+                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) < ratio.Value &&
+                        (!settings.movingHordes || (settings.movingHordes && Convert.ToByte(dgv.Rows[row].Cells[L + "_Rand100"].Value) > 4)))
                     {
-                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                     }  
                 }
                 else if (MethodUsed == 3)
                 {
-                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) == 0)
-                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) == 0)
+                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                 }
                 else if (MethodUsed == 4)
                 {
-                    if (Convert.ToInt32(view.Rows[row].Cells[baseCell].Value) < ratio.Value
-                        && Convert.ToInt32(view.Rows[row].Cells[randCell].Value) < 5
-                        && Horde_Turn.Checked)
-                        view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) < ratio.Value
+                        && Convert.ToInt32(dgv.Rows[row].Cells[L + "_Rand100"].Value) < 5
+                        && MovingHordeOption)
+                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                 }
-                else if (isRadar1())
+                else if (isRadar1)
                 {
-                    if (Convert.ToBoolean(view.Rows[row].Cells[baseCell].Value))
-                        view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
+                    if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Shiny"].Value))
+                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
                 }
-                else if (MethodUsed == 6 && !Equals(Methods.Items[6], "Radar"))
+                else if (IsDexNav)
                 {
-                    if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 2].Value))
+                    if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Success"].Value))
                     {
-                        if (Convert.ToBoolean(view.Rows[row].Cells[baseCell + 6].Value))
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
+                        if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Shiny"].Value))
+                            dgv.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
                         else
-                            view.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                            dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                     }
                 }
             }
-            catch { } //???
         }
-        
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Searcher, e.RowIndex, 6, Rand100Column + 5);
+            CellFormatting(Searcher, e.RowIndex, "S");
         }
 
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Generator, e.RowIndex, 1, Rand100Column);
+            CellFormatting(Generator, e.RowIndex, "G");
         }
+
+        private void Searcher_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (SearchList != null)
+            {
+                ascending = !ascending;
+                string SelectedColumn = Searcher.Columns[e.ColumnIndex].DataPropertyName;
+                SortRowsTinyMT sort = new SortRowsTinyMT();
+                sort.SortRows(SearchList, SelectedColumn, ascending ? 1 : -1);
+                Searcher.Refresh();
+            }
+        }
+
+        private void Generator_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (GenList != null)
+            {
+                ascending = !ascending;
+                string SelectedColumn = Generator.Columns[e.ColumnIndex].DataPropertyName;
+                SortRowsTinyMT sort = new SortRowsTinyMT();
+                sort.SortRows(GenList, SelectedColumn, ascending ? 1 : -1);
+                Generator.Refresh();
+            }
+        }
+
+        private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (Method == 6 && !ORAS)
+            {
+                try
+                {
+                    Patches_Board.Text = Generator.Rows[e.RowIndex].Cells["G_Patches"].Value.ToString();
+                }
+                catch
+                { }
+            }
+        }
+        private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (Method == 6 && !ORAS)
+            {
+                try
+                {
+                    Patches_Board.Text = Searcher.Rows[e.RowIndex].Cells["S_Patches"].Value.ToString();
+                }
+                catch
+                { }
+            }
+        }
+
+        private void Searcher_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right && Searcher.Rows.Count > 0)
+            {
+                try
+                {
+                    Searcher.CurrentCell = Searcher.Rows[e.RowIndex].Cells[0];
+                }
+                catch { }   //Do nothing if the user clicks in a cell header
+            }
+        }
+        private void DateRNGSeed_Click(object sender, EventArgs e)
+        {
+            if (Searcher.Rows.Count > 0)
+            {
+                try
+                {
+                    OpenMTForm();
+                    mersenne.SetDate(Searcher.SelectedCells[0].Value.ToString());
+                }
+                catch { }   //Do nothing if the user clicks in a cell header
+            }
+        }
+
+        private void Generator_CellMouseDown(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (Generator.Rows.Count > 0 && e.Button == MouseButtons.Right)
+            {
+                try
+                {
+                    /*Generator.Rows[e.RowIndex].Cells["G_Tiny3"].Selected = true;
+                    Generator.Rows[e.RowIndex].Cells["G_Tiny2"].Selected = true;
+                    Generator.Rows[e.RowIndex].Cells["G_Tiny1"].Selected = true;
+                    Generator.Rows[e.RowIndex].Cells["G_Tiny0"].Selected = true;*/
+                    GeneratorState[3] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny3"].Value.ToString());
+                    GeneratorState[2] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny2"].Value.ToString());
+                    GeneratorState[1] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny1"].Value.ToString());
+                    GeneratorState[0] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny0"].Value.ToString());
+                }
+                catch { }   //Do nothing if the user clicks in a cell header
+            }
+        }
+        private void SetAsCurrent_Click(object sender, EventArgs e)
+        {
+            if (Generator.Rows.Count > 0)
+            {
+                t3.Value = GeneratorState[3];
+                t2.Value = GeneratorState[2];
+                t1.Value = GeneratorState[1];
+                t0.Value = GeneratorState[0];
+            }
+        }
+
+
         #endregion
     }
 }

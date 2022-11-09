@@ -1,14 +1,11 @@
 ﻿using System.Linq;
+using TinyFinder.Main;
+
 namespace TinyFinder
 {
     class Radar : Index
     {
-        public byte music, chain, party;
-        public bool sync, BonusMusic, boost;
-
         public Patch[] patches = new Patch[5];
-        public char Music => music < 2 ? 'A' : music > 49 ? 'M' : '-';
-        public bool Shiny => patches.Any(p => p.condition == 2);
 
         public string[] Overview
         {
@@ -23,76 +20,64 @@ namespace TinyFinder
             }
         }
 
-        public void GenerateIndex(uint[] currentState)
+        public Radar(uint[] currentState, UISettings current)
         {
             currentState.CopyTo(temp, 0);
 
             rand100 = RandCall(100);
 
-            if (chain == 0)
+            if (current.chain == 0)
             {
-                sync = rand100 < 50;
+                Sync = rand100 < 50;
 
                 slot = data.getSlot(RandCall(100), 0);
 
-                Advance();
-                Advance();
+                itemSlot = FindItem();
 
-                /*if (CurrentRand(100) < 50)
-                    item = 50;
-                else if (CurrentRand(100) < 55)
-                    item = 5;
-                else if (CurrentRand(100) < 56)
-                    item = 1;
-                else 
-                    item = 0;*/
-
-                for (int i = 0; i < 3 * (party - 1); i++)
-                    Advance();
-
-                music = CurrentRand(100);
+                Music = CurrentRand(100) < 2 ? 'A' : CurrentRand(100) > 49 ? 'M' : '-';
 
             }
             else
             {
+                for (byte i = 0; i < current.advances; i++)         // 0 if using from Y menu
+                    Advance();                                      // 27 if using from Bag
 
-                /*Number of Advances calculated only once in FindResults.cs:
-                                                                                        // 0 if using from Y menu
-                for (byte i = 0; i < Advances + (3 * party); i++)                       // 27 if using from Bag
-                    Advance();                                                          */
+                Boost = current.bonusMusic && CurrentRand(100) >= 50;
+                Music = CurrentRand(100) < 2 ? 'A' : CurrentRand(100) > 49 ? 'M' : '-';
+            }
 
-                music = CurrentRand(100);
-                boost = BonusMusic && music >= 50;
-
-                byte ring = 0;
-                for (; ring < 4; ring++)
-                {
-                    patches[ring] = new Patch
-                    {
-                        Ring = ring,
-                        Direction = RandCall(4),
-                        Location = RandCall(ring * 2 + 3),
-                    };
-                    if (RandCall(100) < GoodRate[ring])
-                    {
-                        tiny.nextState(temp);
-                        ulong Chance = boost || chain >= 40 ? 100 : (ulong)(8100 - chain * 200);
-
-                        tiny.nextState(temp);
-                        patches[ring].condition = (byte)(tiny.temper(temp) * Chance <= uint.MaxValue ? 2 : 1);
-                    }
-                }
-
-                // 1 empty patch
-                ring = RandCall(3);
-                patches[4] = new Patch
+            byte ring = 0;
+            for (; ring < 4; ring++)
+            {
+                patches[ring] = new Patch
                 {
                     Ring = ring,
                     Direction = RandCall(4),
                     Location = RandCall(ring * 2 + 3),
-                    condition = 3,
                 };
+                if (RandCall(100) < GoodRate[ring])
+                {
+                    tiny.nextState(temp);
+                    ulong Chance = Boost || current.chain >= 40 ? 100 : (ulong)(8100 - current.chain * 200);
+
+                    tiny.nextState(temp);
+                    patches[ring].condition = (byte)(tiny.temper(temp) * Chance <= uint.MaxValue ? 2 : 1);
+                }
+                shiny = patches.Any(p => p.condition == 2);
             }
+
+            // 1 empty patch
+            ring = RandCall(3);
+            patches[4] = new Patch
+            {
+                Ring = ring,
+                Direction = RandCall(4),
+                Location = RandCall(ring * 2 + 3),
+                condition = 3,
+            };
+
+            PatchBoard = string.Join("\n", Overview.Select(ov => ov));
+
         }
         public static byte[] GoodRate = { 23, 43, 63, 83 };
     }

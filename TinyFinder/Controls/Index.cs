@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace TinyFinder
 {
@@ -18,15 +17,82 @@ namespace TinyFinder
             return tiny.Rand(temp, range);
         }
 
-        public byte rand100;
-        public byte Noise;
-        public bool Sync;
-        public byte slotType;
-        public byte slot;
-        public byte encounter;
-        public bool trigger;
-        public byte flute;
-      //public byte item;
+        public string RTC { get; set; }
+        public uint IndexValue { get; set; }
+        public uint Tiny3 { get; set; }
+        public uint Tiny2 { get; set; }
+        public uint Tiny1 { get; set; }
+        public uint Tiny0 { get; set; }
+        public ushort trainerID { get; set; }
+        public ushort secretID { get; set; }
+        public ushort TSV { get; set; }
+        public byte TRV { get; set; }
+        public uint randhex { get; set; }
+        public byte rand100 { get; set; }
+        public bool Sync { get; set; }
+        public byte slot { get; set; }
+        public byte encounter { get; set; }
+        public bool trigger { get; set; }
+        public ushort ActualDelay { get; set; }
+        public string timeline { get; set; }
+        public bool shiny { get; set; }
+        public byte flute { get; set; }
+        public string Level { get; set; }
+        public int itemSlot { get; set; }
+        public string item { get; set; }
+        
+        public byte HordeHA { get; set; }
+        public byte[] flutes = new byte[5];
+        public string HordeFlutes { get; set; }
+        public byte[] HordeLevels = new byte[5];
+        public byte[] itemSlots = new byte[5];
+        public string PatchBoard { get; set; }
+        public char Music { get; set; }
+
+        public sbyte right { get; set; }
+        public sbyte up { get; set; }
+        public int EnctrType { get; set; }
+        public string Type { get; set; }
+        public bool DexNavHA { get; set; }
+        public bool eggMove { get; set; }
+        public bool Boost { get; set; }
+        public int LevelBoost { get; set; }
+        public byte potential { get; set; }
+        
+        public string SpeciesName { get; set; }
+
+        public byte Findflute()
+        {
+            Advance();
+
+            if (CurrentRand(100) < 40)
+                return 1;
+
+            else if (CurrentRand(100) < 70)
+                return 2;
+
+            else if (CurrentRand(100) < 90)
+                return 3;
+
+            else
+                return 4;
+
+        }
+
+        public byte FindItem()
+        {
+            Advance();
+            Advance();
+
+            if (CurrentRand(100) < 50)
+                return 0;
+
+            else if (CurrentRand(100) < 55)
+                return 1;
+
+            else
+                return 2;
+        }
         
     }
 }
