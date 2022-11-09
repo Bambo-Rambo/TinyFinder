@@ -1,6 +1,7 @@
 # TinyFinder
 
-### [Download the latest commit here](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/build/artifacts)
+### [Download link for the latest stable commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/builds/45333252/artifacts)
+### [Download link for the actual latest commit](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/build/artifacts)
 
 Windows forms app for assisting with RNG abuse (mainly TinyMT) in Pokemon gen 6 games.
 
@@ -12,21 +13,21 @@ Also provides a MT seed searcher for various things (specific PID/EC search, mul
 
 * Index search by date (Citra only - mainly useful for ID, DexNav and Radar RNG)
 * Index filtering
+* Mapped wild encounter slots and held items
 * DexNav RNG support (Egg moves are not predicted)
 * Complete Normal Wild RNG support for every location. Indexes that would generate hordes instead, are not shown. The NPC influence is accounted for, as well
 * Complete Horde RNG support for every location, including caves, 
 either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass).
 The NPC influence is accounted for, as well
-* Fishing RNG with predicted delay and option to use the rod from bag calculating the future character blinks (no timeline needed and every index is hittable)
+* Fishing RNG with predicted delay and rod usage from bag calculating the future character blinks (no timeline needed and every index is hittable)
 * Honey Wild RNG support for places that don't generate hordes
 * Allow Poke Radar usage from the bag instead of the Y menu (no timeline needed and every index is hittable)
 * XY Victory Road swooping encounters (Sync is calculated differently)
-* Minor performance improvements (no lag when scrolling through the indexes etc)
+* Minor performance improvements
 * TinyMT Timeline calibration is not implemented. 
 While it is required for XY ID RNG, nature sync for stationaries, and rock smash, other methods including: 
 wild, hordes, dexnav, radar, fishing etc, can be done way faster using the bag method (see [RNG Guides](https://github.com/Bambo-Rambo/RNG-Guides)).
 Index filtering can still be used for fishing and rock smash to avoid scrolling in 3DS RNG Tool.
-*  Held item chance calculation is not implemented
 
 
 ### Step 1 - Calibration
@@ -49,13 +50,12 @@ As explained above, if you are using the Date Searcher, the month selection is o
 If you are doing Normal Wild RNG, it's important to choose your location. 
 The encounter ratio changes depending on your choice but you can edit it regardless. 
 
-If you are doing Horde RNG by moving (the "Trigger by turn" button is checked), the same things apply.
+If you are doing Horde RNG by moving, the same things apply.
 
 For radar put the number of your party and the chain length. If 0, the tool will search for the desired slot and sync. 
 If > 0, it will search for shiny patches since the slot is the one you have been chaining for while sync is decided when you step into the patch. 
 (It's not possible to generate shiny patches if current chain = 0). 
 Check the Boost box only if the radar-exclusive music currently plays in the background. 
-If you are using the Radar device from the bag (recommended), check the corresponding box.
 
 ### Step 3 - Preferences
 
@@ -88,3 +88,4 @@ If you are using the Date Searcher and you haven't calibrated already, the tool 
 ### Credits
 * wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
 * Real96, zaksabeast, Admiral-Fish and Parzival/StarfBerry for their researches on the MT seed generation
+* shiny finder for mapping wild encounter slots
