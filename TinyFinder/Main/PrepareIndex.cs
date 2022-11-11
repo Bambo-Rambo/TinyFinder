@@ -1,8 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
 
 namespace TinyFinder.Main
 {
@@ -27,6 +25,28 @@ namespace TinyFinder.Main
                         HordeLevels[i] = current.currentLevels[slot];
                     break;
 
+                case 6:
+                    if (current.oras)
+                    {
+                        if (index.EnctrType == 2)   // Only when the result is dexnav exclusive
+                        {
+                            DexNumber = current.specialSlots[slot];
+                            tempLevel = current.dexNavLevel;
+                        }
+                        else
+                        {
+                            DexNumber = current.currentSlots[slot];
+                            tempLevel = current.currentLevels[slot];
+                        }
+                        tempLevel += index.LevelBoost;
+                    }
+                    else
+                    {
+                        DexNumber = current.currentSlots[slot];
+                        tempLevel = current.currentLevels[slot];
+                    }
+                    break;
+
                 case 7:
                     DexNumber = current.DexNumberFS;
                     tempLevel = 30;
@@ -34,16 +54,8 @@ namespace TinyFinder.Main
 
                 default:
 
-                    if (index.EnctrType == 2)   // Only when the result is dexnav exclusive
-                    {
-                        DexNumber = current.specialSlots[slot];
-                        tempLevel = current.dexNavLevel;
-                    }  
-                    else
-                    {
-                        DexNumber = current.currentSlots[slot];
-                        tempLevel = current.currentLevels[slot];
-                    }  
+                    DexNumber = current.currentSlots[slot];
+                    tempLevel = current.currentLevels[slot];
                     break;
             }
             Species pokemon = Species.SpeciesList.ElementAt(DexNumber);
