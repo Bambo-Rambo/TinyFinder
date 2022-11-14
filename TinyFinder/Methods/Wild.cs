@@ -44,12 +44,12 @@ namespace TinyFinder
         public void NormalWild(byte ratio, byte Noise, bool oras, bool MayStepHorde, bool RadarGrass, byte SlotType)
         {
             for (byte i = 0; i < Noise; i++)                //NPC Noise taken into account before everything else
-                Advance();
+                AdvanceOnce();
 
             rand100 = RandCall(100);                        //If (rand100 < 5) -> Horde
 
             if (MayStepHorde)                               //+1 to avoid using the same rand100 for Horde trigger and Sync
-                Advance();                                  //Every horde, triggered by step, would be synced otherwise
+                AdvanceOnce();                                  //Every horde, triggered by step, would be synced otherwise
 
             Sync = CurrentRand(100) < 50;
 
@@ -57,7 +57,7 @@ namespace TinyFinder
             trigger = encounter < ratio && (!MayStepHorde || rand100 > 4);
 
             if (RadarGrass)
-                Advance();
+                AdvanceOnce();
 
             slot = data.getSlot(RandCall(100), SlotType);
 
@@ -88,9 +88,9 @@ namespace TinyFinder
         {
             rand100 = RandCall(100);
 
-                                                      // 3 if Cave / ORAS underwater
+            // 3 if Cave / ORAS underwater
             for (byte i = 0; i < advances; i++)       // 27 if XY
-                Advance();                            // 15 if ORAS
+                AdvanceOnce();                            // 15 if ORAS
                                                       // 6 if ORAS Magma/Aqua Hideout
 
             Sync = CurrentRand(100) < 50;
@@ -112,6 +112,39 @@ namespace TinyFinder
             Sync = RandCall(100) < 50;
 
             itemSlot = FindItem();
+        }
+
+        public byte Findflute()
+        {
+            AdvanceOnce();
+
+            if (CurrentRand(100) < 40)
+                return 1;
+
+            else if (CurrentRand(100) < 70)
+                return 2;
+
+            else if (CurrentRand(100) < 90)
+                return 3;
+
+            else
+                return 4;
+
+        }
+
+        public byte FindItem()
+        {
+            AdvanceOnce();
+            AdvanceOnce();
+
+            if (CurrentRand(100) < 50)
+                return 0;
+
+            else if (CurrentRand(100) < 55)
+                return 1;
+
+            else
+                return 2;
         }
 
     }

@@ -9,13 +9,35 @@ namespace TinyFinder
         protected Data data = new Data();
         protected uint[] temp = new uint[4];
 
-        protected void Advance() => tiny.nextState(temp);
+
+        protected int pointer;
+        public byte Current(List<uint> rngList, int n)
+        {
+            return (byte)((rngList[pointer] * (ulong)n) >> 32);
+        }
+        public byte Rand(List<uint> rngList, int n)
+        {
+            Advance(1);
+            return (byte)((rngList[pointer] * (ulong)n) >> 32);
+        }
+
+        public uint RandUint(List<uint> rngList, int n)
+        {
+            Advance(1);
+            return (uint)((rngList[pointer] * n) >> 32);
+        }
+        public void Advance(int totalRands) => pointer += totalRands;
+
+
+        protected void AdvanceOnce() => tiny.nextState(temp);
         protected byte CurrentRand(int range) => tiny.Rand(temp, range);
         protected byte RandCall(int range)
         {
-            Advance();
+            AdvanceOnce();
             return tiny.Rand(temp, range);
         }
+
+
 
         public string RTC { get; set; }
         public uint IndexValue { get; set; }
@@ -61,17 +83,17 @@ namespace TinyFinder
         
         public string SpeciesName { get; set; }
 
-        public byte Findflute()
+        public byte Findflute(List<uint> rngList)
         {
-            Advance();
+            Advance(1);
 
-            if (CurrentRand(100) < 40)
+            if (Current(rngList, 100) < 40)
                 return 1;
 
-            else if (CurrentRand(100) < 70)
+            else if (Current(rngList, 100) < 70)
                 return 2;
 
-            else if (CurrentRand(100) < 90)
+            else if (Current(rngList, 100) < 90)
                 return 3;
 
             else
@@ -79,15 +101,14 @@ namespace TinyFinder
 
         }
 
-        public byte FindItem()
+        public byte FindItem(List<uint> rngList)
         {
-            Advance();
-            Advance();
+            Advance(2);
 
-            if (CurrentRand(100) < 50)
+            if (Current(rngList, 100) < 50)
                 return 0;
 
-            else if (CurrentRand(100) < 55)
+            else if (Current(rngList, 100) < 55)
                 return 1;
 
             else

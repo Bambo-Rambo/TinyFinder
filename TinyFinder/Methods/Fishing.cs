@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 using TinyFinder.Main;
-using TinyFinder.Properties;
 
 namespace TinyFinder
 {
@@ -23,44 +22,44 @@ namespace TinyFinder
 
             for (byte i = 0; i < current.advances; i++)
             {
-                Advance();
+                AdvanceOnce();
             }
 
             uint FirstRand = tiny.temper(temp);
 
             //DelayRand is the frame where the delay is calculated for each location
             //GameCorrection is 144/146 for XY, custom for ORAS
-            int TotalFrames = getcooldown1(FirstRand) + current.delayRand - current.gameCorrection;     
-                                                                                                         
+            int TotalFrames = getcooldown1(FirstRand) + current.delayRand - current.gameCorrection;
+
             Timeline.Add(current.targetFrame + TotalFrames);
 
-            Advance();
+            AdvanceOnce();
 
             if (TotalFrames < current.delayRand)                    //!!! First blink already happened BEFORE before delay rand call !!!
             {
                 if (tiny.temper(temp) > 0x55555555)                 //Second blink (before delay) is long (Blink +2)
                 {
-                    Advance();
+                    AdvanceOnce();
                     TotalFrames += getcooldown1(tiny.temper(temp));
                     Timeline.Add(current.targetFrame + TotalFrames);
 
-                    Advance();
+                    AdvanceOnce();
 
                     ShortBlinkHappened = false;
                 }
                 else                                                //Second blink (before delay) is short (Blink +1, 12/20)
                 {
-                    Advance();
+                    AdvanceOnce();
 
                     TotalFrames += getcooldown2(tiny.temper(temp));
                     Timeline.Add(current.targetFrame + TotalFrames);
-                    Advance();
+                    AdvanceOnce();
 
                     if (TotalFrames < current.delayRand)                            //Delay rand was called AFTER the next blink
                     {                                                               //We know there was just a short blink, otherwise we wouldn't reach here
                         TotalFrames += getcooldown1(tiny.temper(temp));             //so the next blink is long for sure
                         Timeline.Add(current.targetFrame + TotalFrames);
-                        Advance();
+                        AdvanceOnce();
 
                         ShortBlinkHappened = false;
                     }
@@ -75,7 +74,7 @@ namespace TinyFinder
                 ShortBlinkHappened = false;
             }
 
-          //ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + SystemDelay + BagDelay + 144); //+4 for azure bay only??
+            //ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + SystemDelay + BagDelay + 144); //+4 for azure bay only??
             ActualDelay = (ushort)(CurrentRand(7) * 30 + 60 + current.delayRand - 2);
             if (current.citra)
                 ActualDelay++;
@@ -83,19 +82,19 @@ namespace TinyFinder
 
             while (TotalFrames < ActualDelay)
             {
-                Advance();
+                AdvanceOnce();
 
                 if (tiny.temper(temp) > 0x55555555 || ShortBlinkHappened)           //There can't be consecutive short (12/20) blinks
                 {
                     if (!ShortBlinkHappened)
-                        Advance();
+                        AdvanceOnce();
                     TotalFrames += getcooldown1(tiny.temper(temp));
 
                     ShortBlinkHappened = false;
                 }
                 else
                 {
-                    Advance();
+                    AdvanceOnce();
                     TotalFrames += getcooldown2(tiny.temper(temp));
 
                     ShortBlinkHappened = true;

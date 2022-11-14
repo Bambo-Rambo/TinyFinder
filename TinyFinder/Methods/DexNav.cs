@@ -1,69 +1,69 @@
-﻿using TinyFinder.Main;
+﻿using System.Collections.Generic;
+using TinyFinder.Main;
 
 namespace TinyFinder
 {
     //https://github.com/wwwwwwzx/3DSRNGTool/blob/master/3DSRNGTool/Gen6/DexNav.cs
     class DexNav : Index
     {
-        private uint RandUINT(int n) => (uint)((tiny.Nextuint(temp) * n) >> 32);
         public int TargetValue, CheckCount, index;    //EnctrType -> Normal/DexNav, slotType -> Land(12)/Water(5)
 
-        public DexNav(uint[] currentState, UISettings current)
+        public DexNav(List<uint> rngList, UISettings current)
         {
-            currentState.CopyTo(temp, 0);
-            rand100 = RandCall(100);
+            //currentState.CopyTo(temp, 0);
+            rand100 = Current(rngList, 100);
 
-            for (byte i = 0; i < current.noise; i++)
-                Advance();
+            //for (byte i = 0; i < current.noise; i++)
+                Advance(current.noise);
 
-            trigger = RandCall(100) < 50;
+            trigger = Rand(rngList, 100) < 50;
 
             if (!trigger && current.triggerOnly)       // Save some time here
                 return;
 
             //The coordinates for a patch are generated inside the ring [-9, 9].
             //Currently unknown for caves, water and desert and varies for every tile
-            switch (RandCall(4))
+            switch (Rand(rngList, 4))
             {
                 case 0:
-                    right = (sbyte)(-9 + RandCall(18));
-                    up = (sbyte)-(-9 + RandCall(3));
+                    right = (sbyte)(-9 + Rand(rngList, 18));
+                    up = (sbyte)-(-9 + Rand(rngList, 3));
                     break;
                 case 1:
-                    right = (sbyte)(-9 + RandCall(3));
-                    up = (sbyte)-(-7 + RandCall(14));
+                    right = (sbyte)(-9 + Rand(rngList, 3));
+                    up = (sbyte)-(-7 + Rand(rngList, 14));
                     break;
                 case 2:
-                    right = (sbyte)(7 + RandCall(3));
-                    up = (sbyte)-(-7 + RandCall(14));
+                    right = (sbyte)(7 + Rand(rngList, 3));
+                    up = (sbyte)-(-7 + Rand(rngList, 14));
                     break;
                 case 3:
-                    right = (sbyte)(-9 + RandCall(18));
-                    up = (sbyte)-(7 + RandCall(3));
+                    right = (sbyte)(-9 + Rand(rngList, 18));
+                    up = (sbyte)-(7 + Rand(rngList, 3));
                     break;
             }
 
             //If DexNav exclusives exist for the target encounter type (Grass or Surf), then a DexNav slot has 30% chance of occuring
-            EnctrType = RandCall(100) < 30 && current.exclusives ? 2 : current.sType;
+            EnctrType = Rand(rngList, 100) < 30 && current.exclusives ? 2 : current.sType;
             Type = EnctrType == 2 ? "DexNav" : "Normal";
 
             /*The special Boost has 4% chance of occuring unless the current chain length is [4, 9, 14, 19, 24 etc]
             In this case, it is guaranteed and improves the chances of getting forced shiny indexes as well as higher perfect IV counts
             When occurs, it also guarantees a +10 Level Boost, an egg move, as well as at least 1 perfect IV*/
-            Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || RandCall(100) < 4;
+            Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || Rand(rngList, 100) < 4;
 
-            Sync = RandCall(100) < 50;
+            Sync = Rand(rngList, 100) < 50;
 
             //The rarity of the slots is reversed. The last slot for a given encounter type (Normal Grass [12], Normal Surf [5] and DexNav [3]),
             //is the most common and has 30% chance of occuring. If it doesn't, the game checks the previous slot whose chance is 30% as well etc
             for (slot = SlotNum[EnctrType]; slot > 0; slot--)
-                if (RandCall(100) < 30)
+                if (Rand(rngList, 100) < 30)
                     break;
             //Slot 2 is the most rare because a possible slot 0, becomes slot 1
             if (slot == 0)
                 slot++;
 
-            Advance();
+            Advance(1);
 
             /*
              * The Grade's possible values are 6 (0-5) and depend on the current Search Level of the Pokemon
@@ -88,22 +88,22 @@ namespace TinyFinder
              * 3 => 20%
              * 4 => 10%
              */
-            flute = getFlute(RandCall(100));
+            flute = getFlute(Rand(rngList, 100));
 
-            DexNavHA = RandCall(100) < HARate[Grade];
+            DexNavHA = Rand(rngList, 100) < HARate[Grade];
 
             //index's final value will be the number of perfect IV count (max 3)
             for (index = 2; index >= 0; index--)
-                if (RandCall(100) < IVRate[3 * Grade + index])
+                if (Rand(rngList, 100) < IVRate[3 * Grade + index])
                     break;
             //If boost has been triggered, +2 perfect IVs, otherwise +1
             index += Boost ? 2 : 1;                     //This guarantees that the value will never be < 0
             potential = (byte)(index < 3 ? index : 3);  //This guarantees that the value will never be > 3
 
-            eggMove = RandCall(100) < EggMoveRate[Grade] || Boost;
+            eggMove = Rand(rngList, 100) < EggMoveRate[Grade] || Boost;
 
 
-            int tmp = RandCall(100);
+            int tmp = Rand(rngList, 100);
             for (index = 0; index < 2; index++)
             {
                 tmp -= HeldItemRate[Grade * 2 + index];
@@ -141,13 +141,13 @@ namespace TinyFinder
 
             for (int i = 0; i < CheckCount; i++)
             {
-                if (RandUINT(10000) < TargetValue * 0.01)
+                if (RandUint(rngList, 10000) < TargetValue * 0.01)
                 {
                     shiny = true;
                     return;                  //No more checks if a shiny index is found obviously
                 }
             }
-            shiny = false;
+            //shiny = false;
         }
 
         //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits

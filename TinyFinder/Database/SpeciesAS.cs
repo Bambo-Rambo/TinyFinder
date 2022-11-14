@@ -49,17 +49,20 @@ namespace TinyFinder
                     case "Granite Cave - 1F":
                         loc.CaveTable = new ushort[] { 41, 41, 41, 41, 296, 296, 296, 296, 63, 63, 74, 74, };
                         loc.HordeTable = new ushort[] { 41, 296, 296, };
+                        loc.DexNavTable = new ushort[] { 532, 610, 95, };
                         break;
 
                     case "Granite Cave - B1F":
                         loc.CaveTable = new ushort[] { 41, 41, 41, 304, 304, 304, 296, 296, 63, 63, 63, 63, };
                         loc.HordeTable = new ushort[] { 41, 304, 304, };
+                        loc.DexNavTable = new ushort[] { 532, 610, 95, };
                         break;
 
                     case "Granite Cave - B2F":
                         loc.CaveTable = new ushort[] { 41, 41, 41, 304, 304, 304, 63, 63, 302, 302, 302, 302, };
                         loc.HordeTable = new ushort[] { 41, 304, 302, };
                         loc.SmashTable = new ushort[] { 74, 74, 299, 74, 74, };
+                        loc.DexNavTable = new ushort[] { 532, 610, 95, };
                         break;
 
                     case "Jagged Pass":

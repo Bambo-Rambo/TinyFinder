@@ -6,7 +6,7 @@
         {
             current.CopyTo(temp, 0);
             if (advance)
-                Advance();
+                AdvanceOnce();
             randhex = tiny.temper(temp);
             trainerID = (ushort)randhex;
             secretID = (ushort)(randhex >> 16);

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace TinyFinder
 {
@@ -47,7 +46,24 @@ namespace TinyFinder
                 status[1] ^= mat1;
                 status[2] ^= mat2;
             }
+        }
 
+        public uint[] NextState(uint[] status)
+        {
+            uint y = status[3];
+            uint x = (status[0] & TINYMT32_MASK) ^ status[1] ^ status[2];
+            x ^= (x << TINYMT32_SH0);
+            y ^= (y >> TINYMT32_SH0) ^ x;
+            status[0] = status[1];
+            status[1] = status[2];
+            status[2] = x ^ (y << TINYMT32_SH1);
+            status[3] = y;
+            if ((y & 1) == 1)
+            {
+                status[1] ^= mat1;
+                status[2] ^= mat2;
+            }
+            return status;
         }
 
         public uint[] init(uint seed, int adv) //Takes the TinyMT initial seed and returns the (initial state + adv) (depending on the method)
