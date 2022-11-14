@@ -98,11 +98,10 @@ namespace TinyFinder
             return false;
         }
 
-        // Unused
-        public bool HasFishing()
+        /*public bool HasFishing()
         {
             return OldTable != null && GoodTable != null && SuperTable != null;
-        }
+        }*/
 
         public bool HasRadar()
         {

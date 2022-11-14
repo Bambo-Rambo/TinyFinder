@@ -68,7 +68,6 @@ namespace TinyFinder
             t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
             Generator.Size = new Size(1170, 315);           // Size breaks for some reason
 
-            SearchGen.SelectedIndex = 1;
             GameVersion.SelectedIndex = 0;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
             //Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
@@ -78,6 +77,7 @@ namespace TinyFinder
 
             DefaultChanges();
             Methods.SelectedIndex = 0;
+            SearchGen.SelectedIndex = 1;
         }
 
         // Main Event (Search Button)
@@ -132,6 +132,36 @@ namespace TinyFinder
                 mersenne.SetGame(!ORAS);
         }
 
+        private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            bool DateSearcher = SearchGen.SelectedIndex == 0;
+            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible =
+                Threads_Label.Enabled = ThreadCount.Enabled = DateRNGSeed.Visible = DateSearcher;
+            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
+            Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
+            Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
+
+            if (!Working)
+                MainButton.Text = DateSearcher ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
+
+            if (DateSearcher)
+            {
+                Step_Label.Visible = Chain_Label.Visible = false;
+                min.Value = min.Minimum = !ORAS ? 35 :
+                                          (ORAS && Method == 0) ? 11 :
+                                          (ORAS && Method != 0) ? 20 : 0;
+                max.Value = (!ORAS && Method == 6) ? 800 : 150;
+
+            }
+            else
+            {
+                min.Minimum = 0; min.Value = 0;     //Careful for exception here
+                if (Method != 0)
+                    SetMin();
+                max.Value = 50000;
+            }
+        }
+
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
         {
             ManageControls();
@@ -144,11 +174,6 @@ namespace TinyFinder
             TinyChanged();
         }
 
-        private void party_ValueChanged(object sender, EventArgs e)
-        {
-            if (CheckMethod("Friend Safari"))
-                ManageSlots();
-        }
         private void ratio_ValueChanged(object sender, EventArgs e)
         {
             Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !isRadar1;
@@ -250,9 +275,21 @@ namespace TinyFinder
                         EncounterType.Items.Add("Purple Flowers");
                 }
             }
+            else if (Method == 7)
+            {
+                EncounterType.Items.Add("2 Slots");
+                EncounterType.Items.Add("3 Slots");
+            }
 
             if (EncounterType.Items.Count != 0)
-                EncounterType.SelectedIndex = Method == 2 ? 2 : 0;  // For fishing, Super rod is the default choice
+            {
+                if (Method == 2)
+                    EncounterType.SelectedIndex = 2;    // For fishing, Super rod is the default choice
+                else if (Method == 7)
+                    EncounterType.SelectedIndex = 1;    // For FS, 3 slots is the default choice
+                else
+                    EncounterType.SelectedIndex = 0;
+            } 
             else
                 ManageSpecies();
 
@@ -282,8 +319,12 @@ namespace TinyFinder
         private void SetMin()
         {
             if (SearchGen.SelectedIndex == 1)
-                if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
+            {
+                if (Method == 7)
+                    min.Value = 27;
+                else if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
                     min.Value = CurrentLocation.Bag_Advances;
+            }
         }
 
         private void ManageSpecies()
@@ -321,18 +362,14 @@ namespace TinyFinder
 
         private void Species_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ManageSlots();
             if (Method != 7)
             {
-                ManageSlots();
                 ushort[] tempTable;
                 if (IsDexNav && checkExclusives())
-                {
                     tempTable = GetNavTable;
-                }
                 else
-                {
                     tempTable = SlotTable();
-                }
                 for (int i = 1; i < SlotsComboBox.Items.Count; i++)
                     SlotsComboBox.CheckBoxItems[i].Checked = DexToName(tempTable[i - 1]).Equals(SelectedSpecies);
             }
@@ -362,17 +399,6 @@ namespace TinyFinder
                 return null;
             if (Method == 8)
                 return GetSwoopingTable;
-            
-            /*{
-                ushort[] FSTable;
-                uint pointer = 0;
-                for (ushort i = 1; i < SpeciesList.Count; i++)
-                {
-                    if (SpeciesList.ElementAt(i).FS)
-                        FSTable[++pointer] = i;
-                }
-                return FSTable;
-            }*/
 
             switch (EncounterType.SelectedItem.ToString())
             {
@@ -472,12 +498,6 @@ namespace TinyFinder
                     break;
             }
 
-            foreach (Location ll in listOfLocations)
-            {
-                if (ll.Bag_Advances == 0)
-                    MessageBox.Show("" + ll.Name);
-            }
-
             locationsComboBox.Items.Clear();
             foreach (Location temp in listOfLocations.ToList())
             {
@@ -542,8 +562,8 @@ namespace TinyFinder
                     }
                     break;
                 case 7:     // Friend Safari
-                    SlotsCount = (byte)(party.Value == 2 ? 2 : 3);
-                    ComboBoxHeight = (ushort)(party.Value == 2 ? 65 : 90);
+                    SlotsCount = (byte)(EncounterType.SelectedIndex + 2);
+                    ComboBoxHeight = (ushort)(SlotsCount == 2 ? 65 : 90);
                     break;
 
                 case 2:     // Fishing
@@ -552,49 +572,16 @@ namespace TinyFinder
                     ComboBoxHeight = 90;
                     break;
             }
-            AddSlots(SlotsCount, ComboBoxHeight);
-        }
-
-        private void AddSlots(byte count, ushort height)
-        {
             // All slots need to be unchecked before being removed to clear the slot text in combobox
             for (int i = 0; i < SlotsComboBox.Items.Count; i++)
                 SlotsComboBox.CheckBoxItems[i].Checked = false;
             SlotsComboBox.Items.Clear();
-            SlotsComboBox.DropDownHeight = height;
-            for (byte add = 1; add < count + 1; add++)
+            SlotsComboBox.DropDownHeight = ComboBoxHeight;
+            for (byte add = 1; add < SlotsCount + 1; add++)
                 SlotsComboBox.Items.AddRange(new object[] { add });
         }
 
         private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
-
-        private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            bool DateSearcher = SearchGen.SelectedIndex == 0;
-            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = 
-                Threads_Label.Enabled = ThreadCount.Enabled = DateRNGSeed.Visible = DateSearcher;
-            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
-            Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
-            Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
-
-            if (!Working)
-                MainButton.Text = DateSearcher ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
-
-            if (DateSearcher)
-            {
-                Step_Label.Visible = Chain_Label.Visible = false;
-                min.Value = min.Minimum = !ORAS ? 35 :
-                                          (ORAS && Method == 0) ? 11 :
-                                          (ORAS && Method != 0) ? 20 : 0;
-                max.Value = (!ORAS && Method == 6) ? 800 : 150;
-
-            }
-            else
-            {
-                min.Minimum = 0; min.Value = 0;     //Careful for exception here
-                max.Value = 50000;
-            }
-        }
 
         private void TinyChanged()
         {
@@ -729,7 +716,7 @@ namespace TinyFinder
         {
             TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
             SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
-            SyncBox.Visible = Method != 0 && !CheckMethod("DexNav");
+            SyncBox.Visible = Method != 0 && !IsDexNav;
             FluteOptionLabel.Visible = FluteOption.Visible = Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS;
             HASlot.Visible = HA_Label.Visible = Method == 4;
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
@@ -737,7 +724,7 @@ namespace TinyFinder
             Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
 
             Location_Label.Visible = locationsComboBox.Visible = Method != 0 && Method != 7;
-            EncounterType.Visible = Method == 1 || Method == 2 || Method == 4 || Method == 5 || (Method == 6 && !isRadar1);
+            EncounterType.Visible = Method != 0 && Method != 3 && Method != 8;
 
             BonusMusicBox.Visible = Patches_Board.Visible = !ORAS && Method == 6;
             BagBox.Visible = BagBox.Checked = (Method == 6 && !ORAS) || Method == 2;
@@ -747,15 +734,15 @@ namespace TinyFinder
             Noise_Label.Visible = noise.Visible = NavFilters_Label.Visible = 
                 NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS && Method == 6;
 
-            Species_Label.Visible = SpeciesCombo.Visible = Method != 0;// && Method != 7;
+            Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
 
-            Party_Label.Visible = party.Visible = (Method > 3 && Method < 8) || Method == 2 ;
+            Party_Label.Visible = party.Visible = (Method > 3 && Method < 8 && Method != 7) || Method == 2 ;
 
             Step_Label.Visible = Chain_Label.Visible = false;
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
-            Party_Label.Text = (Method == 6 && ORAS) ? "Search Level" : Method == 7 ? "Slots" : "Party";
+            Party_Label.Text = (IsDexNav) ? "Search Level" : "Party";
 
             ratio.Minimum = 1; ratio.Maximum = 99;
 
@@ -786,7 +773,7 @@ namespace TinyFinder
                 Flute1.Location = new Point(313, 42);
                 SyncBox.Location = new Point(53, 148);
                 Party_Label.Location = new Point(332, 197);
-                party.Minimum = Method == 7 ? 2 : 1; party.Maximum = Method == 7 ? 3 : 6; party.Value = party.Maximum;
+                party.Minimum = 1; party.Maximum = 6; party.Value = party.Maximum;
                 Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = true;
                 
                 if (Method == 4)
@@ -819,10 +806,8 @@ namespace TinyFinder
                 }
                 else if (Method == 7)
                 {
-                    ManageSpecies();
+                    location_SelectedIndexChanged(null, null);
                     ManageRatio();
-                    if (SearchGen.SelectedIndex == 1)
-                        min.Value = 27;
                 }
             }
         }

@@ -298,8 +298,7 @@ namespace TinyFinder
 
                 case 7:     // Friend Safari
 
-                    // Party value is being used here for the total number of slots (2/3)
-                    settings.sType = (byte)(party.Value - 1);   // If 3rd slot is unlocked -> type = 2. If not, -> type = 1
+                    settings.sType = (byte)(EncounterType.SelectedIndex + 1);   // If 3rd slot is unlocked -> type = 2. If not, -> type = 1
                     //TotalRandCalls = settings.noise + settings.advances + 5;
                     break;
             }
@@ -334,7 +333,7 @@ namespace TinyFinder
         }
 
         // This is only used for Hordes and Radar / DexNav.
-        // Instead of calculating the new TinyMT state every time, we put some of them in an array and take them from there.
+        // Instead of calculating the new TinyMT state every time, we store some of them in an array and take them from there.
         // Each Hordes/DexNav index has a lot of rand calls so this approach makes the process way faster.
         // ID has only 1 though so it would become slower instead.
         // Code is far from being optimized. Fix later
@@ -416,7 +415,7 @@ namespace TinyFinder
         }
 
 
-        // This is the old approach. Run faster with ID, but slower for anything else.
+        // This is the old approach. Run faster with ID, but is way slower for anything else.
         // Extra speed is pointless though, since even the most rare possible index, is being found instantly.
         private void StartResearch(uint[] CurrentState, uint Jump)
         {
