@@ -288,6 +288,8 @@ namespace TinyFinder
                     if (IsDexNav)
                     {
                         TotalRandCalls = settings.noise + 35;
+                        if (ratio.Value == 49 || ratio.Value == 99)
+                            TotalRandCalls += 10;
                     }
                     else
                     {
