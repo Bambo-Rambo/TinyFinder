@@ -77,6 +77,9 @@ namespace TinyFinder.Main
                     case "Type":
                         list.Sort((x, y) => x.Type.CompareTo(y.Type) * direction);
                         break;
+                    case "DexNavHA":
+                        list.Sort((x, y) => x.DexNavHA.CompareTo(y.DexNavHA) * direction);
+                        break;
                     case "potential":
                         list.Sort((x, y) => x.potential.CompareTo(y.potential) * direction);
                         break;

@@ -616,6 +616,7 @@ namespace TinyFinder
                 NTRHelper.ntrclient.ReadTiny("TTT");
                 if (Method == 6)
                 {
+                    AllowChainUpdate.Visible = true;
                     if (ORAS)
                     {
                         NTRHelper.ntrclient.ReadTiny("Step");
@@ -638,6 +639,7 @@ namespace TinyFinder
         public void OnConnected_Changed(bool IsConnected)
         {
             updateBTN.Enabled = IsConnected;
+            AllowChainUpdate.Visible = Method == 6 && IsConnected;
         }
 
         public void parseNTRInfo(string name, object info)
@@ -659,13 +661,15 @@ namespace TinyFinder
                     break;
                 case "DexNavChain":
                     var chain = (uint[])info;
-                    ratio.Value = chain[0];
+                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
+                        ratio.Value = chain[0];         // Ratio is in fact the chain value here
                     Chain_Label.Visible = true;
                     Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
                     break;
                 case "RadarChain":
                     var chainRadar = (uint[])info;
-                    //ratio.Value = chainRadar[0];
+                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
+                        ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
                     Chain_Label.Visible = true;
                     Chain_Label.Location = new Point(25, 118);
                     Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
@@ -738,7 +742,7 @@ namespace TinyFinder
 
             Party_Label.Visible = party.Visible = (Method > 3 && Method < 8 && Method != 7) || Method == 2 ;
 
-            Step_Label.Visible = Chain_Label.Visible = false;
+            Step_Label.Visible = Chain_Label.Visible = AllowChainUpdate.Visible = false;
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
@@ -802,6 +806,7 @@ namespace TinyFinder
                         SlotsComboBox.Location = new Point(75, 89);
                         Flute1_Label.Location = new Point(220, 139);
                         Flute1.Location = new Point(311, 137);
+                        AllowChainUpdate.Checked = true;
                     }
                 }
                 else if (Method == 7)

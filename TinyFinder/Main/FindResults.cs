@@ -107,7 +107,8 @@ namespace TinyFinder
 
                 if (!isRadar1)
                 {
-                    // If the user didn't selected any slots, consider them all selected. Not the best approach though
+                    // If the user didn't selected any slots, consider them all selected.
+                    // Not the best approach but may be faster when filtering.
                     if (SlotCount == 0)
                         for (int i = 1; i < 13; i++)
                             settings.Target_Slots[i] = true;

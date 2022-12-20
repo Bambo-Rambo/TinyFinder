@@ -209,6 +209,7 @@ namespace TinyFinder
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.ThreadCount = new System.Windows.Forms.NumericUpDown();
             this.Threads_Label = new System.Windows.Forms.Label();
+            this.AllowChainUpdate = new System.Windows.Forms.CheckBox();
             this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.t3 = new TinyFinder.HexBox();
@@ -766,6 +767,7 @@ namespace TinyFinder
             // Settings_Box
             // 
             this.Settings_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Settings_Box.Controls.Add(this.AllowChainUpdate);
             this.Settings_Box.Controls.Add(this.FluteOption);
             this.Settings_Box.Controls.Add(this.FluteOptionLabel);
             this.Settings_Box.Controls.Add(this.EncounterType);
@@ -1560,7 +1562,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1170, 341);
+            this.Generator.Size = new System.Drawing.Size(1170, 361);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -2059,6 +2061,16 @@ namespace TinyFinder
             this.Threads_Label.TabIndex = 22;
             this.Threads_Label.Text = "Threads";
             // 
+            // AllowChainUpdate
+            // 
+            this.AllowChainUpdate.AutoSize = true;
+            this.AllowChainUpdate.Location = new System.Drawing.Point(313, 228);
+            this.AllowChainUpdate.Name = "AllowChainUpdate";
+            this.AllowChainUpdate.Size = new System.Drawing.Size(15, 14);
+            this.AllowChainUpdate.TabIndex = 54;
+            this.AllowChainUpdate.UseVisualStyleBackColor = true;
+            this.AllowChainUpdate.Visible = false;
+            // 
             // NavFilters
             // 
             this.NavFilters.BlankText = null;
@@ -2367,6 +2379,7 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Patches;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Item;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Rand100;
+        private System.Windows.Forms.CheckBox AllowChainUpdate;
     }
 }
 
