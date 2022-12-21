@@ -1089,7 +1089,7 @@ namespace TinyFinder
 
                 new Location
                 {
-                    Name = "Safari Zone Area 1",
+                    Name = "Safari Zone - Area 1",
                     Bag_Advances = 15,
 
                     CitraDelayRand = 196,
