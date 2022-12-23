@@ -114,8 +114,7 @@ namespace TinyFinder
             }
             if (index >= 2)
                 index = 3;
-            itemSlot = index;// == 0 ? "Common" : index == 1 ? "Rare" : "-";
-
+            itemSlot = index;
 
             /*
              * The game does various RNG calls (checks) and compares the random generated number with the Target Value
