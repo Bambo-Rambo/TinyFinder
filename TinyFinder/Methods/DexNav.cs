@@ -69,7 +69,8 @@ namespace TinyFinder
              * It is being used to get the rate of something
              * The random generated number should be lower than the rate's value in order to trigger the event
              */
-            byte Grade = GetGrade(current.searchLevel);
+
+            //byte Grade = GetGrade(current.searchLevel);
 
             /*
              * The Level of the Pokemon increases by 1 for every 5 added to the chain
@@ -88,23 +89,23 @@ namespace TinyFinder
              */
             flute = getFlute(Rand(rngList, 100));
 
-            DexNavHA = Rand(rngList, 100) < HARate[Grade];
+            DexNavHA = Rand(rngList, 100) < HARate[current.Grade];
 
             //index's final value will be the number of perfect IV count (max 3)
             for (index = 2; index >= 0; index--)
-                if (Rand(rngList, 100) < IVRate[3 * Grade + index])
+                if (Rand(rngList, 100) < IVRate[3 * current.Grade + index])
                     break;
             //If boost has been triggered, +2 perfect IVs, otherwise +1
             index += Boost ? 2 : 1;                     //This guarantees that the value will never be < 0
             potential = (byte)(index < 3 ? index : 3);  //This guarantees that the value will never be > 3
 
-            eggMove = Rand(rngList, 100) < EggMoveRate[Grade] || Boost;
+            eggMove = Rand(rngList, 100) < EggMoveRate[current.Grade] || Boost;
 
 
             int tmp = Rand(rngList, 100);
             for (index = 0; index < 2; index++)
             {
-                tmp -= HeldItemRate[Grade * 2 + index];
+                tmp -= HeldItemRate[current.Grade * 2 + index];
                 //if (CompoundEyes)
                     //tmp -= 5;
                 if (tmp < 0)
@@ -160,7 +161,8 @@ namespace TinyFinder
             return 4;
         }
 
-        public static byte GetGrade(ushort searchlevel)
+
+        /*public static byte GetGrade(ushort searchlevel)
         {
             for (byte g = 0; g < 5; g++)
                 if (searchlevel < GradeRange[g])
@@ -168,7 +170,9 @@ namespace TinyFinder
             return 5;
         }
 
-        public static byte[] GradeRange = { 5, 10, 25, 50, 100 };   //These numbers refer to the current Search Level
+        public static byte[] GradeRange = { 5, 10, 25, 50, 100 };   //These numbers refer to the current Search Level*/
+
+
         public static byte[] SlotNum = { 12, 5, 3 };                // Grass / Surf / DexNav
         public static byte[] HARate = { 0, 0, 5, 15, 20, 25 };      // dword_7E6860[6]
         public static byte[] IVRate =                               // dword_7E6890[18]

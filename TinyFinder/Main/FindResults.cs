@@ -298,6 +298,19 @@ namespace TinyFinder
                             settings.TargetValue = 2 * settings.searchLevel + 400;
                         else
                             settings.TargetValue = 6 * settings.searchLevel;
+
+                        if (settings.searchLevel < 5)
+                            settings.Grade = 0;
+                        else if (settings.searchLevel < 10)
+                            settings.Grade = 1;
+                        else if (settings.searchLevel < 25)
+                            settings.Grade = 2;
+                        else if (settings.searchLevel < 50)
+                            settings.Grade = 3;
+                        else if (settings.searchLevel < 100)
+                            settings.Grade = 4;
+                        else
+                            settings.Grade = 5;
                     }
                     else
                     {
