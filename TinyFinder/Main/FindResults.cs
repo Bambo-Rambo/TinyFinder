@@ -291,6 +291,13 @@ namespace TinyFinder
                         TotalRandCalls = settings.noise + 35;
                         if (ratio.Value == 49 || ratio.Value == 99)
                             TotalRandCalls += 10;
+
+                        if (settings.searchLevel > 200)
+                            settings.TargetValue = settings.searchLevel + 600;
+                        else if (settings.searchLevel > 100)
+                            settings.TargetValue = 2 * settings.searchLevel + 400;
+                        else
+                            settings.TargetValue = 6 * settings.searchLevel;
                     }
                     else
                     {

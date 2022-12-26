@@ -6,15 +6,13 @@ namespace TinyFinder
     //https://github.com/wwwwwwzx/3DSRNGTool/blob/master/3DSRNGTool/Gen6/DexNav.cs
     class DexNav : Index
     {
-        public int TargetValue, CheckCount, index;    //EnctrType -> Normal/DexNav, slotType -> Land(12)/Water(5)
+        public int CheckCount, index;
 
         public DexNav(List<uint> rngList, UISettings current)
         {
-            //currentState.CopyTo(temp, 0);
             rand100 = Current(rngList, 100);
 
-            //for (byte i = 0; i < current.noise; i++)
-                Advance(current.noise);
+            Advance(current.noise);
 
             trigger = Rand(rngList, 100) < 50;
 
@@ -131,22 +129,22 @@ namespace TinyFinder
             else if (current.chain == 99)
                 CheckCount += 10;           //+10 checks if chain length = 99
 
-            if (current.searchLevel > 200)
-                TargetValue = current.searchLevel + 600;
+            // We calculate the Target Value only once in FindResults.cs
+            /*if (current.searchLevel > 200)
+                current.TargetValue = current.searchLevel + 600;
             else if (current.searchLevel > 100)
-                TargetValue = 2 * current.searchLevel + 400;
+                current.TargetValue = 2 * current.searchLevel + 400;
             else
-                TargetValue = 6 * current.searchLevel;
+                current.TargetValue = 6 * current.searchLevel;*/
 
             for (int i = 0; i < CheckCount; i++)
             {
-                if (RandUint(rngList, 10000) < TargetValue * 0.01)
+                if (RandUint(rngList, 10000) < current.TargetValue * 0.01)
                 {
                     shiny = true;
                     return;                  //No more checks if a shiny index is found obviously
                 }
             }
-            //shiny = false;
         }
 
         //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits

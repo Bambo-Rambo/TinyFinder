@@ -10,7 +10,7 @@ namespace TinyFinder.Main
         public ushort searchLevel, DexNumberFS;
         public byte method, fluteOption, fishingRod, noise, party, ratio, sType, chain, advances;
 
-        public int delayRand, targetFrame, gameCorrection, dexNavLevel;
+        public int delayRand, targetFrame, gameCorrection, dexNavLevel, TargetValue;
 
         public ushort[] currentSlots, specialSlots;
         public int[] currentLevels;
