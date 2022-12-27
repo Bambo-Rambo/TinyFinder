@@ -50,12 +50,11 @@ namespace TinyFinder.Main
                     if ((Target_Horde_HA == index.HordeHA && Target_Horde_HA != 0) || (Target_Horde_HA == 0 && index.HordeHA != 0) || Target_Horde_HA == -1)
                         if ((Wants_Sync && index.Sync) || !Wants_Sync)
                         {
-                            byte counter = 5;
                             if (oras)
                                 for (int i = 0; i < 5; i++)
                                     if (Horde_Flutes[i] != index.flutes[i] && Horde_Flutes[i] != 0)
-                                        counter--;
-                            return counter == 5;
+                                        return false;
+                            return true;
                         }
             return false;
         }
