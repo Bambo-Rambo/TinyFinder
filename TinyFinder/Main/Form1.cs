@@ -897,7 +897,7 @@ namespace TinyFinder
             PropertyInfo pi = dgvType.GetProperty("DoubleBuffered", BindingFlags.Instance | BindingFlags.NonPublic);
             pi.SetValue(dgv, true, null);
         }
-        private void CellFormatting(DataGridView dgv, int row, string L)
+        private void CellFormatting(DataGridView dgv, int row, string L, DataGridViewCellFormattingEventArgs e)
         {
             if (AllowCellFormatting)
             {
@@ -935,18 +935,23 @@ namespace TinyFinder
                         else
                             dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
                     }
+                    if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Boost"].Value))
+                    {
+                        if (dgv.Columns[e.ColumnIndex].Name.Equals(L + "_Level"))
+                            e.CellStyle.Font = new Font(dgv.DefaultCellStyle.Font.FontFamily, 9, FontStyle.Bold);
+                    }
                 }
             }
         }
 
         private void Searcher_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Searcher, e.RowIndex, "S");
+            CellFormatting(Searcher, e.RowIndex, "S", e);
         }
 
         private void Generator_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            CellFormatting(Generator, e.RowIndex, "G");
+            CellFormatting(Generator, e.RowIndex, "G", e);
         }
 
         private void Searcher_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
