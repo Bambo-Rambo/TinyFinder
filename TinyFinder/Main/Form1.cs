@@ -669,7 +669,16 @@ namespace TinyFinder
                 case "RadarChain":
                     var chainRadar = (uint[])info;
                     if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
-                        ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
+                    {
+                        try
+                        {
+                            ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
+                        }
+                        catch
+                        {
+                            ratio.Value = 255;
+                        }
+                    }  
                     Chain_Label.Visible = true;
                     Chain_Label.Location = new Point(25, 118);
                     Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
@@ -793,7 +802,7 @@ namespace TinyFinder
                     if (!ORAS)
                     {
                         ratio.Value = 1;    //Chain
-                        ratio.Maximum = 60;
+                        ratio.Maximum = 255;
                         ratio_ValueChanged(null, null);
                     }
                     else
