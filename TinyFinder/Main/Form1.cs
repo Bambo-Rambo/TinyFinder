@@ -135,8 +135,7 @@ namespace TinyFinder
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool DateSearcher = SearchGen.SelectedIndex == 0;
-            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible =
-                Threads_Label.Enabled = ThreadCount.Enabled = DateRNGSeed.Visible = DateSearcher;
+            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = DateRNGSeed.Visible = DateSearcher;
             ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
             Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
             Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
@@ -892,7 +891,7 @@ namespace TinyFinder
             dgv.Columns[L + "_Shiny"].Visible = IsDexNav || isRadar1;
             //dgv.Columns[L + "_Flute"].Visible = IsORAS && method != 0 && method != 4;
             //dgv.Columns[L + "_Flutes"].Visible = IsORAS && method == 4;
-            //dgv.Columns[L + "_Rand100"].Visible = method != 0;
+            dgv.Columns[L + "_Rand100"].Visible = CheckMethod("Swooping");
 
             dgv.Columns[L + "_Level"].Width = method == 4 ? 100 : 60;
             dgv.Columns[L + "_Item"].Width = method == 4 ? 200 : 110;

@@ -2153,11 +2153,11 @@ namespace TinyFinder
             // 
             this.Threads_Label.AutoSize = true;
             this.Threads_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Threads_Label.Location = new System.Drawing.Point(1069, 19);
+            this.Threads_Label.Location = new System.Drawing.Point(999, 19);
             this.Threads_Label.Name = "Threads_Label";
-            this.Threads_Label.Size = new System.Drawing.Size(56, 14);
+            this.Threads_Label.Size = new System.Drawing.Size(119, 14);
             this.Threads_Label.TabIndex = 22;
-            this.Threads_Label.Text = "Threads";
+            this.Threads_Label.Text = "CPU Threads used";
             // 
             // Form1
             // 
