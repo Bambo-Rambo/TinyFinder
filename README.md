@@ -1,5 +1,7 @@
 # TinyFinder
 
+### Note: Recent Citra builds will generate a slightly different Initial seed each time you load a game, making consistent seed RNG abuse impossible. Canary 2610 and Nightly 1915 are tested versions proved to be working fine.
+
 Windows forms app for assisting with RNG abuse (mainly TinyMT) in Pokemon gen 6 games.
 
 It aims to be a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
