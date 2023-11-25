@@ -57,15 +57,14 @@ namespace TinyFinder
             for (slot = SlotNum[EnctrType]; slot > 0; slot--)
                 if (Rand(rngList, 100) < 30)
                     break;
-            //Slot 2 is the most rare because a possible slot 0, becomes slot 1
             if (slot == 0)
                 slot++;
 
-            Advance(1);
+            LevelRand = rngList[++pointer]; // We need to store the seed value to use it when the actual species is known
 
             /*
              * The Grade's possible values are 6 (0-5) and depend on the current Search Level of the Pokemon
-             * It affects HA, Potential, Egg Move, Shininess and the Held Item which is not calculated here
+             * It affects HA, Potential, Egg Move, Shininess and the Held Item
              * It is being used to get the rate of something
              * The random generated number should be lower than the rate's value in order to trigger the event
              */

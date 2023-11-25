@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 
 namespace TinyFinder.Main
 {
@@ -36,7 +37,16 @@ namespace TinyFinder.Main
                         else
                         {
                             DexNumber = current.currentSlots[slot];
-                            tempLevel = current.currentLevels[slot];
+
+                            // A list of all level slots for a given species/location combo is created,
+                            // then one of them is chosen "randomly"
+                            List <int> Levels = new List <int>();
+                            for (int i = 0; i < current.currentSlots.Length; i++)
+                                if (current.currentSlots[i] == DexNumber)
+                                    Levels.Add(current.currentLevels[i]);
+
+                            int rand = (int)((index.LevelRand * Levels.Count) >> 32);
+                            tempLevel = Levels[rand];
                         }
                         tempLevel += index.LevelBoost;
                     }
