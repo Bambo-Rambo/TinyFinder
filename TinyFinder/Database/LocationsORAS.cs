@@ -138,17 +138,6 @@ namespace TinyFinder
 
                 new Location
                 {
-                    Name = "Magma Hideout",
-                    Bag_Advances = 6,
-
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                },
-
-                new Location
-                {
                     Name = "Meteor Falls - Entrance",
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
@@ -1323,11 +1312,33 @@ namespace TinyFinder
 
                 new Location
                 {
+                    Name = "Team Aqua Hideout",
+                    Bag_Advances = 6,
+
+                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
+                    OldLevel = new int[] { 10, 5, 15, },
+                    GoodLevel = new int[] { 25, 25, 25, },
+                    SuperLevel = new int[] { 35, 30, 40, },
+                },
+
+                new Location
+                {
+                    Name = "Team Magma Hideout",
+                    Bag_Advances = 6,
+
+                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
+                    OldLevel = new int[] { 10, 5, 15, },
+                    GoodLevel = new int[] { 25, 25, 25, },
+                    SuperLevel = new int[] { 35, 30, 40, },
+                },
+
+                new Location
+                {
                     Name = "Underwater - Route 128",
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
-                    SurfLevel = new int[] { 25, 30, 30, 30, 35, },
+                    WildLevel = new int[] { 25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 30, 35, },
                 },
 
                 new Location
@@ -1336,7 +1347,7 @@ namespace TinyFinder
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
-                    SurfLevel = new int[] { 25, 30, 30, 30, 35, },
+                    WildLevel = new int[] { 25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 30, 35, },
                 },
 
                 new Location

@@ -153,7 +153,7 @@ namespace TinyFinder
                         break;
 
                     case "Route 11":
-                        loc.GrassTable = new ushort[] { 297, 297, 538, 538, 397, 397, 434, 433, 33, 30, 702, 702, };
+                        loc.GrassTable = new ushort[] { 297, 297, 538, 538, 397, 397, 434, 433, 30, 33, 702, 702, };
                         loc.HordeTable = new ushort[] { 32, 434, 396, };
                         break;
 
@@ -238,7 +238,7 @@ namespace TinyFinder
                         loc.SurfTable = new ushort[] { 271, 419, 271, 419, 271, };
                         loc.OldTable = new ushort[] { 60, 60, 60, };
                         loc.GoodTable = new ushort[] { 550, 61, 147, };
-                        loc.SuperTable = new ushort[] { 61, 725, 148, };
+                        loc.SuperTable = new ushort[] { 61, 550, 148, };
                         break;
 
                     case "Route 22":

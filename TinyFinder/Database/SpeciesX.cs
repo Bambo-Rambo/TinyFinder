@@ -117,7 +117,7 @@ namespace TinyFinder
 
                     case "Route 5":
                         loc.GrassTable = new ushort[] { 659, 659, 659, 676, 676, 674, 673, 84, 316, 63, 311, 311, };
-                        loc.PurpleTable = new ushort[] { 673, 673, 673, 674, 674, 676, 659, 84, 316, 63, 311, 311, };
+                        loc.PurpleTable = new ushort[] { 672, 672, 672, 674, 674, 676, 659, 84, 316, 63, 311, 311, };
                         loc.HordeTable = new ushort[] { 316, 559, 311, };
                         break;
 
@@ -227,8 +227,8 @@ namespace TinyFinder
                         break;
 
                     case "Route 20":
-                        loc.GrassTable = new ushort[] { 164, 164, 164, 39, 39, 709, 576, 591, 591, 591, 571, 571, };
-                        loc.RedTable = new ushort[] { 576, 576, 576, 709, 709, 39, 164, 591, 591, 591, 571, 571, };
+                        loc.GrassTable = new ushort[] { 164, 164, 164, 39, 39, 709, 575, 591, 591, 591, 571, 571, };
+                        loc.RedTable = new ushort[] { 575, 575, 575, 709, 709, 39, 164, 591, 591, 591, 571, 571, };
                         loc.HordeTable = new ushort[] { 590, 709, 709, };
                         break;
 
@@ -238,7 +238,7 @@ namespace TinyFinder
                         loc.HordeTable = new ushort[] { 327, 333, 123, };
                         loc.SurfTable = new ushort[] { 271, 419, 271, 419, 271, };
                         loc.OldTable = new ushort[] { 60, 60, 60, };
-                        loc.GoodTable = new ushort[] { 725, 61, 147, };
+                        loc.GoodTable = new ushort[] { 550, 61, 147, };
                         loc.SuperTable = new ushort[] { 61, 550, 148, };
                         break;
 
@@ -281,8 +281,8 @@ namespace TinyFinder
 
 
                     case "Pokemon Village":
-                        loc.YellowTable = new ushort[] { 576, 576, 576, 132, 132, 39, 164, 591, 591, 571, 571, 571, };
-                        loc.PurpleTable = new ushort[] { 164, 164, 164, 39, 39, 132, 576, 591, 591, 571, 571, 571, };
+                        loc.YellowTable = new ushort[] { 575, 575, 575, 132, 132, 39, 164, 591, 591, 571, 571, 571, };
+                        loc.PurpleTable = new ushort[] { 164, 164, 164, 39, 39, 132, 575, 591, 591, 571, 571, 571, };
                         loc.HordeTable = new ushort[] { 590, 60, 271, };
                         loc.SurfTable = new ushort[] { 271, 61, 271, 61, 271, };
                         loc.OldTable = new ushort[] { 60, 60, 60, };

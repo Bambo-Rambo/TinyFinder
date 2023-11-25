@@ -79,13 +79,6 @@ namespace TinyFinder
                         loc.SmashTable = new ushort[] { 75, 75, 75, 75, 75, };
                         break;
 
-                    case "Magma Hideout":
-                        loc.SurfTable = new ushort[] { 72, 72, 72, 72, 72, };
-                        loc.OldTable = new ushort[] { 129, 72, 129, };
-                        loc.GoodTable = new ushort[] { 129, 72, 320, };
-                        loc.SuperTable = new ushort[] { 320, 320, 120, };
-                        break;
-
                     case "Meteor Falls - Entrance":
                         loc.CaveTable = new ushort[] { 41, 41, 41, 41, 41, 41, 338, 338, 41, 41, 338, 338, };
                         loc.HordeTable = new ushort[] { 41, 41, 41, };
@@ -467,7 +460,7 @@ namespace TinyFinder
 
                     case "Route 118":
                         loc.GrassTable = new ushort[] { 264, 264, 264, 264, 309, 309, 309, 309, 278, 278, 352, 352, };
-                        loc.LongTable = new ushort[] { 264, 264, 264, 264, 309, 309, 309, 309, 279, 279, 352, 352, };
+                        loc.LongTable = new ushort[] { 264, 264, 264, 309, 309, 309, 264, 309, 279, 279, 352, 352, };
                         loc.HordeTable = new ushort[] { 309, 278, 352, };
                         loc.SurfTable = new ushort[] { 72, 278, 72, 279, 279, };
                         loc.OldTable = new ushort[] { 129, 72, 129, };
@@ -763,12 +756,19 @@ namespace TinyFinder
                         loc.SuperTable = new ushort[] { 129, 129, 130, };
                         break;
 
+                    case "Team Magma Hideout":
+                        loc.SurfTable = new ushort[] { 72, 72, 72, 72, 72, };
+                        loc.OldTable = new ushort[] { 129, 72, 129, };
+                        loc.GoodTable = new ushort[] { 129, 72, 320, };
+                        loc.SuperTable = new ushort[] { 320, 320, 120, };
+                        break;
+
                     case "Underwater - Route 128":
-                        loc.SurfTable = new ushort[] { 170, 366, 171, 222, 369, };
+                        loc.GrassTable = new ushort[] { 170, 170, 170, 170, 170, 366, 366, 366, 171, 171, 222, 369, };
                         break;
 
                     case "Underwater - Elsewhere":
-                        loc.SurfTable = new ushort[] { 170, 366, 171, 369, 369, };
+                        loc.GrassTable = new ushort[] { 170, 170, 170, 170, 170, 366, 366, 366, 171, 171, 369, 369, };
                         break;
 
                     case "Victory Road - Default":
