@@ -75,6 +75,7 @@ namespace TinyFinder
         public sbyte up { get; set; }
         public int EnctrType { get; set; }
         public string Type { get; set; }
+        public uint LevelRand { get; set; }
         public bool DexNavHA { get; set; }
         public bool eggMove { get; set; }
         public bool Boost { get; set; }
