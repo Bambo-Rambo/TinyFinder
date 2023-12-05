@@ -11,7 +11,7 @@ namespace TinyFinder
 {
     public partial class Form1
     {
-        int Year, TotalRandCalls;
+        int Year, EstimatedRandCalls;
         uint tinyInitSeed, seconds, initial = 0, Min, Max;
         byte searchMonth, SlotCount;
         bool DateSearcher, fastID;
@@ -86,14 +86,26 @@ namespace TinyFinder
                 if (IsDexNav)
                 {
                     settings.charm = CharmBox.Checked;
-                    settings.noise = (byte)noise.Value;
+                    settings.calibration = (byte)calib.Value;
                     settings.searchLevel = (ushort)party.Value;
                     settings.Wants_Sync = NavFilters.CheckBoxItems[5].Checked;
-                    settings.exclusives = HasExclusives;
+                    settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
                     settings.sType = (byte)(Surfing ? 1 : 0);
                     settings.Wants_Exclusives = checkExclusives();
                     settings.specialSlots = GetNavTable;
                     settings.dexNavLevel = CurrentLocation.DexNavLevel;
+
+                    switch (EncounterType.SelectedItem.ToString())
+                    {
+                        case "Grass" when CurrentLocation.Enc_Ratio != 1:   // Route 111 - Desert
+                        case "Long Grass":
+                            settings.maxEggRand = 2;
+                            break;
+                        default:
+                            settings.maxEggRand = 10;
+                            break;
+                    }
+
                 }
                 else if (Method == 7)
                 {
@@ -226,13 +238,13 @@ namespace TinyFinder
 
                     TargetRand = Convert.ToUInt32(settings.TargetSID.ToString("X") + settings.TargetTID.ToString("X").PadLeft(4, '0'), 16);
                     fastID = DateSearcher && settings.SpecificTID && settings.SpecificSID;
-                    //TotalRandCalls = 1;
+                    //EstimatedRandCalls = 1;
                     break;
 
                 case 1:     // Wild
 
                     settings.sType = (byte)(Surfing ? 4 : 0);   // For wild only
-                    settings.noise = Convert.ToByte(CurrentLocation.NPC);
+                    settings.calibration = Convert.ToByte(CurrentLocation.NPC);
                     if (ORAS)
                     {
                         settings.movingHordes = LongGrass;
@@ -242,7 +254,7 @@ namespace TinyFinder
                         settings.movingHordes = CurrentLocation.HasMovingHordes();
                         settings.radarGrass = CurrentLocation.HasRadar();
                     }
-                    //TotalRandCalls = settings.noise + 7;
+                    //EstimatedRandCalls = settings.noise + 7;
                     break;
 
                 case 2:     // Fishing
@@ -251,29 +263,29 @@ namespace TinyFinder
                     settings.delayRand = CitraBox.Checked ? CurrentLocation.CitraDelayRand : CurrentLocation.ConsoleDelayRand;
                     settings.targetFrame = (int)FishingFrame.Value;
                     settings.gameCorrection = !ORAS ? (settings.citra ? 144 : 146) : (settings.citra ? CurrentLocation.CitraORASCorr : CurrentLocation.ConsoleORASCorr);
-                    //TotalRandCalls = settings.advances + 20;
+                    //EstimatedRandCalls = settings.advances + 20;
                     break;
 
                 case 3:     // Rock Smash
                 case 8:     // Swooping
-                    TotalRandCalls = 6;
+                    EstimatedRandCalls = 6;
                     break;
 
                 case 4:     // Horde
 
                     if (settings.moving)
                     {
-                        settings.noise = Convert.ToByte(CurrentLocation.NPC);
+                        settings.calibration = Convert.ToByte(CurrentLocation.NPC);
                         settings.radarGrass = !ORAS && CurrentLocation.HasRadar();
-                        TotalRandCalls = settings.noise + 18;
+                        EstimatedRandCalls = settings.calibration + 18;
                     }
                     else
                     {
                         settings.advances = (byte)(party.Value * 3 + CurrentLocation.Bag_Advances);
-                        TotalRandCalls = settings.advances + 15;
+                        EstimatedRandCalls = settings.advances + 15;
                     }
                     if (ORAS)
-                        TotalRandCalls += 5;    // Flutes
+                        EstimatedRandCalls += 5;    // Flutes
 
                     break;
 
@@ -281,16 +293,18 @@ namespace TinyFinder
 
                     settings.sType = (byte)(Surfing ? 4 : 0);
                     settings.advances += (byte)(party.Value * 3 + CurrentLocation.Bag_Advances);
-                    //TotalRandCalls = settings.advances + 5;
+                    //EstimatedRandCalls = settings.advances + 5;
                     break;
 
                 case 6:     // Radar / DexNav
 
                     if (IsDexNav)
                     {
-                        TotalRandCalls = settings.noise + 35;
-                        if (ratio.Value == 49 || ratio.Value == 99)
-                            TotalRandCalls += 10;
+                        // With EstimatedRandCalls we avoid storing prng values that will never be used and save some time
+                        EstimatedRandCalls = settings.calibration + 36 + settings.maxEggRand;
+                        EstimatedRandCalls += ((int)ratio.Value / 49) * 5;
+                        if (CharmBox.Checked)
+                            EstimatedRandCalls += 2;
 
                         if (settings.searchLevel > 200)
                             settings.TargetValue = settings.searchLevel + 600;
@@ -315,14 +329,14 @@ namespace TinyFinder
                     else
                     {
                         settings.advances = (byte)(settings.party * 3 + (BagBox.Checked ? 27 : 0));
-                        TotalRandCalls = settings.advances + 24;
+                        EstimatedRandCalls = settings.advances + 24;
                     }
                     break;
 
                 case 7:     // Friend Safari
 
                     settings.sType = (byte)(EncounterType.SelectedIndex + 1);   // If 3rd slot is unlocked -> type = 2. If not, -> type = 1
-                    //TotalRandCalls = settings.noise + settings.advances + 5;
+                    //EstimatedRandCalls = settings.noise + settings.advances + 5;
                     break;
             }
 
@@ -387,7 +401,7 @@ namespace TinyFinder
                 // Not the best approach but saves a lot of time
                 if (!DateSearcher)
                     CurrentState.CopyTo(StoreState, 0);     // This is the actual TinyMT state, necessary for Generator
-                for (int i = 0; i < TotalRandCalls; i++)
+                for (int i = 0; i < EstimatedRandCalls; i++)
                     rngList.Add(tiny.Nextuint(CurrentState));
 
                 for (uint i = Min; i <= Max; i++, rngList.RemoveAt(0))

@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using TinyFinder.Main;
+using TinyFinder.Properties;
 
 namespace TinyFinder
 {
@@ -12,15 +15,13 @@ namespace TinyFinder
         {
             rand100 = Current(rngList, 100);
 
-            Advance(current.noise);
+            Advance(current.calibration);
 
             trigger = Rand(rngList, 100) < 50;
 
-            if (!trigger && current.triggerOnly)       // Save some time here
+            if (!trigger && current.triggerOnly)
                 return;
 
-            //The coordinates for a patch are generated inside the ring [-9, 9].
-            //Currently unknown for caves, water and desert and varies for every tile
             switch (Rand(rngList, 4))
             {
                 case 0:
@@ -41,65 +42,37 @@ namespace TinyFinder
                     break;
             }
 
-            //If DexNav exclusives exist for the target encounter type (Grass or Surf), then a DexNav slot has 30% chance of occuring
+
             EnctrType = Rand(rngList, 100) < 30 && current.exclusives ? 2 : current.sType;
             Type = EnctrType == 2 ? "DexNav" : "Normal";
 
-            /*The special Boost has 4% chance of occuring unless the current chain length is [4, 9, 14, 19, 24 etc]
-            In this case, it is guaranteed and improves the chances of getting forced shiny indexes as well as higher perfect IV counts
-            When occurs, it also guarantees a +10 Level Boost, an egg move, as well as at least 1 perfect IV*/
             Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || Rand(rngList, 100) < 4;
 
             Sync = Rand(rngList, 100) < 50;
 
-            //The rarity of the slots is reversed. The last slot for a given encounter type (Normal Grass [12], Normal Surf [5] and DexNav [3]),
-            //is the most common and has 30% chance of occuring. If it doesn't, the game checks the previous slot whose chance is 30% as well etc
             for (slot = SlotNum[EnctrType]; slot > 0; slot--)
                 if (Rand(rngList, 100) < 30)
                     break;
             if (slot == 0)
                 slot++;
 
-            LevelRand = rngList[++pointer]; // We need to store the seed value to use it when the actual species is known
-
-            /*
-             * The Grade's possible values are 6 (0-5) and depend on the current Search Level of the Pokemon
-             * It affects HA, Potential, Egg Move, Shininess and the Held Item
-             * It is being used to get the rate of something
-             * The random generated number should be lower than the rate's value in order to trigger the event
-             */
+            LevelRand = rngList[++pointer];
 
             //byte Grade = GetGrade(current.searchLevel);
 
-            /*
-             * The Level of the Pokemon increases by 1 for every 5 added to the chain
-             * +1 when 5 =< chain < 10
-             * +2 when 10 =< chain < 15 etc
-             * +10 also whenever (chain + 1) % 5 == 0 as explained above
-             */
             LevelBoost = current.chain / 5 + (Boost ? 10 : 0);
 
-            /*
-             * White Flute chances:
-             * 1 => 40%
-             * 2 => 30%
-             * 3 => 20%
-             * 4 => 10%
-             */
-            flute = getFlute(Rand(rngList, 100));
+            flute = Findflute(rngList);
 
             DexNavHA = Rand(rngList, 100) < HARate[current.Grade];
 
-            //index's final value will be the number of perfect IV count (max 3)
             for (index = 2; index >= 0; index--)
                 if (Rand(rngList, 100) < IVRate[3 * current.Grade + index])
                     break;
-            //If boost has been triggered, +2 perfect IVs, otherwise +1
-            index += Boost ? 2 : 1;                     //This guarantees that the value will never be < 0
-            potential = (byte)(index < 3 ? index : 3);  //This guarantees that the value will never be > 3
+            index += Boost ? 2 : 1;
+            potential = (byte)(index < 3 ? index : 3);
 
-            eggMove = Rand(rngList, 100) < EggMoveRate[current.Grade] || Boost;
-
+            bool HasEggMove = Rand(rngList, 100) < EggMoveRate[current.Grade] || Boost;
 
             int tmp = Rand(rngList, 100);
             for (index = 0; index < 2; index++)
@@ -114,20 +87,14 @@ namespace TinyFinder
                 index = 3;
             itemSlot = index;
 
-            /*
-             * The game does various RNG calls (checks) and compares the random generated number with the Target Value
-             * The Target Value depends on the current Search Level
-             * If random number < Target Value / 100 => Shiny
-             * The number of the total checks (RNG calls) depends on the current circumstances
-             */
 
-            CheckCount = current.charm ? 3 : 1;     //+3 checks if the user has the shiny charm otherwise +1
+            CheckCount = current.charm ? 3 : 1;
             if (Boost)
-                CheckCount += 4;            //+4 checks if the boost has been triggered
+                CheckCount += 4;
             if (current.chain == 49)
-                CheckCount += 5;            //+5 checks if chain length = 49
+                CheckCount += 5;
             else if (current.chain == 99)
-                CheckCount += 10;           //+10 checks if chain length = 99
+                CheckCount += 10;
 
             // We calculate the Target Value only once in FindResults.cs
             /*if (current.searchLevel > 200)
@@ -137,28 +104,21 @@ namespace TinyFinder
             else
                 current.TargetValue = 6 * current.searchLevel;*/
 
+
+            // It would make sense to break the loop when a shiny is found but this is not the case,
+            // all rand calls must happen, otherwise egg move will be wrong
             for (int i = 0; i < CheckCount; i++)
-            {
                 if (RandUint(rngList, 10000) < current.TargetValue * 0.01)
-                {
                     shiny = true;
-                    return;                  //No more checks if a shiny index is found obviously
-                }
-            }
+
+            //Advance(1); // I prefer eggRands[1] to be the first element
+            if (HasEggMove)
+                for (int i = 0; i <= current.maxEggRand; i++)
+                    eggRands.Add(rngList[pointer + i]);
+
         }
 
         //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
-
-        public static byte getFlute(ulong Rand100)
-        {
-            if (Rand100 < 40)
-                return 1;
-            if (Rand100 < 70)
-                return 2;
-            if (Rand100 < 90)
-                return 3;
-            return 4;
-        }
 
 
         /*public static byte GetGrade(ushort searchlevel)
@@ -168,7 +128,6 @@ namespace TinyFinder
                     return g;
             return 5;
         }
-
         public static byte[] GradeRange = { 5, 10, 25, 50, 100 };   //These numbers refer to the current Search Level*/
 
 

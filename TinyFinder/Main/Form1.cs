@@ -6,6 +6,7 @@ using System.Reflection;
 using TinyFinder.Subforms.MT;
 using TinyFinder.Main;
 using System.Linq;
+using TinyFinder.Controls;
 
 namespace TinyFinder
 {
@@ -44,6 +45,7 @@ namespace TinyFinder
         bool LongGrass => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Long Grass");
         bool Swampy => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Swamp");
         byte Method => (byte)Methods.SelectedIndex;
+        bool checkLocation(string loc) => locationsComboBox.SelectedItem.ToString().Equals(loc);
 
 
         Data data = new Data();
@@ -66,7 +68,7 @@ namespace TinyFinder
         private void Form1_Load(object sender, EventArgs e)
         {
             t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
-            Generator.Size = new Size(1170, 315);           // Size breaks for some reason
+            Generator.Size = new Size(1223, 315);           // Size breaks for some reason
 
             GameVersion.SelectedIndex = 0;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
@@ -137,7 +139,7 @@ namespace TinyFinder
             bool DateSearcher = SearchGen.SelectedIndex == 0;
             Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = DateRNGSeed.Visible = DateSearcher;
             ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
-            Date_Label.Location = DateSearcher ? new Point(1, 71) : new Point(98, 71);
+            Date_Label.Location = DateSearcher ? new Point(30, 68) : new Point(135, 68);
             Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
             if (!Working)
@@ -188,6 +190,10 @@ namespace TinyFinder
             {
                 Rate_Label.Visible = ratio.Visible = MovingHordeOption;
                 Party_Label.Visible = party.Visible = !MovingHordeOption;
+            }
+            if (CheckMethod("DexNav"))
+            {
+                calib.Value = EncounterType.SelectedItem.ToString().Equals("Cave") ? 2 : 0;
             }
         }
 
@@ -372,13 +378,6 @@ namespace TinyFinder
                 for (int i = 1; i < SlotsComboBox.Items.Count; i++)
                     SlotsComboBox.CheckBoxItems[i].Checked = DexToName(tempTable[i - 1]).Equals(SelectedSpecies);
             }
-        }
-
-        private void ExclusivesBox_CheckedChanged(object sender, EventArgs e)
-        {
-            ManageSlots();
-            for (int i = 1; i < SlotsComboBox.Items.Count; i++)
-                SlotsComboBox.CheckBoxItems[i].Checked = DexToName(GetNavTable[i - 1]).Equals(SelectedSpecies);
         }
 
         private bool checkExclusives()
@@ -743,7 +742,7 @@ namespace TinyFinder
 
             CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
             CharmBox.Visible = Method == 6 && ORAS;
-            Noise_Label.Visible = noise.Visible = NavFilters_Label.Visible = 
+            Calib_Label.Visible = calib.Visible = NavFilters_Label.Visible = 
                 NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS && Method == 6;
 
             Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
@@ -830,7 +829,7 @@ namespace TinyFinder
             FluteOption.SelectedIndex = 0;
 
             BonusMusicBox.Location = new Point(335, 34);
-            CharmBox.Location = new Point(335, 34);
+            CharmBox.Location = new Point(355, 40);
 
             TIDBOX.Location = new Point(75, 78);
             tid.Location = new Point(139, 77);
@@ -947,6 +946,13 @@ namespace TinyFinder
                     {
                         if (dgv.Columns[e.ColumnIndex].Name.Equals(L + "_Level"))
                             e.CellStyle.Font = new Font(dgv.DefaultCellStyle.Font.FontFamily, 9, FontStyle.Bold);
+                    }
+                    if (dgv.Columns[e.ColumnIndex].Name.Equals(L + "_EggMove"))
+                    {
+                        if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_GoodEggMove"].Value))
+                            e.CellStyle.Font = new Font(dgv.DefaultCellStyle.Font.FontFamily, 9, FontStyle.Bold);
+                        else
+                            e.CellStyle.ForeColor = Color.Gray;
                     }
                 }
             }

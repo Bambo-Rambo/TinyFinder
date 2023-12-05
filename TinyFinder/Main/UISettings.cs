@@ -8,14 +8,13 @@ namespace TinyFinder.Main
         public bool oras, surfing, longGrass, citra, radarGrass, bonusMusic, movingHordes, moving, charm, exclusives;
         public bool triggerOnly;
         public ushort searchLevel, DexNumberFS;
-        public byte method, fluteOption, fishingRod, noise, party, ratio, sType, chain, advances;
+        public byte method, fluteOption, fishingRod, calibration, party, ratio, sType, chain, advances;
 
-        public int delayRand, targetFrame, gameCorrection, dexNavLevel, TargetValue, Grade;
+        public int delayRand, targetFrame, gameCorrection, dexNavLevel, TargetValue, Grade, maxEggRand;
 
         public ushort[] currentSlots, specialSlots;
         public int[] currentLevels;
         #endregion
-
 
         #region Preferences
         public bool SpecificTID, SpecificSID;
@@ -72,7 +71,7 @@ namespace TinyFinder.Main
                 if (index.potential == Target_Potential || Target_Potential == 0)
                     if (index.DexNavHA || !Wants_HA)
                         if (CheckCommon(index, true))
-                            if (index.eggMove || !Wants_EggMove)
+                            if (index.eggRands.Count != 0 || !Wants_EggMove)
                                 if (index.Boost || !Wants_Boost)
                                     if ((Wants_Exclusives && index.EnctrType == 2) || (index.EnctrType != 2 && !Wants_Exclusives))
                                         return true;

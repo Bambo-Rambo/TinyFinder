@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows.Forms;
+using TinyFinder.Controls;
 
 namespace TinyFinder.Main
 {
@@ -15,8 +15,7 @@ namespace TinyFinder.Main
             int slot = index.slot - 1;
             int tempLevel = 0;
 
-
-            // Species Name
+            // Species Name and temp Level
             switch (current.method)
             {
                 case 4:
@@ -45,8 +44,8 @@ namespace TinyFinder.Main
                                 if (current.currentSlots[i] == DexNumber)
                                     Levels.Add(current.currentLevels[i]);
 
-                            int rand = (int)((index.LevelRand * Levels.Count) >> 32);
-                            tempLevel = Levels[rand];
+                            int levelSlot = (int)((index.LevelRand * Levels.Count) >> 32);
+                            tempLevel = Levels[levelSlot];
                         }
                         tempLevel += index.LevelBoost;
                     }
@@ -63,7 +62,6 @@ namespace TinyFinder.Main
                     break;
 
                 default:
-
                     DexNumber = current.currentSlots[slot];
                     tempLevel = current.currentLevels[slot];
                     break;
@@ -72,7 +70,7 @@ namespace TinyFinder.Main
             index.SpeciesName = pokemon.Name;
 
 
-            // Level
+            // Level Finalize
             switch (current.fluteOption)
             {
                 case 1:     // Black Flute
@@ -98,7 +96,7 @@ namespace TinyFinder.Main
                             if (HordeLevels[i] < 1)
                                 HordeLevels[i] = 1;
                         }
-                            
+
                     }
                     break;
             }
@@ -123,12 +121,66 @@ namespace TinyFinder.Main
                 index.item = GetItem(pokemon, index.itemSlot, current.oras);
             }
 
+
+            // Egg Move
+            if (current.method == 6 && current.oras)
+            {
+                if (pokemon.eggMoves.Count == 0 || index.eggRands.Count == 0)
+                    index.eggMove = "-";
+                else
+                {
+                    // Base rand calls consumption is 1 for (long) grass, otherwise each Pokemon has its own
+                    int eggRand = current.maxEggRand == 2 ? 1 : pokemon.eggRand;
+
+                    if (!(pokemon.oras5.Length == 1 && pokemon.oras50.Length == 1 && pokemon.item5.Length == 1 && pokemon.item50.Length == 1))
+                        if (index.item.Length == 1)     // Can have held item but doesn't
+                            eggRand++;
+
+                    int eggSlot = (int)((index.eggRands[eggRand] * pokemon.eggMoves.Count) >> 32);
+
+                    List<string> LevelUpMoves = new List<string>();
+                    foreach (var move in pokemon.moves)
+                        LevelUpMoves.Add(move.Name);
+
+                    if (LevelUpMoves.Contains(pokemon.eggMoves.ElementAt(eggSlot)))
+                    {
+                        // If the wild Pokemon already knows the egg move, the next egg slot will be used instead
+                        List<string> movesAtLevel = new List<string>();
+                        for (int i = pokemon.moves.Count - 1; i >= 0; i--)
+                        {
+                            if (pokemon.moves.ElementAt(i).At > tempLevel)
+                                continue;
+
+                            movesAtLevel.Add(pokemon.moves.ElementAt(i).Name);
+                            if (movesAtLevel.Count == 4)
+                                break;
+                        }
+
+                        // A loop is necessary because Krabby, Pelipper and Luvdisc might know 2 consecutive egg slot moves simultaneously
+                        while (movesAtLevel.Contains(pokemon.eggMoves.ElementAt(eggSlot)))
+                        {
+                            eggSlot++;
+                            eggSlot %= pokemon.eggMoves.Count;
+                        }
+                    }
+                    /*else  // Not correct because it ignores cases where the next eggSlot was used
+                    {
+                        index.goodEggMove = !Move.LearnableMoves.Contains(pokemon.eggMoves.ElementAt(eggSlot));
+                    }*/
+
+                    index.eggMove = pokemon.eggMoves.ElementAt(eggSlot);
+                    index.goodEggMove = !Move.ManualLearnMoves.Contains(index.eggMove) && !LevelUpMoves.Contains(index.eggMove);  // Correct
+                }
+            }
+
             return index;
         }
 
 
         private static string GetItem(Species pokemon, int itemSlot, bool oras)
         {
+            // Length != 1 means the Pokemon may have an item (not '-')
+
             string itemName = "-";
             if (pokemon.item100.Length != 1)                // Lapras from Azure Bay and Pumpkaboo super
                 itemName = pokemon.item100;

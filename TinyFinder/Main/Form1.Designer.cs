@@ -81,6 +81,7 @@ namespace TinyFinder
             this.S_Boost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.S_HA_DexNav = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.S_EggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_GoodEggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.S_Potential = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.S_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.S_Flutes = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -110,8 +111,8 @@ namespace TinyFinder
             this.FishingFrame = new System.Windows.Forms.NumericUpDown();
             this.FinalFR_Label = new System.Windows.Forms.Label();
             this.CitraBox = new System.Windows.Forms.CheckBox();
-            this.Noise_Label = new System.Windows.Forms.Label();
-            this.noise = new System.Windows.Forms.NumericUpDown();
+            this.Calib_Label = new System.Windows.Forms.Label();
+            this.calib = new System.Windows.Forms.NumericUpDown();
             this.BagBox = new System.Windows.Forms.CheckBox();
             this.CharmBox = new System.Windows.Forms.CheckBox();
             this.Chain_Label = new System.Windows.Forms.Label();
@@ -187,6 +188,7 @@ namespace TinyFinder
             this.G_Boost = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_HA_DexNav = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_EggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.G_GoodEggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_Potential = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_Flutes = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -223,7 +225,7 @@ namespace TinyFinder
             ((System.ComponentModel.ISupportInitialize)(this.max)).BeginInit();
             this.Settings_Box.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.noise)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.calib)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).BeginInit();
             this.Filters_Box.SuspendLayout();
@@ -281,6 +283,7 @@ namespace TinyFinder
             this.S_Boost,
             this.S_HA_DexNav,
             this.S_EggMove,
+            this.S_GoodEggMove,
             this.S_Potential,
             this.S_Flute,
             this.S_Flutes,
@@ -296,7 +299,7 @@ namespace TinyFinder
             this.Searcher.RowHeadersVisible = false;
             this.Searcher.RowTemplate.Height = 25;
             this.Searcher.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
-            this.Searcher.Size = new System.Drawing.Size(1170, 315);
+            this.Searcher.Size = new System.Drawing.Size(1223, 315);
             this.Searcher.TabIndex = 0;
             this.Searcher.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Searcher_CellFormatting);
             this.Searcher.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDoubleClick);
@@ -556,7 +559,16 @@ namespace TinyFinder
             this.S_EggMove.Name = "S_EggMove";
             this.S_EggMove.ReadOnly = true;
             this.S_EggMove.Visible = false;
-            this.S_EggMove.Width = 85;
+            this.S_EggMove.Width = 105;
+            // 
+            // S_GoodEggMove
+            // 
+            this.S_GoodEggMove.DataPropertyName = "goodEggMove";
+            this.S_GoodEggMove.HeaderText = "Good Egg Move";
+            this.S_GoodEggMove.Name = "S_GoodEggMove";
+            this.S_GoodEggMove.ReadOnly = true;
+            this.S_GoodEggMove.Visible = false;
+            this.S_GoodEggMove.Width = 50;
             // 
             // S_Potential
             // 
@@ -691,7 +703,7 @@ namespace TinyFinder
             // 
             // year
             // 
-            this.year.Location = new System.Drawing.Point(126, 29);
+            this.year.Location = new System.Drawing.Point(155, 29);
             this.year.Maximum = new decimal(new int[] {
             2080,
             0,
@@ -703,7 +715,7 @@ namespace TinyFinder
             0,
             0});
             this.year.Name = "year";
-            this.year.Size = new System.Drawing.Size(83, 23);
+            this.year.Size = new System.Drawing.Size(63, 23);
             this.year.TabIndex = 11;
             this.year.Value = new decimal(new int[] {
             2000,
@@ -715,7 +727,7 @@ namespace TinyFinder
             // Year_Label
             // 
             this.Year_Label.AutoSize = true;
-            this.Year_Label.Location = new System.Drawing.Point(72, 31);
+            this.Year_Label.Location = new System.Drawing.Point(101, 31);
             this.Year_Label.Name = "Year_Label";
             this.Year_Label.Size = new System.Drawing.Size(35, 15);
             this.Year_Label.TabIndex = 12;
@@ -775,8 +787,8 @@ namespace TinyFinder
             this.Settings_Box.Controls.Add(this.FishingFrame);
             this.Settings_Box.Controls.Add(this.FinalFR_Label);
             this.Settings_Box.Controls.Add(this.CitraBox);
-            this.Settings_Box.Controls.Add(this.Noise_Label);
-            this.Settings_Box.Controls.Add(this.noise);
+            this.Settings_Box.Controls.Add(this.Calib_Label);
+            this.Settings_Box.Controls.Add(this.calib);
             this.Settings_Box.Controls.Add(this.BagBox);
             this.Settings_Box.Controls.Add(this.CharmBox);
             this.Settings_Box.Controls.Add(this.Chain_Label);
@@ -798,7 +810,7 @@ namespace TinyFinder
             this.Settings_Box.Controls.Add(this.Party_Label);
             this.Settings_Box.Controls.Add(this.party);
             this.Settings_Box.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Settings_Box.Location = new System.Drawing.Point(316, 63);
+            this.Settings_Box.Location = new System.Drawing.Point(371, 63);
             this.Settings_Box.Name = "Settings_Box";
             this.Settings_Box.Size = new System.Drawing.Size(485, 267);
             this.Settings_Box.TabIndex = 17;
@@ -824,9 +836,9 @@ namespace TinyFinder
             "-",
             "Black",
             "White"});
-            this.FluteOption.Location = new System.Drawing.Point(389, 114);
+            this.FluteOption.Location = new System.Drawing.Point(386, 114);
             this.FluteOption.Name = "FluteOption";
-            this.FluteOption.Size = new System.Drawing.Size(79, 22);
+            this.FluteOption.Size = new System.Drawing.Size(82, 22);
             this.FluteOption.TabIndex = 53;
             this.FluteOption.Visible = false;
             // 
@@ -902,27 +914,27 @@ namespace TinyFinder
             this.CitraBox.Text = "Citra";
             this.CitraBox.UseVisualStyleBackColor = true;
             // 
-            // Noise_Label
+            // Calib_Label
             // 
-            this.Noise_Label.AutoSize = true;
-            this.Noise_Label.Location = new System.Drawing.Point(332, 167);
-            this.Noise_Label.Name = "Noise_Label";
-            this.Noise_Label.Size = new System.Drawing.Size(42, 14);
-            this.Noise_Label.TabIndex = 44;
-            this.Noise_Label.Text = "Noise";
-            this.Noise_Label.Visible = false;
+            this.Calib_Label.AutoSize = true;
+            this.Calib_Label.Location = new System.Drawing.Point(290, 167);
+            this.Calib_Label.Name = "Calib_Label";
+            this.Calib_Label.Size = new System.Drawing.Size(84, 14);
+            this.Calib_Label.TabIndex = 44;
+            this.Calib_Label.Text = "Calibration";
+            this.Calib_Label.Visible = false;
             // 
-            // noise
+            // calib
             // 
-            this.noise.Location = new System.Drawing.Point(386, 165);
-            this.noise.Maximum = new decimal(new int[] {
-            10,
+            this.calib.Location = new System.Drawing.Point(386, 165);
+            this.calib.Maximum = new decimal(new int[] {
+            16,
             0,
             0,
             0});
-            this.noise.Name = "noise";
-            this.noise.Size = new System.Drawing.Size(82, 22);
-            this.noise.TabIndex = 43;
+            this.calib.Name = "calib";
+            this.calib.Size = new System.Drawing.Size(82, 22);
+            this.calib.TabIndex = 43;
             // 
             // BagBox
             // 
@@ -1131,7 +1143,7 @@ namespace TinyFinder
             this.Filters_Box.Controls.Add(this.sid);
             this.Filters_Box.Controls.Add(this.tid);
             this.Filters_Box.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Filters_Box.Location = new System.Drawing.Point(807, 63);
+            this.Filters_Box.Location = new System.Drawing.Point(861, 63);
             this.Filters_Box.Name = "Filters_Box";
             this.Filters_Box.Size = new System.Drawing.Size(383, 267);
             this.Filters_Box.TabIndex = 18;
@@ -1492,7 +1504,7 @@ namespace TinyFinder
             this.Calibr_Box.Font = new System.Drawing.Font("Consolas", 9.75F);
             this.Calibr_Box.Location = new System.Drawing.Point(21, 63);
             this.Calibr_Box.Name = "Calibr_Box";
-            this.Calibr_Box.Size = new System.Drawing.Size(289, 267);
+            this.Calibr_Box.Size = new System.Drawing.Size(344, 267);
             this.Calibr_Box.TabIndex = 19;
             this.Calibr_Box.TabStop = false;
             this.Calibr_Box.Text = "Step 1 - Calibration";
@@ -1500,7 +1512,7 @@ namespace TinyFinder
             // updateBTN
             // 
             this.updateBTN.Enabled = false;
-            this.updateBTN.Location = new System.Drawing.Point(72, 227);
+            this.updateBTN.Location = new System.Drawing.Point(101, 227);
             this.updateBTN.Name = "updateBTN";
             this.updateBTN.Size = new System.Drawing.Size(161, 30);
             this.updateBTN.TabIndex = 18;
@@ -1513,7 +1525,7 @@ namespace TinyFinder
             // 
             this.Tiny0_Label.AutoSize = true;
             this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny0_Label.Location = new System.Drawing.Point(57, 196);
+            this.Tiny0_Label.Location = new System.Drawing.Point(86, 196);
             this.Tiny0_Label.Name = "Tiny0_Label";
             this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny0_Label.TabIndex = 17;
@@ -1523,7 +1535,7 @@ namespace TinyFinder
             // 
             this.Tiny1_Label.AutoSize = true;
             this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny1_Label.Location = new System.Drawing.Point(57, 165);
+            this.Tiny1_Label.Location = new System.Drawing.Point(86, 165);
             this.Tiny1_Label.Name = "Tiny1_Label";
             this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny1_Label.TabIndex = 16;
@@ -1533,7 +1545,7 @@ namespace TinyFinder
             // 
             this.Tiny2_Label.AutoSize = true;
             this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny2_Label.Location = new System.Drawing.Point(57, 134);
+            this.Tiny2_Label.Location = new System.Drawing.Point(86, 134);
             this.Tiny2_Label.Name = "Tiny2_Label";
             this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny2_Label.TabIndex = 15;
@@ -1543,7 +1555,7 @@ namespace TinyFinder
             // 
             this.Tiny3_Label.AutoSize = true;
             this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny3_Label.Location = new System.Drawing.Point(57, 103);
+            this.Tiny3_Label.Location = new System.Drawing.Point(86, 103);
             this.Tiny3_Label.Name = "Tiny3_Label";
             this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny3_Label.TabIndex = 14;
@@ -1553,7 +1565,7 @@ namespace TinyFinder
             // 
             this.Date_Label.AutoSize = true;
             this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Date_Label.Location = new System.Drawing.Point(1, 67);
+            this.Date_Label.Location = new System.Drawing.Point(45, 67);
             this.Date_Label.Name = "Date_Label";
             this.Date_Label.Size = new System.Drawing.Size(56, 14);
             this.Date_Label.TabIndex = 13;
@@ -1562,7 +1574,7 @@ namespace TinyFinder
             // t3
             // 
             this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t3.Location = new System.Drawing.Point(126, 100);
+            this.t3.Location = new System.Drawing.Point(155, 100);
             this.t3.Mask = "AAAAAAAA";
             this.t3.Name = "t3";
             this.t3.Size = new System.Drawing.Size(63, 23);
@@ -1575,7 +1587,7 @@ namespace TinyFinder
             // t2
             // 
             this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t2.Location = new System.Drawing.Point(126, 132);
+            this.t2.Location = new System.Drawing.Point(155, 132);
             this.t2.Mask = "AAAAAAAA";
             this.t2.Name = "t2";
             this.t2.Size = new System.Drawing.Size(63, 23);
@@ -1588,7 +1600,7 @@ namespace TinyFinder
             // t0
             // 
             this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t0.Location = new System.Drawing.Point(126, 193);
+            this.t0.Location = new System.Drawing.Point(155, 193);
             this.t0.Mask = "AAAAAAAA";
             this.t0.Name = "t0";
             this.t0.Size = new System.Drawing.Size(63, 23);
@@ -1601,7 +1613,7 @@ namespace TinyFinder
             // t1
             // 
             this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t1.Location = new System.Drawing.Point(126, 162);
+            this.t1.Location = new System.Drawing.Point(155, 162);
             this.t1.Mask = "AAAAAAAA";
             this.t1.Name = "t1";
             this.t1.Size = new System.Drawing.Size(63, 23);
@@ -1642,6 +1654,7 @@ namespace TinyFinder
             this.G_Boost,
             this.G_HA_DexNav,
             this.G_EggMove,
+            this.G_GoodEggMove,
             this.G_Potential,
             this.G_Flute,
             this.G_Flutes,
@@ -1660,7 +1673,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1170, 361);
+            this.Generator.Size = new System.Drawing.Size(1223, 373);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1860,7 +1873,16 @@ namespace TinyFinder
             this.G_EggMove.Name = "G_EggMove";
             this.G_EggMove.ReadOnly = true;
             this.G_EggMove.Visible = false;
-            this.G_EggMove.Width = 85;
+            this.G_EggMove.Width = 105;
+            // 
+            // G_GoodEggMove
+            // 
+            this.G_GoodEggMove.DataPropertyName = "goodEggMove";
+            this.G_GoodEggMove.HeaderText = "Good Egg Move";
+            this.G_GoodEggMove.Name = "G_GoodEggMove";
+            this.G_GoodEggMove.ReadOnly = true;
+            this.G_GoodEggMove.Visible = false;
+            this.G_GoodEggMove.Width = 50;
             // 
             // G_Potential
             // 
@@ -1991,7 +2013,7 @@ namespace TinyFinder
             this.SearchGen.Location = new System.Drawing.Point(12, 35);
             this.SearchGen.Name = "SearchGen";
             this.SearchGen.SelectedIndex = 0;
-            this.SearchGen.Size = new System.Drawing.Size(1189, 625);
+            this.SearchGen.Size = new System.Drawing.Size(1242, 625);
             this.SearchGen.TabIndex = 20;
             this.SearchGen.SelectedIndexChanged += new System.EventHandler(this.SearchGen_SelectedIndexChanged);
             // 
@@ -2002,7 +2024,7 @@ namespace TinyFinder
             this.Srch.Location = new System.Drawing.Point(4, 24);
             this.Srch.Name = "Srch";
             this.Srch.Padding = new System.Windows.Forms.Padding(3);
-            this.Srch.Size = new System.Drawing.Size(1181, 597);
+            this.Srch.Size = new System.Drawing.Size(1234, 597);
             this.Srch.TabIndex = 0;
             this.Srch.Text = "Date Searcher";
             this.Srch.UseVisualStyleBackColor = true;
@@ -2014,7 +2036,7 @@ namespace TinyFinder
             this.Gen.Location = new System.Drawing.Point(4, 24);
             this.Gen.Name = "Gen";
             this.Gen.Padding = new System.Windows.Forms.Padding(3);
-            this.Gen.Size = new System.Drawing.Size(1181, 597);
+            this.Gen.Size = new System.Drawing.Size(1234, 597);
             this.Gen.TabIndex = 1;
             this.Gen.Text = "Generator";
             this.Gen.UseVisualStyleBackColor = true;
@@ -2027,7 +2049,7 @@ namespace TinyFinder
             this.guidesToolStripMenuItem});
             this.Tools.Location = new System.Drawing.Point(0, 0);
             this.Tools.Name = "Tools";
-            this.Tools.Size = new System.Drawing.Size(1213, 25);
+            this.Tools.Size = new System.Drawing.Size(1266, 25);
             this.Tools.TabIndex = 0;
             this.Tools.Text = "Tools";
             // 
@@ -2133,7 +2155,7 @@ namespace TinyFinder
             // ThreadCount
             // 
             this.ThreadCount.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.ThreadCount.Location = new System.Drawing.Point(1131, 17);
+            this.ThreadCount.Location = new System.Drawing.Point(1185, 18);
             this.ThreadCount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -2153,7 +2175,7 @@ namespace TinyFinder
             // 
             this.Threads_Label.AutoSize = true;
             this.Threads_Label.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            this.Threads_Label.Location = new System.Drawing.Point(999, 19);
+            this.Threads_Label.Location = new System.Drawing.Point(1053, 20);
             this.Threads_Label.Name = "Threads_Label";
             this.Threads_Label.Size = new System.Drawing.Size(119, 14);
             this.Threads_Label.TabIndex = 22;
@@ -2163,7 +2185,7 @@ namespace TinyFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1213, 661);
+            this.ClientSize = new System.Drawing.Size(1266, 661);
             this.Controls.Add(this.Threads_Label);
             this.Controls.Add(this.ThreadCount);
             this.Controls.Add(this.Filters_Box);
@@ -2174,7 +2196,7 @@ namespace TinyFinder
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.Tools;
-            this.MinimumSize = new System.Drawing.Size(1229, 700);
+            this.MinimumSize = new System.Drawing.Size(1282, 700);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tiny Finder 0.9.3";
@@ -2187,7 +2209,7 @@ namespace TinyFinder
             this.Settings_Box.ResumeLayout(false);
             this.Settings_Box.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FishingFrame)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.noise)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.calib)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ratio)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.party)).EndInit();
             this.Filters_Box.ResumeLayout(false);
@@ -2285,8 +2307,8 @@ namespace TinyFinder
         private System.Windows.Forms.ToolStripMenuItem profilemanager;
         private System.Windows.Forms.CheckBox CharmBox;
         private System.Windows.Forms.CheckBox BagBox;
-        private System.Windows.Forms.NumericUpDown noise;
-        private System.Windows.Forms.Label Noise_Label;
+        private System.Windows.Forms.NumericUpDown calib;
+        private System.Windows.Forms.Label Calib_Label;
         private System.Windows.Forms.Button StopButton;
         private System.Windows.Forms.ToolStripMenuItem MTrng;
         private System.Windows.Forms.ToolStripMenuItem guidesToolStripMenuItem;
@@ -2312,39 +2334,7 @@ namespace TinyFinder
         private System.Windows.Forms.ContextMenuStrip OptionsMenu;
         private System.Windows.Forms.ToolStripMenuItem DateRNGSeed;
         private System.Windows.Forms.ToolStripMenuItem SetAsCurrent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Index;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_TID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_SID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_TSV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_TRV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Right;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Up;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Ratio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Success;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Sync;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Slot;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_SpeciesInfo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_HA_Horde;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Level;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Shiny;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Delay;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Timeline;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Boost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_HA_DexNav;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_EggMove;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Potential;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Flute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Flutes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Music;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Patches;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Item;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Rand100;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_RandHex;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny0;
+        private System.Windows.Forms.CheckBox AllowChainUpdate;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny3;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny2;
@@ -2372,6 +2362,7 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Boost;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_HA_DexNav;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_EggMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_GoodEggMove;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Potential;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Flute;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Flutes;
@@ -2379,7 +2370,40 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Patches;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Item;
         private System.Windows.Forms.DataGridViewTextBoxColumn S_Rand100;
-        private System.Windows.Forms.CheckBox AllowChainUpdate;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_TID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_SID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_TSV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_TRV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Right;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Up;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Ratio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Success;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Sync;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Slot;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_SpeciesInfo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_HA_Horde;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Level;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Shiny;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Delay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Timeline;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Boost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_HA_DexNav;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_EggMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_GoodEggMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Potential;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Flute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Flutes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Music;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Patches;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Rand100;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_RandHex;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny0;
     }
 }
 

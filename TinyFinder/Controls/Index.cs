@@ -76,13 +76,16 @@ namespace TinyFinder
         public int EnctrType { get; set; }
         public string Type { get; set; }
         public uint LevelRand { get; set; }
-        public bool DexNavHA { get; set; }
-        public bool eggMove { get; set; }
-        public bool Boost { get; set; }
         public int LevelBoost { get; set; }
+        public bool DexNavHA { get; set; }
+        public string eggMove { get; set; }
+        public bool Boost { get; set; }
         public byte potential { get; set; }
         
         public string SpeciesName { get; set; }
+
+        public bool goodEggMove { get; set; }
+        public List<uint> eggRands = new List<uint>();
 
         public byte Findflute(List<uint> rngList)
         {
