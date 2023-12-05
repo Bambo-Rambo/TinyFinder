@@ -2,18 +2,18 @@
 
 ### Note: Recent Citra builds will generate a slightly different Initial seed each time you load a game, making consistent seed RNG abuse impossible. Canary 2610 and Nightly 1915 are tested versions proved to be working fine.
 
-Windows forms app for assisting with RNG abuse (mainly TinyMT) in Pokemon gen 6 games.
+Windows forms app for assisting with RNG abuse (mainly TinyMT) in generation 6 Pokemon games.
 
-It aims to be a more user friendly version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
+It can be seen as a more powerful version of Tiny Timeline Tool in 3DS RNG Tool, including various fixes, enhancements and new features.
 
-Also provides a MT seed searcher for various things (specific PID/EC search, multi shiny hordes etc) as well as Time Finder for both MT and TinyMT initial seed manipulation.
+Also provides a MT seed searcher for various things (specific PID/EC search, multi shiny hordes etc) as well as Time Finders for both MT and TinyMT initial seed manipulation.
 
 ### TinyMT differences from 3DS RNG Tool
 
 * Index search by date (Citra only - mainly useful for ID, DexNav and Radar RNG)
 * Index filtering
 * Mapped wild encounter slots and held items
-* DexNav RNG support (Egg moves are not predicted)
+* DexNav RNG support with egg move prediction
 * Complete Normal Wild RNG support for every location. Indexes that would generate hordes instead, are not shown. The NPC influence is accounted for, as well
 * Complete Horde RNG support for every location, including caves, 
 either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass).
@@ -58,9 +58,9 @@ Check the Boost box only if the radar-exclusive music currently plays in the bac
 
 ### Step 3 - Preferences
 
-The "Ignore Filters" button will show all the results for the given state and method without messing with the already selected filters.
+The `Ignore Filters` button will show all results for a given state without messing with the already selected filters.
 
-For ID RNG, pick the desired TID/SID combo and choose how many indexes you want the program to find before stopping the search. Full ID RNG guide [here](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6TidSidRNG.md).
+For ID RNG, pick the desired TID/SID combo or you can uncheck either of the 2 you don't care about if you want more results to choose from (mainly a specific date). Full ID RNG guide [here](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/Gen6TidSidRNG.md).
 
 For Normal Wild RNG, choose the desired slot(s), if you want to sync the nature check the sync button to filter the results. If playing ORAS, choose the desired black/white flute level impact. Set to 0 if don't care. Full Wild/FS guide [here](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/NormalWild-FS-RNG.md).
 
@@ -74,7 +74,7 @@ When chain = 0, you search and RNG for slot and sync. Activate the radar anytime
 
 When chain > 0, you search and RNG for guaranteed shiny patches. Remember that shininess is TinyMT dependant in that case. Simply activate the radar from the bag during the shiny (blue) index and a shiny patch will be generated! Keep in mind that not all shiny patches glow, so you need to check their exact locations in the tool. Double click inside an index to do that. 'C' means "Character" and is always in the middle of the array. 'S' means shiny and is the one you are gonna be stepping in while the rest are "Good" (G), "Bad" (B) and "Empty" (X) which break the chain and must be avoided. The slot will be the one you chained for, while sync is decided when you enter the patch so you need to RNG for it after the patch generation as well.
 
-For DexNav read the [main guide](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/DexNavRNG.md) as well as the [extra info](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/ExtraInfo.md) including slots etc. They explain everything.
+For DexNav you can read the [main guide](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/DexNavRNG.md) as well as some [extra notes](https://github.com/Bambo-Rambo/RNG-Guides/blob/main/ExtraInfo.md). They explain everything.
 
 Finally, Swooping is pretty simple. The encounter slots are (1-8) for Fearow, (9-10) for Skarmory and (11-12) for Hydreigon. 
 In 3DS RNG Tool, set the delay to +40. 
@@ -87,4 +87,4 @@ If you are using the Date Searcher and you haven't calibrated already, the tool 
 ### Credits
 * wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
 * Real96, zaksabeast, Admiral-Fish and Parzival/StarfBerry for their researches on the MT seed generation
-* kwsch for pk3DS allowing me to dump the encounter tables
+* kwsch for pk3DS allowing me to dump egg move slots as well as encounter tables
