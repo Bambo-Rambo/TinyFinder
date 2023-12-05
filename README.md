@@ -89,4 +89,4 @@ If you are using the Date Searcher and you haven't calibrated already, the tool 
 ### Credits
 * wwwwwwzx and zep715 for reverse engineering gen 6 games. wwwwwwzx also for 3DS RNG Tool
 * Real96, zaksabeast, Admiral-Fish and Parzival/StarfBerry for their researches on the MT seed generation
-* kwsch for pk3DS allowing me to dump egg move slots as well as encounter tables
+* kwsch for pk3DS allowing me to dump tons of stuff including egg move slots, encounter tables, level up moves etc
