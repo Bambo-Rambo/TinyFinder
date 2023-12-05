@@ -102,6 +102,10 @@ namespace TinyFinder
                     case "Meteor Falls - Deep":
                         loc.CaveTable = new ushort[] { 42, 42, 42, 42, 371, 337, 337, 371, 371, 371, 337, 337, };
                         loc.HordeTable = new ushort[] { 41, 41, 371, };
+                        loc.SurfTable = new ushort[] { 42, 42, 337, 337, 337, };
+                        loc.OldTable = new ushort[] { 129, 118, 129, };
+                        loc.GoodTable = new ushort[] { 129, 118, 339, };
+                        loc.SuperTable = new ushort[] { 339, 339, 340 };
                         loc.DexNavTable = new ushort[] { 633, 621, 35, };
                         break;
 
@@ -262,8 +266,8 @@ namespace TinyFinder
 
                     case "Mt. Pyre - Summit":
                         loc.GrassTable = new ushort[] { 353, 353, 353, 353, 307, 307, 307, 307, 37, 37, 358, 358, };
-                        //loc.HordeTable = new ushort[] { 353, 307, 37, };
-                        //loc.DexNavTable = new ushort[] { 605, 436, 58, };
+                        loc.HordeTable = new ushort[] { 353, 307, 37, };
+                        loc.DexNavTable = new ushort[] { 605, 436, 58, };
                         break;
 
 

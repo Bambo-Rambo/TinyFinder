@@ -83,6 +83,9 @@ namespace TinyFinder.Main
                     case "potential":
                         list.Sort((x, y) => x.potential.CompareTo(y.potential) * direction);
                         break;
+                    case "eggMove":
+                        list.Sort((x, y) => x.eggMove.CompareTo(y.eggMove) * direction);
+                        break;
                     case "rand100":
                         list.Sort((x, y) => x.rand100.CompareTo(y.rand100) * direction);
                         break;

@@ -89,6 +89,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controls\Index.cs" />
+    <Compile Include="Controls\Move.cs" />
     <Compile Include="Controls\Location.cs" />
     <Compile Include="Database\LocationsORAS.cs" />
     <Compile Include="Database\LocationsXY.cs" />

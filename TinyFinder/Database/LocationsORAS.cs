@@ -180,7 +180,7 @@ namespace TinyFinder
                     WildLevel = new int[] { 37, 38, 39, 40, 37, 37, 38, 38, 39, 40, 39, 40, },
                     HordeLevel = new int[] { 20, 20, 20, },
                     SurfLevel = new int[] { 30, 35, 30, 35, 40, },
-                    OldLevel = new int[] { 10, 5, 15, },
+                    OldLevel = new int[] { 10, 10, 5, },
                     GoodLevel = new int[] { 30, 30, 30, },
                     SuperLevel = new int[] { 30, 35, 40, },
                     DexNavLevel = 40,

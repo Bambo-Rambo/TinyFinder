@@ -116,7 +116,7 @@ namespace TinyFinder
                         break;
 
                     case "Route 5":
-                        loc.GrassTable = new ushort[] { 659, 659, 659, 676, 676, 674, 673, 84, 316, 63, 311, 311, };
+                        loc.GrassTable = new ushort[] { 659, 659, 659, 676, 676, 674, 672, 84, 316, 63, 311, 311, };
                         loc.PurpleTable = new ushort[] { 672, 672, 672, 674, 674, 676, 659, 84, 316, 63, 311, 311, };
                         loc.HordeTable = new ushort[] { 316, 559, 311, };
                         break;

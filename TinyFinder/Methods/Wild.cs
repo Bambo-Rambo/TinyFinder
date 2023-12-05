@@ -12,7 +12,7 @@ namespace TinyFinder
             switch (current.method)
             {
                 case 1:                 // Normal Wild
-                    NormalWild(current.ratio, current.noise, current.oras, current.movingHordes, current.radarGrass, current.sType);
+                    NormalWild(current.ratio, current.calibration, current.oras, current.movingHordes, current.radarGrass, current.sType);
                     break;
 
                 case 2:                 // Fishing
@@ -41,15 +41,15 @@ namespace TinyFinder
         }
 
         //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
-        public void NormalWild(byte ratio, byte Noise, bool oras, bool MayStepHorde, bool RadarGrass, byte SlotType)
+        public void NormalWild(byte ratio, byte Calibration, bool oras, bool MayStepHorde, bool RadarGrass, byte SlotType)
         {
-            for (byte i = 0; i < Noise; i++)                //NPC Noise taken into account before everything else
+            for (byte i = 0; i < Calibration; i++)          //NPC influence taken into account before everything else
                 AdvanceOnce();
 
             rand100 = RandCall(100);                        //If (rand100 < 5) -> Horde
 
             if (MayStepHorde)                               //+1 to avoid using the same rand100 for Horde trigger and Sync
-                AdvanceOnce();                                  //Every horde, triggered by step, would be synced otherwise
+                AdvanceOnce();                              //Every horde, triggered by step, would be synced otherwise
 
             Sync = CurrentRand(100) < 50;
 
@@ -105,9 +105,11 @@ namespace TinyFinder
 
         public void Swooping()
         {
-            rand100 = CurrentRand(100);
+            //rand100 = CurrentRand(100);
 
             slot = data.getSlot(RandCall(100), 0);
+
+            rand100 = CurrentRand(100);     // Show the slot rand (for testing)
 
             Sync = RandCall(100) < 50;
 

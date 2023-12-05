@@ -9,7 +9,7 @@ namespace TinyFinder
         public Horde(List<uint> rngList, UISettings current)
         {
             if (current.moving)
-                HordeTurn(rngList, current.oras, current.radarGrass, current.ratio, current.noise, current.triggerOnly);
+                HordeTurn(rngList, current.oras, current.radarGrass, current.ratio, current.calibration, current.triggerOnly);
             else
                 HordeHoney(rngList, current.oras, current.advances);
         }
