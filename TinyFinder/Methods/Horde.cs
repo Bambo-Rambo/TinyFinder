@@ -62,8 +62,20 @@ namespace TinyFinder
                 for (byte i = 0; i < 5; i++)
                     flutes[i] = Findflute(rngList);
 
+            Advance(1);
             for (byte i = 0; i < 5; i++)
-                itemSlots[i] = FindItem(rngList);
+            {
+                Advance(1);
+
+                if (Current(rngList, 100) < 50)
+                    itemSlots[i] = 0;
+
+                else if (Current(rngList, 100) < 55)
+                    itemSlots[i] = 1;
+
+                else
+                    itemSlots[i] = 2;
+            }
         }
 
     }
