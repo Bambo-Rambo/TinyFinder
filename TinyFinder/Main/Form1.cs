@@ -190,6 +190,7 @@ namespace TinyFinder
             {
                 Rate_Label.Visible = ratio.Visible = MovingHordeOption;
                 Party_Label.Visible = party.Visible = !MovingHordeOption;
+                SetMin();
             }
             if (CheckMethod("DexNav"))
             {
@@ -294,7 +295,7 @@ namespace TinyFinder
                     EncounterType.SelectedIndex = 1;    // For FS, 3 slots is the default choice
                 else
                     EncounterType.SelectedIndex = 0;
-            } 
+            }
             else
                 ManageSpecies();
 
@@ -329,6 +330,8 @@ namespace TinyFinder
                     min.Value = 27;
                 else if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
                     min.Value = CurrentLocation.Bag_Advances;
+                else
+                    min.Value = 0;
             }
         }
 
@@ -893,7 +896,7 @@ namespace TinyFinder
             dgv.Columns[L + "_Rand100"].Visible = CheckMethod("Swooping");
 
             dgv.Columns[L + "_Level"].Width = method == 4 ? 100 : 60;
-            dgv.Columns[L + "_Item"].Width = method == 4 ? 200 : 110;
+            dgv.Columns[L + "_Item"].Width = method == 4 ? 280 : 110;
 
             AllowCellFormatting = true;
         }
