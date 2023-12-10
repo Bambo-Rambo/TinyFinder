@@ -774,7 +774,7 @@ namespace TinyFinder
                 new Location
                 {
                     Name = "Route 116",
-                    Bag_Advances = 16,
+                    Bag_Advances = 15,
 
                     WildLevel = new int[] { 6, 7, 8, 5, 6, 7, 6, 8, 6, 8, 8, 8, },
                     HordeLevel = new int[] { 4, 4, 4, },
