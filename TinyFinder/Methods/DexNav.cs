@@ -11,6 +11,47 @@ namespace TinyFinder
     {
         public int CheckCount, index;
 
+        public static byte[] SlotNum = { 12, 5, 3 };                // Grass / Surf / DexNav
+        public static byte[] HARate = { 0, 0, 5, 15, 20, 25 };      // dword_7E6860[6]
+        public static byte[] IVRate =                               // dword_7E6890[18]
+        {
+            0,0,0,
+            10,0,0,
+            15,10,0,
+            20,15,5,
+            15,20,5,
+            10,25,10,
+        };
+
+        public static byte[] EggMoveRate = { 20, 50, 55, 60, 65, 80 };  // dword_7E6878[6]
+        public static byte[] HeldItemRate =                             // byte_7E68D8[12]
+        {
+            40,10,
+            40,10,
+            45,15,
+            50,20,
+            50,20,
+            50,30,
+        };
+
+        public static byte[] SearchLevelTable = { 5, 10, 25, 50, 100 }; //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
+        public static byte GetGrade(ushort searchlevel)
+        {
+            for (byte g = 0; g < 5; g++)
+                if (searchlevel < SearchLevelTable[g])
+                    return g;
+            return 5;
+        }
+
+        public static int GetTargetValue(ushort searchlevel)
+        {
+            if (searchlevel > 200)
+                return searchlevel + 600;
+            else if (searchlevel > 100)
+                return 2 * searchlevel + 400;
+            return 6 * searchlevel;
+        }
+
         public DexNav(List<uint> rngList, UISettings current)
         {
             rand100 = Current(rngList, 100);
@@ -58,8 +99,6 @@ namespace TinyFinder
 
             LevelRand = rngList[++pointer];
 
-            //byte Grade = GetGrade(current.searchLevel);
-
             LevelBoost = current.chain / 5 + (Boost ? 10 : 0);
 
             flute = Findflute(rngList);
@@ -96,15 +135,6 @@ namespace TinyFinder
             else if (current.chain == 99)
                 CheckCount += 10;
 
-            // We calculate the Target Value only once in FindResults.cs
-            /*if (current.searchLevel > 200)
-                current.TargetValue = current.searchLevel + 600;
-            else if (current.searchLevel > 100)
-                current.TargetValue = 2 * current.searchLevel + 400;
-            else
-                current.TargetValue = 6 * current.searchLevel;*/
-
-
             // It would make sense to break the loop when a shiny is found but this is not the case,
             // all rand calls must happen, otherwise egg move will be wrong
             for (int i = 0; i < CheckCount; i++)
@@ -118,40 +148,5 @@ namespace TinyFinder
 
         }
 
-        //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
-
-
-        /*public static byte GetGrade(ushort searchlevel)
-        {
-            for (byte g = 0; g < 5; g++)
-                if (searchlevel < GradeRange[g])
-                    return g;
-            return 5;
-        }
-        public static byte[] GradeRange = { 5, 10, 25, 50, 100 };   //These numbers refer to the current Search Level*/
-
-
-        public static byte[] SlotNum = { 12, 5, 3 };                // Grass / Surf / DexNav
-        public static byte[] HARate = { 0, 0, 5, 15, 20, 25 };      // dword_7E6860[6]
-        public static byte[] IVRate =                               // dword_7E6890[18]
-        {
-            0,0,0,
-            10,0,0,
-            15,10,0,
-            20,15,5,
-            15,20,5,
-            10,25,10,
-        };
-
-        public static byte[] EggMoveRate = { 20, 50, 55, 60, 65, 80 };  // dword_7E6878[6]
-        public static byte[] HeldItemRate =                             // byte_7E68D8[12]
-        {
-            40,10,
-            40,10,
-            45,15,
-            50,20,
-            50,20,
-            50,30,
-        };
     }
 }

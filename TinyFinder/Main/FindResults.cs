@@ -306,25 +306,8 @@ namespace TinyFinder
                         if (CharmBox.Checked)
                             EstimatedRandCalls += 2;
 
-                        if (settings.searchLevel > 200)
-                            settings.TargetValue = settings.searchLevel + 600;
-                        else if (settings.searchLevel > 100)
-                            settings.TargetValue = 2 * settings.searchLevel + 400;
-                        else
-                            settings.TargetValue = 6 * settings.searchLevel;
-
-                        if (settings.searchLevel < 5)
-                            settings.Grade = 0;
-                        else if (settings.searchLevel < 10)
-                            settings.Grade = 1;
-                        else if (settings.searchLevel < 25)
-                            settings.Grade = 2;
-                        else if (settings.searchLevel < 50)
-                            settings.Grade = 3;
-                        else if (settings.searchLevel < 100)
-                            settings.Grade = 4;
-                        else
-                            settings.Grade = 5;
+                        settings.TargetValue = DexNav.GetTargetValue(settings.searchLevel);
+                        settings.Grade = DexNav.GetGrade(settings.searchLevel);
                     }
                     else
                     {
@@ -371,9 +354,8 @@ namespace TinyFinder
 
         // This is only used for Hordes and Radar / DexNav.
         // Instead of calculating the new TinyMT state every time, we store some of them in an array and take them from there.
-        // Each Hordes/DexNav index has a lot of rand calls so this approach makes the process way faster.
+        // Each Hordes/DexNav index does a lot of rand calls so this approach makes the process faster.
         // ID has only 1 though so it would become slower instead.
-        // Code is far from being optimized. Fix later
         private void FastSearch(uint[] CurrentState, uint Jump)
         {
             Index index;

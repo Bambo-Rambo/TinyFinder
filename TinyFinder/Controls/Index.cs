@@ -107,7 +107,7 @@ namespace TinyFinder
 
         public byte FindItem(List<uint> rngList)
         {
-            Advance(2);
+            Advance(1);
 
             if (Current(rngList, 100) < 50)
                 return 0;

@@ -64,19 +64,8 @@ namespace TinyFinder
 
             Advance(1);
             for (byte i = 0; i < 5; i++)
-            {
-                Advance(1);
+                itemSlots[i] = FindItem(rngList);
 
-                if (Current(rngList, 100) < 50)
-                    itemSlots[i] = 0;
-
-                else if (Current(rngList, 100) < 55)
-                    itemSlots[i] = 1;
-
-                else
-                    itemSlots[i] = 2;
-            }
         }
-
     }
 }

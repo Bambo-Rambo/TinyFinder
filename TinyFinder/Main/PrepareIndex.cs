@@ -137,12 +137,13 @@ namespace TinyFinder.Main
                             eggRand++;
 
                     int eggSlot = (int)((index.eggRands[eggRand] * pokemon.eggMoves.Count) >> 32);
+                    string tempEggMove = pokemon.eggMoves.ElementAt(eggSlot);
 
                     List<string> LevelUpMoves = new List<string>();
                     foreach (var move in pokemon.moves)
                         LevelUpMoves.Add(move.Name);
 
-                    if (LevelUpMoves.Contains(pokemon.eggMoves.ElementAt(eggSlot)))
+                    if (LevelUpMoves.Contains(tempEggMove))
                     {
                         // If the wild Pokemon already knows the egg move, the next egg slot will be used instead
                         List<string> movesAtLevel = new List<string>();
@@ -157,18 +158,19 @@ namespace TinyFinder.Main
                         }
 
                         // A loop is necessary because Krabby, Pelipper and Luvdisc might know 2 consecutive egg slot moves simultaneously
-                        while (movesAtLevel.Contains(pokemon.eggMoves.ElementAt(eggSlot)))
+                        while (movesAtLevel.Contains(tempEggMove))
                         {
                             eggSlot++;
                             eggSlot %= pokemon.eggMoves.Count;
+                            tempEggMove = pokemon.eggMoves.ElementAt(eggSlot);
                         }
                     }
                     /*else  // Not correct because it ignores cases where the next eggSlot was used
                     {
-                        index.goodEggMove = !Move.LearnableMoves.Contains(pokemon.eggMoves.ElementAt(eggSlot));
+                        index.goodEggMove = !Move.LearnableMoves.Contains(tempEggMove);
                     }*/
 
-                    index.eggMove = pokemon.eggMoves.ElementAt(eggSlot);
+                    index.eggMove = tempEggMove;
                     index.goodEggMove = !Move.ManualLearnMoves.Contains(index.eggMove) && !LevelUpMoves.Contains(index.eggMove);  // Correct
                 }
             }

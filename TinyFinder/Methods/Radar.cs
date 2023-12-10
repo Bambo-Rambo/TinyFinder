@@ -33,6 +33,7 @@ namespace TinyFinder
 
                 slot = data.getSlot(Rand(rngList, 100), 0);
 
+                Advance(1);
                 itemSlot = FindItem(rngList);
 
                 Music = Current(rngList, 100) < 2 ? 'A' : Current(rngList, 100) > 49 ? 'M' : '-';
@@ -40,8 +41,7 @@ namespace TinyFinder
             }
             else
             {
-                //for (byte i = 0; i < current.advances; i++)         // 0 if using from Y menu
-                    Advance(current.advances);                                      // 27 if using from Bag
+                Advance(current.advances);
 
                 Boost = current.bonusMusic && Current(rngList, 100) >= 50;
                 Music = Current(rngList, 100) < 2 ? 'A' : Current(rngList, 100) > 49 ? 'M' : '-';
