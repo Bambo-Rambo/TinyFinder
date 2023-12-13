@@ -3,6 +3,7 @@ namespace TinyFinder
 {
     class Location
     {
+        public int Map;
         public string Name;
         public byte NPC;
         public byte Enc_Ratio;
@@ -29,8 +30,9 @@ namespace TinyFinder
         public ushort   [] SwampTable;
         public int      [] SwampLevel;
 
-        public ushort   [] HordeTable;
+        public ushort   [] HordeTable1;
         public ushort   [] HordeTable2;
+        public ushort   [] HordeTable3;
         public int      [] HordeLevel;
 
         public ushort   [] SurfTable;
@@ -51,8 +53,8 @@ namespace TinyFinder
         public ushort   [] DexNavTable;
         public int         DexNavLevel;
 
-        public ushort   [] SwoopingTable;
-        public int      [] SwoopingLevel;
+        public ushort   [] AmbushTable;
+        public int      [] AmbushLevel;
 
 
         public bool HasNormalWild()
@@ -77,7 +79,7 @@ namespace TinyFinder
                 CaveTable == null &&
                 RedTable == null &&
                 YellowTable == null &&
-                PurpleTable == null) && HordeTable != null;
+                PurpleTable == null) && HordeTable1 != null;
         }
 
         public bool HasHoneyWild()
@@ -85,7 +87,7 @@ namespace TinyFinder
             if (SurfTable != null || SwampTable != null)
                 return true;
 
-            if (HordeTable == null && RideTable == null)
+            if (HordeTable1 == null && RideTable == null)
             {
                 if (!(GrassTable == null &&
                     LongTable == null &&

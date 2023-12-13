@@ -23,14 +23,16 @@ namespace TinyFinder
         private ushort[] GetYellowTable => CurrentLocation.YellowTable;
         private ushort[] GetPurpleTable => CurrentLocation.PurpleTable;
         private ushort[] GetSwampTable => CurrentLocation.SwampTable;
-        private ushort[] GetHordeTable => CurrentLocation.HordeTable;
+        private ushort[] GetHordeTable1 => CurrentLocation.HordeTable1;
+        private ushort[] GetHordeTable2 => CurrentLocation.HordeTable2;
+        private ushort[] GetHordeTable3 => CurrentLocation.HordeTable3;
         private ushort[] GetSurfTable => CurrentLocation.SurfTable;
         private ushort[] GetOldTable => CurrentLocation.OldTable;
         private ushort[] GetGoodTable => CurrentLocation.GoodTable;
         private ushort[] GetSuperTable => CurrentLocation.SuperTable;
         private ushort[] GetSmashTable => CurrentLocation.SmashTable;
         private ushort[] GetNavTable => CurrentLocation.DexNavTable;
-        private ushort[] GetSwoopingTable => CurrentLocation.SwoopingTable;
+        private ushort[] GetAmbushTable => CurrentLocation.AmbushTable;
         private List<ushort> GetFSList => Species.getFSList();
 
         bool MovingHordeOption => Method == 4 && EncounterType.SelectedIndex == 1;      // User selected moving horde method
@@ -64,7 +66,6 @@ namespace TinyFinder
             InitializeComponent();
         }
 
-        #region GUI Events
         private void Form1_Load(object sender, EventArgs e)
         {
             t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
@@ -104,6 +105,12 @@ namespace TinyFinder
             MainButton.Enabled = IgnoreFiltersButton.Enabled = true;
             MainButton.Text = SearchGen.SelectedIndex == 0 ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
         }
+        private void year_ValueChanged(object sender, EventArgs e)
+        {
+            if (SearchGen.SelectedIndex == 0)
+                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+            TinyChanged();
+        }
         private void ThreadCount_ValueChanged(object sender, EventArgs e)
         {
             Properties.Settings.Default.CPUs = (int)ThreadCount.Value;
@@ -118,14 +125,14 @@ namespace TinyFinder
                 if (Methods.Items.Count != 9)
                 {
                     Methods.Items.Add("Friend Safari");
-                    Methods.Items.Add("Swooping");
+                    Methods.Items.Add("Ambush encounter");
                 }
             }
             else
             {
                 Methods.Items[6] = "DexNav";
                 Methods.Items.Remove("Friend Safari");
-                Methods.Items.Remove("Swooping");
+                Methods.Items.Remove("Ambush encounter");
             }
 
             Methods.SelectedIndex = 0;
@@ -139,7 +146,7 @@ namespace TinyFinder
             bool DateSearcher = SearchGen.SelectedIndex == 0;
             Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = DateRNGSeed.Visible = DateSearcher;
             ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
-            Date_Label.Location = DateSearcher ? new Point(30, 68) : new Point(135, 68);
+            Date_Label.Location = DateSearcher ? new Point(16, 68) : new Point(135, 68);
             Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
             if (!Working)
@@ -163,39 +170,51 @@ namespace TinyFinder
             }
         }
 
-        private void Methods_SelectedIndexChanged(object sender, EventArgs e)
+        private void ManageLocations()
         {
-            ManageControls();
-        }
-
-        private void year_ValueChanged(object sender, EventArgs e)
-        {
-            if (SearchGen.SelectedIndex == 0)
-                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
-            TinyChanged();
-        }
-
-        private void ratio_ValueChanged(object sender, EventArgs e)
-        {
-            Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !isRadar1;
-            BonusMusicBox.Enabled = isRadar1;
-        }
-
-        private void EncounterChanged_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ManageSpecies();
-            ManageRatio();
-
-            if (Method == 4)
+            switch (GameVersion.SelectedIndex)
             {
-                Rate_Label.Visible = ratio.Visible = MovingHordeOption;
-                Party_Label.Visible = party.Visible = !MovingHordeOption;
-                SetMin();
+                case 0:
+                    listOfLocations = TableXY.EncounterTable(true);
+                    break;
+                case 1:
+                    listOfLocations = TableXY.EncounterTable(false);
+                    break;
+                case 2:
+                    listOfLocations = TableORAS.EncounterTable(true);
+                    break;
+                case 3:
+                    listOfLocations = TableORAS.EncounterTable(false);
+                    break;
             }
-            if (CheckMethod("DexNav"))
+
+            locationsComboBox.Items.Clear();
+            foreach (Location temp in listOfLocations.ToList())     // Create a copy of list since we remove items
             {
-                calib.Value = EncounterType.SelectedItem.ToString().Equals("Cave") ? 2 : 0;
+                if (
+                (Method == 1 && !temp.HasNormalWild()) ||
+
+              //(Method == 2 && !temp.HasFishing()) ||
+                (Method == 2 && temp.ConsoleDelayRand == 0) ||      // <- Smarter
+
+                (Method == 3 && temp.SmashTable == null) ||
+
+                (Method == 4 && temp.HordeTable1 == null) ||        // Only checking the 1st horde table works
+
+                (Method == 5 && !temp.HasHoneyWild()) ||
+
+                (CheckMethod("Radar") && !temp.HasRadar()) ||
+
+                (CheckMethod("DexNav") && !temp.HasDexNav()) ||
+
+                (Method == 8 && temp.AmbushTable == null))
+                {
+                    listOfLocations.Remove(temp);
+                    continue;
+                }
+                locationsComboBox.Items.Add(temp.Name);
             }
+            locationsComboBox.SelectedIndex = 0;
         }
 
         private void location_SelectedIndexChanged(object sender, EventArgs e)
@@ -236,7 +255,7 @@ namespace TinyFinder
             }
             else if (Method == 5)
             {
-                if (GetHordeTable == null)
+                if (GetHordeTable1 == null)
                 {
                     if (GetWildTable != null)
                         EncounterType.Items.Add("Grass");
@@ -297,9 +316,27 @@ namespace TinyFinder
                     EncounterType.SelectedIndex = 0;
             }
             else
+            {
+                SetMin();
                 ManageSpecies();
+            }
 
+        }
+
+        private void EncounterChanged_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageRatio();
             SetMin();
+            if (Method == 4)
+            {
+                Rate_Label.Visible = ratio.Visible = MovingHordeOption;
+                Party_Label.Visible = party.Visible = !MovingHordeOption;
+            }
+            if (CheckMethod("DexNav"))
+            {
+                calib.Value = EncounterType.SelectedItem.ToString().Equals("Cave") ? 2 : 0;
+            }
+            ManageSpecies();
         }
 
         private void ManageRatio()
@@ -322,19 +359,6 @@ namespace TinyFinder
                 ratio.Value = 13;
         }
 
-        private void SetMin()
-        {
-            if (SearchGen.SelectedIndex == 1)
-            {
-                if (Method == 7)
-                    min.Value = 27;
-                else if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
-                    min.Value = CurrentLocation.Bag_Advances;
-                else
-                    min.Value = 0;
-            }
-        }
-
         private void ManageSpecies()
         {
             SpeciesCombo.Items.Clear();
@@ -343,35 +367,45 @@ namespace TinyFinder
             {
                 foreach (int num in GetFSList)
                     SpeciesCombo.Items.Add(DexToName(num));
-                SpeciesCombo.SelectedIndex = 0;
-                return;
             }
-
-            SpeciesCombo.Items.Add("Any");
-            HashSet<ushort> SlotSpecies = new HashSet<ushort>(SlotTable());
-
-            if (IsDexNav && GetNavTable != null)
+            else
             {
-                HashSet<ushort> navSpecies = new HashSet<ushort>(GetNavTable);
-                // Merge DexNav slots with water slots ONLY if every other table doesn't exit for a given location
-                if (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null))
+                SpeciesCombo.Items.Add("Any");
+                if (Method == 4)
                 {
-                    SlotSpecies.UnionWith(navSpecies);
+                    HashSet<string> SlotSpecies = new HashSet<string>(NameHordeSlots());
+                    foreach (string s in SlotSpecies)
+                        SpeciesCombo.Items.Add(s);
+                }
+                else
+                {
+                    HashSet<ushort> SlotSpecies = new HashSet<ushort>(SlotTable());
+
+                    if (IsDexNav && GetNavTable != null)
+                    {
+                        HashSet<ushort> navSpecies = new HashSet<ushort>(GetNavTable);
+                        // Merge DexNav slots with water slots ONLY if every other table doesn't exit for a given location
+                        if (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null))
+                        {
+                            SlotSpecies.UnionWith(navSpecies);
+                        }
+                    }
+
+                    foreach (int s in SlotSpecies)
+                        SpeciesCombo.Items.Add(DexToName(s));
                 }
             }
-
-            foreach (int s in SlotSpecies)
-                SpeciesCombo.Items.Add(DexToName(s));
 
             SpeciesCombo.SelectedIndex = 0;
 
         }
-
-
         private void Species_SelectedIndexChanged(object sender, EventArgs e)
         {
             ManageSlots();
-            if (Method != 7)
+            if (Method == 4)
+                for (int i = 1; i <= 3; i++)
+                    SlotsComboBox.CheckBoxItems[i].Checked = SpeciesCombo.SelectedItem.ToString().Equals(NameHordeSlots()[i - 1]);
+            else if (Method != 7)
             {
                 ushort[] tempTable;
                 if (IsDexNav && checkExclusives())
@@ -383,15 +417,6 @@ namespace TinyFinder
             }
         }
 
-        private bool checkExclusives()
-        {
-            if (GetNavTable != null)
-                for (int i = 0; i < 3; i++)
-                    if (DexToName(GetNavTable[i]).Equals(SelectedSpecies))
-                        return true;
-            return false;
-        }
-
         private ushort[] SlotTable()
         {
             if (Method == 3)
@@ -399,7 +424,7 @@ namespace TinyFinder
             if (Method == 7)
                 return null;
             if (Method == 8)
-                return GetSwoopingTable;
+                return GetAmbushTable;
 
             switch (EncounterType.SelectedItem.ToString())
             {
@@ -429,15 +454,60 @@ namespace TinyFinder
                     return GetGoodTable;
                 case "Super Rod":
                     return GetSuperTable;
-                case "Honey":
-                case "Moving":
-                    return GetHordeTable;
                 default:
-                    MessageBox.Show("Faulty Slot. Please Report this.");
+                    MessageBox.Show("Faulty Encounter Type.");
                     break;
             }
-            
+
             return null;
+        }
+
+        public string[] NameHordeSlots()
+        {
+            string[] HordeSlots = new string[3];
+            HordeSlots[0] = NameHordeSlot(GetHordeTable1);
+            HordeSlots[1] = NameHordeSlot(GetHordeTable2);
+            HordeSlots[2] = NameHordeSlot(GetHordeTable3);
+            return HordeSlots;
+        }
+
+        public string NameHordeSlot(ushort[] hordeTable)
+        {
+            if (hordeTable.All(x => x == hordeTable[0]))
+                return "5 " + DexToName(hordeTable[0]);
+
+            object outsider = hordeTable.GroupBy(x => x).Single(group => group.Count() == 1).Key;
+            int outsiderSlot = Array.IndexOf(hordeTable, outsider);
+            return "4 " + DexToName(hordeTable[0]) + ", 1 " + DexToName(hordeTable[outsiderSlot]);
+        }
+
+        private byte getBagAdvances()
+        {
+            if (CurrentLocation.Bag_Advances == 0)
+                return (byte)(GameVersion.SelectedIndex <= 1 ? 27 : 15);
+            else
+                return CurrentLocation.Bag_Advances;
+        }
+        private void SetMin()
+        {
+            if (SearchGen.SelectedIndex == 1)
+            {
+                if (Method == 7)
+                    min.Value = 27;
+                else if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
+                    min.Value = getBagAdvances();
+                else
+                    min.Value = 0;
+            }
+        }
+
+        private bool checkExclusives()
+        {
+            if (GetNavTable != null)
+                for (int i = 0; i < 3; i++)
+                    if (DexToName(GetNavTable[i]).Equals(SelectedSpecies))
+                        return true;
+            return false;
         }
 
         private int[] LevelTable()
@@ -445,7 +515,7 @@ namespace TinyFinder
             if (Method == 3)
                 return CurrentLocation.SmashLevel;
             else if (Method == 8)
-                return CurrentLocation.SwoopingLevel;
+                return CurrentLocation.AmbushLevel;
             else if (Method == 7)
                 return null;
 
@@ -476,56 +546,9 @@ namespace TinyFinder
                 case "Moving":
                     return CurrentLocation.HordeLevel;
                 default:
-                    MessageBox.Show("Faulty Level. Please Report this.");
+                    MessageBox.Show("Faulty Level table.");
                     return null;
             }
-        }
-
-        private void ManageLocations()
-        {
-            switch (GameVersion.SelectedIndex)
-            {
-                case 0:
-                    listOfLocations = SpeciesX.WildLocationsX();
-                    break;
-                case 1:
-                    listOfLocations = SpeciesY.WildLocationsY();
-                    break;
-                case 2:
-                    listOfLocations = SpeciesOR.WildLocationsOR();
-                    break;
-                case 3:
-                    listOfLocations = SpeciesAS.WildLocationsAS();
-                    break;
-            }
-
-            locationsComboBox.Items.Clear();
-            foreach (Location temp in listOfLocations.ToList())
-            {
-                if (
-                (Method == 1                && !temp.HasNormalWild()) ||
-
-              //(Method == 2                && !temp.HasFishing()) ||
-                (Method == 2                && temp.ConsoleDelayRand == 0) ||   // <- Better
-
-                (Method == 3                && temp.SmashTable == null) ||
-
-                (Method == 4                && temp.HordeTable == null) ||
-
-                (Method == 5                && !temp.HasHoneyWild()) ||
-
-                (CheckMethod("Radar")       && !temp.HasRadar()) ||
-
-                (CheckMethod("DexNav")      && !temp.HasDexNav()) ||
-
-                (Method == 8                && temp.SwoopingTable == null))
-                {
-                    listOfLocations.Remove(temp);
-                    continue;
-                }
-                locationsComboBox.Items.Add(temp.Name);
-            }
-            locationsComboBox.SelectedIndex = 0;
         }
 
         private void ManageSlots()
@@ -582,150 +605,17 @@ namespace TinyFinder
                 SlotsComboBox.Items.AddRange(new object[] { add });
         }
 
-        private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
-
-        private void TinyChanged()
-        {
-            if (SearchGen.SelectedIndex == 0)
-            {
-                Calibrated = false;
-                if (!Working)
-                    MainButton.Text = "Calibrate and Search";
-            }
-        }
-        private void t3_TextChanged(object sender, EventArgs e)
-        {
-            TinyChanged();
-        }
-        private void t2_TextChanged(object sender, EventArgs e)
-        {
-            TinyChanged();
-        }
-        private void t1_TextChanged(object sender, EventArgs e)
-        {
-            TinyChanged();
-        }
-        private void t0_TextChanged(object sender, EventArgs e)
-        {
-            TinyChanged();
-        }
-
-        private void updateBTN_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                NTRHelper.ntrclient.ReadTiny("TTT");
-                if (Method == 6)
-                {
-                    AllowChainUpdate.Visible = true;
-                    if (ORAS)
-                    {
-                        NTRHelper.ntrclient.ReadTiny("Step");
-                        NTRHelper.ntrclient.ReadTiny("DexNavChain");
-                    }
-                    else
-                    {
-                        NTRHelper.ntrclient.ReadTiny("RadarChain");
-                    }
-                }
-                MainButton.PerformClick();
-            }
-            catch   //If the user clicks Update before the console is connected again
-            {
-                ntrhelper.HandleException();
-                updateBTN.PerformClick();
-            }
-        }
-
-        public void OnConnected_Changed(bool IsConnected)
-        {
-            updateBTN.Enabled = IsConnected;
-            AllowChainUpdate.Visible = Method == 6 && IsConnected;
-        }
-
-        public void parseNTRInfo(string name, object info)
-        {
-            switch (name)
-            {
-                case "TTT":
-                    var tiny = (uint[])info;
-                    t3.Value = tiny[3];
-                    t2.Value = tiny[2];
-                    t1.Value = tiny[1];
-                    t0.Value = tiny[0];
-                    return;
-                case "Step":
-                    var steps = (uint[])info;
-                    Step_Label.Visible = true;
-                    Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
-                    Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
-                    break;
-                case "DexNavChain":
-                    var chain = (uint[])info;
-                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
-                        ratio.Value = chain[0];         // Ratio is in fact the chain value here
-                    Chain_Label.Visible = true;
-                    Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
-                    break;
-                case "RadarChain":
-                    var chainRadar = (uint[])info;
-                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
-                    {
-                        try
-                        {
-                            ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
-                        }
-                        catch
-                        {
-                            ratio.Value = 255;
-                        }
-                    }  
-                    Chain_Label.Visible = true;
-                    Chain_Label.Location = new Point(25, 118);
-                    Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
-                    break;
-            }
-        }
-
-        private void ntr_Click(object sender, EventArgs e)
-        {
-            if (ntrhelper == null)
-                ntrhelper = new NTRHelper();
-            ntrhelper.Show();
-            ntrhelper.Focus();
-        }
-
-        private void MTrng_Click(object sender, EventArgs e)
-        {
-            OpenMTForm();
-        }
-        private void OpenMTForm()
-        {
-            if (mersenne == null)
-                mersenne = new MTForm();
-            mersenne.Show();
-            mersenne.Focus();
-            mersenne.SetGame(!ORAS);
-        }
-
-        private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
-        {
-            tid.Enabled = TIDBOX.Checked;
-        }
-        private void SIDBOX_CheckedChanged(object sender, EventArgs e)
-        {
-            sid.Enabled = SIDBOX.Checked;
-        }
-
-        private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
-        private void TIDSIDGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
-        private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
-        private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
-        private void DexNavGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
-
-        #endregion
-
         #region Manage Buttons and Slots
+        private void ratio_ValueChanged(object sender, EventArgs e)
+        {
+            Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !isRadar1;
+            BonusMusicBox.Enabled = isRadar1;
+        }
+
+        private void Methods_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ManageControls();
+        }
         private void ManageControls()
         {
             TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
@@ -792,8 +682,8 @@ namespace TinyFinder
                 
                 if (Method == 4)
                 {
-                    Flute1_Label.Location = new Point(245, 55);
-                    Flute1.Location = new Point(313, 52);
+                    Flute1_Label.Location = new Point(257, 55);
+                    Flute1.Location = new Point(325, 52);
                     HASlot.SelectedIndex = 0;
                     SyncBox.Location = new Point(35, 175);
                 }
@@ -814,15 +704,14 @@ namespace TinyFinder
                         Party_Label.Location = new Point(284, 196);
                         Slots_Label.Location = new Point(13, 93);
                         SlotsComboBox.Location = new Point(75, 89);
-                        Flute1_Label.Location = new Point(220, 139);
-                        Flute1.Location = new Point(311, 137);
+                        Flute1_Label.Location = new Point(240, 139);
+                        Flute1.Location = new Point(331, 137);
                         AllowChainUpdate.Checked = true;
                     }
                 }
                 else if (Method == 7)
                 {
                     location_SelectedIndexChanged(null, null);
-                    ManageRatio();
                 }
             }
         }
@@ -834,10 +723,10 @@ namespace TinyFinder
             BonusMusicBox.Location = new Point(335, 34);
             CharmBox.Location = new Point(355, 40);
 
-            TIDBOX.Location = new Point(75, 78);
-            tid.Location = new Point(139, 77);
-            SIDBOX.Location = new Point(75, 117);
-            sid.Location = new Point(139, 116);
+            TIDBOX.Location = new Point(105, 78);
+            tid.Location = new Point(170, 77);
+            SIDBOX.Location = new Point(105, 117);
+            sid.Location = new Point(170, 116);
 
             HA_Label.Location = new Point(13, 140);
             HASlot.Location = new Point(75, 137);
@@ -850,8 +739,8 @@ namespace TinyFinder
 
             NavFilters_Label.Location = new Point(13, 140);
             NavFilters.Location = new Point(75, 137);
-            Potential_Label.Location = new Point(220, 91);
-            Potential.Location = new Point(311, 89);
+            Potential_Label.Location = new Point(240, 91);
+            Potential.Location = new Point(331, 89);
 
             Searcher.AutoGenerateColumns = false;
             Generator.AutoGenerateColumns = false;
@@ -890,10 +779,10 @@ namespace TinyFinder
             dgv.Columns[L + "_Delay"].Visible = dgv.Columns[L + "_Timeline"].Visible = method == 2;
             dgv.Columns[L + "_HA_Horde"].Visible = method == 4;
             dgv.Columns[L + "_Music"].Visible = !ORAS && method == 6;
-            dgv.Columns[L + "_Shiny"].Visible = IsDexNav || isRadar1;
+            dgv.Columns[L + "_Shiny"].Visible = isRadar1;
             //dgv.Columns[L + "_Flute"].Visible = IsORAS && method != 0 && method != 4;
             //dgv.Columns[L + "_Flutes"].Visible = IsORAS && method == 4;
-            dgv.Columns[L + "_Rand100"].Visible = CheckMethod("Swooping");
+            dgv.Columns[L + "_Rand100"].Visible = CheckMethod("Ambush encounter");
 
             dgv.Columns[L + "_Level"].Width = method == 4 ? 100 : 60;
             dgv.Columns[L + "_Item"].Width = method == 4 ? 280 : 110;
@@ -1075,5 +964,150 @@ namespace TinyFinder
 
 
         #endregion
+
+        #region Rarely useful
+        private void min_ValueChanged(object sender, EventArgs e) { max.Minimum = min.Value; }
+
+        private void TinyChanged()
+        {
+            if (SearchGen.SelectedIndex == 0)
+            {
+                Calibrated = false;
+                if (!Working)
+                    MainButton.Text = "Calibrate and Search";
+            }
+        }
+        private void t3_TextChanged(object sender, EventArgs e)
+        {
+            TinyChanged();
+        }
+        private void t2_TextChanged(object sender, EventArgs e)
+        {
+            TinyChanged();
+        }
+        private void t1_TextChanged(object sender, EventArgs e)
+        {
+            TinyChanged();
+        }
+        private void t0_TextChanged(object sender, EventArgs e)
+        {
+            TinyChanged();
+        }
+
+        private void updateBTN_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                NTRHelper.ntrclient.ReadTiny("TTT");
+                if (Method == 6)
+                {
+                    AllowChainUpdate.Visible = true;
+                    if (ORAS)
+                    {
+                        NTRHelper.ntrclient.ReadTiny("Step");
+                        NTRHelper.ntrclient.ReadTiny("DexNavChain");
+                    }
+                    else
+                    {
+                        NTRHelper.ntrclient.ReadTiny("RadarChain");
+                    }
+                }
+                MainButton.PerformClick();
+            }
+            catch   //If the user clicks Update before the console is connected again
+            {
+                ntrhelper.HandleException();
+                updateBTN.PerformClick();
+            }
+        }
+
+        public void OnConnected_Changed(bool IsConnected)
+        {
+            updateBTN.Enabled = IsConnected;
+            AllowChainUpdate.Visible = Method == 6 && IsConnected;
+        }
+
+        public void parseNTRInfo(string name, object info)
+        {
+            switch (name)
+            {
+                case "TTT":
+                    var tiny = (uint[])info;
+                    t3.Value = tiny[3];
+                    t2.Value = tiny[2];
+                    t1.Value = tiny[1];
+                    t0.Value = tiny[0];
+                    return;
+                case "Step":
+                    var steps = (uint[])info;
+                    Step_Label.Visible = true;
+                    Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
+                    Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
+                    break;
+                case "DexNavChain":
+                    var chain = (uint[])info;
+                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
+                        ratio.Value = chain[0];         // Ratio is in fact the chain value here
+                    Chain_Label.Visible = true;
+                    Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
+                    break;
+                case "RadarChain":
+                    var chainRadar = (uint[])info;
+                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
+                    {
+                        try
+                        {
+                            ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
+                        }
+                        catch
+                        {
+                            ratio.Value = 255;
+                        }
+                    }
+                    Chain_Label.Visible = true;
+                    Chain_Label.Location = new Point(25, 118);
+                    Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
+                    break;
+            }
+        }
+
+        private void ntr_Click(object sender, EventArgs e)
+        {
+            if (ntrhelper == null)
+                ntrhelper = new NTRHelper();
+            ntrhelper.Show();
+            ntrhelper.Focus();
+        }
+
+        private void MTrng_Click(object sender, EventArgs e)
+        {
+            OpenMTForm();
+        }
+        private void OpenMTForm()
+        {
+            if (mersenne == null)
+                mersenne = new MTForm();
+            mersenne.Show();
+            mersenne.Focus();
+            mersenne.SetGame(!ORAS);
+        }
+
+        private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
+        {
+            tid.Enabled = TIDBOX.Checked;
+        }
+        private void SIDBOX_CheckedChanged(object sender, EventArgs e)
+        {
+            sid.Enabled = SIDBOX.Checked;
+        }
+
+        private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void TIDSIDGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+        private void DexNavGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+
+        #endregion
+
     }
 }

@@ -33,9 +33,9 @@ namespace TinyFinder
                     NormalWild(current.ratio, 0, false, false, false, current.sType);
                     break;
 
-                case 8:                 // Swooping
+                case 8:                 // Ambush encounter
 
-                    Swooping();
+                    Ambush();
                     break;
             }
         }
@@ -103,7 +103,7 @@ namespace TinyFinder
             itemSlot = FindItem();
         }
 
-        public void Swooping()
+        public void Ambush()
         {
             //rand100 = CurrentRand(100);
 

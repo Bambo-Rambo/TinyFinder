@@ -13,147 +13,100 @@ namespace TinyFinder
                 new Location
                 {
                     Name = "Battle Resort",
-                    Bag_Advances = 15,
+                    Map = 210,
 
                     CitraDelayRand = 204,
                     ConsoleDelayRand = 222,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 162,
-
-                    SurfLevel = new int[] { 35, 35, 35, 40, 40, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-
                 },
 
                 new Location
                 {
                     Name = "Cave of Origin",
+                    Map = 112,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 33, 33, 34, 34, 34, 35, 35, 35, 36, 36, 36, 36, },
-                    HordeLevel = new int[] { 18, 18, 18, },
                 },
 
                 new Location
                 {
                     Name = "Dewford Town",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 8,
                 },
 
                 new Location
                 {
                     Name = "Ever Grande City",
-                    Bag_Advances = 15,
+                    Map = 21,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 208,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Fiery Path",
+                    Map = 85,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 13, 14, 15, 16, 14, 15, 16, 15, 15, 15, 14, 14, },
-                    HordeLevel = new int[] { 8, 8, 8, },
-                    DexNavLevel = 15,
                 },
 
                 new Location
                 {
                     Name = "Granite Cave - 1F",
+                    Map = 78,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 9, 10, 11, 12, 9, 10, 11, 12, 10, 12, 10, 12, },
-                    HordeLevel = new int[] { 6, 6, 6, },
-                    DexNavLevel = 12,
                 },
 
                 new Location
                 {
                     Name = "Granite Cave - B1F",
+                    Map = 79,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 10, 11, 12, 10, 11, 12, 10, 12, 10, 12, 12, 12, },
-                    HordeLevel = new int[] { 6, 6, 6, },
-                    DexNavLevel = 12,
                 },
 
                 new Location
                 {
                     Name = "Granite Cave - B2F",
+                    Map = 80,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 10, 11, 12, 10, 11, 12, 10, 12, 10, 12, 12, 12, },
-                    HordeLevel = new int[] { 6, 6, 6, },
-                    SmashLevel = new int[] { 10, 11, 10, 12, 12, },
-                    DexNavLevel = 12,
                 },
 
                 new Location
                 {
                     Name = "Jagged Pass",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 18, 19, 20, 21, 18, 19, 20, 21, 18, 19, 20, 21, },
-                    HordeLevel = new int[] { 10, 10, 10, },
-                    DexNavLevel = 21,
+                    Map = 84,
                 },
 
                 new Location
                 {
                     Name = "Lilycove City",
-                    Bag_Advances = 15,
+                    Map = 18,
 
                     CitraDelayRand = 204,
                     ConsoleDelayRand = 214,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 162,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    SmashLevel = new int[] { 28, 29, 30, 31, 31, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
-                    Name = "Meteor Falls - Entrance",
+                    Name = "Meteor Falls - 1F 1R",
+                    Map = 71,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 16, 16, 17, 17, 18, 18, 16, 17, 19, 19, 18, 19, },
-                    HordeLevel = new int[] { 9, 9, 9, },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 19,
                 },
 
                 new Location
                 {
-                    Name = "Meteor Falls - Not Entrance",
+                    Name = "Meteor Falls - 1F 2R, B1F 1R",
+                    Map = 72,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
@@ -161,1000 +114,651 @@ namespace TinyFinder
                     ConsoleDelayRand = 204,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 154,
-
-                    WildLevel = new int[] { 37, 37, 38, 38, 39, 39, 37, 38, 40, 40, 39, 40, },
-                    HordeLevel = new int[] { 20, 20, 20, },
-                    SurfLevel = new int[] { 30, 35, 30, 35, 40, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 30, 30, 30, },
-                    SuperLevel = new int[] { 30, 35, 40, },
-                    DexNavLevel = 40,
                 },
 
                 new Location
                 {
-                    Name = "Meteor Falls - Deep",
+                    Name = "Meteor Falls - B1F2",
+                    Map = 74,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 37, 38, 39, 40, 37, 37, 38, 38, 39, 40, 39, 40, },
-                    HordeLevel = new int[] { 20, 20, 20, },
-                    SurfLevel = new int[] { 30, 35, 30, 35, 40, },
-                    OldLevel = new int[] { 10, 10, 5, },
-                    GoodLevel = new int[] { 30, 30, 30, },
-                    SuperLevel = new int[] { 30, 35, 40, },
-                    DexNavLevel = 40,
                 },
 
                 new Location
                 {
                     Name = "M. Cave - North of Fallarbor",
+                    Map = 515,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - North of Fortree",
+                    Map = 509,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - North of 124",
+                    Map = 512,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - North of 132",
+                    Map = 513,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - South of Pacifidlog",
+                    Map = 510,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - South of 107",
+                    Map = 511,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - West of Rustboro",
+                    Map = 508,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Cave - Southeast of 129",
+                    Map = 514,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
                 },
 
                 new Location
                 {
                     Name = "M. Forest - East of Mossdeep",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 184,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - North of Lilycove",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 187,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - North of 111",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 191,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - West of 114",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 186,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - North of 124",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 185,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - West of 105",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 33, 34, 35, 36, 36, },
+                    Map = 189,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - South of 109",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 190,
                 },
 
                 new Location
                 {
                     Name = "M. Forest - South of 132",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 188,
                 },
 
                 new Location
                 {
                     Name = "M. Island - South of 132",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 205,
                 },
 
                 new Location
                 {
                     Name = "M. Island - North of 113",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 206,
                 },
 
                 new Location
                 {
                     Name = "M. Island - North of 124",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 202,
                 },
 
                 new Location
                 {
                     Name = "M. Island - North of 125",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 207,
                 },
 
                 new Location
                 {
                     Name = "M. Island - West of 104",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 200,
                 },
 
                 new Location
                 {
                     Name = "M. Island - West of Dewford",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 203,
                 },
 
                 new Location
                 {
                     Name = "M. Island - South of Pacifidlog",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
+                    Map = 204,
                 },
 
                 new Location
                 {
                     Name = "M. Island - South of 134",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
+                    Map = 201,
                 },
 
 
                 new Location
                 {
                     Name = "M. Mountain - North of 125",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
+                    Map = 466,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - East of 125",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 463,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - North of Lilycove",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 460,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - Northeast of 125",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 461,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - West of 104",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 208,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - South of 129",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 464,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - South of 131",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
+                    Map = 462,
                 },
 
                 new Location
                 {
                     Name = "M. Mountain - Southeast of 129",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 38, 37, 36, 38, 37, 36, 38, 37, 36, 36, 37, 38, },
-                    SmashLevel = new int[] { 35, 36, 37, 37, 38, },
+                    Map = 465,
                 },
 
                 new Location
                 {
                     Name = "Mossdeep City",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 25, 30, 40, },
+                    Map = 19,
                 },
 
-                 new Location
+                new Location
                 {
                     Name = "Mt. Pyre - Inside",
+                    Map = 86,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 28, 28, 29, 29, 29, 30, 30, 30, 31, 31, 31, 31, },
-                    HordeLevel = new int[] { 15, 15, 15, },
                 },
 
                 new Location
                 {
                     Name = "Mt. Pyre - Outside",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 28, 29, 30, 31, 28, 29, 30, 31, 29, 31, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    DexNavLevel = 31,
+                    Map = 90,
                 },
 
                 new Location
                 {
                     Name = "Mt. Pyre - Summit",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 28, 29, 30, 31, 28, 29, 30, 31, 29, 31, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    DexNavLevel = 31,
+                    Map = 91,
                 },
 
                 new Location
                 {
                     Name = "New Mauville",
+                    Map = 139,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 22, 23, 24, 25, 25, 22, 23, 24, 25, 25, 25, 25, },
-                    HordeLevel = new int[] { 12, 12, 12, },
                 },
 
                 new Location
                 {
                     Name = "Pacifidlog Town",
-                    Bag_Advances = 15,
-                    
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 12,
+
                 },
 
                 new Location
                 {
                     Name = "Petalburg City",
-                    Bag_Advances = 15,
+                    Map = 13,
 
                     CitraDelayRand = 200,
                     ConsoleDelayRand = 212,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 162,
-
-                    SurfLevel = new int[] { 15, 20, 15, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Petalburg Woods",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 4, 5, 6, 4, 5, 6, 6, 6, 5, 5, 5, 5, },
-                    HordeLevel = new int[] { 3, 3, 3 },
-                    DexNavLevel = 6,
+                    Map = 82,
                 },
 
                 new Location
                 {
                     Name = "Route 101",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, },
-                    HordeLevel = new int[] { 2, 2, 2, },
-                    DexNavLevel = 2,
+                    Map = 23,
                 },
 
                 new Location
                 {
                     Name = "Route 102",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 2, 3, 3, 2, 3, 3, 2, 3, 2, 3, 3, 3, },
-                    HordeLevel = new int[] { 2, 2, 2, },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 3,
+                    Map = 24,
                 },
 
                 new Location
                 {
                     Name = "Route 103",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 2, 2, 3, 3, 2, 2, 3, 3, 2, 3, 3, 3, },
-                    HordeLevel = new int[] { 2, 2, 2, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 3,
+                    Map = 25,
                 },
 
                 new Location
                 {
                     Name = "Route 104 - North",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 4, 5, 6, 7, 4, 5, 6, 7, 5, 7, 5, 7, },
-                    HordeLevel = new int[] { 3, 3, 3 },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 7,
+                    Map = 26,
                 },
 
                 new Location
                 {
                     Name = "Route 104 - South",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 2, 3, 4, 5, 2, 3, 4, 5, 3, 5, 3, 5, },
-                    HordeLevel = new int[] { 2, 2, 2, },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 5,
+                    Map = 27,
                 },
 
                 new Location
                 {
                     Name = "Route 105",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    DexNavLevel = 25,
+                    Map = 28,
                 },
 
                 new Location
                 {
                     Name = "Route 106",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 25,
+                    Map = 29,
                 },
 
                 new Location
                 {
                     Name = "Route 107",
-                    Bag_Advances = 15,
+                    Map = 30,
+                },
 
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 25,
+                new Location
+                {
+                    Name = "Route 107 - Underwater",
+                    Map = 64,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 108",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    DexNavLevel = 25,
+                    Map = 31,
 
                 },
 
                 new Location
                 {
                     Name = "Route 109",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 25,
+                    Map = 32,
                 },
 
                 new Location
                 {
                     Name = "Route 110",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 10, 11, 12, 13, 13, 13, 13, 13, 11, 12, 13, 13, },
-                    HordeLevel = new int[] { 6, 6, 6, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 13,
+                    Map = 33,
                 },
 
                 new Location
                 {
                     Name = "Route 111",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    SmashLevel = new int[] { 13, 14, 15, 16, 16, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 37,
                 },
 
                 new Location
                 {
                     Name = "Route 111 - Desert",
+                    Map = 35,
                     NPC = 1,
                     Enc_Ratio = 1,
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 20, 21, 22, 23, 20, 22, 21, 23, 21, 23, 23, 23, },
-                    HordeLevel = new int[] { 11, 11, 11, },
-                    DexNavLevel = 23,
                 },
 
                 new Location
                 {
                     Name = "Route 112 - North",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 14, 15, 15, 16, 16, 17, 14, 15, 16, 17, 17, 17, },
-                    HordeLevel = new int[] { 8, 8, 8, },
-                    DexNavLevel = 17,
+                    Map = 38,
                 },
 
                 new Location
                 {
                     Name = "Route 112 - South",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 13, 14, 14, 15, 15, 16, 13, 14, 15, 16, 16, 16, },
-                    HordeLevel = new int[] { 8, 8, 8, },
-                    DexNavLevel = 16,
+                    Map = 39,
                 },
 
                 new Location
                 {
                     Name = "Route 113",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 15, 16, 16, 17, 17, 18, 15, 16, 17, 18, 16, 18, },
-                    HordeLevel = new int[] { 9, 9, 9, },
-                    DexNavLevel = 18,
+                    Map = 40,
                 },
 
                 new Location
                 {
                     Name = "Route 114",
+                    Map = 41,
                     Bag_Advances = 16,
-
-                    WildLevel = new int[] { 16, 17, 18, 19, 16, 17, 18, 19, 17, 19, 19, 19, },
-                    HordeLevel = new int[] { 9, 9, 9 },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25 },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    SmashLevel = new int[] { 15, 10, 20, 5, 5 },
-                    DexNavLevel = 19,
                 },
 
                 new Location
                 {
                     Name = "Route 115",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 17, 18, 19, 20, 17, 18, 19, 20, 20, 18, 18, 20, },
-                    HordeLevel = new int[] { 10, 10, 10, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 20,
+                    Map = 42,
                 },
 
                 new Location
                 {
                     Name = "Route 116",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 6, 7, 8, 5, 6, 7, 6, 8, 6, 8, 8, 8, },
-                    HordeLevel = new int[] { 4, 4, 4, },
-                    DexNavLevel = 8,
+                    Map = 43,
                 },
 
                 new Location
                 {
                     Name = "Route 117",
+                    Map = 44,
                     NPC = 1,
-                    Bag_Advances = 15,
 
                     CitraDelayRand = 202,
                     ConsoleDelayRand = 214,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 164,
-
-                    WildLevel = new int[] { 12, 13, 14, 12, 14, 11, 13, 14, 11, 13, 14, 14, },
-                    HordeLevel = new int[] { 7, 7, 7, },
-                    SurfLevel = new int[] { 15, 20, 20, 25, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 14,
                 },
 
                 new Location
                 {
                     Name = "Route 118",
-                    Bag_Advances = 15,
+                    Map = 45,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 216,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 168,
-
-                    WildLevel = new int[] { 21, 22, 23, 24, 21, 22, 23, 24, 22, 24, 24, 24, },
-                    HordeLevel = new int[] { 12, 12, 12, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 24,
                 },
 
                 new Location
                 {
                     Name = "Route 119",
-                    Bag_Advances = 15,
+                    Map = 46,
 
                     CitraDelayRand = 204,
                     ConsoleDelayRand = 226,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 166,
-
-                    WildLevel = new int[] { 22, 23, 24, 25, 22, 23, 24, 25, 23, 25, 25, 25, },
-                    HordeLevel = new int[] { 12, 12, 12 },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30 },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25 },
-                    SuperLevel = new int[] { 35, 40, 35 },
-                },
-
-                new Location
-                {
-                    Name = "Route 119 - Feebas",
-                    Bag_Advances = 15,
-
-                    CitraDelayRand = 204,
-                    ConsoleDelayRand = 226,
-                    CitraORASCorr = 152,
-                    ConsoleORASCorr = 166,
-
-                    WildLevel = new int[] { 22, 23, 24, 25, 22, 23, 24, 25, 23, 25, 25, 25, },
-                    HordeLevel = new int[] { 12, 12, 12 },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30 },
-                    OldLevel = new int[] { 15, 15, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 35, 35, },
                 },
 
                 new Location
                 {
                     Name = "Route 120 - East",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 24, 25, 26, 27, 24, 25, 26, 27, 27, 27, 27, 27, },
-                    HordeLevel = new int[] { 13, 13, 13, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 48,
                 },
 
                 new Location
                 {
                     Name = "Route 120 - West",
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 24, 25, 26, 27, 24, 25, 26, 27, 27, 27, 27, 27, },
-                    HordeLevel = new int[] { 13, 13, 13, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 49,
                 },
 
                 new Location
                 {
                     Name = "Route 121",
+                    Map = 50,
                     Bag_Advances = 16,
-
-                    WildLevel = new int[] { 28, 29, 30, 27, 28, 29, 28, 29, 30, 30, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15 },
-                    DexNavLevel = 30,
                 },
 
                 new Location
                 {
                     Name = "Route 122",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 25,
+                    Map = 51,
                 },
 
                 new Location
                 {
                     Name = "Route 123",
+                    Map = 52,
                     NPC = 1,
-                    Bag_Advances = 15,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 214,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 166,
-
-                    WildLevel = new int[] { 29, 30, 31, 28, 29, 30, 29, 30, 31, 31, 31, 31, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Route 124",
-                    Bag_Advances = 15,
+                    Map = 53,
+                },
 
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                new Location
+                {
+                    Name = "Route 124 - Underwater",
+                    Map = 65,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 125",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 54,
                 },
 
                 new Location
                 {
                     Name = "Route 126",
-                    Bag_Advances = 15,
+                    Map = 55,
+                },
 
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                new Location
+                {
+                    Name = "Route 126 - Underwater",
+                    Map = 66,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 127",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 56,
                 },
 
                 new Location
                 {
                     Name = "Route 128",
-                    Bag_Advances = 15,
+                    Map = 57,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 210,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 162,
+                },
 
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                new Location
+                {
+                    Name = "Route 128 - Underwater",
+                    Map = 68,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 129",
-                    Bag_Advances = 15,
+                    Map = 58,
+                },
 
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                new Location
+                {
+                    Name = "Route 129 - Underwater",
+                    Map = 69,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 130",
-                    Bag_Advances = 15,
+                    Map = 59,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 208,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 162,
+                },
 
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                new Location
+                {
+                    Name = "Route 130 - Underwater",
+                    Map = 70,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Route 131",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 60,
                 },
 
                 new Location
                 {
                     Name = "Route 132",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 61,
                 },
 
                 new Location
                 {
                     Name = "Route 133",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 62,
                 },
 
                 new Location
                 {
                     Name = "Route 134",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 30,
+                    Map = 63,
                 },
 
                 new Location
                 {
                     Name = "Rusturf Tunnel",
+                    Map = 75,
                     Enc_Ratio = 7,
-                    Bag_Advances = 15,
-
-                    WildLevel = new int[] { 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 10, },
-                    HordeLevel = new int[] { 5, 5, 5, },
-                    SmashLevel = new int[] { 14, 15, 16, 17, 17, },
                 },
 
                 new Location
                 {
                     Name = "Safari Zone - Area 1",
-                    Bag_Advances = 15,
+                    Map = 222,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 210,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    WildLevel = new int[] { 27, 28, 29, 30, 29, 28, 29, 30, 28, 30, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15 },
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    DexNavLevel = 30,
                 },
 
                 new Location
                 {
                     Name = "Safari Zone - Area 2",
-                    Bag_Advances = 15,
+                    Map = 221,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 210,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    WildLevel = new int[] { 27, 28, 29, 30, 29, 28, 29, 30, 28, 30, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    DexNavLevel = 30,
                 },
 
                 new Location
                 {
                     Name = "Safari Zone - Area 3",
-                    Bag_Advances = 15,
+                    Map = 219,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 210,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    WildLevel = new int[] { 27, 28, 29, 30, 29, 28, 29, 30, 28, 30, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    DexNavLevel = 30,
                 },
 
                 new Location
                 {
                     Name = "Safari Zone - Area 4",
-                    Bag_Advances = 15,
+                    Map = 220,
 
                     CitraDelayRand = 196,
                     ConsoleDelayRand = 210,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    WildLevel = new int[] { 27, 28, 29, 30, 29, 28, 29, 30, 28, 30, 30, 30, },
-                    HordeLevel = new int[] { 15, 15, 15, },
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15 },
-                    GoodLevel = new int[] { 25, 25, 25},
-                    SuperLevel = new int[] { 35, 30, 40 },
-                    DexNavLevel = 30,
                 },
 
                 new Location
                 {
-                    Name = "Scorched Slab",
+                    Name = "Scorched Slab - 1F",
+                    Map = 164,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
@@ -1162,197 +766,139 @@ namespace TinyFinder
                     ConsoleDelayRand = 202,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
+                },
 
-                    WildLevel = new int[] { 26, 26, 27, 27, 27, 28, 28, 28, 29, 29, 29, 29, },
-                    SurfLevel = new int[] { 20, 25, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 10, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                new Location
+                {
+                    Name = "Scorched Slab - B1F",
+                    Map = 165,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
+                },
+
+                new Location
+                {
+                    Name = "Scorched Slab - B2F-BF3",
+                    Map = 166,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Sea Mauville - Outside",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 15, 15, 20, 20, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 145,
                 },
 
                 new Location
                 {
                     Name = "Sea Mauville - Inside",
-                    Bag_Advances = 15,
-
-                    SurfLevel = new int[] { 15, 15, 20, 20, 25, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                    Map = 146,
                 },
 
                 new Location
                 {
                     Name = "Sealed Chamber",
+                    Map = 162,
                     Bag_Advances = 3,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Seafloor Cavern - Entrance",
+                    Map = 99,
                     Bag_Advances = 3,
-
-                    SurfLevel = new int[] { 25, 30, 35, 30, 35, },
-                    SmashLevel = new int[] { 33, 34, 35, 36, 36, },
-                    OldLevel = new int[] { 10, 10, 5, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 30, 35, 40, },
                 },
 
                 new Location
                 {
-                    Name = "Seafloor Cavern - Inside",
+                    Name = "Seafloor Cavern - 1, 2, 4",
+                    Map = 100,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
+                },
 
-                    WildLevel = new int[] { 33, 33, 34, 34, 34, 35, 35, 35, 36, 36, 36, 36, },
-                    HordeLevel = new int[] { 18, 18, 18, },
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    SmashLevel = new int[] { 33, 34, 35, 36, 36, },
-                    OldLevel = new int[] { 10, 5, 10, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
+                new Location
+                {
+                    Name = "Seafloor Cavern - 3, 7, 8, 9",
+                    Map = 104,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
+                },
+
+                new Location
+                {
+                    Name = "Seafloor Cavern - 5, 6",
+                    Map = 102,
+                    Enc_Ratio = 7,
+                    Bag_Advances = 3,
                 },
 
                 new Location
                 {
                     Name = "Shoal Cave - Low tide",
+                    Map = 130,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 31, 32, 33, 34, 31, 31, 32, 32, 33, 34, 34, 34, },
-                    HordeLevel = new int[] { 17, 17, 17, },
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    SmashLevel = new int[] { 31, 32, 33, 34, 34, },
-                    DexNavLevel = 34,
                 },
 
                 new Location
                 {
                     Name = "Shoal Cave - High tide",
+                    Map = 132,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 31, 32, 33, 34, 31, 31, 32, 32, 33, 34, 34, 34, },
-                    HordeLevel = new int[] { 17, 17, 17, },
-                    SurfLevel = new int[] { 25, 25, 30, 30, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                    DexNavLevel = 34,
                 },
 
                 new Location
                 {
-                    Name = "Shoal Cave - Frozen area",
+                    Name = "Shoal Cave - Ice room",
+                    Map = 134,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 31, 32, 33, 34, 31, 32, 33, 34, 31, 32, 33, 34, },
-                    HordeLevel = new int[] { 17, 17, 17, },
                 },
 
                 new Location
                 {
                     Name = "Sky Pillar",
+                    Map = 176,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    WildLevel = new int[] { 44, 45, 46, 44, 45, 46, 44, 45, 46, 44, 45, 46, },
-                    HordeLevel = new int[] { 23, 23, 23, },
                 },
 
                 new Location
                 {
                     Name = "Slateport City",
-                    Bag_Advances = 15,
+                    Map = 14,
 
                     CitraDelayRand = 204,
                     ConsoleDelayRand = 216,
                     CitraORASCorr = 154,
                     ConsoleORASCorr = 164,
-
-                    SurfLevel = new int[] { 20, 20, 25, 25, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Sootopolis City",
-                    Bag_Advances = 15,
+                    Map = 20,
 
                     CitraDelayRand = 202,
                     ConsoleDelayRand = 212,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    SurfLevel = new int[] { 30, 25, 35, 35, 35, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
-                    Name = "Team Aqua Hideout",
+                    Name = "Team Magma/Aqua Hideout",
+                    Map = 92,
                     Bag_Advances = 6,
-
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                },
-
-                new Location
-                {
-                    Name = "Team Magma Hideout",
-                    Bag_Advances = 6,
-
-                    SurfLevel = new int[] { 20, 20, 25, 30, 30, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
-                },
-
-                new Location
-                {
-                    Name = "Underwater - Route 128",
-                    Enc_Ratio = 7,
-                    Bag_Advances = 3,
-
-                    WildLevel = new int[] { 25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 30, 35, },
-                },
-
-                new Location
-                {
-                    Name = "Underwater - Elsewhere",
-                    Enc_Ratio = 7,
-                    Bag_Advances = 3,
-
-                    WildLevel = new int[] { 25, 25, 25, 25, 25, 30, 30, 30, 30, 30, 30, 35, },
                 },
 
                 new Location
                 {
                     Name = "Victory Road - Default",
+                    Map = 123,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
@@ -1360,25 +906,14 @@ namespace TinyFinder
                     ConsoleDelayRand = 202,
                     CitraORASCorr = 152,
                     ConsoleORASCorr = 156,
-
-                    WildLevel = new int[] { 37, 39, 38, 40, 37, 39, 37, 39, 38, 40, 40, 40, },
-                    HordeLevel = new int[] { 20, 20, 20, },
-                    SurfLevel = new int[] { 25, 30, 35, 40, 40, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
                 new Location
                 {
                     Name = "Victory Road - 2F",
+                    Map = 126,
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
-
-                    SurfLevel = new int[] { 25, 30, 35, 40, 40, },
-                    OldLevel = new int[] { 10, 5, 15, },
-                    GoodLevel = new int[] { 25, 25, 25, },
-                    SuperLevel = new int[] { 35, 30, 40, },
                 },
 
             };
@@ -1388,3 +923,4 @@ namespace TinyFinder
         }
     }
 }
+

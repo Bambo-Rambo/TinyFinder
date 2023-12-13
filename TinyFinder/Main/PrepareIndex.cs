@@ -7,6 +7,8 @@ namespace TinyFinder.Main
 {
     internal class PrepareIndex
     {
+        static Species pokemon;
+        static Species[] HordePokemon;
         static int[] HordeLevels;
         static ushort DexNumber = 0;
 
@@ -15,20 +17,23 @@ namespace TinyFinder.Main
             int slot = index.slot - 1;
             int tempLevel = 0;
 
-            // Species Name and temp Level
             switch (current.method)
             {
                 case 4:
-                    DexNumber = current.currentSlots[slot];
+                    HordePokemon = new Species[5];
                     HordeLevels = new int[5];
                     for (int i = 0; i < 5; i++)
+                    {
+                        DexNumber = current.currentSlots[slot * 5 + i];
+                        HordePokemon[i] = Species.SpeciesList.ElementAt(DexNumber);
                         HordeLevels[i] = current.currentLevels[slot];
+                    }
                     break;
 
                 case 6:
                     if (current.oras)
                     {
-                        if (index.EnctrType == 2)   // Only when the result is dexnav exclusive
+                        if (index.EnctrType == 2)   // Only when the result is DexNav exclusive
                         {
                             DexNumber = current.specialSlots[slot];
                             tempLevel = current.dexNavLevel;
@@ -66,11 +71,9 @@ namespace TinyFinder.Main
                     tempLevel = current.currentLevels[slot];
                     break;
             }
-            Species pokemon = Species.SpeciesList.ElementAt(DexNumber);
-            index.SpeciesName = pokemon.Name;
 
 
-            // Level Finalize
+            // Actual Level calculation
             switch (current.fluteOption)
             {
                 case 1:     // Black Flute
@@ -96,28 +99,26 @@ namespace TinyFinder.Main
                             if (HordeLevels[i] < 1)
                                 HordeLevels[i] = 1;
                         }
-
                     }
                     break;
             }
-            if (current.method != 4)
-                index.Level = tempLevel.ToString();
-            else
-                index.Level = string.Join(", ", HordeLevels.Select(lvl => lvl.ToString()));
 
-
-            // Held Item
             if (current.method == 4)
             {
+                index.SpeciesName = string.Join(", ", HordePokemon.Select(species => species.Name).ToArray());
+                index.Level = string.Join(", ", HordeLevels.Select(lvl => lvl.ToString()));
                 string[] tempItems = new string[5];
                 for (int i = 0; i < 5; i++)
                 {
-                    tempItems[i] = GetItem(pokemon, index.itemSlots[i], current.oras);
+                    tempItems[i] = GetItem(HordePokemon[i], index.itemSlots[i], current.oras);
                 }
                 index.item = string.Join(", ", tempItems.Select(item => item));
             }
             else
             {
+                pokemon = Species.SpeciesList.ElementAt(DexNumber);
+                index.SpeciesName = pokemon.Name;
+                index.Level = tempLevel.ToString();
                 index.item = GetItem(pokemon, index.itemSlot, current.oras);
             }
 

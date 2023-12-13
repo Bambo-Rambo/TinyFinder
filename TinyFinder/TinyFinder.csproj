@@ -94,10 +94,8 @@
     <Compile Include="Database\LocationsORAS.cs" />
     <Compile Include="Database\LocationsXY.cs" />
     <Compile Include="Database\Species.cs" />
-    <Compile Include="Database\SpeciesAS.cs" />
-    <Compile Include="Database\SpeciesOR.cs" />
-    <Compile Include="Database\SpeciesX.cs" />
-    <Compile Include="Database\SpeciesY.cs" />
+    <Compile Include="Database\TableORAS.cs" />
+    <Compile Include="Database\TableXY.cs" />
     <Compile Include="Main\UISettings.cs" />
     <Compile Include="Main\FindResults.cs">
       <SubType>Form</SubType>

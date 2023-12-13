@@ -4169,7 +4169,7 @@ namespace TinyFinder
                 },
 
                 new Species() {
-                    Name = "Flabébé (red)",
+                    Name = "Flabébé (Red)",
                     moves = { new Move { Name = "Tackle", At = 1 }, new Move { Name = "Vine Whip", At = 1 }, new Move { Name = "Fairy Wind", At = 6 }, new Move { Name = "Lucky Chant", At = 10 }, new Move { Name = "Razor Leaf", At = 15 }, new Move { Name = "Wish", At = 20 }, new Move { Name = "Magical Leaf", At = 22 }, new Move { Name = "Grassy Terrain", At = 24 }, new Move { Name = "Petal Blizzard", At = 28 }, new Move { Name = "Aromatherapy", At = 33 }, new Move { Name = "Misty Terrain", At = 37 }, new Move { Name = "Moonblast", At = 41 }, new Move { Name = "Petal Dance", At = 45 }, new Move { Name = "Solar Beam", At = 48 }, },
                     eggMoves = { "Copycat", "Captivate", "Camouflage", },
                 },
@@ -4413,7 +4413,7 @@ namespace TinyFinder
                 },
 
                 new Species() {
-                    Name = "Pumpkaboo (small)",
+                    Name = "Pumpkaboo (Average)",
                     moves = { new Move { Name = "Trick", At = 1 }, new Move { Name = "Astonish", At = 1 }, new Move { Name = "Confuse Ray", At = 1 }, new Move { Name = "Scary Face", At = 4 }, new Move { Name = "Trick-or-Treat", At = 6 }, new Move { Name = "Worry Seed", At = 11 }, new Move { Name = "Razor Leaf", At = 16 }, new Move { Name = "Leech Seed", At = 20 }, new Move { Name = "Trick-or-Treat", At = 23 }, new Move { Name = "Bullet Seed", At = 26 }, new Move { Name = "Shadow Sneak", At = 30 }, new Move { Name = "Shadow Ball", At = 36 }, new Move { Name = "Trick-or-Treat", At = 40 }, new Move { Name = "Pain Split", At = 42 }, new Move { Name = "Seed Bomb", At = 48 }, },
                     eggMoves = { "Disable", "Bestow", "Destiny Bond", },
                 },
@@ -4492,37 +4492,37 @@ namespace TinyFinder
                 },
 
                 new Species() {
-                    Name = "Basculin (blue)",
+                    Name = "Basculin (Blue)",
                     FS = true,
                     item5 = "Deep Sea Scale",
                 },
 
                 new Species() {
-                    Name = "Flabébé (yellow)",
+                    Name = "Flabébé (Yellow)",
                 },
 
                 new Species() {
-                    Name = "Flabébé (orange)",
+                    Name = "Flabébé (Orange)",
                 },
 
                 new Species() {
-                    Name = "Flabébé (blue)",
+                    Name = "Flabébé (Blue)",
                 },
 
                 new Species() {
-                    Name = "Flabébé (white)",
+                    Name = "Flabébé (White)",
                 },
 
                 new Species() {
-                    Name = "Pumpkaboo (average)",
+                    Name = "Pumpkaboo (Small)",
                 },
 
                 new Species() {
-                    Name = "Pumpkaboo (large)",
+                    Name = "Pumpkaboo (Large)",
                 },
 
                 new Species() {
-                    Name = "Pumpkaboo (super)",
+                    Name = "Pumpkaboo (Super)",
                     item100 = "Miracle Seed",
                 },
 

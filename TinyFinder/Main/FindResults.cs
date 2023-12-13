@@ -71,7 +71,7 @@ namespace TinyFinder
             {
                 settings.surfing = Surfing;
                 settings.longGrass = LongGrass; 
-                settings.currentSlots = SlotTable();
+                settings.currentSlots = Method == 4 ? GetHordeTable1.Concat(GetHordeTable2).Concat(GetHordeTable3).ToArray() : SlotTable();
                 settings.currentLevels = LevelTable();
 
                 if (ORAS)
@@ -259,7 +259,7 @@ namespace TinyFinder
 
                 case 2:     // Fishing
 
-                    settings.advances = (byte)(party.Value * 3 + (BagBox.Checked ? CurrentLocation.Bag_Advances : 0));
+                    settings.advances = (byte)(party.Value * 3 + (BagBox.Checked ? getBagAdvances() : 0));
                     settings.delayRand = CitraBox.Checked ? CurrentLocation.CitraDelayRand : CurrentLocation.ConsoleDelayRand;
                     settings.targetFrame = (int)FishingFrame.Value;
                     settings.gameCorrection = !ORAS ? (settings.citra ? 144 : 146) : (settings.citra ? CurrentLocation.CitraORASCorr : CurrentLocation.ConsoleORASCorr);
@@ -267,7 +267,7 @@ namespace TinyFinder
                     break;
 
                 case 3:     // Rock Smash
-                case 8:     // Swooping
+                case 8:     // Ambush encounter
                     EstimatedRandCalls = 6;
                     break;
 
@@ -281,7 +281,7 @@ namespace TinyFinder
                     }
                     else
                     {
-                        settings.advances = (byte)(party.Value * 3 + CurrentLocation.Bag_Advances);
+                        settings.advances = (byte)(party.Value * 3 + getBagAdvances());
                         EstimatedRandCalls = settings.advances + 15;
                     }
                     if (ORAS)
@@ -292,7 +292,7 @@ namespace TinyFinder
                 case 5:     // Honey Wild
 
                     settings.sType = (byte)(Surfing ? 4 : 0);
-                    settings.advances += (byte)(party.Value * 3 + CurrentLocation.Bag_Advances);
+                    settings.advances += (byte)(party.Value * 3 + getBagAdvances());
                     //EstimatedRandCalls = settings.advances + 5;
                     break;
 
@@ -490,7 +490,7 @@ namespace TinyFinder
                                 AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
-                        case 8:     // Swooping
+                        case 8:     // Ambush encounter
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, false) || NoFilters)
