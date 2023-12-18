@@ -92,6 +92,7 @@ namespace TinyFinder
                     settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
                     settings.sType = (byte)(Surfing ? 1 : 0);
                     settings.Wants_Exclusives = checkExclusives();
+                    settings.Show_Alt_EggMove = AltEggMove.Checked;
                     settings.specialSlots = GetNavTable;
                     settings.dexNavLevel = CurrentLocation.DexNavLevel;
 
@@ -105,6 +106,8 @@ namespace TinyFinder
                             settings.maxEggRand = 10;
                             break;
                     }
+                    if (settings.Show_Alt_EggMove)
+                        settings.maxEggRand += 2;
 
                 }
                 else if (Method == 7)

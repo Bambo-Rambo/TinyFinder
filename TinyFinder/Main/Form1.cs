@@ -634,9 +634,8 @@ namespace TinyFinder
             BagBox.Visible = BagBox.Checked = (Method == 6 && !ORAS) || Method == 2;
 
             CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
-            CharmBox.Visible = Method == 6 && ORAS;
-            Calib_Label.Visible = calib.Visible = NavFilters_Label.Visible = 
-                NavFilters.Visible = Potential_Label.Visible = Potential.Visible = ORAS && Method == 6;
+            CharmBox.Visible = Calib_Label.Visible = calib.Visible = NavFilters_Label.Visible = NavFilters.Visible = 
+                Potential_Label.Visible = Potential.Visible = AltEggMove.Visible = ORAS && Method == 6;
 
             Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
 
@@ -704,8 +703,8 @@ namespace TinyFinder
                         Party_Label.Location = new Point(284, 196);
                         Slots_Label.Location = new Point(13, 93);
                         SlotsComboBox.Location = new Point(75, 89);
-                        Flute1_Label.Location = new Point(240, 139);
-                        Flute1.Location = new Point(331, 137);
+                        Flute1_Label.Location = new Point(240, 94);
+                        Flute1.Location = new Point(331, 92);
                         AllowChainUpdate.Checked = true;
                     }
                 }
@@ -739,8 +738,9 @@ namespace TinyFinder
 
             NavFilters_Label.Location = new Point(13, 140);
             NavFilters.Location = new Point(75, 137);
-            Potential_Label.Location = new Point(240, 91);
-            Potential.Location = new Point(331, 89);
+            Potential_Label.Location = new Point(240, 46);
+            Potential.Location = new Point(331, 44);
+            AltEggMove.Location = new Point(243, 140);
 
             Searcher.AutoGenerateColumns = false;
             Generator.AutoGenerateColumns = false;

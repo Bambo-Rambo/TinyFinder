@@ -131,7 +131,9 @@ namespace TinyFinder.Main
                 else
                 {
                     // Base rand calls consumption is 1 for (long) grass, otherwise each Pokemon has its own
-                    int eggRand = current.maxEggRand == 2 ? 1 : pokemon.eggRand;
+                    int eggRand = current.maxEggRand < 10 ? 1 : pokemon.eggRand;
+                    if (current.Show_Alt_EggMove)
+                        eggRand += 2;
 
                     if (!(pokemon.oras5.Length == 1 && pokemon.oras50.Length == 1 && pokemon.item5.Length == 1 && pokemon.item50.Length == 1))
                         if (index.item.Length == 1)     // Can have held item but doesn't

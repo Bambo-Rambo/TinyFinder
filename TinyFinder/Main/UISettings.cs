@@ -24,7 +24,7 @@ namespace TinyFinder.Main
         public bool Wants_Sync;
         public sbyte Target_Horde_HA;
 
-        public bool Wants_Exclusives, Wants_Shiny, Wants_HA, Wants_EggMove, Wants_Boost;
+        public bool Wants_Exclusives, Wants_Shiny, Wants_HA, Wants_EggMove, Wants_Boost, Show_Alt_EggMove;
 
         public bool[] Target_Slots = new bool[13];      // If a slot has been selected, the array index for that slot/number becomes true
         public byte[] Horde_Flutes = new byte[5];
