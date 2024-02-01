@@ -36,7 +36,7 @@ namespace TinyFinder
         private List<ushort> GetFSList => Species.getFSList();
 
         bool MovingHordeOption => Method == 4 && EncounterType.SelectedIndex == 1;      // User selected moving horde method
-        private bool HasExclusives => GetNavTable != null;
+        private bool HasExclusives => GetNavTable != null && LegendDefeated.Checked;
         bool ORAS => GameVersion.SelectedIndex > 1;
         bool IsDexNav => Method == 6 && ORAS;
         
@@ -133,6 +133,7 @@ namespace TinyFinder
                 Methods.Items[6] = "DexNav";
                 Methods.Items.Remove("Friend Safari");
                 Methods.Items.Remove("Ambush encounter");
+                LegendDefeated.Text = (GameVersion.SelectedIndex == 2 ? "Groudon" : "Kyogre") + " Defeated";
             }
 
             Methods.SelectedIndex = 0;
@@ -381,7 +382,7 @@ namespace TinyFinder
                 {
                     HashSet<ushort> SlotSpecies = new HashSet<ushort>(SlotTable());
 
-                    if (IsDexNav && GetNavTable != null)
+                    if (IsDexNav && HasExclusives)
                     {
                         HashSet<ushort> navSpecies = new HashSet<ushort>(GetNavTable);
                         // Merge DexNav slots with water slots ONLY if every other table doesn't exit for a given location
@@ -408,7 +409,7 @@ namespace TinyFinder
             else if (Method != 7)
             {
                 ushort[] tempTable;
-                if (IsDexNav && checkExclusives())
+                if (IsDexNav && AddExclusiveSlots())
                     tempTable = GetNavTable;
                 else
                     tempTable = SlotTable();
@@ -501,9 +502,9 @@ namespace TinyFinder
             }
         }
 
-        private bool checkExclusives()
+        private bool AddExclusiveSlots()
         {
-            if (GetNavTable != null)
+            if (HasExclusives)
                 for (int i = 0; i < 3; i++)
                     if (DexToName(GetNavTable[i]).Equals(SelectedSpecies))
                         return true;
@@ -574,7 +575,7 @@ namespace TinyFinder
 
                 case 6:     // DexNav
 
-                    if (IsDexNav && checkExclusives())
+                    if (IsDexNav && AddExclusiveSlots())
                     {
                         SlotsCount = 3;
                         ComboBoxHeight = 90;
@@ -635,7 +636,7 @@ namespace TinyFinder
 
             CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
             CharmBox.Visible = Calib_Label.Visible = calib.Visible = NavFilters_Label.Visible = NavFilters.Visible = 
-                Potential_Label.Visible = Potential.Visible = AltEggMove.Visible = ORAS && Method == 6;
+                Potential_Label.Visible = Potential.Visible = AltEggMove.Visible = LegendDefeated.Visible = ORAS && Method == 6;
 
             Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
 
@@ -645,7 +646,7 @@ namespace TinyFinder
 
             Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
             Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
-            Party_Label.Text = (IsDexNav) ? "Search Level" : "Party";
+            Party_Label.Text = IsDexNav ? "Search Level" : "Party";
 
             ratio.Minimum = 1; ratio.Maximum = 99;
 
@@ -720,7 +721,8 @@ namespace TinyFinder
             FluteOption.SelectedIndex = 0;
 
             BonusMusicBox.Location = new Point(335, 34);
-            CharmBox.Location = new Point(355, 40);
+            CharmBox.Location = new Point(335, 30);
+            LegendDefeated.Location = new Point(335, 50);
 
             TIDBOX.Location = new Point(105, 78);
             tid.Location = new Point(170, 77);
@@ -1107,6 +1109,10 @@ namespace TinyFinder
         private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void DexNavGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
 
+        private void LegendDefeated_CheckedChanged(object sender, EventArgs e)
+        {
+            ManageSpecies();
+        }
         #endregion
 
     }

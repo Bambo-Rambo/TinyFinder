@@ -85,7 +85,6 @@ namespace TinyFinder
 
 
             EnctrType = Rand(rngList, 100) < 30 && current.exclusives ? 2 : current.sType;
-            Type = EnctrType == 2 ? "DexNav" : "Normal";
 
             Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || Rand(rngList, 100) < 4;
 

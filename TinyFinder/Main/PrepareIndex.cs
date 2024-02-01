@@ -35,11 +35,13 @@ namespace TinyFinder.Main
                     {
                         if (index.EnctrType == 2)   // Only when the result is DexNav exclusive
                         {
+                            index.Type = "DexNav";
                             DexNumber = current.specialSlots[slot];
                             tempLevel = current.dexNavLevel;
                         }
                         else
                         {
+                            index.Type = "Normal";
                             DexNumber = current.currentSlots[slot];
 
                             // A list of all level slots for a given species/location combo is created,

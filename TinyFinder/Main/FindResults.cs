@@ -91,7 +91,7 @@ namespace TinyFinder
                     settings.Wants_Sync = NavFilters.CheckBoxItems[5].Checked;
                     settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
                     settings.sType = (byte)(Surfing ? 1 : 0);
-                    settings.Wants_Exclusives = checkExclusives();
+                    settings.Wants_Exclusives = AddExclusiveSlots();
                     settings.Show_Alt_EggMove = AltEggMove.Checked;
                     settings.specialSlots = GetNavTable;
                     settings.dexNavLevel = CurrentLocation.DexNavLevel;
@@ -216,7 +216,7 @@ namespace TinyFinder
             seconds = calc.FindSeconds(searchMonth, Year);          //then add them to find the TinyMT seed for the selected month's 1st day 
             tinyInitSeed = calc.FindMonthSeed(initial, seconds);    //and continue from there (1 second = +1000 seeds)
 
-            if (MethodUsed != 0 && !isRadar1)     //Checking which slots are checked for searching (Pointless for ID and Radar chain 1)
+            if (MethodUsed != 0 && !isRadar1)     //Checking which slots are checked for searching (Pointless for ID and Radar chain > 0)
             {
                 try
                 {
