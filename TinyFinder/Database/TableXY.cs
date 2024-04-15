@@ -447,7 +447,7 @@ namespace TinyFinder
 						break;
 
 					case 276:		// Route 16
-						loc.LongTable = new ushort[]		{ 710, 710, 710, 730, 730, 731, 708, 590, 590, 707, 707, 732 };
+						loc.LongTable = new ushort[]		{ 710, 710, 710, 734, 734, 735, 708, 590, 590, 707, 707, 736 };
 						loc.WildLevel = new int[]			{ 34, 34, 35, 35, 36, 36, 35, 34, 36, 34, 35, 36 };
 						loc.YellowTable = new ushort[]		{ 70, 70, 451, 451, 419, 419, 708, 590, 590, 707, 707, 707 };
 						loc.YellowLevel = new int[]			{ 35, 36, 34, 35, 35, 36, 35, 34, 36, 34, 35, 36 };

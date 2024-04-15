@@ -4416,6 +4416,7 @@ namespace TinyFinder
                     Name = "Pumpkaboo (Average)",
                     moves = { new Move { Name = "Trick", At = 1 }, new Move { Name = "Astonish", At = 1 }, new Move { Name = "Confuse Ray", At = 1 }, new Move { Name = "Scary Face", At = 4 }, new Move { Name = "Trick-or-Treat", At = 6 }, new Move { Name = "Worry Seed", At = 11 }, new Move { Name = "Razor Leaf", At = 16 }, new Move { Name = "Leech Seed", At = 20 }, new Move { Name = "Trick-or-Treat", At = 23 }, new Move { Name = "Bullet Seed", At = 26 }, new Move { Name = "Shadow Sneak", At = 30 }, new Move { Name = "Shadow Ball", At = 36 }, new Move { Name = "Trick-or-Treat", At = 40 }, new Move { Name = "Pain Split", At = 42 }, new Move { Name = "Seed Bomb", At = 48 }, },
                     eggMoves = { "Disable", "Bestow", "Destiny Bond", },
+                    FS = true,
                 },
 
                 new Species() {
@@ -4493,7 +4494,6 @@ namespace TinyFinder
 
                 new Species() {
                     Name = "Basculin (Blue)",
-                    FS = true,
                     item5 = "Deep Sea Scale",
                 },
 
@@ -4511,6 +4511,24 @@ namespace TinyFinder
 
                 new Species() {
                     Name = "Flabébé (White)",
+                },
+
+                new Species() {
+                    Name = "Floette (Yellow)",
+                    FS = true,
+                },
+
+                new Species() {
+                    Name = "Floette (Orange)",
+                },
+
+                new Species() {
+                    Name = "Floette (Blue)",
+                    FS = true,
+                },
+
+                new Species() {
+                    Name = "Floette (White)",
                 },
 
                 new Species() {
