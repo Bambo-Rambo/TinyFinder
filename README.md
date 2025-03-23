@@ -1,7 +1,5 @@
 # TinyFinder
 
-### [Download link for the most up to date build](https://ci.appveyor.com/project/Bambo-Rambo/tinyfinder/build/artifacts)
-
 ### Note: Recent Citra builds will generate a slightly different Initial seed each time you load a game, making consistent seed RNG abuse impossible. Canary 2610 and Nightly 1915 are tested versions proved to be working fine.
 
 Windows forms app for assisting with RNG abuse (mainly TinyMT) in generation 6 Pokemon games.
