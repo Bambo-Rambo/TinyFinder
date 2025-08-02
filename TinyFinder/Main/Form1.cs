@@ -68,7 +68,7 @@ namespace TinyFinder
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
+            //t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
             Generator.Size = new Size(1223, 315);           // Size breaks for some reason
 
             GameVersion.SelectedIndex = 0;
@@ -81,6 +81,7 @@ namespace TinyFinder
             DefaultChanges();
             Methods.SelectedIndex = 0;
             SearchGen.SelectedIndex = 1;
+            ReaderBTN.Checked = true;
         }
 
         // Main Event (Search Button)
@@ -103,7 +104,7 @@ namespace TinyFinder
 
             StopButton.Enabled = Working = false;
             MainButton.Enabled = IgnoreFiltersButton.Enabled = true;
-            MainButton.Text = SearchGen.SelectedIndex == 0 ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
+            MainButton.Text = SearchGen.SelectedIndex == 0 ? "Search" : "Generate";
         }
         private void year_ValueChanged(object sender, EventArgs e)
         {
@@ -145,13 +146,13 @@ namespace TinyFinder
         private void SearchGen_SelectedIndexChanged(object sender, EventArgs e)
         {
             bool DateSearcher = SearchGen.SelectedIndex == 0;
-            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = DateRNGSeed.Visible = DateSearcher;
-            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = SetAsCurrent.Visible = !DateSearcher;
-            Date_Label.Location = DateSearcher ? new Point(16, 68) : new Point(135, 68);
-            Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
+            Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Date_Label.Visible = DateRNGSeed.Visible = DateSearcher;
+            ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = OffsetCalc.Visible = !DateSearcher;
+            //Date_Label.Location = DateSearcher ? new Point(16, 68) : new Point(135, 68);
+            //Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
             if (!Working)
-                MainButton.Text = DateSearcher ? (Calibrated ? "Search" : "Calibrate and Search") : "Generate";
+                MainButton.Text = DateSearcher ? "Search" : "Generate";
 
             if (DateSearcher)
             {
@@ -331,7 +332,7 @@ namespace TinyFinder
             if (Method == 4)
             {
                 Rate_Label.Visible = ratio.Visible = MovingHordeOption;
-                Party_Label.Visible = party.Visible = !MovingHordeOption;
+                //Party_Label.Visible = party.Visible = !MovingHordeOption;
             }
             if (CheckMethod("DexNav"))
             {
@@ -621,7 +622,7 @@ namespace TinyFinder
         {
             TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
             SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
-            SyncBox.Visible = Method != 0 && !IsDexNav;
+            SyncBox.Visible = OffsetCalc.Enabled = Method != 0 && !IsDexNav;
             FluteOptionLabel.Visible = FluteOption.Visible = Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS;
             HASlot.Visible = HA_Label.Visible = Method == 4;
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
@@ -640,7 +641,8 @@ namespace TinyFinder
 
             Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
 
-            Party_Label.Visible = party.Visible = (Method > 3 && Method < 8 && Method != 7) || Method == 2 ;
+            Party_Label.Visible = party.Visible = Method > 0;
+            //Party_Label.Visible = party.Visible = (Method > 3 && Method < 8 && Method != 7) || Method == 2 ;
 
             Step_Label.Visible = Chain_Label.Visible = AllowChainUpdate.Visible = false;
 
@@ -653,7 +655,7 @@ namespace TinyFinder
             if (SearchGen.SelectedIndex == 0)
             {
                 min.Value = min.Minimum = !ORAS ? 35 :
-                                          (ORAS && Method == 0) ? 11 :
+                                          (ORAS && Method == 0) ? 13 :  // ? 11 :
                                           (ORAS && Method != 0) ? 20 : 0;
                 max.Value = (!ORAS && Method == 6) ? 800 : 150;
             }
@@ -949,6 +951,8 @@ namespace TinyFinder
                     GeneratorState[2] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny2"].Value.ToString());
                     GeneratorState[1] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny1"].Value.ToString());
                     GeneratorState[0] = Convert.ToUInt32(Generator.Rows[e.RowIndex].Cells["G_Tiny0"].Value.ToString());
+                    Generator.ClearSelection();
+                    Generator.Rows[e.RowIndex].Selected = true;
                 }
                 catch { }   //Do nothing if the user clicks in a cell header
             }
@@ -964,6 +968,61 @@ namespace TinyFinder
             }
         }
 
+        private void OffsetCalc_Click(object sender, EventArgs e)
+        {
+            if (Generator.Rows.Count > 0)
+            {
+                int EXP = 0, Hld = 0, Move = 0;
+                int Target = (int)(uint)Generator.SelectedRows[0].Cells[0].Value;  // The highlighted index from the user
+                int Offset = Target - (int)min.Value;
+
+                int BagAdvances = 0;
+                if (Method == 1 || MovingHordeOption || IsDexNav)   // Methods that require exiting the bag
+                    BagAdvances = getBagAdvances();
+                else if (Method == 7)    // Friend Safari is the standard 27
+                    BagAdvances = 27;
+
+                int AdvancesRequired = Offset - BagAdvances;
+                if (AdvancesRequired < 0)
+                {
+                    int EarliestIndex = (int)min.Value + BagAdvances;
+                    MessageBox.Show("Index " + Target + " is too close." + "\n" + 
+                        "The earliest you can aim for is " + EarliestIndex + ".", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                } 
+                else if (AdvancesRequired == 0)
+                {
+                    MessageBox.Show("No advances required!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    int TargetAdvances = (int)min.Value + AdvancesRequired;
+                    string[] Steps = new string[3];
+                    int ExpShareAdvances = (int)party.Value * 3;
+                    EXP = AdvancesRequired / ExpShareAdvances;
+                    int RemainingAdv = AdvancesRequired % ExpShareAdvances;
+                    if (RemainingAdv != 0)
+                    {
+                        Hld = RemainingAdv / 3;
+                        Move = (AdvancesRequired % ExpShareAdvances) % 3;
+                    }
+
+                    if (EXP != 0)
+                        Steps[0] = "Use the Exp. Share " + EXP + " time(s).";
+                    if (Hld != 0)
+                        Steps[1] = "Give a held item " + Hld + " time(s).";
+                    if (Move != 0)
+                        Steps[2] = "Reject a new TM/HM move " + Move + " time(s).";
+
+                    string FinalSteps = "";
+                    for (int i = 0; i < 3; i++)
+                        if (!string.IsNullOrWhiteSpace(Steps[i]))
+                            FinalSteps += "\n" + Steps[i];
+
+                    MessageBox.Show(FinalSteps, "Target Advances = " + TargetAdvances, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
 
         #endregion
 
@@ -975,8 +1034,8 @@ namespace TinyFinder
             if (SearchGen.SelectedIndex == 0)
             {
                 Calibrated = false;
-                if (!Working)
-                    MainButton.Text = "Calibrate and Search";
+                //if (!Working)
+                    //MainButton.Text = "Calibrate and Search";
             }
         }
         private void t3_TextChanged(object sender, EventArgs e)
@@ -1094,6 +1153,14 @@ namespace TinyFinder
             mersenne.SetGame(!ORAS);
         }
 
+        private void ReaderBTN_CheckedChanged(object sender, EventArgs e)
+        {
+            int x = ReaderBTN.Checked ? 45 : 73;
+            Tiny3_Label.Location = new Point(x, 103);
+            Tiny3_Label.Text = ReaderBTN.Checked ? "TinyMT Seed" : "Tiny [3]";
+            Tiny2_Label.Visible = t2.Visible = Tiny1_Label.Visible = t1.Visible = Tiny0_Label.Visible = t0.Visible = !ReaderBTN.Checked;
+        }
+
         private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
         {
             tid.Enabled = TIDBOX.Checked;
@@ -1108,6 +1175,7 @@ namespace TinyFinder
         private void NormalGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void HordeGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
         private void DexNavGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }
+
 
         private void LegendDefeated_CheckedChanged(object sender, EventArgs e)
         {

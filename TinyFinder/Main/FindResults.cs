@@ -155,11 +155,6 @@ namespace TinyFinder
             GenList = new List<Index>();
             SearchList = new List<Index>();
 
-            state[3] = t3.Value;
-            state[2] = t2.Value;
-            state[1] = t1.Value;
-            state[0] = t0.Value;
-
             Year = (int)year.Value;
             Min = (uint)min.Value;
             Max = (uint)max.Value;
@@ -168,21 +163,43 @@ namespace TinyFinder
             Nav = IsDexNav;
             Radar1 = isRadar1;
             DateSearcher = SearchGen.SelectedIndex == 0;
-            bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
+            
+
+            if (ReaderBTN.Checked)
+            {
+                TinyMT tiny = new TinyMT();
+                initial = t3.Value;
+                bootAdvances = 0;
+                state = tiny.init(initial, bootAdvances);
+            }
+            else
+            {
+                state[3] = t3.Value;
+                state[2] = t2.Value;
+                state[1] = t1.Value;
+                state[0] = t0.Value;
+                bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
+            }
+
 
             if (!DateSearcher)
                 ManageColumns(Generator, MethodUsed);
             else
+            {
                 ManageColumns(Searcher, MethodUsed);
-
+                Searcher.Columns["S_Tiny3"].Visible = Searcher.Columns["S_Tiny2"].Visible =
+                    Searcher.Columns["S_Tiny1"].Visible = Searcher.Columns["S_Tiny0"].Visible = !ReaderBTN.Checked;
+                Searcher.Columns["S_Tiny32"].Visible = ReaderBTN.Checked;
+            }
+                
             jobs = new Thread[(int)ThreadCount.Value];
             // Use the selected number of threads only for ID, Hordes, Radar and DexNav
             ThreadsUsed = (MethodUsed == 0 || MethodUsed == 4 || MethodUsed == 6) ? (uint)jobs.Length : 1;
 
-            if (DateSearcher)       //Calibrating the TinyMT seed depending on the user's currnet state at 13:00:00
+            if (DateSearcher)       //Calibrating the TinyMT seed depending on the user's current state at 13:00:00
             {
                 Working = true;
-                if (!Calibrated)
+                if (!Calibrated && !ReaderBTN.Checked)
                 {
                     MainButton.Text = "Calibrating...";
 
@@ -201,6 +218,8 @@ namespace TinyFinder
                         Application.DoEvents();
                     }
                 }
+
+
                 MainButton.Text = "Searching...";
                 StopButton.Enabled = true;
 
@@ -211,6 +230,7 @@ namespace TinyFinder
             {
                 Working = false;    //For Generator, we need to make sure that the calculations will be done only once and only for the current state
             }
+
 
             searchMonth = (byte)(Months.SelectedIndex + 1);         //We calculate how many seconds have passed from January to the selected month,
             seconds = calc.FindSeconds(searchMonth, Year);          //then add them to find the TinyMT seed for the selected month's 1st day 
@@ -330,12 +350,13 @@ namespace TinyFinder
             {
                 for (int i = 0; i < ThreadsUsed; i++)
                 {
+                    uint[] localState = (uint[])state.Clone();
                     jobs[i] = new Thread(() => 
                     {
                         if (MethodUsed == 4 || MethodUsed == 6) // Hordes / Radar / DexNav
-                            FastSearch(state, ThreadsUsed);
+                            FastSearch(localState, ThreadsUsed);
                         else
-                            StartResearch(state, ThreadsUsed);
+                            StartResearch(localState, ThreadsUsed);
                     });
                     jobs[i].Start();
                     Thread.Sleep(100);
@@ -399,14 +420,14 @@ namespace TinyFinder
                             {
                                 index = new DexNav(rngList, settings);
                                 if (settings.CheckDexNav(index) || NoFilters)
-                                    AddtoList(index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
+                                    AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
                             }
                             else
                             {
                                 index = new Radar(rngList, settings);
                                 if (settings.CheckRadar(index, settings.chain) || NoFilters)
                                 {
-                                    AddtoList(index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
+                                    AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
                                 }
                             }
                             break;
@@ -418,7 +439,7 @@ namespace TinyFinder
                             {
                                 index.HordeFlutes = string.Join(", ", index.flutes.Select(f => f.ToString()));
                                 index.item = string.Join(", ", index.itemSlots.Select(f => f.ToString()));
-                                AddtoList(index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
                             }
                             break;
                     }
@@ -460,13 +481,13 @@ namespace TinyFinder
                             if (tiny.temper(CurrentState) == TargetRand && fastID)
                             {
                                 index = new ID(CurrentState, false);
-                                AddtoList(index, i - 1, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i - 1, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             }
                             else if (!fastID)
                             {
                                 index = new ID(CurrentState, true);
                                 if (settings.CheckID(index) || NoFilters)
-                                    AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                    AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             }
                             break;
 
@@ -476,28 +497,28 @@ namespace TinyFinder
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, true) || NoFilters)
-                                AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
                         case 2:     // Fishing
 
                             index = new Fishing(CurrentState, settings);
                             if (settings.CheckCommon(index, true) || NoFilters)
-                                AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
                         case 5:     // Honey Wild
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, false) || NoFilters)
-                                AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
                         case 8:     // Ambush encounter
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, false) || NoFilters)
-                                AddtoList(index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
                     }
@@ -515,7 +536,7 @@ namespace TinyFinder
         }
 
 
-        private void AddtoList(Index index, uint CurrentIndex, uint[] InitialState, uint[] TinyState, string rtc)
+        private void AddtoList(uint TinySeed, Index index, uint CurrentIndex, uint[] InitialState, uint[] TinyState, string rtc)
         {
             if (MethodUsed != 0 && !Radar1)
                 index = PrepareIndex.Prepare(index, settings);
@@ -524,6 +545,7 @@ namespace TinyFinder
             if (DateSearcher)
             {
                 index.RTC = rtc;
+                index.InitTiny32 = TinySeed;
                 index.Tiny3 = InitialState[3];
                 index.Tiny2 = InitialState[2];
                 index.Tiny1 = InitialState[1];

@@ -40,6 +40,7 @@ namespace TinyFinder
 
 
         public string RTC { get; set; }
+        public uint InitTiny32 { get; set; }
         public uint IndexValue { get; set; }
         public uint Tiny3 { get; set; }
         public uint Tiny2 { get; set; }

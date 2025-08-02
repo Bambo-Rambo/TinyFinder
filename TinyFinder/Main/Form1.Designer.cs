@@ -30,18 +30,6 @@ namespace TinyFinder
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
-            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -52,46 +40,25 @@ namespace TinyFinder
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties1 = new TinyFinder.Controls.CheckBoxProperties();
+            TinyFinder.Controls.CheckBoxProperties checkBoxProperties2 = new TinyFinder.Controls.CheckBoxProperties();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.Searcher = new System.Windows.Forms.DataGridView();
-            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Tiny3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_TID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_SID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_TSV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_TRV = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_RandHex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Right = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Up = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Ratio = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Success = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Sync = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Slot = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_SpeciesInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_HA_Horde = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Shiny = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Timeline = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Boost = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_HA_DexNav = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_EggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_GoodEggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Potential = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Flutes = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Music = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Patches = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.S_Rand100 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.OptionsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.DateRNGSeed = new System.Windows.Forms.ToolStripMenuItem();
             this.SetAsCurrent = new System.Windows.Forms.ToolStripMenuItem();
+            this.OffsetCalc = new System.Windows.Forms.ToolStripMenuItem();
             this.MainButton = new System.Windows.Forms.Button();
             this.Methods = new System.Windows.Forms.ComboBox();
             this.Game_Label = new System.Windows.Forms.Label();
@@ -138,7 +105,6 @@ namespace TinyFinder
             this.Potential_Label = new System.Windows.Forms.Label();
             this.Potential = new System.Windows.Forms.NumericUpDown();
             this.NavFilters_Label = new System.Windows.Forms.Label();
-            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
             this.Patches_Board = new System.Windows.Forms.Label();
             this.Flute3_Label = new System.Windows.Forms.Label();
             this.Flute5_Label = new System.Windows.Forms.Label();
@@ -154,7 +120,6 @@ namespace TinyFinder
             this.Flute2_Label = new System.Windows.Forms.Label();
             this.HASlot = new System.Windows.Forms.ComboBox();
             this.Slots_Label = new System.Windows.Forms.Label();
-            this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
             this.sid = new System.Windows.Forms.NumericUpDown();
             this.tid = new System.Windows.Forms.NumericUpDown();
             this.Calibr_Box = new System.Windows.Forms.GroupBox();
@@ -164,10 +129,6 @@ namespace TinyFinder
             this.Tiny2_Label = new System.Windows.Forms.Label();
             this.Tiny3_Label = new System.Windows.Forms.Label();
             this.Date_Label = new System.Windows.Forms.Label();
-            this.t3 = new TinyFinder.HexBox();
-            this.t2 = new TinyFinder.HexBox();
-            this.t0 = new TinyFinder.HexBox();
-            this.t1 = new TinyFinder.HexBox();
             this.Generator = new System.Windows.Forms.DataGridView();
             this.G_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.G_TID = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -220,6 +181,49 @@ namespace TinyFinder
             this.DexNavGuide = new System.Windows.Forms.ToolStripMenuItem();
             this.ThreadCount = new System.Windows.Forms.NumericUpDown();
             this.Threads_Label = new System.Windows.Forms.Label();
+            this.NavFilters = new TinyFinder.Controls.CheckBoxComboBox();
+            this.SlotsComboBox = new TinyFinder.Controls.CheckBoxComboBox();
+            this.t3 = new TinyFinder.HexBox();
+            this.t2 = new TinyFinder.HexBox();
+            this.t0 = new TinyFinder.HexBox();
+            this.t1 = new TinyFinder.HexBox();
+            this.ReaderBTN = new System.Windows.Forms.CheckBox();
+            this.S_Rand100 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Item = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Patches = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Music = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Flutes = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Flute = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Potential = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_GoodEggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_EggMove = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_HA_DexNav = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Boost = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Timeline = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Delay = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Shiny = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Level = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_HA_Horde = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_SpeciesInfo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Slot = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Sync = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Success = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Ratio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Up = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Right = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_RandHex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_TRV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_TSV = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_SID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_TID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Tiny0 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Tiny1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Tiny2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Tiny3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.S_Tiny32 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.Searcher)).BeginInit();
             this.OptionsMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.year)).BeginInit();
@@ -259,6 +263,7 @@ namespace TinyFinder
             this.Searcher.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Searcher.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Date,
+            this.S_Tiny32,
             this.S_Tiny3,
             this.S_Tiny2,
             this.S_Tiny1,
@@ -308,353 +313,36 @@ namespace TinyFinder
             this.Searcher.CellMouseDown += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_CellMouseDown);
             this.Searcher.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Searcher_ColumnHeaderMouseClick);
             // 
-            // Date
-            // 
-            this.Date.DataPropertyName = "RTC";
-            this.Date.HeaderText = "Date";
-            this.Date.Name = "Date";
-            this.Date.ReadOnly = true;
-            this.Date.Width = 120;
-            // 
-            // S_Tiny3
-            // 
-            this.S_Tiny3.DataPropertyName = "Tiny3";
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle1.Format = "X8";
-            this.S_Tiny3.DefaultCellStyle = dataGridViewCellStyle1;
-            this.S_Tiny3.HeaderText = "Tiny [3]";
-            this.S_Tiny3.Name = "S_Tiny3";
-            this.S_Tiny3.ReadOnly = true;
-            this.S_Tiny3.Width = 75;
-            // 
-            // S_Tiny2
-            // 
-            this.S_Tiny2.DataPropertyName = "Tiny2";
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle2.Format = "X8";
-            this.S_Tiny2.DefaultCellStyle = dataGridViewCellStyle2;
-            this.S_Tiny2.HeaderText = "Tiny [2]";
-            this.S_Tiny2.Name = "S_Tiny2";
-            this.S_Tiny2.ReadOnly = true;
-            this.S_Tiny2.Width = 75;
-            // 
-            // S_Tiny1
-            // 
-            this.S_Tiny1.DataPropertyName = "Tiny1";
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle3.Format = "X8";
-            this.S_Tiny1.DefaultCellStyle = dataGridViewCellStyle3;
-            this.S_Tiny1.HeaderText = "Tiny [1]";
-            this.S_Tiny1.Name = "S_Tiny1";
-            this.S_Tiny1.ReadOnly = true;
-            this.S_Tiny1.Width = 75;
-            // 
-            // S_Tiny0
-            // 
-            this.S_Tiny0.DataPropertyName = "Tiny0";
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle4.Format = "X8";
-            this.S_Tiny0.DefaultCellStyle = dataGridViewCellStyle4;
-            this.S_Tiny0.HeaderText = "Tiny [0]";
-            this.S_Tiny0.Name = "S_Tiny0";
-            this.S_Tiny0.ReadOnly = true;
-            this.S_Tiny0.Width = 75;
-            // 
-            // S_Index
-            // 
-            this.S_Index.DataPropertyName = "IndexValue";
-            this.S_Index.HeaderText = "Index";
-            this.S_Index.Name = "S_Index";
-            this.S_Index.ReadOnly = true;
-            this.S_Index.Width = 60;
-            // 
-            // S_TID
-            // 
-            this.S_TID.DataPropertyName = "trainerID";
-            dataGridViewCellStyle5.Format = "D5";
-            this.S_TID.DefaultCellStyle = dataGridViewCellStyle5;
-            this.S_TID.HeaderText = "TID";
-            this.S_TID.Name = "S_TID";
-            this.S_TID.ReadOnly = true;
-            this.S_TID.Width = 50;
-            // 
-            // S_SID
-            // 
-            this.S_SID.DataPropertyName = "secretID";
-            dataGridViewCellStyle6.Format = "D5";
-            this.S_SID.DefaultCellStyle = dataGridViewCellStyle6;
-            this.S_SID.HeaderText = "SID";
-            this.S_SID.Name = "S_SID";
-            this.S_SID.ReadOnly = true;
-            this.S_SID.Width = 50;
-            // 
-            // S_TSV
-            // 
-            this.S_TSV.DataPropertyName = "TSV";
-            dataGridViewCellStyle7.Format = "D4";
-            this.S_TSV.DefaultCellStyle = dataGridViewCellStyle7;
-            this.S_TSV.HeaderText = "TSV";
-            this.S_TSV.Name = "S_TSV";
-            this.S_TSV.ReadOnly = true;
-            this.S_TSV.Width = 50;
-            // 
-            // S_TRV
-            // 
-            this.S_TRV.DataPropertyName = "TRV";
-            dataGridViewCellStyle8.Format = "X1";
-            this.S_TRV.DefaultCellStyle = dataGridViewCellStyle8;
-            this.S_TRV.HeaderText = "TRV";
-            this.S_TRV.Name = "S_TRV";
-            this.S_TRV.ReadOnly = true;
-            this.S_TRV.Width = 35;
-            // 
-            // S_RandHex
-            // 
-            this.S_RandHex.DataPropertyName = "randhex";
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle9.Format = "X8";
-            this.S_RandHex.DefaultCellStyle = dataGridViewCellStyle9;
-            this.S_RandHex.HeaderText = "Rand#";
-            this.S_RandHex.Name = "S_RandHex";
-            this.S_RandHex.ReadOnly = true;
-            this.S_RandHex.Width = 80;
-            // 
-            // S_Right
-            // 
-            this.S_Right.DataPropertyName = "right";
-            this.S_Right.HeaderText = "Right";
-            this.S_Right.Name = "S_Right";
-            this.S_Right.ReadOnly = true;
-            this.S_Right.Visible = false;
-            this.S_Right.Width = 40;
-            // 
-            // S_Up
-            // 
-            this.S_Up.DataPropertyName = "up";
-            this.S_Up.HeaderText = "Up";
-            this.S_Up.Name = "S_Up";
-            this.S_Up.ReadOnly = true;
-            this.S_Up.Visible = false;
-            this.S_Up.Width = 40;
-            // 
-            // S_Ratio
-            // 
-            this.S_Ratio.DataPropertyName = "encounter";
-            this.S_Ratio.HeaderText = "Ratio";
-            this.S_Ratio.Name = "S_Ratio";
-            this.S_Ratio.ReadOnly = true;
-            this.S_Ratio.Visible = false;
-            this.S_Ratio.Width = 50;
-            // 
-            // S_Success
-            // 
-            this.S_Success.DataPropertyName = "trigger";
-            this.S_Success.HeaderText = "Success";
-            this.S_Success.Name = "S_Success";
-            this.S_Success.ReadOnly = true;
-            this.S_Success.Visible = false;
-            this.S_Success.Width = 55;
-            // 
-            // S_Type
-            // 
-            this.S_Type.DataPropertyName = "Type";
-            this.S_Type.HeaderText = "Type";
-            this.S_Type.Name = "S_Type";
-            this.S_Type.ReadOnly = true;
-            this.S_Type.Visible = false;
-            this.S_Type.Width = 60;
-            // 
-            // S_Sync
-            // 
-            this.S_Sync.DataPropertyName = "Sync";
-            this.S_Sync.HeaderText = "Sync";
-            this.S_Sync.Name = "S_Sync";
-            this.S_Sync.ReadOnly = true;
-            this.S_Sync.Visible = false;
-            this.S_Sync.Width = 60;
-            // 
-            // S_Slot
-            // 
-            this.S_Slot.DataPropertyName = "slot";
-            this.S_Slot.HeaderText = "Slot";
-            this.S_Slot.Name = "S_Slot";
-            this.S_Slot.ReadOnly = true;
-            this.S_Slot.Visible = false;
-            this.S_Slot.Width = 50;
-            // 
-            // S_SpeciesInfo
-            // 
-            this.S_SpeciesInfo.DataPropertyName = "SpeciesName";
-            this.S_SpeciesInfo.HeaderText = "Species";
-            this.S_SpeciesInfo.Name = "S_SpeciesInfo";
-            this.S_SpeciesInfo.ReadOnly = true;
-            this.S_SpeciesInfo.Visible = false;
-            this.S_SpeciesInfo.Width = 125;
-            // 
-            // S_HA_Horde
-            // 
-            this.S_HA_Horde.DataPropertyName = "HordeHA";
-            this.S_HA_Horde.HeaderText = "HA";
-            this.S_HA_Horde.Name = "S_HA_Horde";
-            this.S_HA_Horde.ReadOnly = true;
-            this.S_HA_Horde.Visible = false;
-            this.S_HA_Horde.Width = 50;
-            // 
-            // S_Level
-            // 
-            this.S_Level.DataPropertyName = "Level";
-            this.S_Level.HeaderText = "Level";
-            this.S_Level.Name = "S_Level";
-            this.S_Level.ReadOnly = true;
-            this.S_Level.Visible = false;
-            this.S_Level.Width = 55;
-            // 
-            // S_Shiny
-            // 
-            this.S_Shiny.DataPropertyName = "shiny";
-            this.S_Shiny.HeaderText = "Shiny";
-            this.S_Shiny.Name = "S_Shiny";
-            this.S_Shiny.ReadOnly = true;
-            this.S_Shiny.Visible = false;
-            this.S_Shiny.Width = 50;
-            // 
-            // S_Delay
-            // 
-            this.S_Delay.DataPropertyName = "ActualDelay";
-            this.S_Delay.HeaderText = "Delay";
-            this.S_Delay.Name = "S_Delay";
-            this.S_Delay.ReadOnly = true;
-            this.S_Delay.Visible = false;
-            this.S_Delay.Width = 60;
-            // 
-            // S_Timeline
-            // 
-            this.S_Timeline.DataPropertyName = "timeline";
-            this.S_Timeline.HeaderText = "Timeline";
-            this.S_Timeline.Name = "S_Timeline";
-            this.S_Timeline.ReadOnly = true;
-            this.S_Timeline.Visible = false;
-            this.S_Timeline.Width = 250;
-            // 
-            // S_Boost
-            // 
-            this.S_Boost.DataPropertyName = "Boost";
-            this.S_Boost.HeaderText = "Boost";
-            this.S_Boost.Name = "S_Boost";
-            this.S_Boost.ReadOnly = true;
-            this.S_Boost.Visible = false;
-            this.S_Boost.Width = 50;
-            // 
-            // S_HA_DexNav
-            // 
-            this.S_HA_DexNav.DataPropertyName = "DexNavHA";
-            this.S_HA_DexNav.HeaderText = "HA";
-            this.S_HA_DexNav.Name = "S_HA_DexNav";
-            this.S_HA_DexNav.ReadOnly = true;
-            this.S_HA_DexNav.Visible = false;
-            this.S_HA_DexNav.Width = 50;
-            // 
-            // S_EggMove
-            // 
-            this.S_EggMove.DataPropertyName = "eggMove";
-            this.S_EggMove.HeaderText = "Egg Move";
-            this.S_EggMove.Name = "S_EggMove";
-            this.S_EggMove.ReadOnly = true;
-            this.S_EggMove.Visible = false;
-            this.S_EggMove.Width = 105;
-            // 
-            // S_GoodEggMove
-            // 
-            this.S_GoodEggMove.DataPropertyName = "goodEggMove";
-            this.S_GoodEggMove.HeaderText = "Good Egg Move";
-            this.S_GoodEggMove.Name = "S_GoodEggMove";
-            this.S_GoodEggMove.ReadOnly = true;
-            this.S_GoodEggMove.Visible = false;
-            this.S_GoodEggMove.Width = 50;
-            // 
-            // S_Potential
-            // 
-            this.S_Potential.DataPropertyName = "potential";
-            this.S_Potential.HeaderText = "Potential";
-            this.S_Potential.Name = "S_Potential";
-            this.S_Potential.ReadOnly = true;
-            this.S_Potential.Visible = false;
-            this.S_Potential.Width = 60;
-            // 
-            // S_Flute
-            // 
-            this.S_Flute.DataPropertyName = "flute";
-            this.S_Flute.HeaderText = "Flute";
-            this.S_Flute.Name = "S_Flute";
-            this.S_Flute.ReadOnly = true;
-            this.S_Flute.Visible = false;
-            this.S_Flute.Width = 50;
-            // 
-            // S_Flutes
-            // 
-            this.S_Flutes.DataPropertyName = "HordeFlutes";
-            this.S_Flutes.HeaderText = "Flutes";
-            this.S_Flutes.Name = "S_Flutes";
-            this.S_Flutes.ReadOnly = true;
-            this.S_Flutes.Visible = false;
-            this.S_Flutes.Width = 80;
-            // 
-            // S_Music
-            // 
-            this.S_Music.DataPropertyName = "Music";
-            this.S_Music.HeaderText = "Music";
-            this.S_Music.Name = "S_Music";
-            this.S_Music.ReadOnly = true;
-            this.S_Music.Visible = false;
-            this.S_Music.Width = 50;
-            // 
-            // S_Patches
-            // 
-            this.S_Patches.DataPropertyName = "PatchBoard";
-            this.S_Patches.HeaderText = "Patches";
-            this.S_Patches.Name = "S_Patches";
-            this.S_Patches.ReadOnly = true;
-            this.S_Patches.Visible = false;
-            // 
-            // S_Item
-            // 
-            this.S_Item.DataPropertyName = "item";
-            this.S_Item.HeaderText = "Held Item";
-            this.S_Item.Name = "S_Item";
-            this.S_Item.ReadOnly = true;
-            this.S_Item.Visible = false;
-            this.S_Item.Width = 110;
-            // 
-            // S_Rand100
-            // 
-            this.S_Rand100.DataPropertyName = "rand100";
-            this.S_Rand100.HeaderText = "Rand (100)";
-            this.S_Rand100.Name = "S_Rand100";
-            this.S_Rand100.ReadOnly = true;
-            this.S_Rand100.Visible = false;
-            this.S_Rand100.Width = 80;
-            // 
             // OptionsMenu
             // 
             this.OptionsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.DateRNGSeed,
-            this.SetAsCurrent});
+            this.SetAsCurrent,
+            this.OffsetCalc});
             this.OptionsMenu.Name = "OptionsMenu";
-            this.OptionsMenu.Size = new System.Drawing.Size(239, 48);
+            this.OptionsMenu.Size = new System.Drawing.Size(259, 70);
             // 
             // DateRNGSeed
             // 
             this.DateRNGSeed.Name = "DateRNGSeed";
-            this.DateRNGSeed.Size = new System.Drawing.Size(238, 22);
-            this.DateRNGSeed.Text = "RNG for specific seed with date";
+            this.DateRNGSeed.Size = new System.Drawing.Size(258, 22);
+            this.DateRNGSeed.Text = "RNG for specific MT seed with date";
             this.DateRNGSeed.Click += new System.EventHandler(this.DateRNGSeed_Click);
             // 
             // SetAsCurrent
             // 
             this.SetAsCurrent.Name = "SetAsCurrent";
-            this.SetAsCurrent.Size = new System.Drawing.Size(238, 22);
+            this.SetAsCurrent.Size = new System.Drawing.Size(258, 22);
             this.SetAsCurrent.Text = "Set Tiny state as current";
+            this.SetAsCurrent.Visible = false;
             this.SetAsCurrent.Click += new System.EventHandler(this.SetAsCurrent_Click);
+            // 
+            // OffsetCalc
+            // 
+            this.OffsetCalc.Name = "OffsetCalc";
+            this.OffsetCalc.Size = new System.Drawing.Size(258, 22);
+            this.OffsetCalc.Text = "Calculate advances";
+            this.OffsetCalc.Click += new System.EventHandler(this.OffsetCalc_Click);
             // 
             // MainButton
             // 
@@ -663,7 +351,7 @@ namespace TinyFinder
             this.MainButton.Name = "MainButton";
             this.MainButton.Size = new System.Drawing.Size(175, 38);
             this.MainButton.TabIndex = 5;
-            this.MainButton.Text = "Calibrate and Search";
+            this.MainButton.Text = "Search";
             this.MainButton.UseVisualStyleBackColor = true;
             this.MainButton.Click += new System.EventHandler(this.MainButton_Click);
             // 
@@ -705,7 +393,7 @@ namespace TinyFinder
             // 
             // year
             // 
-            this.year.Location = new System.Drawing.Point(149, 29);
+            this.year.Location = new System.Drawing.Point(142, 36);
             this.year.Maximum = new decimal(new int[] {
             2080,
             0,
@@ -729,7 +417,7 @@ namespace TinyFinder
             // Year_Label
             // 
             this.Year_Label.AutoSize = true;
-            this.Year_Label.Location = new System.Drawing.Point(95, 31);
+            this.Year_Label.Location = new System.Drawing.Point(98, 39);
             this.Year_Label.Name = "Year_Label";
             this.Year_Label.Size = new System.Drawing.Size(35, 15);
             this.Year_Label.TabIndex = 12;
@@ -1280,27 +968,6 @@ namespace TinyFinder
             this.NavFilters_Label.TabIndex = 48;
             this.NavFilters_Label.Text = "Filters";
             // 
-            // NavFilters
-            // 
-            this.NavFilters.BlankText = null;
-            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
-            this.NavFilters.DisplayMemberSingleItem = "";
-            this.NavFilters.DropDownHeight = 140;
-            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.NavFilters.FormattingEnabled = true;
-            this.NavFilters.Items.AddRange(new object[] {
-            "Shiny",
-            "HA",
-            "Egg Move",
-            "Level Boost",
-            "Sync"});
-            this.NavFilters.Location = new System.Drawing.Point(79, 178);
-            this.NavFilters.Name = "NavFilters";
-            this.NavFilters.Size = new System.Drawing.Size(143, 22);
-            this.NavFilters.TabIndex = 25;
-            this.NavFilters.Visible = false;
-            // 
             // Patches_Board
             // 
             this.Patches_Board.AutoSize = true;
@@ -1477,21 +1144,6 @@ namespace TinyFinder
             this.Slots_Label.Text = "Slots";
             this.Slots_Label.Visible = false;
             // 
-            // SlotsComboBox
-            // 
-            this.SlotsComboBox.BlankText = "Any";
-            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.SlotsComboBox.CheckBoxProperties = checkBoxProperties2;
-            this.SlotsComboBox.DisplayMemberSingleItem = "";
-            this.SlotsComboBox.DropDownHeight = 310;
-            this.SlotsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SlotsComboBox.FormattingEnabled = true;
-            this.SlotsComboBox.Location = new System.Drawing.Point(79, 150);
-            this.SlotsComboBox.Name = "SlotsComboBox";
-            this.SlotsComboBox.Size = new System.Drawing.Size(143, 22);
-            this.SlotsComboBox.TabIndex = 24;
-            this.SlotsComboBox.Visible = false;
-            // 
             // sid
             // 
             this.sid.Location = new System.Drawing.Point(56, 52);
@@ -1519,6 +1171,7 @@ namespace TinyFinder
             // Calibr_Box
             // 
             this.Calibr_Box.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.Calibr_Box.Controls.Add(this.ReaderBTN);
             this.Calibr_Box.Controls.Add(this.updateBTN);
             this.Calibr_Box.Controls.Add(this.Tiny0_Label);
             this.Calibr_Box.Controls.Add(this.Tiny1_Label);
@@ -1542,7 +1195,7 @@ namespace TinyFinder
             // updateBTN
             // 
             this.updateBTN.Enabled = false;
-            this.updateBTN.Location = new System.Drawing.Point(95, 227);
+            this.updateBTN.Location = new System.Drawing.Point(91, 227);
             this.updateBTN.Name = "updateBTN";
             this.updateBTN.Size = new System.Drawing.Size(161, 30);
             this.updateBTN.TabIndex = 18;
@@ -1555,7 +1208,7 @@ namespace TinyFinder
             // 
             this.Tiny0_Label.AutoSize = true;
             this.Tiny0_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny0_Label.Location = new System.Drawing.Point(80, 196);
+            this.Tiny0_Label.Location = new System.Drawing.Point(73, 196);
             this.Tiny0_Label.Name = "Tiny0_Label";
             this.Tiny0_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny0_Label.TabIndex = 17;
@@ -1565,7 +1218,7 @@ namespace TinyFinder
             // 
             this.Tiny1_Label.AutoSize = true;
             this.Tiny1_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny1_Label.Location = new System.Drawing.Point(80, 165);
+            this.Tiny1_Label.Location = new System.Drawing.Point(73, 165);
             this.Tiny1_Label.Name = "Tiny1_Label";
             this.Tiny1_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny1_Label.TabIndex = 16;
@@ -1575,7 +1228,7 @@ namespace TinyFinder
             // 
             this.Tiny2_Label.AutoSize = true;
             this.Tiny2_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny2_Label.Location = new System.Drawing.Point(80, 134);
+            this.Tiny2_Label.Location = new System.Drawing.Point(73, 134);
             this.Tiny2_Label.Name = "Tiny2_Label";
             this.Tiny2_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny2_Label.TabIndex = 15;
@@ -1585,7 +1238,7 @@ namespace TinyFinder
             // 
             this.Tiny3_Label.AutoSize = true;
             this.Tiny3_Label.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.Tiny3_Label.Location = new System.Drawing.Point(80, 103);
+            this.Tiny3_Label.Location = new System.Drawing.Point(73, 103);
             this.Tiny3_Label.Name = "Tiny3_Label";
             this.Tiny3_Label.Size = new System.Drawing.Size(63, 15);
             this.Tiny3_Label.TabIndex = 14;
@@ -1595,63 +1248,11 @@ namespace TinyFinder
             // 
             this.Date_Label.AutoSize = true;
             this.Date_Label.Font = new System.Drawing.Font("Consolas", 9F);
-            this.Date_Label.Location = new System.Drawing.Point(7, 67);
+            this.Date_Label.Location = new System.Drawing.Point(13, 71);
             this.Date_Label.Name = "Date_Label";
             this.Date_Label.Size = new System.Drawing.Size(56, 14);
             this.Date_Label.TabIndex = 13;
             this.Date_Label.Text = "message";
-            // 
-            // t3
-            // 
-            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t3.Location = new System.Drawing.Point(149, 100);
-            this.t3.Mask = "AAAAAAAA";
-            this.t3.Name = "t3";
-            this.t3.Size = new System.Drawing.Size(63, 23);
-            this.t3.TabIndex = 1;
-            this.t3.Text = "00000000";
-            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t3.Value = ((uint)(0u));
-            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
-            // 
-            // t2
-            // 
-            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t2.Location = new System.Drawing.Point(149, 132);
-            this.t2.Mask = "AAAAAAAA";
-            this.t2.Name = "t2";
-            this.t2.Size = new System.Drawing.Size(63, 23);
-            this.t2.TabIndex = 2;
-            this.t2.Text = "00000000";
-            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t2.Value = ((uint)(0u));
-            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
-            // 
-            // t0
-            // 
-            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t0.Location = new System.Drawing.Point(149, 193);
-            this.t0.Mask = "AAAAAAAA";
-            this.t0.Name = "t0";
-            this.t0.Size = new System.Drawing.Size(63, 23);
-            this.t0.TabIndex = 4;
-            this.t0.Text = "00000000";
-            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t0.Value = ((uint)(0u));
-            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
-            // 
-            // t1
-            // 
-            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
-            this.t1.Location = new System.Drawing.Point(149, 162);
-            this.t1.Mask = "AAAAAAAA";
-            this.t1.Name = "t1";
-            this.t1.Size = new System.Drawing.Size(63, 23);
-            this.t1.TabIndex = 3;
-            this.t1.Text = "00000000";
-            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.t1.Value = ((uint)(0u));
-            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
             // 
             // Generator
             // 
@@ -1703,7 +1304,7 @@ namespace TinyFinder
             this.Generator.ReadOnly = true;
             this.Generator.RowHeadersVisible = false;
             this.Generator.RowTemplate.Height = 25;
-            this.Generator.Size = new System.Drawing.Size(1223, 467);
+            this.Generator.Size = new System.Drawing.Size(1223, 489);
             this.Generator.TabIndex = 18;
             this.Generator.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.Generator_CellFormatting);
             this.Generator.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.Generator_CellMouseDoubleClick);
@@ -1721,8 +1322,8 @@ namespace TinyFinder
             // G_TID
             // 
             this.G_TID.DataPropertyName = "trainerID";
-            dataGridViewCellStyle10.Format = "D5";
-            this.G_TID.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle11.Format = "D5";
+            this.G_TID.DefaultCellStyle = dataGridViewCellStyle11;
             this.G_TID.HeaderText = "TID";
             this.G_TID.Name = "G_TID";
             this.G_TID.ReadOnly = true;
@@ -1731,8 +1332,8 @@ namespace TinyFinder
             // G_SID
             // 
             this.G_SID.DataPropertyName = "secretID";
-            dataGridViewCellStyle11.Format = "D5";
-            this.G_SID.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle12.Format = "D5";
+            this.G_SID.DefaultCellStyle = dataGridViewCellStyle12;
             this.G_SID.HeaderText = "SID";
             this.G_SID.Name = "G_SID";
             this.G_SID.ReadOnly = true;
@@ -1741,8 +1342,8 @@ namespace TinyFinder
             // G_TSV
             // 
             this.G_TSV.DataPropertyName = "TSV";
-            dataGridViewCellStyle12.Format = "D4";
-            this.G_TSV.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle13.Format = "D4";
+            this.G_TSV.DefaultCellStyle = dataGridViewCellStyle13;
             this.G_TSV.HeaderText = "TSV";
             this.G_TSV.Name = "G_TSV";
             this.G_TSV.ReadOnly = true;
@@ -1751,9 +1352,9 @@ namespace TinyFinder
             // G_TRV
             // 
             this.G_TRV.DataPropertyName = "TRV";
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle13.Format = "X1";
-            this.G_TRV.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle14.Format = "X1";
+            this.G_TRV.DefaultCellStyle = dataGridViewCellStyle14;
             this.G_TRV.HeaderText = "TRV";
             this.G_TRV.Name = "G_TRV";
             this.G_TRV.ReadOnly = true;
@@ -1879,8 +1480,8 @@ namespace TinyFinder
             // G_Boost
             // 
             this.G_Boost.DataPropertyName = "Boost";
-            dataGridViewCellStyle14.NullValue = null;
-            this.G_Boost.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle15.NullValue = null;
+            this.G_Boost.DefaultCellStyle = dataGridViewCellStyle15;
             this.G_Boost.HeaderText = "Boost";
             this.G_Boost.Name = "G_Boost";
             this.G_Boost.ReadOnly = true;
@@ -1961,8 +1562,8 @@ namespace TinyFinder
             // G_Item
             // 
             this.G_Item.DataPropertyName = "item";
-            dataGridViewCellStyle15.NullValue = "-";
-            this.G_Item.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle16.NullValue = "-";
+            this.G_Item.DefaultCellStyle = dataGridViewCellStyle16;
             this.G_Item.HeaderText = "Held Item";
             this.G_Item.Name = "G_Item";
             this.G_Item.ReadOnly = true;
@@ -1981,9 +1582,9 @@ namespace TinyFinder
             // G_RandHex
             // 
             this.G_RandHex.DataPropertyName = "randhex";
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle16.Format = "X8";
-            this.G_RandHex.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle17.Format = "X8";
+            this.G_RandHex.DefaultCellStyle = dataGridViewCellStyle17;
             this.G_RandHex.HeaderText = "Rand#";
             this.G_RandHex.Name = "G_RandHex";
             this.G_RandHex.ReadOnly = true;
@@ -1992,9 +1593,9 @@ namespace TinyFinder
             // G_Tiny3
             // 
             this.G_Tiny3.DataPropertyName = "Tiny3";
-            dataGridViewCellStyle17.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle17.Format = "X8";
-            this.G_Tiny3.DefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle18.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle18.Format = "X8";
+            this.G_Tiny3.DefaultCellStyle = dataGridViewCellStyle18;
             this.G_Tiny3.HeaderText = "Tiny [3]";
             this.G_Tiny3.Name = "G_Tiny3";
             this.G_Tiny3.ReadOnly = true;
@@ -2003,9 +1604,9 @@ namespace TinyFinder
             // G_Tiny2
             // 
             this.G_Tiny2.DataPropertyName = "Tiny2";
-            dataGridViewCellStyle18.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle18.Format = "X8";
-            this.G_Tiny2.DefaultCellStyle = dataGridViewCellStyle18;
+            dataGridViewCellStyle19.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle19.Format = "X8";
+            this.G_Tiny2.DefaultCellStyle = dataGridViewCellStyle19;
             this.G_Tiny2.HeaderText = "Tiny [2]";
             this.G_Tiny2.Name = "G_Tiny2";
             this.G_Tiny2.ReadOnly = true;
@@ -2014,9 +1615,9 @@ namespace TinyFinder
             // G_Tiny1
             // 
             this.G_Tiny1.DataPropertyName = "Tiny1";
-            dataGridViewCellStyle19.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle19.Format = "X8";
-            this.G_Tiny1.DefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle20.Format = "X8";
+            this.G_Tiny1.DefaultCellStyle = dataGridViewCellStyle20;
             this.G_Tiny1.HeaderText = "Tiny [1]";
             this.G_Tiny1.Name = "G_Tiny1";
             this.G_Tiny1.ReadOnly = true;
@@ -2025,9 +1626,9 @@ namespace TinyFinder
             // G_Tiny0
             // 
             this.G_Tiny0.DataPropertyName = "Tiny0";
-            dataGridViewCellStyle20.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
-            dataGridViewCellStyle20.Format = "X8";
-            this.G_Tiny0.DefaultCellStyle = dataGridViewCellStyle20;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle21.Format = "X8";
+            this.G_Tiny0.DefaultCellStyle = dataGridViewCellStyle21;
             this.G_Tiny0.HeaderText = "Tiny [0]";
             this.G_Tiny0.Name = "G_Tiny0";
             this.G_Tiny0.ReadOnly = true;
@@ -2211,6 +1812,441 @@ namespace TinyFinder
             this.Threads_Label.TabIndex = 22;
             this.Threads_Label.Text = "CPU Threads used";
             // 
+            // NavFilters
+            // 
+            this.NavFilters.BlankText = null;
+            checkBoxProperties1.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.NavFilters.CheckBoxProperties = checkBoxProperties1;
+            this.NavFilters.DisplayMemberSingleItem = "";
+            this.NavFilters.DropDownHeight = 140;
+            this.NavFilters.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.NavFilters.FormattingEnabled = true;
+            this.NavFilters.Items.AddRange(new object[] {
+            "Shiny",
+            "HA",
+            "Egg Move",
+            "Level Boost",
+            "Sync"});
+            this.NavFilters.Location = new System.Drawing.Point(79, 178);
+            this.NavFilters.Name = "NavFilters";
+            this.NavFilters.Size = new System.Drawing.Size(143, 22);
+            this.NavFilters.TabIndex = 25;
+            this.NavFilters.Visible = false;
+            // 
+            // SlotsComboBox
+            // 
+            this.SlotsComboBox.BlankText = "Any";
+            checkBoxProperties2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.SlotsComboBox.CheckBoxProperties = checkBoxProperties2;
+            this.SlotsComboBox.DisplayMemberSingleItem = "";
+            this.SlotsComboBox.DropDownHeight = 310;
+            this.SlotsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SlotsComboBox.FormattingEnabled = true;
+            this.SlotsComboBox.Location = new System.Drawing.Point(79, 150);
+            this.SlotsComboBox.Name = "SlotsComboBox";
+            this.SlotsComboBox.Size = new System.Drawing.Size(143, 22);
+            this.SlotsComboBox.TabIndex = 24;
+            this.SlotsComboBox.Visible = false;
+            // 
+            // t3
+            // 
+            this.t3.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t3.Location = new System.Drawing.Point(142, 100);
+            this.t3.Mask = "AAAAAAAA";
+            this.t3.Name = "t3";
+            this.t3.Size = new System.Drawing.Size(63, 23);
+            this.t3.TabIndex = 1;
+            this.t3.Text = "00000000";
+            this.t3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t3.Value = ((uint)(0u));
+            this.t3.TextChanged += new System.EventHandler(this.t3_TextChanged);
+            // 
+            // t2
+            // 
+            this.t2.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t2.Location = new System.Drawing.Point(142, 132);
+            this.t2.Mask = "AAAAAAAA";
+            this.t2.Name = "t2";
+            this.t2.Size = new System.Drawing.Size(63, 23);
+            this.t2.TabIndex = 2;
+            this.t2.Text = "00000000";
+            this.t2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t2.Value = ((uint)(0u));
+            this.t2.TextChanged += new System.EventHandler(this.t2_TextChanged);
+            // 
+            // t0
+            // 
+            this.t0.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t0.Location = new System.Drawing.Point(142, 193);
+            this.t0.Mask = "AAAAAAAA";
+            this.t0.Name = "t0";
+            this.t0.Size = new System.Drawing.Size(63, 23);
+            this.t0.TabIndex = 4;
+            this.t0.Text = "00000000";
+            this.t0.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t0.Value = ((uint)(0u));
+            this.t0.TextChanged += new System.EventHandler(this.t0_TextChanged);
+            // 
+            // t1
+            // 
+            this.t1.Font = new System.Drawing.Font("Consolas", 9.75F);
+            this.t1.Location = new System.Drawing.Point(142, 162);
+            this.t1.Mask = "AAAAAAAA";
+            this.t1.Name = "t1";
+            this.t1.Size = new System.Drawing.Size(63, 23);
+            this.t1.TabIndex = 3;
+            this.t1.Text = "00000000";
+            this.t1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.t1.Value = ((uint)(0u));
+            this.t1.TextChanged += new System.EventHandler(this.t1_TextChanged);
+            // 
+            // ReaderBTN
+            // 
+            this.ReaderBTN.AutoSize = true;
+            this.ReaderBTN.Location = new System.Drawing.Point(222, 11);
+            this.ReaderBTN.Name = "ReaderBTN";
+            this.ReaderBTN.Size = new System.Drawing.Size(96, 19);
+            this.ReaderBTN.TabIndex = 21;
+            this.ReaderBTN.Text = "PokeReader";
+            this.ReaderBTN.UseVisualStyleBackColor = true;
+            this.ReaderBTN.CheckedChanged += new System.EventHandler(this.ReaderBTN_CheckedChanged);
+            // 
+            // S_Rand100
+            // 
+            this.S_Rand100.DataPropertyName = "rand100";
+            this.S_Rand100.HeaderText = "Rand (100)";
+            this.S_Rand100.Name = "S_Rand100";
+            this.S_Rand100.ReadOnly = true;
+            this.S_Rand100.Visible = false;
+            this.S_Rand100.Width = 80;
+            // 
+            // S_Item
+            // 
+            this.S_Item.DataPropertyName = "item";
+            this.S_Item.HeaderText = "Held Item";
+            this.S_Item.Name = "S_Item";
+            this.S_Item.ReadOnly = true;
+            this.S_Item.Visible = false;
+            this.S_Item.Width = 110;
+            // 
+            // S_Patches
+            // 
+            this.S_Patches.DataPropertyName = "PatchBoard";
+            this.S_Patches.HeaderText = "Patches";
+            this.S_Patches.Name = "S_Patches";
+            this.S_Patches.ReadOnly = true;
+            this.S_Patches.Visible = false;
+            // 
+            // S_Music
+            // 
+            this.S_Music.DataPropertyName = "Music";
+            this.S_Music.HeaderText = "Music";
+            this.S_Music.Name = "S_Music";
+            this.S_Music.ReadOnly = true;
+            this.S_Music.Visible = false;
+            this.S_Music.Width = 50;
+            // 
+            // S_Flutes
+            // 
+            this.S_Flutes.DataPropertyName = "HordeFlutes";
+            this.S_Flutes.HeaderText = "Flutes";
+            this.S_Flutes.Name = "S_Flutes";
+            this.S_Flutes.ReadOnly = true;
+            this.S_Flutes.Visible = false;
+            this.S_Flutes.Width = 80;
+            // 
+            // S_Flute
+            // 
+            this.S_Flute.DataPropertyName = "flute";
+            this.S_Flute.HeaderText = "Flute";
+            this.S_Flute.Name = "S_Flute";
+            this.S_Flute.ReadOnly = true;
+            this.S_Flute.Visible = false;
+            this.S_Flute.Width = 50;
+            // 
+            // S_Potential
+            // 
+            this.S_Potential.DataPropertyName = "potential";
+            this.S_Potential.HeaderText = "Potential";
+            this.S_Potential.Name = "S_Potential";
+            this.S_Potential.ReadOnly = true;
+            this.S_Potential.Visible = false;
+            this.S_Potential.Width = 60;
+            // 
+            // S_GoodEggMove
+            // 
+            this.S_GoodEggMove.DataPropertyName = "goodEggMove";
+            this.S_GoodEggMove.HeaderText = "Good Egg Move";
+            this.S_GoodEggMove.Name = "S_GoodEggMove";
+            this.S_GoodEggMove.ReadOnly = true;
+            this.S_GoodEggMove.Visible = false;
+            this.S_GoodEggMove.Width = 50;
+            // 
+            // S_EggMove
+            // 
+            this.S_EggMove.DataPropertyName = "eggMove";
+            this.S_EggMove.HeaderText = "Egg Move";
+            this.S_EggMove.Name = "S_EggMove";
+            this.S_EggMove.ReadOnly = true;
+            this.S_EggMove.Visible = false;
+            this.S_EggMove.Width = 105;
+            // 
+            // S_HA_DexNav
+            // 
+            this.S_HA_DexNav.DataPropertyName = "DexNavHA";
+            this.S_HA_DexNav.HeaderText = "HA";
+            this.S_HA_DexNav.Name = "S_HA_DexNav";
+            this.S_HA_DexNav.ReadOnly = true;
+            this.S_HA_DexNav.Visible = false;
+            this.S_HA_DexNav.Width = 50;
+            // 
+            // S_Boost
+            // 
+            this.S_Boost.DataPropertyName = "Boost";
+            this.S_Boost.HeaderText = "Boost";
+            this.S_Boost.Name = "S_Boost";
+            this.S_Boost.ReadOnly = true;
+            this.S_Boost.Visible = false;
+            this.S_Boost.Width = 50;
+            // 
+            // S_Timeline
+            // 
+            this.S_Timeline.DataPropertyName = "timeline";
+            this.S_Timeline.HeaderText = "Timeline";
+            this.S_Timeline.Name = "S_Timeline";
+            this.S_Timeline.ReadOnly = true;
+            this.S_Timeline.Visible = false;
+            this.S_Timeline.Width = 250;
+            // 
+            // S_Delay
+            // 
+            this.S_Delay.DataPropertyName = "ActualDelay";
+            this.S_Delay.HeaderText = "Delay";
+            this.S_Delay.Name = "S_Delay";
+            this.S_Delay.ReadOnly = true;
+            this.S_Delay.Visible = false;
+            this.S_Delay.Width = 60;
+            // 
+            // S_Shiny
+            // 
+            this.S_Shiny.DataPropertyName = "shiny";
+            this.S_Shiny.HeaderText = "Shiny";
+            this.S_Shiny.Name = "S_Shiny";
+            this.S_Shiny.ReadOnly = true;
+            this.S_Shiny.Visible = false;
+            this.S_Shiny.Width = 50;
+            // 
+            // S_Level
+            // 
+            this.S_Level.DataPropertyName = "Level";
+            this.S_Level.HeaderText = "Level";
+            this.S_Level.Name = "S_Level";
+            this.S_Level.ReadOnly = true;
+            this.S_Level.Visible = false;
+            this.S_Level.Width = 55;
+            // 
+            // S_HA_Horde
+            // 
+            this.S_HA_Horde.DataPropertyName = "HordeHA";
+            this.S_HA_Horde.HeaderText = "HA";
+            this.S_HA_Horde.Name = "S_HA_Horde";
+            this.S_HA_Horde.ReadOnly = true;
+            this.S_HA_Horde.Visible = false;
+            this.S_HA_Horde.Width = 50;
+            // 
+            // S_SpeciesInfo
+            // 
+            this.S_SpeciesInfo.DataPropertyName = "SpeciesName";
+            this.S_SpeciesInfo.HeaderText = "Species";
+            this.S_SpeciesInfo.Name = "S_SpeciesInfo";
+            this.S_SpeciesInfo.ReadOnly = true;
+            this.S_SpeciesInfo.Visible = false;
+            this.S_SpeciesInfo.Width = 125;
+            // 
+            // S_Slot
+            // 
+            this.S_Slot.DataPropertyName = "slot";
+            this.S_Slot.HeaderText = "Slot";
+            this.S_Slot.Name = "S_Slot";
+            this.S_Slot.ReadOnly = true;
+            this.S_Slot.Visible = false;
+            this.S_Slot.Width = 50;
+            // 
+            // S_Sync
+            // 
+            this.S_Sync.DataPropertyName = "Sync";
+            this.S_Sync.HeaderText = "Sync";
+            this.S_Sync.Name = "S_Sync";
+            this.S_Sync.ReadOnly = true;
+            this.S_Sync.Visible = false;
+            this.S_Sync.Width = 60;
+            // 
+            // S_Type
+            // 
+            this.S_Type.DataPropertyName = "Type";
+            this.S_Type.HeaderText = "Type";
+            this.S_Type.Name = "S_Type";
+            this.S_Type.ReadOnly = true;
+            this.S_Type.Visible = false;
+            this.S_Type.Width = 60;
+            // 
+            // S_Success
+            // 
+            this.S_Success.DataPropertyName = "trigger";
+            this.S_Success.HeaderText = "Success";
+            this.S_Success.Name = "S_Success";
+            this.S_Success.ReadOnly = true;
+            this.S_Success.Visible = false;
+            this.S_Success.Width = 55;
+            // 
+            // S_Ratio
+            // 
+            this.S_Ratio.DataPropertyName = "encounter";
+            this.S_Ratio.HeaderText = "Ratio";
+            this.S_Ratio.Name = "S_Ratio";
+            this.S_Ratio.ReadOnly = true;
+            this.S_Ratio.Visible = false;
+            this.S_Ratio.Width = 50;
+            // 
+            // S_Up
+            // 
+            this.S_Up.DataPropertyName = "up";
+            this.S_Up.HeaderText = "Up";
+            this.S_Up.Name = "S_Up";
+            this.S_Up.ReadOnly = true;
+            this.S_Up.Visible = false;
+            this.S_Up.Width = 40;
+            // 
+            // S_Right
+            // 
+            this.S_Right.DataPropertyName = "right";
+            this.S_Right.HeaderText = "Right";
+            this.S_Right.Name = "S_Right";
+            this.S_Right.ReadOnly = true;
+            this.S_Right.Visible = false;
+            this.S_Right.Width = 40;
+            // 
+            // S_RandHex
+            // 
+            this.S_RandHex.DataPropertyName = "randhex";
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle10.Format = "X8";
+            this.S_RandHex.DefaultCellStyle = dataGridViewCellStyle10;
+            this.S_RandHex.HeaderText = "Rand#";
+            this.S_RandHex.Name = "S_RandHex";
+            this.S_RandHex.ReadOnly = true;
+            this.S_RandHex.Width = 80;
+            // 
+            // S_TRV
+            // 
+            this.S_TRV.DataPropertyName = "TRV";
+            dataGridViewCellStyle9.Format = "X1";
+            this.S_TRV.DefaultCellStyle = dataGridViewCellStyle9;
+            this.S_TRV.HeaderText = "TRV";
+            this.S_TRV.Name = "S_TRV";
+            this.S_TRV.ReadOnly = true;
+            this.S_TRV.Width = 35;
+            // 
+            // S_TSV
+            // 
+            this.S_TSV.DataPropertyName = "TSV";
+            dataGridViewCellStyle8.Format = "D4";
+            this.S_TSV.DefaultCellStyle = dataGridViewCellStyle8;
+            this.S_TSV.HeaderText = "TSV";
+            this.S_TSV.Name = "S_TSV";
+            this.S_TSV.ReadOnly = true;
+            this.S_TSV.Width = 50;
+            // 
+            // S_SID
+            // 
+            this.S_SID.DataPropertyName = "secretID";
+            dataGridViewCellStyle7.Format = "D5";
+            this.S_SID.DefaultCellStyle = dataGridViewCellStyle7;
+            this.S_SID.HeaderText = "SID";
+            this.S_SID.Name = "S_SID";
+            this.S_SID.ReadOnly = true;
+            this.S_SID.Width = 50;
+            // 
+            // S_TID
+            // 
+            this.S_TID.DataPropertyName = "trainerID";
+            dataGridViewCellStyle6.Format = "D5";
+            this.S_TID.DefaultCellStyle = dataGridViewCellStyle6;
+            this.S_TID.HeaderText = "TID";
+            this.S_TID.Name = "S_TID";
+            this.S_TID.ReadOnly = true;
+            this.S_TID.Width = 50;
+            // 
+            // S_Index
+            // 
+            this.S_Index.DataPropertyName = "IndexValue";
+            this.S_Index.HeaderText = "Index";
+            this.S_Index.Name = "S_Index";
+            this.S_Index.ReadOnly = true;
+            this.S_Index.Width = 60;
+            // 
+            // S_Tiny0
+            // 
+            this.S_Tiny0.DataPropertyName = "Tiny0";
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle5.Format = "X8";
+            this.S_Tiny0.DefaultCellStyle = dataGridViewCellStyle5;
+            this.S_Tiny0.HeaderText = "Tiny [0]";
+            this.S_Tiny0.Name = "S_Tiny0";
+            this.S_Tiny0.ReadOnly = true;
+            this.S_Tiny0.Width = 75;
+            // 
+            // S_Tiny1
+            // 
+            this.S_Tiny1.DataPropertyName = "Tiny1";
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle4.Format = "X8";
+            this.S_Tiny1.DefaultCellStyle = dataGridViewCellStyle4;
+            this.S_Tiny1.HeaderText = "Tiny [1]";
+            this.S_Tiny1.Name = "S_Tiny1";
+            this.S_Tiny1.ReadOnly = true;
+            this.S_Tiny1.Width = 75;
+            // 
+            // S_Tiny2
+            // 
+            this.S_Tiny2.DataPropertyName = "Tiny2";
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle3.Format = "X8";
+            this.S_Tiny2.DefaultCellStyle = dataGridViewCellStyle3;
+            this.S_Tiny2.HeaderText = "Tiny [2]";
+            this.S_Tiny2.Name = "S_Tiny2";
+            this.S_Tiny2.ReadOnly = true;
+            this.S_Tiny2.Width = 75;
+            // 
+            // S_Tiny3
+            // 
+            this.S_Tiny3.DataPropertyName = "Tiny3";
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle2.Format = "X8";
+            this.S_Tiny3.DefaultCellStyle = dataGridViewCellStyle2;
+            this.S_Tiny3.HeaderText = "Tiny [3]";
+            this.S_Tiny3.Name = "S_Tiny3";
+            this.S_Tiny3.ReadOnly = true;
+            this.S_Tiny3.Width = 75;
+            // 
+            // S_Tiny32
+            // 
+            this.S_Tiny32.DataPropertyName = "InitTiny32";
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(161)));
+            dataGridViewCellStyle1.Format = "X8";
+            this.S_Tiny32.DefaultCellStyle = dataGridViewCellStyle1;
+            this.S_Tiny32.HeaderText = "TinyMT Seed";
+            this.S_Tiny32.Name = "S_Tiny32";
+            this.S_Tiny32.ReadOnly = true;
+            // 
+            // Date
+            // 
+            this.Date.DataPropertyName = "RTC";
+            this.Date.HeaderText = "Date";
+            this.Date.Name = "Date";
+            this.Date.ReadOnly = true;
+            this.Date.Width = 120;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2365,41 +2401,6 @@ namespace TinyFinder
         private System.Windows.Forms.ToolStripMenuItem DateRNGSeed;
         private System.Windows.Forms.ToolStripMenuItem SetAsCurrent;
         private System.Windows.Forms.CheckBox AllowChainUpdate;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny0;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Index;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_TID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_SID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_TSV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_TRV;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_RandHex;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Right;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Up;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Ratio;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Success;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Type;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Sync;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Slot;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_SpeciesInfo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_HA_Horde;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Level;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Shiny;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Delay;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Timeline;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Boost;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_HA_DexNav;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_EggMove;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_GoodEggMove;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Potential;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Flute;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Flutes;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Music;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Patches;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Item;
-        private System.Windows.Forms.DataGridViewTextBoxColumn S_Rand100;
         private System.Windows.Forms.DataGridViewTextBoxColumn G_Index;
         private System.Windows.Forms.DataGridViewTextBoxColumn G_TID;
         private System.Windows.Forms.DataGridViewTextBoxColumn G_SID;
@@ -2436,6 +2437,44 @@ namespace TinyFinder
         private System.Windows.Forms.DataGridViewTextBoxColumn G_Tiny0;
         private System.Windows.Forms.CheckBox AltEggMove;
         private System.Windows.Forms.CheckBox LegendDefeated;
+        private System.Windows.Forms.ToolStripMenuItem OffsetCalc;
+        private System.Windows.Forms.CheckBox ReaderBTN;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny32;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Tiny0;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Index;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_TID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_SID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_TSV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_TRV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_RandHex;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Right;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Up;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Ratio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Success;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Type;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Sync;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Slot;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_SpeciesInfo;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_HA_Horde;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Level;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Shiny;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Delay;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Timeline;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Boost;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_HA_DexNav;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_EggMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_GoodEggMove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Potential;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Flute;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Flutes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Music;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Patches;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Item;
+        private System.Windows.Forms.DataGridViewTextBoxColumn S_Rand100;
     }
 }
 
