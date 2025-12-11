@@ -544,7 +544,7 @@ namespace TinyFinder.Subforms.MT
             DateTime Finaldate = CitraRTC;
             uint SecondsAdd = Offset;
 
-            int SaveDelay = XY_MTButton.Checked ? 24 : 26;  //23 : 25; for 3ds
+            int SaveDelay = XY_MTButton.Checked ? 23 : 25;
             MersenneTwister_Fast rng;
 
             if (!SpecificTime.Checked)

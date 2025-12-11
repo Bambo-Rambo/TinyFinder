@@ -1,16 +1,20 @@
-﻿
+﻿using TinyFinder.Controls;
+
 namespace TinyFinder.Main
 {
     internal class UISettings
     {
 
         #region Settings
-        public bool oras, surfing, longGrass, citra, radarGrass, bonusMusic, movingHordes, moving, charm, exclusives;
-        public bool triggerOnly;
-        public ushort searchLevel, DexNumberFS;
-        public byte method, fluteOption, fishingRod, calibration, party, ratio, sType, chain, advances;
+        public EnctrKey encounterKey;
+        public bool oras, surfing, longGrass, emulator, radarGrass, bonusMusic, possibleHorde, moving, charm, exclusives;
+        public bool triggerOnly, DNsearching;   // DexNav searching
+        public ushort searchLevel, DexNumberFS, FixedSpecies;
+        public int fluteOption, fishingRod, calibration, party, ratio, sType, chain, advances;
 
-        public int delayRand, targetFrame, gameCorrection, dexNavLevel, TargetValue, Grade, maxEggRand;
+        public int delayRand, interactMTFrame, dexNavLevel, TargetValue, Grade, maxEggRand, longBlinkRand, honeyDelay;
+
+        public int bagAdvances;
 
         public ushort[] currentSlots, specialSlots;
         public int[] currentLevels;
@@ -22,20 +26,20 @@ namespace TinyFinder.Main
 
         public int Target_Flute, Target_Potential;
         public bool Wants_Sync;
-        public sbyte Target_Horde_HA;
+        public int Target_Horde_HA;
 
         public bool Wants_Exclusives, Wants_Shiny, Wants_HA, Wants_EggMove, Wants_Boost, Show_Alt_EggMove;
 
         public bool[] Target_Slots = new bool[13];      // If a slot has been selected, the array index for that slot/number becomes true
-        public byte[] Horde_Flutes = new byte[5];
+        public int[] Horde_Flutes = new int[5];
         #endregion
 
 
         public bool CheckCommon(Index index, bool triggerCheck)
         {
-            if (Target_Slots[index.slot] == true)                                     // Check if slot matches / user didn't select any slots
+            if (DNsearching || Target_Slots[index.slot] == true)                      // Check if slot matches / user didn't select any slots
                 if ((Wants_Sync && index.Sync) || !Wants_Sync)                        // Check if sync works / user doesn't care
-                    if (index.trigger || !triggerCheck)                               // Check if the encounter is successful
+                    if (DNsearching || index.trigger || !triggerCheck)                // Check if the encounter is successful
                         if ((Target_Flute == index.flute) || Target_Flute == 0)       // Check if flute matches / user doesn't care
                             return true;
             return false;
@@ -58,7 +62,7 @@ namespace TinyFinder.Main
             return false;
         }
 
-        public bool CheckRadar(Index index, byte chain)
+        public bool CheckRadar(Index index, int chain)
         {
             if (chain > 0)
                 return index.shiny;
@@ -73,14 +77,12 @@ namespace TinyFinder.Main
                         if (CheckCommon(index, true))
                             if (index.eggRands.Count != 0 || !Wants_EggMove)
                                 if (index.Boost || !Wants_Boost)
-                                    if ((Wants_Exclusives && index.EnctrType == 2) || (index.EnctrType != 2 && !Wants_Exclusives))
+                                    if (DNsearching || (Wants_Exclusives && index.EnctrType == 2) || (index.EnctrType != 2 && !Wants_Exclusives))
                                         return true;
             return false;
         }
 
-        public bool CheckID(Index index)
-        {
-            return (index.trainerID == TargetTID || !SpecificTID) && (index.secretID == TargetSID || !SpecificSID);
-        }
+        public bool CheckID(Index index) => (index.trainerID == TargetTID || !SpecificTID) && (index.secretID == TargetSID || !SpecificSID);
+
     }
 }

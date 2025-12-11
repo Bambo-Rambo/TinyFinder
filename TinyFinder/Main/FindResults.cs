@@ -6,27 +6,32 @@ using System.Windows.Forms;
 using System.Threading;
 using System.Threading.Tasks;
 using TinyFinder.Main;
+using TinyFinder.Controls;
+using System.Diagnostics.PerformanceData;
+using System.Data.SqlTypes;
+using TinyFinder.Properties;
 
 namespace TinyFinder
 {
     public partial class Form1
     {
-        int Year, EstimatedRandCalls;
+        int Year;
         uint tinyInitSeed, seconds, initial = 0, Min, Max;
-        byte searchMonth, SlotCount;
+        uint TargetRandID;
+        int searchMonth, SlotCount;
         bool DateSearcher, fastID;
-        byte bootAdvances;
+        int bootAdvances;
 
-        byte MethodUsed;
-        bool Calibrated = false, Working, NoFilters, Nav, Radar1;
+        bool Calibrated = false, Working, NoFilters, Radar1;
+
+        TinyMT tiny = new TinyMT();
+        EncounterType Choice = new EncounterType();
+        EnctrKey EnctrTypeChosen => Choice.Key;
 
         BindingSource source = new BindingSource();
         UISettings settings;
         List<Index> GenList = new List<Index>();
         List<Index> SearchList = new List<Index>();
-
-        // Values for UI controls
-        uint TargetRand;
 
         Thread[] jobs;
         uint ThreadsUsed;
@@ -35,28 +40,27 @@ namespace TinyFinder
         {
             settings = new UISettings()
             {
+                // General Settings
+                triggerOnly = DateSearcher || !NoFilters,
+                encounterKey = EnctrTypeChosen,
+
                 // UI Settings
                 oras = ORAS,
                 bonusMusic = BonusMusicBox.Checked,
                 moving = MovingHordeOption,
-                fishingRod = (byte)EncounterType.SelectedIndex,
-                fluteOption = (byte)(ORAS ? FluteOption.SelectedIndex : 0),
-                citra = CitraBox.Checked,
-                ratio = (byte)ratio.Value,
-                chain = (byte)ratio.Value,  // Different variable to avoid confusion
-
-                // Side Settings
-                triggerOnly = DateSearcher || !NoFilters,
-                method = MethodUsed,
-
+                fishingRod = EncounterSettings.SelectedIndex,
+                fluteOption = ORAS ? FluteOption.SelectedIndex : 0,
+                emulator = EmuBox.Checked,
+                ratio = (int)ratio.Value,
+                chain = (int)CurrentChain.Value,
 
                 // Preferences
                 SpecificTID = TIDBOX.Checked,
                 SpecificSID = SIDBOX.Checked,
-                TargetTID = (ushort)tid.Value,
-                TargetSID = (ushort)sid.Value,
+                TargetTID = (ushort)TIDValue.Value,
+                TargetSID = (ushort)SIDValue.Value,
                 Wants_Sync = SyncBox.Checked,
-                Target_Horde_HA = (sbyte)(HASlot.SelectedIndex - 1),
+                Target_Horde_HA = HASlot.SelectedIndex - 1,
                 Target_Slots = SelectedSlots,
                 Target_Flute = ORAS ? (int)Flute1.Value : 0,
                 Target_Potential = (int)Potential.Value,
@@ -67,36 +71,48 @@ namespace TinyFinder
                 Wants_Boost = NavFilters.CheckBoxItems[4].Checked,
             };
 
-            if (Method != 0)
+            if (!IsID)
             {
                 settings.surfing = Surfing;
                 settings.longGrass = LongGrass; 
-                settings.currentSlots = Method == 4 ? GetHordeTable1.Concat(GetHordeTable2).Concat(GetHordeTable3).ToArray() : SlotTable();
+                settings.currentSlots = IsHorde ? GetHordeTable1.Concat(GetHordeTable2).Concat(GetHordeTable3).ToArray() : SlotTable();
                 settings.currentLevels = LevelTable();
+                settings.interactMTFrame = (int)InteractFrame.Value;
+                settings.longBlinkRand = EmuBox.Checked ? CurrentLocation.FirstLongBlinkRand_Emu : CurrentLocation.FirstLongBlinkRand;
 
                 if (ORAS)
                 {
-                    settings.Horde_Flutes[0] = (byte)Flute1.Value;
-                    settings.Horde_Flutes[1] = (byte)Flute2.Value;
-                    settings.Horde_Flutes[2] = (byte)Flute3.Value;
-                    settings.Horde_Flutes[3] = (byte)Flute4.Value;
-                    settings.Horde_Flutes[4] = (byte)Flute5.Value;
+                    settings.Horde_Flutes[0] = (int)Flute1.Value;
+                    settings.Horde_Flutes[1] = (int)Flute2.Value;
+                    settings.Horde_Flutes[2] = (int)Flute3.Value;
+                    settings.Horde_Flutes[3] = (int)Flute4.Value;
+                    settings.Horde_Flutes[4] = (int)Flute5.Value;
                 }
 
                 if (IsDexNav)
                 {
+                    settings.DNsearching = IsDexNavSrch;
                     settings.charm = CharmBox.Checked;
-                    settings.calibration = (byte)calib.Value;
-                    settings.searchLevel = (ushort)party.Value;
+                    settings.searchLevel = (ushort)SearchLvl.Value;
                     settings.Wants_Sync = NavFilters.CheckBoxItems[5].Checked;
-                    settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
-                    settings.sType = (byte)(Surfing ? 1 : 0);
                     settings.Wants_Exclusives = AddExclusiveSlots();
                     settings.Show_Alt_EggMove = AltEggMove.Checked;
                     settings.specialSlots = GetNavTable;
                     settings.dexNavLevel = CurrentLocation.DexNavLevel;
 
-                    switch (EncounterType.SelectedItem.ToString())
+                    if (IsDexNavSrch && AddExclusiveSlots())
+                        settings.exclusives = true;
+                    else
+                        settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
+
+                    for (ushort i = 0; i < Species.SpeciesList.Count; i++)
+                        if (Species.SpeciesList.ElementAt(i).Name.Equals(SpeciesCombo.SelectedItem.ToString()))
+                        {
+                            settings.FixedSpecies = i;
+                            break;
+                        }
+
+                    switch (EncounterSettings.SelectedItem.ToString())
                     {
                         case "Grass" when CurrentLocation.Enc_Ratio != 1:   // Route 111 - Desert
                         case "Long Grass":
@@ -110,17 +126,17 @@ namespace TinyFinder
                         settings.maxEggRand += 2;
 
                 }
-                else if (Method == 7)
+                else if (IsFriendSafari)
                 {
                     settings.DexNumberFS = GetFSList.ElementAt(SpeciesCombo.SelectedIndex);
                 }
                 else
                 {
                     settings.specialSlots = CurrentLocation.HordeTable2;
-                    settings.party = (byte)party.Value;
+                    settings.party = (int)party.Value;
                 }
 
-                if (!isRadar1)
+                if (!IsRadar1)
                 {
                     // If the user didn't selected any slots, consider them all selected.
                     // Not the best approach but may be faster when filtering.
@@ -133,7 +149,6 @@ namespace TinyFinder
         }
         public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
         {
-            TinyMT tiny = new TinyMT();
             await Task.Run(() =>
             {
                 while (!Calibrated)
@@ -155,19 +170,19 @@ namespace TinyFinder
             GenList = new List<Index>();
             SearchList = new List<Index>();
 
+            if ((IsDexNavSrch || IsFishing) && min.Value < 1)
+                min.Value = 1;
+
             Year = (int)year.Value;
             Min = (uint)min.Value;
             Max = (uint)max.Value;
 
-            MethodUsed = (byte)Methods.SelectedIndex;
-            Nav = IsDexNav;
-            Radar1 = isRadar1;
+            Choice = SelectedEncounter;
+            Radar1 = IsRadar1;
             DateSearcher = SearchGen.SelectedIndex == 0;
             
-
             if (ReaderBTN.Checked)
             {
-                TinyMT tiny = new TinyMT();
                 initial = t3.Value;
                 bootAdvances = 0;
                 state = tiny.init(initial, bootAdvances);
@@ -178,15 +193,14 @@ namespace TinyFinder
                 state[2] = t2.Value;
                 state[1] = t1.Value;
                 state[0] = t0.Value;
-                bootAdvances = (byte)(MethodUsed == 0 ? 2 : 1);
+                bootAdvances = EnctrTypeChosen == EnctrKey.ID ? 2 : 1;
             }
 
-
             if (!DateSearcher)
-                ManageColumns(Generator, MethodUsed);
+                ManageColumns(Generator, Choice);
             else
             {
-                ManageColumns(Searcher, MethodUsed);
+                ManageColumns(Searcher, Choice);
                 Searcher.Columns["S_Tiny3"].Visible = Searcher.Columns["S_Tiny2"].Visible =
                     Searcher.Columns["S_Tiny1"].Visible = Searcher.Columns["S_Tiny0"].Visible = !ReaderBTN.Checked;
                 Searcher.Columns["S_Tiny32"].Visible = ReaderBTN.Checked;
@@ -194,7 +208,8 @@ namespace TinyFinder
                 
             jobs = new Thread[(int)ThreadCount.Value];
             // Use the selected number of threads only for ID, Hordes, Radar and DexNav
-            ThreadsUsed = (MethodUsed == 0 || MethodUsed == 4 || MethodUsed == 6) ? (uint)jobs.Length : 1;
+            ThreadsUsed = (EnctrTypeChosen == EnctrKey.ID || EnctrTypeChosen == EnctrKey.Horde || 
+                EnctrTypeChosen == EnctrKey.DexNavMov || EnctrTypeChosen == EnctrKey.DexNavSrch) ? (uint)jobs.Length : 1;
 
             if (DateSearcher)       //Calibrating the TinyMT seed depending on the user's current state at 13:00:00
             {
@@ -219,7 +234,6 @@ namespace TinyFinder
                     }
                 }
 
-
                 MainButton.Text = "Searching...";
                 StopButton.Enabled = true;
 
@@ -231,18 +245,17 @@ namespace TinyFinder
                 Working = false;    //For Generator, we need to make sure that the calculations will be done only once and only for the current state
             }
 
-
-            searchMonth = (byte)(Months.SelectedIndex + 1);         //We calculate how many seconds have passed from January to the selected month,
+            searchMonth = Months.SelectedIndex + 1;                 //We calculate how many seconds have passed from January to the selected month,
             seconds = calc.FindSeconds(searchMonth, Year);          //then add them to find the TinyMT seed for the selected month's 1st day 
             tinyInitSeed = calc.FindMonthSeed(initial, seconds);    //and continue from there (1 second = +1000 seeds)
 
-            if (MethodUsed != 0 && !isRadar1)     //Checking which slots are checked for searching (Pointless for ID and Radar chain > 0)
+            if (EnctrTypeChosen != EnctrKey.ID && !IsRadar1)     //Checking which slots are checked for searching (Pointless for ID and Radar chain > 0)
             {
                 try
                 {
                     SelectedSlots = new bool[13];
                     SlotCount = 0;
-                    for (byte s = 1; s < SlotsComboBox.Items.Count; s++)
+                    for (int s = 1; s < SlotsComboBox.Items.Count; s++)
                         if (SlotsComboBox.CheckBoxItems[s].Checked)
                         {
                             SelectedSlots[s] = true;
@@ -255,94 +268,99 @@ namespace TinyFinder
 
             ApplyUISettings();
 
-            switch (MethodUsed)
+            switch (EnctrTypeChosen)
             {
-                case 0:     // ID
+                case EnctrKey.ID:
 
-                    TargetRand = Convert.ToUInt32(settings.TargetSID.ToString("X") + settings.TargetTID.ToString("X").PadLeft(4, '0'), 16);
+                    TargetRandID = Convert.ToUInt32(settings.TargetSID.ToString("X") + settings.TargetTID.ToString("X").PadLeft(4, '0'), 16);
                     fastID = DateSearcher && settings.SpecificTID && settings.SpecificSID;
-                    //EstimatedRandCalls = 1;
                     break;
 
-                case 1:     // Wild
+                case EnctrKey.Wild:
 
-                    settings.sType = (byte)(Surfing ? 4 : 0);   // For wild only
-                    settings.calibration = Convert.ToByte(CurrentLocation.NPC);
+                    settings.sType = Surfing ? 4 : 0;   // For wild only
+                    settings.calibration = Convert.ToInt32(CurrentLocation.NPC);
                     if (ORAS)
                     {
-                        settings.movingHordes = LongGrass;
+                        settings.possibleHorde = LongGrass;
                     }
                     else if (!Surfing && !LongGrass && !Swampy)
                     {
-                        settings.movingHordes = CurrentLocation.HasMovingHordes();
+                        settings.possibleHorde = CurrentLocation.HasMovingHordes();
                         settings.radarGrass = CurrentLocation.HasRadar();
                     }
-                    //EstimatedRandCalls = settings.noise + 7;
                     break;
 
-                case 2:     // Fishing
+                case EnctrKey.Fishing:
 
-                    settings.advances = (byte)(party.Value * 3 + (BagBox.Checked ? getBagAdvances() : 0));
-                    settings.delayRand = CitraBox.Checked ? CurrentLocation.CitraDelayRand : CurrentLocation.ConsoleDelayRand;
-                    settings.targetFrame = (int)FishingFrame.Value;
-                    settings.gameCorrection = !ORAS ? (settings.citra ? 144 : 146) : (settings.citra ? CurrentLocation.CitraORASCorr : CurrentLocation.ConsoleORASCorr);
-                    //EstimatedRandCalls = settings.advances + 20;
+                    settings.sType = 3;
+                  //settings.advances = (int)(party.Value * 3 + getBagAdvances() - 1);     // When use rod from bag
+
+                    // Route 12 is excluded for now since NPC affects in different spot than wild
+                    settings.advances = (int)(party.Value * 3 + CurrentLocation.NPC);
+
                     break;
 
-                case 3:     // Rock Smash
-                case 8:     // Ambush encounter
-                    EstimatedRandCalls = 6;
-                    break;
+                /*case EnctrKey.RockSmash:
+                    //settings.advances = getBagAdvances();
+                    //settings.advances = CurrentLocation.NPC;  // Route 12 and Route 18 only but in different spots than wild
+                    break;*/
 
-                case 4:     // Horde
+                case EnctrKey.Horde:
+                case EnctrKey.Honey:
 
                     if (settings.moving)
                     {
-                        settings.calibration = Convert.ToByte(CurrentLocation.NPC);
+                        settings.calibration = Convert.ToInt32(CurrentLocation.NPC);
                         settings.radarGrass = !ORAS && CurrentLocation.HasRadar();
-                        EstimatedRandCalls = settings.calibration + 18;
                     }
                     else
                     {
-                        settings.advances = (byte)(party.Value * 3 + getBagAdvances());
-                        EstimatedRandCalls = settings.advances + 15;
+                        settings.advances = (int)(party.Value * 3 + getBagAdvances() - 1);     // -1 is necessary for calculating the first blink
+                        if (EmuBox.Checked)
+                        {
+                            settings.honeyDelay = ORAS ? 118 : 114;
+                        }
+                        else
+                        {
+                            // 114 in XY retail connection cave
+                            // 120 in XY retail route 5?
+                            // 122 in XY retail route 7
+                            // 112-114 in Azure Bay?
+
+                            if (getBagAdvances() == 3)
+                            {
+                                settings.honeyDelay = ORAS ? 120 : 110;     // ORAS 120, 120, 120, 
+                            }
+                            else
+                            {
+                                settings.honeyDelay = ORAS ? 126 : 112;     // 114, 110, 112, 112,  ORAS 126, 122, 126, 126, 128?
+                            }
+
+                        }
+                        if (IsHoney)
+                            settings.sType = Surfing ? 4 : 0;
                     }
-                    if (ORAS)
-                        EstimatedRandCalls += 5;    // Flutes
 
                     break;
 
-                case 5:     // Honey Wild
+                case EnctrKey.Radar:
 
-                    settings.sType = (byte)(Surfing ? 4 : 0);
-                    settings.advances += (byte)(party.Value * 3 + getBagAdvances());
-                    //EstimatedRandCalls = settings.advances + 5;
+                    settings.advances = settings.party * 3 + 27;
                     break;
 
-                case 6:     // Radar / DexNav
+                case EnctrKey.DexNavMov:
+                case EnctrKey.DexNavSrch:
 
-                    if (IsDexNav)
-                    {
-                        // With EstimatedRandCalls we avoid storing prng values that will never be used and save some time
-                        EstimatedRandCalls = settings.calibration + 36 + settings.maxEggRand;
-                        EstimatedRandCalls += ((int)ratio.Value / 49) * 5;
-                        if (CharmBox.Checked)
-                            EstimatedRandCalls += 2;
-
-                        settings.TargetValue = DexNav.GetTargetValue(settings.searchLevel);
-                        settings.Grade = DexNav.GetGrade(settings.searchLevel);
-                    }
-                    else
-                    {
-                        settings.advances = (byte)(settings.party * 3 + (BagBox.Checked ? 27 : 0));
-                        EstimatedRandCalls = settings.advances + 24;
-                    }
+                    settings.calibration = EncounterSettings.SelectedItem.ToString().Equals("Cave") ? 2 : 0;
+                    settings.sType = Surfing ? 1 : 0;
+                    settings.TargetValue = DexNav.GetTargetValue(settings.searchLevel);
+                    settings.Grade = DexNav.GetGrade(settings.searchLevel);
                     break;
 
-                case 7:     // Friend Safari
+                case EnctrKey.FS:
 
-                    settings.sType = (byte)(EncounterType.SelectedIndex + 1);   // If 3rd slot is unlocked -> type = 2. If not, -> type = 1
-                    //EstimatedRandCalls = settings.noise + settings.advances + 5;
+                    settings.sType = EncounterSettings.SelectedIndex + 1;   // If 3rd slot is unlocked -> type = 2. If not, -> type = 1
                     break;
             }
 
@@ -353,10 +371,7 @@ namespace TinyFinder
                     uint[] localState = (uint[])state.Clone();
                     jobs[i] = new Thread(() => 
                     {
-                        if (MethodUsed == 4 || MethodUsed == 6) // Hordes / Radar / DexNav
-                            FastSearch(localState, ThreadsUsed);
-                        else
-                            StartResearch(localState, ThreadsUsed);
+                        StartResearch(localState, ThreadsUsed);
                     });
                     jobs[i].Start();
                     Thread.Sleep(100);
@@ -366,119 +381,40 @@ namespace TinyFinder
             }
             else
             {
-                if (MethodUsed == 4 || MethodUsed == 6) // Hordes / Radar / DexNav
-                    FastSearch(state, 0);
-                else
-                    StartResearch(state, 0);
-
+                StartResearch(state, 0);
                 Generator.DataSource = GenList;
             }
 
         }
 
-        // This is only used for Hordes and Radar / DexNav.
-        // Instead of calculating the new TinyMT state every time, we store some of them in an array and take them from there.
-        // Each Hordes/DexNav index does a lot of rand calls so this approach makes the process faster.
-        // ID has only 1 though so it would become slower instead.
-        private void FastSearch(uint[] CurrentState, uint Jump)
-        {
-            Index index;
-            List<uint> rngList = new List<uint>();
-            TinyMT tiny = new TinyMT();
-            
-            uint[] StoreSeed = new uint[4];
-            uint[] StoreState = new uint[4];
-            uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
 
-            do
-            {
-                /*List<uint[]> States = new List<uint[]>();
-                for (uint i = 0; i <= Max; i++)
-                    States.Add(tiny.NextState(CurrentState));
-                for (uint i = Min; i < Min + 20; i++)
-                    rngList.Add(tiny.Nextuint(States[(int)i]));*/
-
-                rngList.Clear();
-
-                CurrentState.CopyTo(StoreSeed, 0);          // This is the TinyMT seed, necessary for Date Searcher
-                for (uint i = 0; i < Min; i++)
-                    tiny.nextState(CurrentState);
-
-                // Not the best approach but saves a lot of time
-                if (!DateSearcher)
-                    CurrentState.CopyTo(StoreState, 0);     // This is the actual TinyMT state, necessary for Generator
-                for (int i = 0; i < EstimatedRandCalls; i++)
-                    rngList.Add(tiny.Nextuint(CurrentState));
-
-                for (uint i = Min; i <= Max; i++, rngList.RemoveAt(0))
-                {
-                    switch (MethodUsed)
-                    {
-                        case 6:     // DexNav / Radar
-
-                            if (Nav)
-                            {
-                                index = new DexNav(rngList, settings);
-                                if (settings.CheckDexNav(index) || NoFilters)
-                                    AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
-                            }
-                            else
-                            {
-                                index = new Radar(rngList, settings);
-                                if (settings.CheckRadar(index, settings.chain) || NoFilters)
-                                {
-                                    AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
-                                }
-                            }
-                            break;
-
-                        case 4:     // Horde
-
-                            index = new Horde(rngList, settings);
-                            if (settings.CheckHorde(index, settings.moving, settings.oras) || NoFilters)
-                            {
-                                index.HordeFlutes = string.Join(", ", index.flutes.Select(f => f.ToString()));
-                                index.item = string.Join(", ", index.itemSlots.Select(f => f.ToString()));
-                                AddtoList(TinySeed, index, i, StoreSeed, StoreState, calc.secondsToDate(TotalSeconds, Year));
-                            }
-                            break;
-                    }
-
-                    tiny.nextState(StoreState);
-                    rngList.Add(tiny.Nextuint(CurrentState));
-                }
-
-                TotalSeconds += Jump;
-                TinySeed += 1000 * Jump;
-                CurrentState = tiny.init(TinySeed, bootAdvances);
-
-            }
-            while (Working);
-            Invoke(new Action(() => { Finished(); }));
-        }
-
-
-        // This is the old approach. Run faster with ID, but is way slower for anything else.
-        // Extra speed is pointless though, since even the most rare possible index, is being found instantly.
         private void StartResearch(uint[] CurrentState, uint Jump)
         {
             Index index;
-            TinyMT tiny = new TinyMT();
             uint[] StoreSeed = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
             
             do
             {
                 CurrentState.CopyTo(StoreSeed, 0);
-                for (uint i = 0; i < Min; i++)
-                    tiny.nextState(CurrentState);
+
+                if (IsDexNavSrch)
+                {
+                    for (uint i = 0; i < Min - 1; i++)      // We need -1 in order to calculate the 1st long blink cycle
+                        tiny.nextState(CurrentState);
+                }
+                else
+                {
+                    for (uint i = 0; i < Min; i++)
+                        tiny.nextState(CurrentState);
+                }
 
                 for (uint i = Min; i <= Max; i++)
                 {
-                    switch (MethodUsed)
+                    switch (EnctrTypeChosen)
                     {
-                        case 0:     // ID
-                            if (tiny.temper(CurrentState) == TargetRand && fastID)
+                        case EnctrKey.ID:
+                            if (tiny.temper(CurrentState) == TargetRandID && fastID)
                             {
                                 index = new ID(CurrentState, false);
                                 AddtoList(TinySeed, index, i - 1, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
@@ -491,30 +427,58 @@ namespace TinyFinder
                             }
                             break;
 
-                        case 1:     // Normal Wild
-                        case 3:     // Rock Smash
-                        case 7:     // Friend Safari
+                        case EnctrKey.Wild:
+                        //case EnctrKey.Fishing:
+                        case EnctrKey.RockSmash:
+                        case EnctrKey.FS:
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, true) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
-                        case 2:     // Fishing
+                        case EnctrKey.Fishing:
 
-                            index = new Fishing(CurrentState, settings);
+                            index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, true) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
-                        case 5:     // Honey Wild
+                        case EnctrKey.Horde:
+
+                            index = new Horde(CurrentState, settings);
+                            if (settings.CheckHorde(index, settings.moving, settings.oras) || NoFilters)
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                            break;
+
+                        case EnctrKey.Honey:
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, false) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
-                        case 8:     // Ambush encounter
+                        case EnctrKey.Radar:
+
+                            index = new Radar(CurrentState, settings);
+                            if (settings.CheckRadar(index, settings.chain) || NoFilters)
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                            break;
+
+                        case EnctrKey.DexNavMov:
+
+                            index = new DexNav(CurrentState, settings);
+                            if (settings.CheckDexNav(index) || NoFilters)
+                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
+                            break;
+
+                        case EnctrKey.DexNavSrch:
+                            index = new DexNav(CurrentState, settings);
+                            if (settings.CheckDexNav(index) || NoFilters)
+                                AddtoList(TinySeed, index, i, StoreSeed, tiny.NextState(CurrentState.ToArray()), calc.secondsToDate(TotalSeconds, Year));
+                            break;
+
+                        case EnctrKey.Ambush:
 
                             index = new Wild(CurrentState, settings);
                             if (settings.CheckCommon(index, false) || NoFilters)
@@ -524,10 +488,11 @@ namespace TinyFinder
                     }
 
                     tiny.nextState(CurrentState);
+
                 }
 
                 TotalSeconds += Jump;
-                TinySeed += 1000 * Jump;
+                TinySeed += Jump * 1000;
                 CurrentState = tiny.init(TinySeed, bootAdvances);
 
             }
@@ -538,8 +503,12 @@ namespace TinyFinder
 
         private void AddtoList(uint TinySeed, Index index, uint CurrentIndex, uint[] InitialState, uint[] TinyState, string rtc)
         {
-            if (MethodUsed != 0 && !Radar1)
-                index = PrepareIndex.Prepare(index, settings);
+            if (EnctrTypeChosen != EnctrKey.ID && !Radar1)
+                index = PrepareRow.Prepare(index, settings);
+
+            if (index.risky && !NoFilters)
+                return;
+
             index.IndexValue = CurrentIndex;
 
             if (DateSearcher)

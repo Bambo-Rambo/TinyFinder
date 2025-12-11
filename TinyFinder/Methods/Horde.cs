@@ -1,30 +1,35 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
+using TinyFinder.Controls;
 using TinyFinder.Main;
 
 namespace TinyFinder
 {
     class Horde : Index
     {
-        public Horde(List<uint> rngList, UISettings current)
+        public Horde(uint[] currentState, UISettings current)
         {
+            currentState.CopyTo(temp, 0);
+
             if (current.moving)
-                HordeTurn(rngList, current.oras, current.radarGrass, current.ratio, current.calibration, current.triggerOnly);
+                HordeTurn(current.oras, current.radarGrass, current.ratio, current.calibration, current.triggerOnly);
             else
-                HordeHoney(rngList, current.oras, current.advances);
+                HordeHoney(current);
         }
 
-        public void HordeTurn(List<uint> rngList, bool oras, bool XY_TallGrass, byte ratio, byte NPC, bool Trigger_only)
+        public void HordeTurn(bool oras, bool XY_TallGrass, int ratio, int NPC, bool Trigger_only)
         {
             Advance(NPC);                           //NPC Influence taken into account before everything else
 
-            rand100 = Current(rngList, 100);
+            rand100 = RandCall(100);
 
             //+1 in order to avoid using the same rand100 for Horde trigger check and Sync
             //Every horde, triggered by step, would be synced otherwise
-            Sync = Rand(rngList, 100) < 50;
+            Sync = RandCall(100) < 50;
 
-            encounter = Rand(rngList, 100);
+            encounter = RandCall(100);
 
             trigger =  rand100 < 5 && encounter < ratio;
 
@@ -32,39 +37,42 @@ namespace TinyFinder
                 return;
 
             if (XY_TallGrass)                       //Unknown reason
-                Advance(1);
+                AdvanceOnce();
 
-            FinalizeHorde(rngList, oras);
+            FinalizeHorde(oras);
         }
 
         //(Sweet Scent is different - probably ignores the party number since it doesn't make use of memories)
-        public void HordeHoney(List<uint> rngList, bool oras, byte TotalAdvances)
+        public void HordeHoney(UISettings current)
         {
-            rand100 = Current(rngList, 100);
-                                        // 3 if Cave / ORAS underwater
-            Advance(TotalAdvances);     // 27 if XY
-                                        // 15 if ORAS
-            Sync = Current(rngList, 100) < 50;
+            rand100 = Current(100);
+                                                // 3 if Cave / ORAS underwater
+            Advance(current.advances);          // 27 if XY
+                                                // 15 if ORAS
 
-            FinalizeHorde(rngList, oras);
+            BlinkSystem totalBlinks = new BlinkSystem(this);
+            totalBlinks.Apply(current);
+
+            Sync = RandCall(100) < 50;
+            FinalizeHorde(current.oras);
         }
 
-        public void FinalizeHorde(List<uint> rngList, bool oras)
+        public void FinalizeHorde(bool oras)
         {
-            slot = data.getSlot(Rand(rngList, 100), 3);
+            slot = data.getSlot(RandCall(100), 3);
 
-            if (Rand(rngList, 100) < 20)
-                HordeHA = (byte)(Rand(rngList, 5) + 1);
+            if (RandCall(100) < 20)
+                HordeHA = RandCall(5) + 1;
             else
                 HordeHA = 0;
 
             if (oras)
-                for (byte i = 0; i < 5; i++)
-                    flutes[i] = Findflute(rngList);
+                for (int i = 0; i < 5; i++)
+                    flutes[i] = Findflute();
 
-            Advance(1);
-            for (byte i = 0; i < 5; i++)
-                itemSlots[i] = FindItem(rngList);
+            AdvanceOnce();
+            for (int i = 0; i < 5; i++)
+                itemSlots[i] = FindWildItem();
 
         }
     }

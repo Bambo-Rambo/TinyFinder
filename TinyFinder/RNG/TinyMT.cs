@@ -16,7 +16,7 @@ namespace TinyFinder
         private const int MIN_LOOP = 8;
         private const int PRE_LOOP = 8;
 
-        public uint[] state = new uint[4];
+        private uint[] state = new uint[4];
 
         public uint temper(uint[] array)
         {
@@ -82,7 +82,7 @@ namespace TinyFinder
             return state;
         }
 
-        public byte Rand(uint[] array, int n) => (byte)((temper(array) * (ulong)n) >> 32);
+        public int Rand(uint[] array, int n) => (int)((temper(array) * (ulong)n) >> 32);
 
         public uint Nextuint(uint[] array)
         {

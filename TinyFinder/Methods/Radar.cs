@@ -21,75 +21,75 @@ namespace TinyFinder
             }
         }
 
-        public Radar(List<uint> rngList, UISettings current)
+        public Radar(uint[] currentState, UISettings current)
         {
-            //currentState.CopyTo(temp, 0);
+            currentState.CopyTo(temp, 0);
 
-            rand100 = Current(rngList, 100);
+            rand100 = RandCall(100);
 
             if (current.chain == 0)
             {
                 Sync = rand100 < 50;
 
-                slot = data.getSlot(Rand(rngList, 100), 0);
+                slot = data.getSlot(RandCall(100), 0);
 
-                Advance(1);
-                itemSlot = FindItem(rngList);
+                AdvanceOnce();
+                itemSlot = FindWildItem();
 
-                Music = Current(rngList, 100) < 2 ? 'A' : Current(rngList, 100) > 49 ? 'M' : '-';
+                Music = Current(100) < 2 ? 'A' : Current(100) > 49 ? 'M' : '-';
 
             }
             else
             {
                 Advance(current.advances);
 
-                Boost = current.bonusMusic && Current(rngList, 100) >= 50;
-                Music = Current(rngList, 100) < 2 ? 'A' : Current(rngList, 100) > 49 ? 'M' : '-';
+                Boost = current.bonusMusic && Current(100) >= 50;
+                Music = Current(100) < 2 ? 'A' : Current(100) > 49 ? 'M' : '-';
             }
 
-            byte ring = 0;
+            int ring = 0;
             for (; ring < 4; ring++)
             {
                 patches[ring] = new Patch
                 {
                     Ring = ring,
-                    Direction = Rand(rngList, 4),
-                    Location = Rand(rngList, ring * 2 + 3),
+                    Direction = RandCall(4),
+                    Location = RandCall(ring * 2 + 3),
                 };
-                if (Rand(rngList, 100) < GoodRate[ring])
+                if (RandCall(100) < GoodRate[ring])
                 {
-                    Advance(1);
+                    AdvanceOnce();
                     ulong Chance = Boost || current.chain >= 40 ? 100 : (ulong)(8100 - current.chain * 200);
 
-                    Advance(1);
-                    patches[ring].condition = (byte)(rngList[pointer] * Chance <= uint.MaxValue ? 2 : 1);
+                    AdvanceOnce();
+                    patches[ring].condition = CurrentU32() * Chance <= uint.MaxValue ? 2 : 1;
                 }
                 shiny = patches.Any(p => p.condition == 2);
             }
 
             // 1 empty patch
-            ring = Rand(rngList, 3);
+            ring = RandCall(3);
             patches[4] = new Patch
             {
                 Ring = ring,
-                Direction = Rand(rngList, 4),
-                Location = Rand(rngList, ring * 2 + 3),
+                Direction = RandCall(4),
+                Location = RandCall(ring * 2 + 3),
                 condition = 3,
             };
 
             PatchBoard = string.Join("\n", Overview.Select(ov => ov));
 
         }
-        public static byte[] GoodRate = { 23, 43, 63, 83 };
+        public static int[] GoodRate = { 23, 43, 63, 83 };
     }
 
     public struct Patch
     {
         private static string StateChars = "BGSX"; // Bad / Good / Shiny / Empty (Never step in)
-        public byte Ring;
-        public byte Direction;
-        public byte Location;
-        public byte condition;
+        public int Ring;
+        public int Direction;
+        public int Location;
+        public int condition;
         public char State => StateChars[condition];
 
         public int X

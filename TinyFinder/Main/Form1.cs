@@ -7,6 +7,8 @@ using TinyFinder.Subforms.MT;
 using TinyFinder.Main;
 using System.Linq;
 using TinyFinder.Controls;
+using System.ComponentModel;
+using System.Security.Claims;
 
 namespace TinyFinder
 {
@@ -14,7 +16,7 @@ namespace TinyFinder
     {
         private string DexToName(int dex) => Species.SpeciesList.ElementAt(dex).Name;
         private string SelectedSpecies => SpeciesCombo.SelectedItem.ToString();
-        byte SelectedLocation => (byte)locationsComboBox.SelectedIndex;
+        int SelectedLocation => (int)locationsComboBox.SelectedIndex;
         Location CurrentLocation => listOfLocations.ElementAt(SelectedLocation);
         private ushort[] GetWildTable => CurrentLocation.GrassTable;
         private ushort[] GetCaveTable => CurrentLocation.CaveTable;
@@ -35,20 +37,35 @@ namespace TinyFinder
         private ushort[] GetAmbushTable => CurrentLocation.AmbushTable;
         private List<ushort> GetFSList => Species.getFSList();
 
-        bool MovingHordeOption => Method == 4 && EncounterType.SelectedIndex == 1;      // User selected moving horde method
-        private bool HasExclusives => GetNavTable != null && LegendDefeated.Checked;
         bool ORAS => GameVersion.SelectedIndex > 1;
-        bool IsDexNav => Method == 6 && ORAS;
         
+        bool Surfing => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Water");
+        bool Fishing => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Contains("Rod");
+        bool LongGrass => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Long Grass");
+        bool Swampy => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Swamp");
 
-        private bool isRadar1 => Method == 6 && !ORAS && ratio.Value > 0;
+        private EncounterType SelectedEncounter => Methods.SelectedItem as EncounterType;
 
-        bool Surfing => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Water");
-        bool LongGrass => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Long Grass");
-        bool Swampy => EncounterType.SelectedIndex != -1 && EncounterType.SelectedItem.ToString().Equals("Swamp");
-        byte Method => (byte)Methods.SelectedIndex;
-        bool checkLocation(string loc) => locationsComboBox.SelectedItem.ToString().Equals(loc);
+        bool IsID => SelectedEncounter.Key == EnctrKey.ID;
+        bool IsWild => SelectedEncounter.Key == EnctrKey.Wild;
+        bool IsFishing => SelectedEncounter.Key == EnctrKey.Fishing;
+        bool IsRockSmash => SelectedEncounter.Key == EnctrKey.RockSmash;
 
+        bool IsHorde => SelectedEncounter.Key == EnctrKey.Horde;
+        bool MovingHordeOption => IsHorde && EncounterSettings.SelectedIndex == 1;      // User selected moving horde method
+
+        bool IsHoney => SelectedEncounter.Key == EnctrKey.Honey;
+
+        bool IsRadar => SelectedEncounter.Key == EnctrKey.Radar;
+        private bool IsRadar1 => IsRadar && CurrentChain.Value > 0;
+
+        bool IsFriendSafari => SelectedEncounter.Key == EnctrKey.FS;
+        bool IsAmbush => SelectedEncounter.Key == EnctrKey.Ambush;
+
+        bool IsDexNavMov => SelectedEncounter.Key == EnctrKey.DexNavMov;
+        bool IsDexNavSrch => SelectedEncounter.Key == EnctrKey.DexNavSrch;
+        bool IsDexNav => IsDexNavMov || IsDexNavSrch;
+        private bool HasExclusives => GetNavTable != null && LegendDefeated.Checked;
 
         Data data = new Data();
         NTRHelper ntrhelper;
@@ -60,20 +77,20 @@ namespace TinyFinder
         uint[] GeneratorState = new uint[4];
 
         List<Location> listOfLocations;
+        List<EncounterType> EncounterTypeList;
 
         public Form1()
         {
             InitializeComponent();
+            Text += $"{Application.ProductVersion}";
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //t3.Text = t2.Text = t1.Text = t0.Text = "";     // Faster copy paste for Citra
             Generator.Size = new Size(1223, 315);           // Size breaks for some reason
 
             GameVersion.SelectedIndex = 0;
             year.Value = DateTime.Now.Year; Months.SelectedIndex = DateTime.Now.Month - 1;
-            //Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
 
             ThreadCount.Value = Properties.Settings.Default.CPUs == 0 ? Environment.ProcessorCount : Properties.Settings.Default.CPUs;
             ThreadCount.Maximum = Environment.ProcessorCount;
@@ -109,7 +126,7 @@ namespace TinyFinder
         private void year_ValueChanged(object sender, EventArgs e)
         {
             if (SearchGen.SelectedIndex == 0)
-                Date_Label.Text = "Set the Citra RTC to " + year.Value + "-01-01 13:00:00";
+                Date_Label.Text = "Set the RTC to " + year.Value + "-01-01 13:00:00";
             TinyChanged();
         }
         private void ThreadCount_ValueChanged(object sender, EventArgs e)
@@ -120,22 +137,12 @@ namespace TinyFinder
 
         private void GameVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (GameVersion.SelectedIndex <= 1)
-            {
-                Methods.Items[6] = "Radar";
-                if (Methods.Items.Count != 9)
-                {
-                    Methods.Items.Add("Friend Safari");
-                    Methods.Items.Add("Ambush encounter");
-                }
-            }
-            else
-            {
-                Methods.Items[6] = "DexNav";
-                Methods.Items.Remove("Friend Safari");
-                Methods.Items.Remove("Ambush encounter");
-                LegendDefeated.Text = (GameVersion.SelectedIndex == 2 ? "Groudon" : "Kyogre") + " Defeated";
-            }
+            LegendDefeated.Text = (GameVersion.SelectedIndex == 2 ? "Groudon" : "Kyogre") + " Defeated";
+
+            EncounterTypeList = EncounterType.GetEncounterTypes(ORAS);
+            
+            Methods.DataSource = EncounterTypeList;
+            Methods.DisplayMember = "Name";
 
             Methods.SelectedIndex = 0;
             ManageControls();
@@ -148,25 +155,23 @@ namespace TinyFinder
             bool DateSearcher = SearchGen.SelectedIndex == 0;
             Year_Label.Visible = year.Visible = Month_Label.Visible = Months.Visible = Date_Label.Visible = DateRNGSeed.Visible = DateSearcher;
             ntr.Enabled = updateBTN.Visible = IgnoreFiltersButton.Visible = OffsetCalc.Visible = !DateSearcher;
-            //Date_Label.Location = DateSearcher ? new Point(16, 68) : new Point(135, 68);
-            //Date_Label.Text = DateSearcher ? "Set the Citra RTC to " + year.Value + "-01-01 13:00:00" : "Current State";
 
             if (!Working)
                 MainButton.Text = DateSearcher ? "Search" : "Generate";
 
             if (DateSearcher)
             {
-                Step_Label.Visible = Chain_Label.Visible = false;
+                Step_Info.Visible = Chain_Info.Visible = false;
                 min.Value = min.Minimum = !ORAS ? 35 :
-                                          (ORAS && Method == 0) ? 11 :
-                                          (ORAS && Method != 0) ? 20 : 0;
-                max.Value = (!ORAS && Method == 6) ? 800 : 150;
+                                          (ORAS && IsID) ? 11 :
+                                          (ORAS && !IsID) ? 20 : 0;
+                max.Value = IsRadar ? 800 : 150;
 
             }
             else
             {
                 min.Minimum = 0; min.Value = 0;     //Careful for exception here
-                if (Method != 0)
+                if (!IsID)
                     SetMin();
                 max.Value = 50000;
             }
@@ -194,22 +199,22 @@ namespace TinyFinder
             foreach (Location temp in listOfLocations.ToList())     // Create a copy of list since we remove items
             {
                 if (
-                (Method == 1 && !temp.HasNormalWild()) ||
+                (IsWild && !temp.HasNormalWild()) ||
 
-              //(Method == 2 && !temp.HasFishing()) ||
-                (Method == 2 && temp.ConsoleDelayRand == 0) ||      // <- Smarter
+                (IsFishing && !temp.HasFishing()) ||
+              //(IsFishing && temp.ConsoleDelayRand == 0) ||
 
-                (Method == 3 && temp.SmashTable == null) ||
+                (IsRockSmash && temp.SmashTable == null) ||
 
-                (Method == 4 && temp.HordeTable1 == null) ||        // Only checking the 1st horde table works
+                (IsHorde && temp.HordeTable1 == null) ||            // Only checking the 1st horde table works
 
-                (Method == 5 && !temp.HasHoneyWild()) ||
+                (IsHoney && !temp.HasHoneyWild()) ||
 
-                (CheckMethod("Radar") && !temp.HasRadar()) ||
+                (IsRadar && !temp.HasRadar()) ||
 
-                (CheckMethod("DexNav") && !temp.HasDexNav()) ||
+                (IsDexNav && !temp.HasDexNav()) ||
 
-                (Method == 8 && temp.AmbushTable == null))
+                (IsAmbush && temp.AmbushTable == null))
                 {
                     listOfLocations.Remove(temp);
                     continue;
@@ -221,101 +226,108 @@ namespace TinyFinder
 
         private void location_SelectedIndexChanged(object sender, EventArgs e)
         {
-            EncounterType.Items.Clear();
-            if (Method == 1)
+            EncounterSettings.Items.Clear();
+            if (IsWild)
             {
                 if (GetWildTable != null)
-                    EncounterType.Items.Add("Grass");
+                    EncounterSettings.Items.Add("Grass");
                 if (GetCaveTable != null)
-                    EncounterType.Items.Add("Cave");
+                    EncounterSettings.Items.Add("Cave");
                 if (GetLongTable != null)
-                    EncounterType.Items.Add("Long Grass");
+                    EncounterSettings.Items.Add("Long Grass");
                 if (GetRedTable != null)
-                    EncounterType.Items.Add("Red Flowers");
+                    EncounterSettings.Items.Add("Red Flowers");
                 if (GetYellowTable != null)
-                    EncounterType.Items.Add("Yellow Flowers");
+                    EncounterSettings.Items.Add("Yellow Flowers");
                 if (GetPurpleTable != null)
-                    EncounterType.Items.Add("Purple Flowers");
+                    EncounterSettings.Items.Add("Purple Flowers");
                 if (GetSwampTable != null)
-                    EncounterType.Items.Add("Swamp");
+                    EncounterSettings.Items.Add("Swamp");
                 if (CurrentLocation.RideTable != null)
-                    EncounterType.Items.Add("Riding");
+                    EncounterSettings.Items.Add("Riding");
                 if (GetSurfTable != null)
-                    EncounterType.Items.Add("Water");
+                    EncounterSettings.Items.Add("Water");
             }
-            else if (Method == 2)
+            else if (IsFishing)
             {
-                EncounterType.Items.Add("Old Rod");
-                EncounterType.Items.Add("Good Rod");
-                EncounterType.Items.Add("Super Rod");
+                EncounterSettings.Items.Add("Old Rod");
+                EncounterSettings.Items.Add("Good Rod");
+                EncounterSettings.Items.Add("Super Rod");
             }
-            else if (Method == 4)
+            else if (IsHorde)
             {
-                EncounterType.Items.Add("Honey");
+                EncounterSettings.Items.Add("Honey");
                 if (!ORAS || (GetLongTable != null))
-                    EncounterType.Items.Add("Moving");
+                    EncounterSettings.Items.Add("Moving");
             }
-            else if (Method == 5)
+            else if (IsHoney)
             {
                 if (GetHordeTable1 == null)
                 {
                     if (GetWildTable != null)
-                        EncounterType.Items.Add("Grass");
+                        EncounterSettings.Items.Add("Grass");
                     if (GetRedTable != null)
-                        EncounterType.Items.Add("Red Flowers");
+                        EncounterSettings.Items.Add("Red Flowers");
                     if (GetYellowTable != null)
-                        EncounterType.Items.Add("Yellow Flowers");
+                        EncounterSettings.Items.Add("Yellow Flowers");
                     if (GetPurpleTable != null)
-                        EncounterType.Items.Add("Purple Flowers");
+                        EncounterSettings.Items.Add("Purple Flowers");
                     if (GetLongTable != null)
-                        EncounterType.Items.Add("Long Grass");
+                        EncounterSettings.Items.Add("Long Grass");
                     if (GetCaveTable != null)
-                        EncounterType.Items.Add("Cave");
+                        EncounterSettings.Items.Add("Cave");
                 }
                 if (GetSwampTable != null)
-                    EncounterType.Items.Add("Swamp");
+                    EncounterSettings.Items.Add("Swamp");
                 if (GetSurfTable != null)
-                    EncounterType.Items.Add("Water");
+                    EncounterSettings.Items.Add("Water");
             }
-            else if (Method == 6)
+            else if (IsRadar || IsDexNav)
             {
                 if (GetWildTable != null)
-                    EncounterType.Items.Add("Grass");
+                    EncounterSettings.Items.Add("Grass");
                 if (IsDexNav)
                 {
                     if (GetCaveTable != null)
-                        EncounterType.Items.Add("Cave");
+                        EncounterSettings.Items.Add("Cave");
                     if (GetLongTable != null)
-                        EncounterType.Items.Add("Long Grass");
+                        EncounterSettings.Items.Add("Long Grass");
                     if (GetSurfTable != null)
-                        EncounterType.Items.Add("Water");
+                        EncounterSettings.Items.Add("Water");
+
+                    if (IsDexNavSrch && GetOldTable != null)
+                    {
+                        EncounterSettings.Items.Add("Old Rod");
+                        EncounterSettings.Items.Add("Good Rod");
+                        EncounterSettings.Items.Add("Super Rod");
+                    }
                 }
                 else
                 {
                     if (GetLongTable != null)
-                        EncounterType.Items.Add("Long Grass");
+                        EncounterSettings.Items.Add("Long Grass");
                     if (GetRedTable != null)
-                        EncounterType.Items.Add("Red Flowers");
+                        EncounterSettings.Items.Add("Red Flowers");
                     if (GetYellowTable != null)
-                        EncounterType.Items.Add("Yellow Flowers");
+                        EncounterSettings.Items.Add("Yellow Flowers");
                     if (GetPurpleTable != null)
-                        EncounterType.Items.Add("Purple Flowers");
+                        EncounterSettings.Items.Add("Purple Flowers");
                 }
             }
-            else if (Method == 7)
+            else if (IsFriendSafari)
             {
-                EncounterType.Items.Add("2 Slots");
-                EncounterType.Items.Add("3 Slots");
+                EncounterSettings.Items.Add("2 Slots");
+                EncounterSettings.Items.Add("3 Slots");
             }
 
-            if (EncounterType.Items.Count != 0)
+            if (EncounterSettings.Items.Count != 0)
             {
-                if (Method == 2)
-                    EncounterType.SelectedIndex = 2;    // For fishing, Super rod is the default choice
-                else if (Method == 7)
-                    EncounterType.SelectedIndex = 1;    // For FS, 3 slots is the default choice
+                if (IsFishing)
+                    EncounterSettings.SelectedIndex = 2;    // For fishing, Super rod is the default choice
+                else if (IsFriendSafari)
+                    EncounterSettings.SelectedIndex = 1;    // For FS, 3 slots is the default choice
                 else
-                    EncounterType.SelectedIndex = 0;
+                    EncounterSettings.SelectedIndex = 0;
             }
             else
             {
@@ -329,21 +341,17 @@ namespace TinyFinder
         {
             ManageRatio();
             SetMin();
-            if (Method == 4)
+            if (IsHorde)
             {
                 Rate_Label.Visible = ratio.Visible = MovingHordeOption;
-                //Party_Label.Visible = party.Visible = !MovingHordeOption;
-            }
-            if (CheckMethod("DexNav"))
-            {
-                calib.Value = EncounterType.SelectedItem.ToString().Equals("Cave") ? 2 : 0;
+                EmuBox.Visible = !MovingHordeOption;
             }
             ManageSpecies();
         }
 
         private void ManageRatio()
         {
-            if (Method == 1 || MovingHordeOption)
+            if (IsWild || MovingHordeOption)
             {
                 if (Surfing)
                     ratio.Value = 7;
@@ -355,9 +363,9 @@ namespace TinyFinder
                         ratio.Value = 13;
                 }
             }
-            else if (Method == 2)
+            else if (IsFishing)
                 ratio.Value = 49;
-            else if (Method == 7)
+            else if (IsFriendSafari)
                 ratio.Value = 13;
         }
 
@@ -365,15 +373,16 @@ namespace TinyFinder
         {
             SpeciesCombo.Items.Clear();
 
-            if (Method == 7)
+            if (IsFriendSafari)
             {
                 foreach (int num in GetFSList)
                     SpeciesCombo.Items.Add(DexToName(num));
             }
             else
             {
-                SpeciesCombo.Items.Add("Any");
-                if (Method == 4)
+                if (!IsDexNavSrch)
+                    SpeciesCombo.Items.Add("Any");
+                if (IsHorde)
                 {
                     HashSet<string> SlotSpecies = new HashSet<string>(NameHordeSlots());
                     foreach (string s in SlotSpecies)
@@ -387,7 +396,7 @@ namespace TinyFinder
                     {
                         HashSet<ushort> navSpecies = new HashSet<ushort>(GetNavTable);
                         // Merge DexNav slots with water slots ONLY if every other table doesn't exit for a given location
-                        if (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null))
+                        if (!Fishing && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null)))
                         {
                             SlotSpecies.UnionWith(navSpecies);
                         }
@@ -404,10 +413,10 @@ namespace TinyFinder
         private void Species_SelectedIndexChanged(object sender, EventArgs e)
         {
             ManageSlots();
-            if (Method == 4)
+            if (IsHorde)
                 for (int i = 1; i <= 3; i++)
                     SlotsComboBox.CheckBoxItems[i].Checked = SpeciesCombo.SelectedItem.ToString().Equals(NameHordeSlots()[i - 1]);
-            else if (Method != 7)
+            else if (!IsFriendSafari && !IsDexNavSrch)
             {
                 ushort[] tempTable;
                 if (IsDexNav && AddExclusiveSlots())
@@ -421,14 +430,14 @@ namespace TinyFinder
 
         private ushort[] SlotTable()
         {
-            if (Method == 3)
+            if (IsRockSmash)
                 return GetSmashTable;
-            if (Method == 7)
+            if (IsFriendSafari)
                 return null;
-            if (Method == 8)
+            if (IsAmbush)
                 return GetAmbushTable;
 
-            switch (EncounterType.SelectedItem.ToString())
+            switch (EncounterSettings.SelectedItem.ToString())
             {
                 case "Grass":
                     return GetWildTable;
@@ -483,20 +492,24 @@ namespace TinyFinder
             return "4 " + DexToName(hordeTable[0]) + ", 1 " + DexToName(hordeTable[outsiderSlot]);
         }
 
-        private byte getBagAdvances()
+        private int getBagAdvances()
         {
+            int Advances;
             if (CurrentLocation.Bag_Advances == 0)
-                return (byte)(GameVersion.SelectedIndex <= 1 ? 27 : 15);
+                Advances = ORAS ? 15 : 27;
             else
-                return CurrentLocation.Bag_Advances;
+                Advances = CurrentLocation.Bag_Advances;
+            if (IsDexNavSrch)
+                Advances++;
+            return Advances;
         }
         private void SetMin()
         {
             if (SearchGen.SelectedIndex == 1)
             {
-                if (Method == 7)
+                if (IsFriendSafari)
                     min.Value = 27;
-                else if (Method == 1 || MovingHordeOption || (Method >= 6 && !isRadar1))
+                else if (IsWild || MovingHordeOption || IsDexNav || IsFriendSafari || IsAmbush || (IsRadar && !IsRadar1))
                     min.Value = getBagAdvances();
                 else
                     min.Value = 0;
@@ -514,14 +527,14 @@ namespace TinyFinder
 
         private int[] LevelTable()
         {
-            if (Method == 3)
+            if (IsRockSmash)
                 return CurrentLocation.SmashLevel;
-            else if (Method == 8)
+            else if (IsAmbush)
                 return CurrentLocation.AmbushLevel;
-            else if (Method == 7)
+            else if (IsFriendSafari)
                 return null;
 
-            switch (EncounterType.SelectedItem.ToString())
+            switch (EncounterSettings.SelectedItem.ToString())
             {
                 case "Grass":
                 case "Cave":
@@ -556,25 +569,26 @@ namespace TinyFinder
         private void ManageSlots()
         {
             //Default values for most methods
-            byte SlotsCount = 12;
+            int SlotsCount = 12;
             ushort ComboBoxHeight = 310;
             //
 
-            switch (Method)
+            switch (SelectedEncounter.Key)
             {
-                case 3:     // Rock Smash
+                case EnctrKey.RockSmash:
                     SlotsCount = 5;
                     ComboBoxHeight = 140;
                     break;
 
-                case 1:     // Normal Wild
-                case 5:     // Honey Wild
-                //case 6:     // Radar / DexNav
-                    SlotsCount = (byte)(Surfing ? 5 : 12);
+                case EnctrKey.Wild:
+                case EnctrKey.Honey:
+                    SlotsCount = Surfing ? 5 : 12;
                     ComboBoxHeight = (ushort)(Surfing ? 140 : 310);
                     break;
 
-                case 6:     // DexNav
+                case EnctrKey.DexNavMov:
+                case EnctrKey.DexNavSrch:
+                case EnctrKey.Radar:
 
                     if (IsDexNav && AddExclusiveSlots())
                     {
@@ -583,17 +597,17 @@ namespace TinyFinder
                     }
                     else
                     {
-                        SlotsCount = (byte)(Surfing ? 5 : 12);
+                        SlotsCount = Surfing ? 5 : 12;
                         ComboBoxHeight = (ushort)(Surfing ? 140 : 310);
                     }
                     break;
-                case 7:     // Friend Safari
-                    SlotsCount = (byte)(EncounterType.SelectedIndex + 2);
+                case EnctrKey.FS:
+                    SlotsCount = EncounterSettings.SelectedIndex + 2;
                     ComboBoxHeight = (ushort)(SlotsCount == 2 ? 65 : 90);
                     break;
 
-                case 2:     // Fishing
-                case 4:     // Horde
+                case EnctrKey.Fishing:
+                case EnctrKey.Horde:
                     SlotsCount = 3;
                     ComboBoxHeight = 90;
                     break;
@@ -603,15 +617,16 @@ namespace TinyFinder
                 SlotsComboBox.CheckBoxItems[i].Checked = false;
             SlotsComboBox.Items.Clear();
             SlotsComboBox.DropDownHeight = ComboBoxHeight;
-            for (byte add = 1; add < SlotsCount + 1; add++)
+            for (int add = 1; add < SlotsCount + 1; add++)
                 SlotsComboBox.Items.AddRange(new object[] { add });
         }
 
         #region Manage Buttons and Slots
-        private void ratio_ValueChanged(object sender, EventArgs e)
+
+        private void CurrentChain_ValueChanged(object sender, EventArgs e)
         {
-            Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !isRadar1;
-            BonusMusicBox.Enabled = isRadar1;
+            Species_Label.Enabled = SpeciesCombo.Enabled = SyncBox.Enabled = SlotsComboBox.Enabled = Slots_Label.Enabled = !IsRadar1;
+            BonusMusicBox.Enabled = IsRadar1;
         }
 
         private void Methods_SelectedIndexChanged(object sender, EventArgs e)
@@ -620,44 +635,47 @@ namespace TinyFinder
         }
         private void ManageControls()
         {
-            TIDBOX.Visible = SIDBOX.Visible = tid.Visible = sid.Visible = Method == 0;
-            SlotsComboBox.Visible = Slots_Label.Visible = Method != 0;
-            SyncBox.Visible = OffsetCalc.Enabled = Method != 0 && !IsDexNav;
-            FluteOptionLabel.Visible = FluteOption.Visible = Flute1_Label.Visible = Flute1.Visible = Method != 0 && ORAS;
-            HASlot.Visible = HA_Label.Visible = Method == 4;
+            OffsetCalc.Enabled = !IsID;
+
+            //It's safer to use the fields of the class directly rather than methods like "IsWild", "IsHorde" etc
+
+            TIDBOX.Visible = SIDBOX.Visible = TIDValue.Visible = SIDValue.Visible = SelectedEncounter.ShowsTIDSID;
+            SlotsComboBox.Visible = Slots_Label.Visible = SelectedEncounter.ShowsSlots;
+            Species_Label.Visible = SpeciesCombo.Visible = SelectedEncounter.ShowsSpecies;
+            SyncBox.Visible = SelectedEncounter.ShowsSync;
+
+            FluteOptionLabel.Visible = FluteOption.Visible = Flute1_Label.Visible = Flute1.Visible = SelectedEncounter.ShowsFlute;
             Flute2_Label.Visible = Flute2.Visible = Flute3_Label.Visible = Flute3.Visible = Flute4_Label.Visible =
-                Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = ORAS && Method == 4;
-            Rate_Label.Visible = ratio.Visible = Method == 1 || Method == 2 || Method == 6 || Method == 7;
+                Flute4.Visible = Flute5_Label.Visible = Flute5.Visible = SelectedEncounter.ShowsMultiFlutes;
 
-            Location_Label.Visible = locationsComboBox.Visible = Method != 0 && Method != 7;
-            EncounterType.Visible = Method != 0 && Method != 3 && Method != 8;
+            HASlot.Visible = HA_Label.Visible = SelectedEncounter.ShowsHordeInfo;
+            Rate_Label.Visible = ratio.Visible = SelectedEncounter.ShowsRatio;
+            Chain_Label.Visible = CurrentChain.Visible = SelectedEncounter.ShowsChain;
+            Location_Label.Visible = locationsComboBox.Visible = SelectedEncounter.ShowsLocations;
+            BonusMusicBox.Visible = Patches_Board.Visible = SelectedEncounter.ShowsRadarInfo;
 
-            BonusMusicBox.Visible = Patches_Board.Visible = !ORAS && Method == 6;
-            BagBox.Visible = BagBox.Checked = (Method == 6 && !ORAS) || Method == 2;
+            EmuBox.Visible = SelectedEncounter.ShowsEmulator;
+            Interact_Label.Visible = InteractFrame.Visible = SelectedEncounter.ShowsTriggerMTFrame;
 
-            CitraBox.Visible = FinalFR_Label.Visible = FishingFrame.Visible = Method == 2;
-            CharmBox.Visible = Calib_Label.Visible = calib.Visible = NavFilters_Label.Visible = NavFilters.Visible = 
-                Potential_Label.Visible = Potential.Visible = AltEggMove.Visible = LegendDefeated.Visible = ORAS && Method == 6;
+            CharmBox.Visible = SearchLvl_Label.Visible = SearchLvl.Visible = NavFilters_Label.Visible = NavFilters.Visible =
+                Potential_Label.Visible = Potential.Visible = LegendDefeated.Visible = SelectedEncounter.ShowsDexNavInfo;
+            AltEggMove.Visible = IsDexNavMov;
 
-            Species_Label.Visible = SpeciesCombo.Visible = Method != 0;
+            Party_Label.Visible = party.Visible = SelectedEncounter.ShowsParty;
+            EncounterSettings.Visible = SelectedEncounter.ShowsSettings;
 
-            Party_Label.Visible = party.Visible = Method > 0;
-            //Party_Label.Visible = party.Visible = (Method > 3 && Method < 8 && Method != 7) || Method == 2 ;
+            Step_Info.Visible = Chain_Info.Visible = false;
 
-            Step_Label.Visible = Chain_Label.Visible = AllowChainUpdate.Visible = false;
+            Flute1_Label.Text = "Flute" + (IsHorde ? " 1" : "");
 
-            Flute1_Label.Text = Method == 4 ? "Flute 1" : "Flute";
-            Rate_Label.Text = Method == 6 ? "Chain" : "Ratio";
-            Party_Label.Text = IsDexNav ? "Search Level" : "Party";
-
-            ratio.Minimum = 1; ratio.Maximum = 99;
+            InteractFrame.Value = SelectedEncounter.InteractMT;
 
             if (SearchGen.SelectedIndex == 0)
             {
                 min.Value = min.Minimum = !ORAS ? 35 :
-                                          (ORAS && Method == 0) ? 13 :  // ? 11 :
-                                          (ORAS && Method != 0) ? 20 : 0;
-                max.Value = (!ORAS && Method == 6) ? 800 : 150;
+                                          (ORAS && IsID) ? 13 :  // ? 11 :
+                                          (ORAS && !IsID) ? 20 : 0;
+                max.Value = IsRadar ? 800 : 150;
             }
             else
             {
@@ -665,11 +683,11 @@ namespace TinyFinder
                 max.Value = 50000;
             }
 
-            if (Method != 0)
+            if (!IsID)
             {
-                ratio_ValueChanged(null, null);
+                CurrentChain_ValueChanged(null, null);
                 SpeciesCombo.Items.Clear();
-                if (Method != 7)
+                if (!IsFriendSafari)
                     ManageLocations();
 
                 Species_Label.Location = new Point(13, 46); SpeciesCombo.Location = new Point(75, 42);
@@ -678,40 +696,31 @@ namespace TinyFinder
                 Flute1_Label.Location = new Point(245, 45);
                 Flute1.Location = new Point(313, 42);
                 SyncBox.Location = new Point(53, 148);
-                Party_Label.Location = new Point(332, 197);
-                party.Minimum = 1; party.Maximum = 6; party.Value = party.Maximum;
                 Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = true;
                 
-                if (Method == 4)
+                if (IsHorde)
                 {
                     Flute1_Label.Location = new Point(257, 55);
                     Flute1.Location = new Point(325, 52);
                     HASlot.SelectedIndex = 0;
                     SyncBox.Location = new Point(35, 175);
                 }
-                else if (Method == 6)
+                else if (IsRadar)
                 {
-                    ratio.Minimum = 0;
-                    if (!ORAS)
-                    {
-                        ratio.Value = 1;    //Chain
-                        ratio.Maximum = 255;
-                        ratio_ValueChanged(null, null);
-                    }
-                    else
-                    {
-                        ratio.Value = 0;    //Chain
-                        party.Maximum = 999;
-                        party.Value = 999;
-                        Party_Label.Location = new Point(284, 196);
-                        Slots_Label.Location = new Point(13, 93);
-                        SlotsComboBox.Location = new Point(75, 89);
-                        Flute1_Label.Location = new Point(240, 94);
-                        Flute1.Location = new Point(331, 92);
-                        AllowChainUpdate.Checked = true;
-                    }
+                    CurrentChain.Value = 1;
+                    CurrentChain.Maximum = 255;
+                    CurrentChain_ValueChanged(null, null);
                 }
-                else if (Method == 7)
+                else if (IsDexNav)
+                {
+                    CurrentChain.Value = 0;
+                    CurrentChain.Maximum = 99;
+                    Slots_Label.Location = new Point(13, 93);
+                    SlotsComboBox.Location = new Point(75, 89);
+                    Flute1_Label.Location = new Point(240, 94);
+                    Flute1.Location = new Point(331, 92);
+                }
+                else if (IsFriendSafari)
                 {
                     location_SelectedIndexChanged(null, null);
                 }
@@ -722,14 +731,10 @@ namespace TinyFinder
         {
             FluteOption.SelectedIndex = 0;
 
-            BonusMusicBox.Location = new Point(335, 34);
-            CharmBox.Location = new Point(335, 30);
-            LegendDefeated.Location = new Point(335, 50);
-
             TIDBOX.Location = new Point(105, 78);
-            tid.Location = new Point(170, 77);
+            TIDValue.Location = new Point(170, 77);
             SIDBOX.Location = new Point(105, 117);
-            sid.Location = new Point(170, 116);
+            SIDValue.Location = new Point(170, 116);
 
             HA_Label.Location = new Point(13, 140);
             HASlot.Location = new Point(75, 137);
@@ -737,8 +742,8 @@ namespace TinyFinder
             Patches_Board.Location = new Point(242, 38);
             Patches_Board.Text = "#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########\n#########";
 
-            Step_Label.Location = new Point(75, 119);
-            Chain_Label.Location = new Point(75, 149);
+            Step_Info.Location = new Point(75, 119);
+            Chain_Info.Location = new Point(75, 149);
 
             NavFilters_Label.Location = new Point(13, 140);
             NavFilters.Location = new Point(75, 137);
@@ -753,43 +758,39 @@ namespace TinyFinder
             DoubleBuffered(Generator);
         }
 
-        public bool CheckMethod(string m)
-        {
-            return Methods.SelectedItem.ToString().Equals(m);
-        }
-
         
         #endregion
 
         #region ManageDataGridviews
         
-        private void ManageColumns(DataGridView dgv, byte method)
+        private void ManageColumns(DataGridView dgv, EncounterType choice)
         {
             string L = dgv == Generator ? "G" : "S";
-            dgv.Columns[L + "_TID"].Visible = dgv.Columns[L + "_SID"].Visible = 
-                dgv.Columns[L + "_TSV"].Visible = dgv.Columns[L + "_TRV"].Visible = 
-                dgv.Columns[L + "_RandHex"].Visible = method == 0;
+            dgv.Columns[L + "_TID"].Visible = dgv.Columns[L + "_SID"].Visible =
+                dgv.Columns[L + "_TSV"].Visible = dgv.Columns[L + "_TRV"].Visible = IsID;
+            //dgv.Columns[L + "_RandHex"].Visible = IsID;
 
             dgv.Columns[L + "_Right"].Visible = dgv.Columns[L + "_Up"].Visible =
-                dgv.Columns[L + "_Type"].Visible =
                 dgv.Columns[L + "_HA_DexNav"].Visible =
                 dgv.Columns[L + "_Potential"].Visible =
                 dgv.Columns[L + "_EggMove"].Visible = IsDexNav;
+            dgv.Columns[L + "_Type"].Visible = IsDexNavMov;
 
-            dgv.Columns[L + "_Ratio"].Visible = (method >= 1 && method <= 3) || method == 7 || MovingHordeOption;
-            dgv.Columns[L + "_Slot"].Visible = dgv.Columns[L + "_Sync"].Visible = dgv.Columns[L + "_Item"].Visible =
-                dgv.Columns[L + "_Level"].Visible = dgv.Columns[L + "_SpeciesInfo"].Visible = method != 0 && !isRadar1;
+            dgv.Columns[L + "_Ratio"].Visible = choice.ShowsRatio || MovingHordeOption;
+            dgv.Columns[L + "_SpeciesInfo"].Visible = dgv.Columns[L + "_Sync"].Visible = 
+                dgv.Columns[L + "_Item"].Visible = dgv.Columns[L + "_Level"].Visible = choice.ShowsSpecies && !IsRadar1;
+            dgv.Columns[L + "_Slot"].Visible = choice.ShowsSlots && !IsRadar1;
 
-            dgv.Columns[L + "_Delay"].Visible = dgv.Columns[L + "_Timeline"].Visible = method == 2;
-            dgv.Columns[L + "_HA_Horde"].Visible = method == 4;
-            dgv.Columns[L + "_Music"].Visible = !ORAS && method == 6;
-            dgv.Columns[L + "_Shiny"].Visible = isRadar1;
-            //dgv.Columns[L + "_Flute"].Visible = IsORAS && method != 0 && method != 4;
-            //dgv.Columns[L + "_Flutes"].Visible = IsORAS && method == 4;
-            dgv.Columns[L + "_Rand100"].Visible = CheckMethod("Ambush encounter");
+            dgv.Columns[L + "_Delay"].Visible = //dgv.Columns[L + "_Timeline"].Visible = 
+                IsFishing || IsDexNavSrch || IsRockSmash || (IsHorde && !MovingHordeOption) || IsHoney;
+            dgv.Columns[L + "_HA_Horde"].Visible = IsHorde;
+            dgv.Columns[L + "_Music"].Visible = IsRadar;
+            dgv.Columns[L + "_Shiny"].Visible = IsRadar1;
+            dgv.Columns[L + "_Rand100"].Visible = choice.Key == EnctrKey.Ambush;
 
-            dgv.Columns[L + "_Level"].Width = method == 4 ? 100 : 60;
-            dgv.Columns[L + "_Item"].Width = method == 4 ? 280 : 110;
+            dgv.Columns[L + "_Level"].Width = IsHorde ? 100 : 60;
+            dgv.Columns[L + "_Item"].Width = IsHorde ? 260 : 110;
+            dgv.Columns[L + "_Timeline"].Width = IsFishing ? 250 : 130;
 
             AllowCellFormatting = true;
         }
@@ -804,39 +805,48 @@ namespace TinyFinder
         {
             if (AllowCellFormatting)
             {
-                if (MethodUsed == 1 || MethodUsed == 2 || MethodUsed == 7)
+                bool risky = false;
+                if (IsFishing || IsRockSmash || IsHorde || IsHoney || IsDexNavSrch)
+                    if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Risky"].Value))
+                        risky = true;
+
+                if (ratio.Visible && Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) < ratio.Value)
                 {
-                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) < ratio.Value &&
-                        (!settings.movingHordes || (settings.movingHordes && Convert.ToByte(dgv.Rows[row].Cells[L + "_Rand100"].Value) > 4)))
+                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Rand100"].Value) < 5)
                     {
-                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
-                    }  
+                        if (!settings.possibleHorde)
+                            dgv.Rows[row].DefaultCellStyle.BackColor = risky ? Color.LightCoral : Color.LightYellow;
+                    }
+                    else if (!MovingHordeOption)
+                    {
+                        dgv.Rows[row].DefaultCellStyle.BackColor = risky ? Color.LightCoral : Color.LightYellow;
+                    }
                 }
-                else if (MethodUsed == 3)
+
+                if (IsRockSmash)
                 {
                     if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) == 0)
-                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                        dgv.Rows[row].DefaultCellStyle.BackColor = risky ? Color.LightCoral : Color.LightYellow;
                 }
-                else if (MethodUsed == 4)
+                else if (EnctrTypeChosen == EnctrKey.Horde)
                 {
-                    if (Convert.ToInt32(dgv.Rows[row].Cells[L + "_Ratio"].Value) < ratio.Value
-                        && Convert.ToInt32(dgv.Rows[row].Cells[L + "_Rand100"].Value) < 5
-                        && MovingHordeOption)
-                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                    if (risky)
+                        dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightCoral;
+
                 }
-                else if (isRadar1)
+                else if (IsRadar1)
                 {
                     if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Shiny"].Value))
                         dgv.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
                 }
                 else if (IsDexNav)
                 {
-                    if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Success"].Value))
+                    if (IsDexNavSrch || Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Success"].Value))
                     {
                         if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Shiny"].Value))
-                            dgv.Rows[row].DefaultCellStyle.BackColor = Color.Aqua;
-                        else
-                            dgv.Rows[row].DefaultCellStyle.BackColor = Color.LightYellow;
+                            dgv.Rows[row].DefaultCellStyle.BackColor = risky ? Color.LightCoral : Color.Aqua;
+                        else if (!IsDexNavSrch)
+                            dgv.Rows[row].DefaultCellStyle.BackColor = risky ? Color.LightCoral : Color.LightYellow;
                     }
                     if (Convert.ToBoolean(dgv.Rows[row].Cells[L + "_Boost"].Value))
                     {
@@ -851,6 +861,7 @@ namespace TinyFinder
                             e.CellStyle.ForeColor = Color.Gray;
                     }
                 }
+
             }
         }
 
@@ -890,7 +901,7 @@ namespace TinyFinder
 
         private void Generator_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (Method == 6 && !ORAS)
+            if (IsRadar)
             {
                 try
                 {
@@ -902,7 +913,7 @@ namespace TinyFinder
         }
         private void Searcher_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
         {
-            if (Method == 6 && !ORAS)
+            if (IsRadar)
             {
                 try
                 {
@@ -977,9 +988,9 @@ namespace TinyFinder
                 int Offset = Target - (int)min.Value;
 
                 int BagAdvances = 0;
-                if (Method == 1 || MovingHordeOption || IsDexNav)   // Methods that require exiting the bag
+                if (IsWild || IsFishing || IsRockSmash || MovingHordeOption || IsDexNav)   // Methods that require exiting the bag
                     BagAdvances = getBagAdvances();
-                else if (Method == 7)    // Friend Safari is the standard 27
+                else if (IsFriendSafari)
                     BagAdvances = 27;
 
                 int AdvancesRequired = Offset - BagAdvances;
@@ -1060,9 +1071,8 @@ namespace TinyFinder
             try
             {
                 NTRHelper.ntrclient.ReadTiny("TTT");
-                if (Method == 6)
+                if (IsRadar || IsDexNav)
                 {
-                    AllowChainUpdate.Visible = true;
                     if (ORAS)
                     {
                         NTRHelper.ntrclient.ReadTiny("Step");
@@ -1085,7 +1095,6 @@ namespace TinyFinder
         public void OnConnected_Changed(bool IsConnected)
         {
             updateBTN.Enabled = IsConnected;
-            AllowChainUpdate.Visible = Method == 6 && IsConnected;
         }
 
         public void parseNTRInfo(string name, object info)
@@ -1101,33 +1110,29 @@ namespace TinyFinder
                     return;
                 case "Step":
                     var steps = (uint[])info;
-                    Step_Label.Visible = true;
-                    Step_Label.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
-                    Step_Label.Text = "Step Counter   =   " + steps[0].ToString();
+                    Step_Info.Visible = true;
+                    Step_Info.ForeColor = steps[0] == 19 ? Color.Red : Color.Black;
+                    Step_Info.Text = "Step Counter   =   " + steps[0].ToString();
                     break;
                 case "DexNavChain":
                     var chain = (uint[])info;
-                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
-                        ratio.Value = chain[0];         // Ratio is in fact the chain value here
-                    Chain_Label.Visible = true;
-                    Chain_Label.Text = "Chain Length   =   " + chain[0].ToString();
+                    CurrentChain.Value = chain[0];
+                    Chain_Info.Visible = true;
+                    Chain_Info.Text = "Chain Length   =   " + chain[0].ToString();
                     break;
                 case "RadarChain":
                     var chainRadar = (uint[])info;
-                    if (AllowChainUpdate.Checked)       // Only set the new chain value if the button is checked
-                    {
-                        try
+                    try
                         {
-                            ratio.Value = chainRadar[0];    // Ratio is in fact the chain value here
+                            CurrentChain.Value = chainRadar[0];
                         }
                         catch
                         {
-                            ratio.Value = 255;
+                            CurrentChain.Value = 255;
                         }
-                    }
-                    Chain_Label.Visible = true;
-                    Chain_Label.Location = new Point(25, 118);
-                    Chain_Label.Text = "Chain Length   =   " + chainRadar[0].ToString();
+                    Chain_Info.Visible = true;
+                    Chain_Info.Location = new Point(25, 118);
+                    Chain_Info.Text = "Chain Length   =   " + chainRadar[0].ToString();
                     break;
             }
         }
@@ -1163,11 +1168,11 @@ namespace TinyFinder
 
         private void TIDBOX_CheckedChanged_1(object sender, EventArgs e)
         {
-            tid.Enabled = TIDBOX.Checked;
+            TIDValue.Enabled = TIDBOX.Checked;
         }
         private void SIDBOX_CheckedChanged(object sender, EventArgs e)
         {
-            sid.Enabled = SIDBOX.Checked;
+            SIDValue.Enabled = SIDBOX.Checked;
         }
 
         private void MTSeedGuide_Click(object sender, EventArgs e) { data.Guides(sender.ToString()); }

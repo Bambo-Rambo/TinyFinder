@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
+using TinyFinder.Controls;
 using TinyFinder.Main;
 using TinyFinder.Properties;
-
 namespace TinyFinder
 {
     //https://github.com/wwwwwwzx/3DSRNGTool/blob/master/3DSRNGTool/Gen6/DexNav.cs
@@ -11,9 +13,9 @@ namespace TinyFinder
     {
         public int CheckCount, index;
 
-        public static byte[] SlotNum = { 12, 5, 3 };                // Grass / Surf / DexNav
-        public static byte[] HARate = { 0, 0, 5, 15, 20, 25 };      // dword_7E6860[6]
-        public static byte[] IVRate =                               // dword_7E6890[18]
+        public static int[] SlotNum = { 12, 5, 3 };                // Grass / Surf / DexNav
+        public static int[] HARate = { 0, 0, 5, 15, 20, 25 };      // dword_7E6860[6]
+        public static int[] IVRate =                               // dword_7E6890[18]
         {
             0,0,0,
             10,0,0,
@@ -23,8 +25,8 @@ namespace TinyFinder
             10,25,10,
         };
 
-        public static byte[] EggMoveRate = { 20, 50, 55, 60, 65, 80 };  // dword_7E6878[6]
-        public static byte[] HeldItemRate =                             // byte_7E68D8[12]
+        public static int[] EggMoveRate = { 20, 50, 55, 60, 65, 80 };  // dword_7E6878[6]
+        public static int[] HeldItemRate =                             // byte_7E68D8[12]
         {
             40,10,
             40,10,
@@ -34,10 +36,10 @@ namespace TinyFinder
             50,30,
         };
 
-        public static byte[] SearchLevelTable = { 5, 10, 25, 50, 100 }; //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
-        public static byte GetGrade(ushort searchlevel)
+        public static int[] SearchLevelTable = { 5, 10, 25, 50, 100 }; //https://bulbapedia.bulbagarden.net/wiki/DexNav#Benefits
+        public static int GetGrade(ushort searchlevel)
         {
-            for (byte g = 0; g < 5; g++)
+            for (int g = 0; g < 5; g++)
                 if (searchlevel < SearchLevelTable[g])
                     return g;
             return 5;
@@ -52,67 +54,81 @@ namespace TinyFinder
             return 6 * searchlevel;
         }
 
-        public DexNav(List<uint> rngList, UISettings current)
+        public DexNav(uint[] currentState, UISettings current)
         {
-            rand100 = Current(rngList, 100);
+            currentState.CopyTo(temp, 0);
+            rand100 = Current(100);
 
-            Advance(current.calibration);
-
-            trigger = Rand(rngList, 100) < 50;
-
-            if (!trigger && current.triggerOnly)
-                return;
-
-            switch (Rand(rngList, 4))
+            if (current.DNsearching)
+            {
+                BlinkSystem totalBlinks = new BlinkSystem(this);
+                totalBlinks.Apply(current);
+            }
+            else
+            {
+                AdvanceOnce();
+                Advance(current.calibration);
+                
+                trigger = RandCall(100) < 50;
+                if (!trigger && current.triggerOnly)
+                    return;
+            }
+            
+            switch (RandCall(4))
             {
                 case 0:
-                    right = (sbyte)(-9 + Rand(rngList, 18));
-                    up = (sbyte)-(-9 + Rand(rngList, 3));
+                    right = -9 + RandCall(18);
+                    up = -(-9 + RandCall(3));
                     break;
                 case 1:
-                    right = (sbyte)(-9 + Rand(rngList, 3));
-                    up = (sbyte)-(-7 + Rand(rngList, 14));
+                    right = -9 + RandCall(3);
+                    up = -(-7 + RandCall(14));
                     break;
                 case 2:
-                    right = (sbyte)(7 + Rand(rngList, 3));
-                    up = (sbyte)-(-7 + Rand(rngList, 14));
+                    right = 7 + RandCall(3);
+                    up = -(-7 + RandCall(14));
                     break;
                 case 3:
-                    right = (sbyte)(-9 + Rand(rngList, 18));
-                    up = (sbyte)-(7 + Rand(rngList, 3));
+                    right = -9 + RandCall(18);
+                    up = -(7 + RandCall(3));
                     break;
             }
 
+            // If search method, current.exclusives is true when selected species is exclusive
+            // If moving method, current.exclusives is true when target species is exclusive
+            // This RandCall always happens regardless
+            EnctrType = ((RandCall(100) < 30) || current.DNsearching) && current.exclusives ? 2 : current.sType;
 
-            EnctrType = Rand(rngList, 100) < 30 && current.exclusives ? 2 : current.sType;
+            Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || RandCall(100) < 4;
 
-            Boost = current.chain > 0 && (current.chain + 1) % 5 == 0 || Rand(rngList, 100) < 4;
+            Sync = RandCall(100) < 50;
 
-            Sync = Rand(rngList, 100) < 50;
-
-            for (slot = SlotNum[EnctrType]; slot > 0; slot--)
-                if (Rand(rngList, 100) < 30)
-                    break;
-            if (slot == 0)
-                slot++;
-
-            LevelRand = rngList[++pointer];
+            if (!current.DNsearching)
+            {
+                for (slot = SlotNum[EnctrType]; slot > 0; slot--)
+                    if (RandCall(100) < 30)
+                        break;
+                if (slot == 0)
+                    slot++;
+            }
+                
+            LevelRand = RandU32();
 
             LevelBoost = current.chain / 5 + (Boost ? 10 : 0);
 
-            flute = Findflute(rngList);
+            flute = Findflute();
 
-            DexNavHA = Rand(rngList, 100) < HARate[current.Grade];
+            DexNavHA = RandCall(100) < HARate[current.Grade];
 
             for (index = 2; index >= 0; index--)
-                if (Rand(rngList, 100) < IVRate[3 * current.Grade + index])
+                if (RandCall(100) < IVRate[3 * current.Grade + index])
                     break;
             index += Boost ? 2 : 1;
-            potential = (byte)(index < 3 ? index : 3);
+            potential = index < 3 ? index : 3;
 
-            bool HasEggMove = Rand(rngList, 100) < EggMoveRate[current.Grade] || Boost;
+            bool HasEggMove = RandCall(100) < EggMoveRate[current.Grade] || Boost;
 
-            int tmp = Rand(rngList, 100);
+            int tmp = RandCall(100);
             for (index = 0; index < 2; index++)
             {
                 tmp -= HeldItemRate[current.Grade * 2 + index];
@@ -137,13 +153,15 @@ namespace TinyFinder
             // It would make sense to break the loop when a shiny is found but this is not the case,
             // all rand calls must happen, otherwise egg move will be wrong
             for (int i = 0; i < CheckCount; i++)
-                if (RandUint(rngList, 10000) < current.TargetValue * 0.01)
+                if (RandCallUint(10000) < current.TargetValue * 0.01)
                     shiny = true;
 
-            //Advance(1); // I prefer eggRands[1] to be the first element
             if (HasEggMove)
-                for (int i = 0; i <= current.maxEggRand; i++)
-                    eggRands.Add(rngList[pointer + i]);
+                for (uint i = 0; i <= current.maxEggRand; i++)
+                {
+                    eggRands.Add(CurrentU32());
+                    AdvanceOnce();
+                }
 
         }
 

@@ -356,7 +356,7 @@ namespace TinyFinder
 						loc.HordeLevel = new int[]			{ 13, 13, 14 };
 						loc.SurfTable = new ushort[]		{ 72, 72, 458, 72, 131 };
 						loc.SurfLevel = new int[]			{ 25, 26, 27, 27, 27 };
-						loc.OldTable = new ushort[]			{ 370, 370, 370 };
+						/*loc.OldTable = new ushort[]			{ 370, 370, 370 };
 						loc.OldLevel = new int[]			{ 15, 15, 15 };
 						loc.GoodTable = new ushort[]		{ 223, 366, 223 };
 						loc.GoodLevel = new int[]			{ 25, 25, 25 };
@@ -369,8 +369,9 @@ namespace TinyFinder
 							loc.SuperTable = new ushort[]	{ 222, 224, 368 };
 						}
 						loc.SuperLevel = new int[]			{ 35, 35, 35 };
+						// 1 NPC but on different spot than wild, let's avoid confusion since species are available elsewhere
 						loc.SmashTable = new ushort[]		{ 557, 688, 557, 688, 557 };
-						loc.SmashLevel = new int[]			{ 23, 23, 24, 25, 25 };
+						loc.SmashLevel = new int[]		{ 23, 23, 24, 25, 25 };*/
 						break;
 
 					case 272:		// Route 13
@@ -514,9 +515,10 @@ namespace TinyFinder
 						{
 							loc.HordeLevel = new int[]		{ 23, 23, 24 };
 						}
-						loc.SmashTable = new ushort[]		{ 75, 75, 75, 213, 213 };
-						loc.SmashLevel = new int[]			{ 44, 45, 46, 44, 46 };
-						break;
+                        // 1 NPC but on different spot than wild, let's avoid confusion since species are available elsewhere
+                        //loc.SmashTable = new ushort[]		{ 75, 75, 75, 213, 213 };
+                        //loc.SmashLevel = new int[]		{ 44, 45, 46, 44, 46 };
+                        break;
 
 					case 281:		// Route 19
 						loc.YellowTable = new ushort[]		{ 195, 195, 195, 705, 705, 70, 452, 588, 616, 93, 455, 455 };

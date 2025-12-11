@@ -787,12 +787,15 @@ namespace TinyFinder
                     Name = "Horsea",
                     moves = { new Move { Name = "Bubble", At = 1 }, new Move { Name = "Smokescreen", At = 5 }, new Move { Name = "Leer", At = 9 }, new Move { Name = "Water Gun", At = 13 }, new Move { Name = "Twister", At = 17 }, new Move { Name = "Bubble Beam", At = 21 }, new Move { Name = "Focus Energy", At = 26 }, new Move { Name = "Brine", At = 31 }, new Move { Name = "Agility", At = 36 }, new Move { Name = "Dragon Pulse", At = 41 }, new Move { Name = "Dragon Dance", At = 46 }, new Move { Name = "Hydro Pump", At = 52 }, },
                     eggMoves = { "Flail", "Aurora Beam", "Octazooka", "Disable", "Splash", "Dragon Rage", "Dragon Breath", "Signal Beam", "Razor Wind", "Muddy Water", "Water Pulse", "Clear Smog", "Outrage", },
+                    eggRand = 9,
                     item5 = "Dragon Scale",
                 },
 
                 new Species() {
                     Name = "Seadra",
                     moves = { new Move { Name = "Hydro Pump", At = 1 }, new Move { Name = "Bubble", At = 1 }, new Move { Name = "Smokescreen", At = 1 }, new Move { Name = "Leer", At = 1 }, new Move { Name = "Water Gun", At = 1 }, new Move { Name = "Smokescreen", At = 5 }, new Move { Name = "Leer", At = 9 }, new Move { Name = "Water Gun", At = 13 }, new Move { Name = "Twister", At = 17 }, new Move { Name = "Bubble Beam", At = 21 }, new Move { Name = "Focus Energy", At = 26 }, new Move { Name = "Brine", At = 31 }, new Move { Name = "Agility", At = 38 }, new Move { Name = "Dragon Pulse", At = 45 }, new Move { Name = "Dragon Dance", At = 52 }, new Move { Name = "Hydro Pump", At = 60 }, },
+                    eggMoves = { "Flail", "Aurora Beam", "Octazooka", "Disable", "Splash", "Dragon Rage", "Dragon Breath", "Signal Beam", "Razor Wind", "Muddy Water", "Water Pulse", "Clear Smog", "Outrage", },
+                    eggRand = 9,
                     item5 = "Dragon Scale",
                 },
 
@@ -800,12 +803,15 @@ namespace TinyFinder
                     Name = "Goldeen",
                     moves = { new Move { Name = "Peck", At = 1 }, new Move { Name = "Tail Whip", At = 1 }, new Move { Name = "Water Sport", At = 1 }, new Move { Name = "Supersonic", At = 5 }, new Move { Name = "Horn Attack", At = 8 }, new Move { Name = "Flail", At = 13 }, new Move { Name = "Water Pulse", At = 16 }, new Move { Name = "Aqua Ring", At = 21 }, new Move { Name = "Fury Attack", At = 24 }, new Move { Name = "Agility", At = 29 }, new Move { Name = "Waterfall", At = 32 }, new Move { Name = "Horn Drill", At = 37 }, new Move { Name = "Soak", At = 40 }, new Move { Name = "Megahorn", At = 45 }, },
                     eggMoves = { "Psybeam", "Haze", "Hydro Pump", "Sleep Talk", "Mud Sport", "Mud-Slap", "Aqua Tail", "Body Slam", "Mud Shot", "Skull Bash", "Signal Beam", },
+                    eggRand = 7,
                     oras5 = "Mystic Water",
                 },
 
                 new Species() {
                     Name = "Seaking",
                     moves = { new Move { Name = "Megahorn", At = 1 }, new Move { Name = "Poison Jab", At = 1 }, new Move { Name = "Peck", At = 1 }, new Move { Name = "Tail Whip", At = 1 }, new Move { Name = "Water Sport", At = 1 }, new Move { Name = "Supersonic", At = 1 }, new Move { Name = "Supersonic", At = 5 }, new Move { Name = "Horn Attack", At = 8 }, new Move { Name = "Flail", At = 13 }, new Move { Name = "Water Pulse", At = 16 }, new Move { Name = "Aqua Ring", At = 21 }, new Move { Name = "Fury Attack", At = 24 }, new Move { Name = "Agility", At = 29 }, new Move { Name = "Waterfall", At = 32 }, new Move { Name = "Horn Drill", At = 40 }, new Move { Name = "Soak", At = 46 }, new Move { Name = "Megahorn", At = 54 }, },
+                    eggMoves = { "Psybeam", "Haze", "Hydro Pump", "Sleep Talk", "Mud Sport", "Mud-Slap", "Aqua Tail", "Body Slam", "Mud Shot", "Skull Bash", "Signal Beam", },
+                    eggRand = 7,
                     oras5 = "Mystic Water",
                 },
 
@@ -1435,6 +1441,7 @@ namespace TinyFinder
                     Name = "Corsola",
                     moves = { new Move { Name = "Tackle", At = 1 }, new Move { Name = "Harden", At = 1 }, new Move { Name = "Bubble", At = 4 }, new Move { Name = "Recover", At = 8 }, new Move { Name = "Bubble Beam", At = 10 }, new Move { Name = "Refresh", At = 13 }, new Move { Name = "Ancient Power", At = 17 }, new Move { Name = "Spike Cannon", At = 20 }, new Move { Name = "Lucky Chant", At = 23 }, new Move { Name = "Brine", At = 27 }, new Move { Name = "Iron Defense", At = 29 }, new Move { Name = "Rock Blast", At = 31 }, new Move { Name = "Endure", At = 35 }, new Move { Name = "Aqua Ring", At = 38 }, new Move { Name = "Power Gem", At = 41 }, new Move { Name = "Mirror Coat", At = 45 }, new Move { Name = "Earth Power", At = 47 }, new Move { Name = "Flail", At = 50 }, },
                     eggMoves = { "Screech", "Mist", "Amnesia", "Barrier", "Ingrain", "Confuse Ray", "Icicle Spear", "Nature Power", "Aqua Ring", "Curse", "Bide", "Water Pulse", "Head Smash", "Camouflage", },
+                    eggRand = 5,
                     FS = true,
                     xy5 = "Hard Stone",
                     oras5 = "Luminous Moss",
@@ -1444,11 +1451,14 @@ namespace TinyFinder
                     Name = "Remoraid",
                     moves = { new Move { Name = "Water Gun", At = 1 }, new Move { Name = "Lock-On", At = 6 }, new Move { Name = "Psybeam", At = 10 }, new Move { Name = "Aurora Beam", At = 14 }, new Move { Name = "Bubble Beam", At = 18 }, new Move { Name = "Focus Energy", At = 22 }, new Move { Name = "Water Pulse", At = 26 }, new Move { Name = "Signal Beam", At = 30 }, new Move { Name = "Ice Beam", At = 34 }, new Move { Name = "Bullet Seed", At = 38 }, new Move { Name = "Hydro Pump", At = 42 }, new Move { Name = "Hyper Beam", At = 46 }, new Move { Name = "Soak", At = 50 }, },
                     eggMoves = { "Aurora Beam", "Octazooka", "Supersonic", "Haze", "Screech", "Rock Blast", "Snore", "Flail", "Water Spout", "Mud Shot", "Swift", "Acid Spray", "Water Pulse", "Entrainment", },
+                    eggRand = 9,
                 },
 
                 new Species() {
                     Name = "Octillery",
                     moves = { new Move { Name = "Gunk Shot", At = 1 }, new Move { Name = "Rock Blast", At = 1 }, new Move { Name = "Water Gun", At = 1 }, new Move { Name = "Constrict", At = 1 }, new Move { Name = "Psybeam", At = 1 }, new Move { Name = "Aurora Beam", At = 1 }, new Move { Name = "Constrict", At = 6 }, new Move { Name = "Psybeam", At = 10 }, new Move { Name = "Aurora Beam", At = 14 }, new Move { Name = "Bubble Beam", At = 18 }, new Move { Name = "Focus Energy", At = 22 }, new Move { Name = "Octazooka", At = 25 }, new Move { Name = "Wring Out", At = 28 }, new Move { Name = "Signal Beam", At = 34 }, new Move { Name = "Ice Beam", At = 40 }, new Move { Name = "Bullet Seed", At = 46 }, new Move { Name = "Hydro Pump", At = 52 }, new Move { Name = "Hyper Beam", At = 58 }, new Move { Name = "Soak", At = 64 }, },
+                    eggMoves = { "Aurora Beam", "Octazooka", "Supersonic", "Haze", "Screech", "Rock Blast", "Snore", "Flail", "Water Spout", "Mud Shot", "Swift", "Acid Spray", "Water Pulse", "Entrainment", },
+                    eggRand = 9,
                     FS = true,
                 },
 
@@ -2063,12 +2073,15 @@ namespace TinyFinder
                     Name = "Carvanha",
                     moves = { new Move { Name = "Leer", At = 1 }, new Move { Name = "Bite", At = 1 }, new Move { Name = "Rage", At = 4 }, new Move { Name = "Focus Energy", At = 8 }, new Move { Name = "Aqua Jet", At = 11 }, new Move { Name = "Assurance", At = 15 }, new Move { Name = "Screech", At = 18 }, new Move { Name = "Swagger", At = 22 }, new Move { Name = "Ice Fang", At = 25 }, new Move { Name = "Scary Face", At = 29 }, new Move { Name = "Poison Fang", At = 32 }, new Move { Name = "Crunch", At = 36 }, new Move { Name = "Agility", At = 39 }, new Move { Name = "Take Down", At = 43 }, },
                     eggMoves = { "Hydro Pump", "Double-Edge", "Thrash", "Ancient Power", "Swift", "Brine", "Destiny Bond", },
+                    eggRand = 7,
                     item5 = "Deep Sea Tooth",
                 },
 
                 new Species() {
                     Name = "Sharpedo",
                     moves = { new Move { Name = "Night Slash", At = 1 }, new Move { Name = "Feint", At = 1 }, new Move { Name = "Leer", At = 1 }, new Move { Name = "Bite", At = 1 }, new Move { Name = "Rage", At = 1 }, new Move { Name = "Focus Energy", At = 1 }, new Move { Name = "Rage", At = 4 }, new Move { Name = "Focus Energy", At = 8 }, new Move { Name = "Aqua Jet", At = 11 }, new Move { Name = "Assurance", At = 15 }, new Move { Name = "Screech", At = 18 }, new Move { Name = "Swagger", At = 22 }, new Move { Name = "Ice Fang", At = 25 }, new Move { Name = "Scary Face", At = 29 }, new Move { Name = "Slash", At = 30 }, new Move { Name = "Poison Fang", At = 34 }, new Move { Name = "Crunch", At = 40 }, new Move { Name = "Agility", At = 45 }, new Move { Name = "Skull Bash", At = 51 }, new Move { Name = "Taunt", At = 56 }, new Move { Name = "Night Slash", At = 62 }, },
+                    eggMoves = { "Hydro Pump", "Double-Edge", "Thrash", "Ancient Power", "Swift", "Brine", "Destiny Bond", },
+                    eggRand = 9,
                     item5 = "Deep Sea Tooth",
                 },
 
@@ -2076,6 +2089,7 @@ namespace TinyFinder
                     Name = "Wailmer",
                     moves = { new Move { Name = "Splash", At = 1 }, new Move { Name = "Growl", At = 4 }, new Move { Name = "Water Gun", At = 7 }, new Move { Name = "Rollout", At = 10 }, new Move { Name = "Whirlpool", At = 13 }, new Move { Name = "Astonish", At = 16 }, new Move { Name = "Water Pulse", At = 19 }, new Move { Name = "Mist", At = 22 }, new Move { Name = "Brine", At = 25 }, new Move { Name = "Rest", At = 29 }, new Move { Name = "Dive", At = 33 }, new Move { Name = "Amnesia", At = 37 }, new Move { Name = "Water Spout", At = 41 }, new Move { Name = "Bounce", At = 45 }, new Move { Name = "Hydro Pump", At = 49 }, new Move { Name = "Heavy Slam", At = 53 }, },
                     eggMoves = { "Double-Edge", "Thrash", "Snore", "Sleep Talk", "Curse", "Fissure", "Tickle", "Defense Curl", "Body Slam", "Aqua Ring", "Soak", "Zen Headbutt", "Clear Smog", },
+                    eggRand = 9,
                 },
 
                 new Species() {
@@ -2200,22 +2214,28 @@ namespace TinyFinder
                     Name = "Barboach",
                     moves = { new Move { Name = "Mud-Slap", At = 1 }, new Move { Name = "Mud Sport", At = 6 }, new Move { Name = "Water Sport", At = 6 }, new Move { Name = "Water Gun", At = 9 }, new Move { Name = "Mud Bomb", At = 13 }, new Move { Name = "Amnesia", At = 15 }, new Move { Name = "Water Pulse", At = 17 }, new Move { Name = "Magnitude", At = 20 }, new Move { Name = "Rest", At = 25 }, new Move { Name = "Snore", At = 25 }, new Move { Name = "Aqua Tail", At = 28 }, new Move { Name = "Earthquake", At = 32 }, new Move { Name = "Muddy Water", At = 35 }, new Move { Name = "Future Sight", At = 39 }, new Move { Name = "Fissure", At = 44 }, },
                     eggMoves = { "Thrash", "Whirlpool", "Spark", "Hydro Pump", "Flail", "Take Down", "Dragon Dance", "Earth Power", "Mud Shot", "Muddy Water", },
+                    eggRand = 5,
                 },
 
                 new Species() {
                     Name = "Whiscash",
                     moves = { new Move { Name = "Tickle", At = 1 }, new Move { Name = "Mud-Slap", At = 1 }, new Move { Name = "Mud Sport", At = 1 }, new Move { Name = "Water Sport", At = 1 }, new Move { Name = "Water Gun", At = 1 }, new Move { Name = "Mud Sport", At = 6 }, new Move { Name = "Water Sport", At = 6 }, new Move { Name = "Water Gun", At = 9 }, new Move { Name = "Mud Bomb", At = 13 }, new Move { Name = "Amnesia", At = 15 }, new Move { Name = "Water Pulse", At = 17 }, new Move { Name = "Magnitude", At = 20 }, new Move { Name = "Rest", At = 25 }, new Move { Name = "Snore", At = 25 }, new Move { Name = "Aqua Tail", At = 28 }, new Move { Name = "Zen Headbutt", At = 30 }, new Move { Name = "Earthquake", At = 34 }, new Move { Name = "Muddy Water", At = 39 }, new Move { Name = "Future Sight", At = 45 }, new Move { Name = "Fissure", At = 52 }, },
+                    eggMoves = { "Thrash", "Whirlpool", "Spark", "Hydro Pump", "Flail", "Take Down", "Dragon Dance", "Earth Power", "Mud Shot", "Muddy Water", },
+                    eggRand = 5,
                 },
 
                 new Species() {
                     Name = "Corphish",
                     moves = { new Move { Name = "Bubble", At = 1 }, new Move { Name = "Harden", At = 5 }, new Move { Name = "Vice Grip", At = 7 }, new Move { Name = "Leer", At = 10 }, new Move { Name = "Bubble Beam", At = 14 }, new Move { Name = "Protect", At = 17 }, new Move { Name = "Double Hit", At = 20 }, new Move { Name = "Knock Off", At = 23 }, new Move { Name = "Night Slash", At = 26 }, new Move { Name = "Razor Shell", At = 31 }, new Move { Name = "Taunt", At = 34 }, new Move { Name = "Swords Dance", At = 37 }, new Move { Name = "Crunch", At = 39 }, new Move { Name = "Crabhammer", At = 43 }, new Move { Name = "Guillotine", At = 48 }, },
                     eggMoves = { "Mud Sport", "Endeavor", "Body Slam", "Ancient Power", "Knock Off", "Superpower", "Metal Claw", "Dragon Dance", "Trump Card", "Chip Away", "Double-Edge", "Aqua Jet", "Switcheroo", },
+                    eggRand = 7,
                 },
 
                 new Species() {
                     Name = "Crawdaunt",
                     moves = { new Move { Name = "Bubble", At = 1 }, new Move { Name = "Harden", At = 1 }, new Move { Name = "Vice Grip", At = 1 }, new Move { Name = "Leer", At = 1 }, new Move { Name = "Harden", At = 5 }, new Move { Name = "Vice Grip", At = 7 }, new Move { Name = "Leer", At = 10 }, new Move { Name = "Bubble Beam", At = 14 }, new Move { Name = "Protect", At = 17 }, new Move { Name = "Double Hit", At = 20 }, new Move { Name = "Knock Off", At = 23 }, new Move { Name = "Night Slash", At = 26 }, new Move { Name = "Swift", At = 30 }, new Move { Name = "Razor Shell", At = 32 }, new Move { Name = "Taunt", At = 36 }, new Move { Name = "Swords Dance", At = 40 }, new Move { Name = "Crunch", At = 43 }, new Move { Name = "Crabhammer", At = 48 }, new Move { Name = "Guillotine", At = 54 }, },
+                    eggMoves = { "Mud Sport", "Endeavor", "Body Slam", "Ancient Power", "Knock Off", "Superpower", "Metal Claw", "Dragon Dance", "Trump Card", "Chip Away", "Double-Edge", "Aqua Jet", "Switcheroo", },
+                    eggRand = 7,
                     FS = true,
                 },
 
@@ -2259,6 +2279,7 @@ namespace TinyFinder
                     Name = "Feebas",
                     moves = { new Move { Name = "Splash", At = 1 }, new Move { Name = "Tackle", At = 15 }, new Move { Name = "Flail", At = 30 }, },
                     eggMoves = { "Mirror Coat", "Dragon Breath", "Mud Sport", "Hypnosis", "Confuse Ray", "Mist", "Haze", "Tickle", "Brine", "Iron Tail", "Dragon Pulse", "Captivate", },
+                    eggRand = 7,
                 },
 
                 new Species() {
@@ -2403,6 +2424,7 @@ namespace TinyFinder
                     Name = "Luvdisc",
                     moves = { new Move { Name = "Tackle", At = 1 }, new Move { Name = "Charm", At = 1 }, new Move { Name = "Water Gun", At = 4 }, new Move { Name = "Agility", At = 7 }, new Move { Name = "Draining Kiss", At = 9 }, new Move { Name = "Lucky Chant", At = 14 }, new Move { Name = "Water Pulse", At = 17 }, new Move { Name = "Attract", At = 22 }, new Move { Name = "Flail", At = 27 }, new Move { Name = "Sweet Kiss", At = 31 }, new Move { Name = "Take Down", At = 37 }, new Move { Name = "Aqua Ring", At = 40 }, new Move { Name = "Captivate", At = 46 }, new Move { Name = "Hydro Pump", At = 50 }, new Move { Name = "Safeguard", At = 55 }, },
                     eggMoves = { "Splash", "Supersonic", "Water Sport", "Mud Sport", "Captivate", "Aqua Ring", "Aqua Jet", "Heal Pulse", "Brine", "Entrainment", },
+                    eggRand = 9,
                     item50 = "Heart Scale",
                 },
 

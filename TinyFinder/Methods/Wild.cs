@@ -1,4 +1,9 @@
-﻿using TinyFinder.Main;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+using TinyFinder.Controls;
+using TinyFinder.Main;
 
 namespace TinyFinder
 {
@@ -9,144 +14,127 @@ namespace TinyFinder
             currentState.CopyTo(temp, 0);
 
             //slotType = current.sType;
-            switch (current.method)
+            switch (current.encounterKey)
             {
-                case 1:                 // Normal Wild
-                    NormalWild(current.ratio, current.calibration, current.oras, current.movingHordes, current.radarGrass, current.sType);
+                case EnctrKey.Wild:
+                case EnctrKey.FS:
+                    NormalWild(current);
                     break;
 
-                case 2:                 // Fishing
+                case EnctrKey.Fishing:
 
-                    NormalWild(current.ratio, 0, current.oras, false, false, 3);
+                    FishingWild(current);
                     break;
 
-                case 3:                 // Rock Smash
+                case EnctrKey.RockSmash:
 
-                    RockSmash(current.oras);
+                    RockSmash(current);
                     break;
 
-                case 5:                 // Honey Wild
-                    HoneyWild(current.oras, current.advances, current.sType);
+                case EnctrKey.Honey:
+                    HoneyWild(current);
                     break;
 
-                case 7:                 // Friend Safari
-                    NormalWild(current.ratio, 0, false, false, false, current.sType);
-                    break;
-
-                case 8:                 // Ambush encounter
+                case EnctrKey.Ambush:
 
                     Ambush();
                     break;
             }
         }
 
-        //https://github.com/Bambo-Rambo/TinyFinder/blob/main/Notes.md#normal-wild---hordes-connection
-        public void NormalWild(byte ratio, byte Calibration, bool oras, bool MayStepHorde, bool RadarGrass, byte SlotType)
+        public void NormalWild(UISettings current)
         {
-            for (byte i = 0; i < Calibration; i++)          //NPC influence taken into account before everything else
+            for (int i = 0; i < current.calibration; i++)           //NPC influence taken into account before everything else
                 AdvanceOnce();
 
-            rand100 = RandCall(100);                        //If (rand100 < 5) -> Horde
+            rand100 = RandCall(100);                                //If (rand100 < 5) -> Horde
 
-            if (MayStepHorde)                               //+1 to avoid using the same rand100 for Horde trigger and Sync
-                AdvanceOnce();                              //Every horde, triggered by step, would be synced otherwise
+            if (current.possibleHorde)                               //+1 to avoid using the same rand100 for Horde trigger and Sync
+                AdvanceOnce();                                      //Every horde, triggered by step, would be synced otherwise
 
-            Sync = CurrentRand(100) < 50;
+            Sync = Current(100) < 50;
 
             encounter = RandCall(100);
-            trigger = encounter < ratio && (!MayStepHorde || rand100 > 4);
+            trigger = encounter < current.ratio && (!current.possibleHorde || rand100 > 4);
 
-            if (RadarGrass)
+            if (current.radarGrass)
                 AdvanceOnce();
 
-            slot = data.getSlot(RandCall(100), SlotType);
+            slot = data.getSlot(RandCall(100), current.sType);
 
-            if (oras)
+            if (current.oras)
                 flute = Findflute();
 
-            itemSlot = FindItem();
+            AdvanceOnce();
+            itemSlot = FindWildItem();
         }
 
-        public void RockSmash(bool oras)
+        public void FishingWild(UISettings current)
         {
-            rand100 = RandCall(100);
+            rand100 = Current(100);
 
-            encounter = CurrentRand(3);
+            BlinkSystem totalBlinks = new BlinkSystem(this);
+            totalBlinks.Apply(current);
+
+            NormalWild(current);
+        }
+
+        public void RockSmash(UISettings current)
+        {
+            rand100 = Current(100);
+
+            BlinkSystem totalBlinks = new BlinkSystem(this);
+            totalBlinks.Apply(current);
+
+            encounter = RandCall(3);
             trigger = encounter == 0;       // 0 => Pokemon, 1 => item, 2 => nothing
 
             Sync = RandCall(100) < 50;
 
             slot = data.getSlot(RandCall(100), 4);
 
-            if (oras)
+            if (current.oras)
                 flute = Findflute();
 
-            itemSlot = FindItem();
+            AdvanceOnce();
+            itemSlot = FindWildItem();
         }
 
-        public void HoneyWild(bool oras, byte advances, byte SlotType)
+        public void HoneyWild(UISettings current)
         {
-            rand100 = RandCall(100);
+            rand100 = Current(100);
 
-            // 3 if Cave / ORAS underwater
-            for (byte i = 0; i < advances; i++)       // 27 if XY
-                AdvanceOnce();                            // 15 if ORAS
-                                                      // 6 if ORAS Magma/Aqua Hideout
+                                                            // 3 if Cave / ORAS underwater
+            for (int i = 0; i < current.advances; i++)      // 27 if XY
+                AdvanceOnce();                              // 15 if ORAS
+                                                            // 6 if ORAS Magma/Aqua Hideout
 
-            Sync = CurrentRand(100) < 50;
+            BlinkSystem totalBlinks = new BlinkSystem(this);
+            totalBlinks.Apply(current);
 
-            slot = data.getSlot(RandCall(100), SlotType);
+            Sync = RandCall(100) < 50;
 
-            if (oras)
+            slot = data.getSlot(RandCall(100), current.sType);
+
+            if (current.oras)
                 flute = Findflute();
 
-            itemSlot = FindItem();
+            AdvanceOnce();
+            itemSlot = FindWildItem();
         }
 
         public void Ambush()
         {
-            //rand100 = CurrentRand(100);
+            //rand100 = Current(100);
 
             slot = data.getSlot(RandCall(100), 0);
 
-            rand100 = CurrentRand(100);     // Show the slot rand (for testing)
+            rand100 = Current(100);     // Show the slot rand (for testing)
 
             Sync = RandCall(100) < 50;
 
-            itemSlot = FindItem();
-        }
-
-        public byte Findflute()
-        {
             AdvanceOnce();
-
-            if (CurrentRand(100) < 40)
-                return 1;
-
-            else if (CurrentRand(100) < 70)
-                return 2;
-
-            else if (CurrentRand(100) < 90)
-                return 3;
-
-            else
-                return 4;
-
-        }
-
-        public byte FindItem()
-        {
-            AdvanceOnce();
-            AdvanceOnce();
-
-            if (CurrentRand(100) < 50)
-                return 0;
-
-            else if (CurrentRand(100) < 55)
-                return 1;
-
-            else
-                return 2;
+            itemSlot = FindWildItem();
         }
 
     }
