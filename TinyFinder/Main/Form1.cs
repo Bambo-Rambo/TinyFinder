@@ -44,7 +44,22 @@ namespace TinyFinder
         bool LongGrass => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Long Grass");
         bool Swampy => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Swamp");
 
-        private EncounterType SelectedEncounter => Methods.SelectedItem as EncounterType;
+        private EncounterType SelectedEncounter;
+        private EncounterType getEncounterType
+        {
+            get
+            {
+                if (Methods.InvokeRequired)
+                {
+                    return (EncounterType)Methods.Invoke(new Func<EncounterType>(() =>
+                        Methods.SelectedItem as EncounterType));
+                }
+                else
+                {
+                    return Methods.SelectedItem as EncounterType;
+                }
+            }
+        }
 
         bool IsID => SelectedEncounter.Key == EnctrKey.ID;
         bool IsWild => SelectedEncounter.Key == EnctrKey.Wild;
@@ -635,6 +650,7 @@ namespace TinyFinder
         }
         private void ManageControls()
         {
+            SelectedEncounter = getEncounterType;
             OffsetCalc.Enabled = !IsID;
 
             //It's safer to use the fields of the class directly rather than methods like "IsWild", "IsHorde" etc
