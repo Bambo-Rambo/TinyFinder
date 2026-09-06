@@ -15,6 +15,7 @@ namespace TinyFinder
 {
     public partial class Form1
     {
+        readonly object _searchLock = new object();
         int Year;
         uint tinyInitSeed, seconds, initial = 0, Min, Max;
         uint TargetRandID;
@@ -78,7 +79,8 @@ namespace TinyFinder
                 settings.currentSlots = IsHorde ? GetHordeTable1.Concat(GetHordeTable2).Concat(GetHordeTable3).ToArray() : SlotTable();
                 settings.currentLevels = LevelTable();
                 settings.interactMTFrame = (int)InteractFrame.Value;
-                settings.longBlinkRand = EmuBox.Checked ? CurrentLocation.FirstLongBlinkRand_Emu : CurrentLocation.FirstLongBlinkRand;
+                if (SelectedEncounter.ShowsLocations)
+                    settings.longBlinkRand = EmuBox.Checked ? CurrentLocation.FirstLongBlinkRand_Emu : CurrentLocation.FirstLongBlinkRand;
 
                 if (ORAS)
                 {
@@ -205,7 +207,7 @@ namespace TinyFinder
                     Searcher.Columns["S_Tiny1"].Visible = Searcher.Columns["S_Tiny0"].Visible = !ReaderBTN.Checked;
                 Searcher.Columns["S_Tiny32"].Visible = ReaderBTN.Checked;
             }
-                
+
             jobs = new Thread[(int)ThreadCount.Value];
             // Use the selected number of threads only for ID, Hordes, Radar and DexNav
             ThreadsUsed = (EnctrTypeChosen == EnctrKey.ID || EnctrTypeChosen == EnctrKey.Horde || 
@@ -364,7 +366,7 @@ namespace TinyFinder
                     break;
             }
 
-            if (DateSearcher)
+            if (DateSearcher)//
             {
                 for (int i = 0; i < ThreadsUsed; i++)
                 {
@@ -390,6 +392,7 @@ namespace TinyFinder
 
         private void StartResearch(uint[] CurrentState, uint Jump)
         {
+            TinyMT tiny = new TinyMT();
             Index index;
             uint[] StoreSeed = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
@@ -519,7 +522,10 @@ namespace TinyFinder
                 index.Tiny2 = InitialState[2];
                 index.Tiny1 = InitialState[1];
                 index.Tiny0 = InitialState[0];
-                SearchList.Add(index);
+                lock (_searchLock)
+                {
+                    SearchList.Add(index);
+                }
                 Thread.Sleep(50);
                 Invoke(new Action(() =>
                 {

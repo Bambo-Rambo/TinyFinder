@@ -324,8 +324,9 @@ namespace TinyFinder
 						loc.HordeLevel = new int[]			{ 11, 11, 12 };
 						break;
 
-					case 270:		// Route 12
-						if (X)
+					case 270:       // Route 12 - Shalour Side
+                    case 271:       // Route 12 - Coumarine Side
+                        if (X)
 						{
 							loc.GrassTable = new ushort[]	{ 79, 79, 79, 441, 441, 441, 241, 128, 102, 127, 417, 417 };
 						}
@@ -356,7 +357,7 @@ namespace TinyFinder
 						loc.HordeLevel = new int[]			{ 13, 13, 14 };
 						loc.SurfTable = new ushort[]		{ 72, 72, 458, 72, 131 };
 						loc.SurfLevel = new int[]			{ 25, 26, 27, 27, 27 };
-						/*loc.OldTable = new ushort[]			{ 370, 370, 370 };
+						loc.OldTable = new ushort[]			{ 370, 370, 370 };
 						loc.OldLevel = new int[]			{ 15, 15, 15 };
 						loc.GoodTable = new ushort[]		{ 223, 366, 223 };
 						loc.GoodLevel = new int[]			{ 25, 25, 25 };
@@ -370,7 +371,7 @@ namespace TinyFinder
 						}
 						loc.SuperLevel = new int[]			{ 35, 35, 35 };
 						// 1 NPC but on different spot than wild, let's avoid confusion since species are available elsewhere
-						loc.SmashTable = new ushort[]		{ 557, 688, 557, 688, 557 };
+						/*loc.SmashTable = new ushort[]		{ 557, 688, 557, 688, 557 };
 						loc.SmashLevel = new int[]		{ 23, 23, 24, 25, 25 };*/
 						break;
 

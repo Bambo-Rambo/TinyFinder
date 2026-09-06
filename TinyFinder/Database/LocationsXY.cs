@@ -234,9 +234,18 @@ namespace TinyFinder
 
                 new Location
                 {
-                    Name = "Route 12",
+                    Name = "Route 12 - Shalour Side",
                     Map = 270,
                     NPC = 1,
+
+                    FirstLongBlinkRand = 96,
+                    FirstLongBlinkRand_Emu = 82,
+                },
+
+                new Location
+                {
+                    Name = "Route 12 - Coumarine Side",
+                    Map = 271,
 
                     FirstLongBlinkRand = 96,
                     FirstLongBlinkRand_Emu = 82,
@@ -370,8 +379,8 @@ namespace TinyFinder
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
-                    FirstLongBlinkRand_Emu = 78,
                     FirstLongBlinkRand = 80,
+                    FirstLongBlinkRand_Emu = 78,
                 },
 
                 new Location
@@ -390,8 +399,8 @@ namespace TinyFinder
                     Enc_Ratio = 7,
                     Bag_Advances = 3,
 
-                    FirstLongBlinkRand_Emu = 76,
                     FirstLongBlinkRand = 80,
+                    FirstLongBlinkRand_Emu = 76,
                 },
 
                 new Location
