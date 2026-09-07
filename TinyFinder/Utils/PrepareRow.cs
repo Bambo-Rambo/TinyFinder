@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Forms;
 using TinyFinder.Controls;
 
 namespace TinyFinder.Main
@@ -101,7 +102,7 @@ namespace TinyFinder.Main
                         tempLevel -= index.flute;
                         if (tempLevel < 1)
                             tempLevel = 1;
-                    }  
+                    }
                     else
                     {
                         for (int i = 0; i < 5; i++)

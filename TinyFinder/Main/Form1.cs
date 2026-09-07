@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using System.Reflection;
-using TinyFinder.Subforms.MT;
-using TinyFinder.Main;
-using System.Linq;
-using TinyFinder.Controls;
 using System.ComponentModel;
+using System.Diagnostics.PerformanceData;
+using System.Drawing;
+using System.Linq;
+using System.Reflection;
 using System.Security.Claims;
+using System.Windows.Forms;
+using TinyFinder.Controls;
+using TinyFinder.Main;
+using TinyFinder.Subforms.MT;
 
 namespace TinyFinder
 {
@@ -38,7 +39,7 @@ namespace TinyFinder
         private List<ushort> GetFSList => Species.getFSList();
 
         bool ORAS => GameVersion.SelectedIndex > 1;
-        
+
         bool Surfing => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Water");
         bool Fishing => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Contains("Rod");
         bool LongGrass => EncounterSettings.SelectedIndex != -1 && EncounterSettings.SelectedItem.ToString().Equals("Long Grass");
@@ -155,7 +156,7 @@ namespace TinyFinder
             LegendDefeated.Text = (GameVersion.SelectedIndex == 2 ? "Groudon" : "Kyogre") + " Defeated";
 
             EncounterTypeList = EncounterType.GetEncounterTypes(ORAS);
-            
+
             Methods.DataSource = EncounterTypeList;
             Methods.DisplayMember = "Name";
 
@@ -217,7 +218,7 @@ namespace TinyFinder
                 (IsWild && !temp.HasNormalWild()) ||
 
                 (IsFishing && !temp.HasFishing()) ||
-              //(IsFishing && temp.ConsoleDelayRand == 0) ||
+                //(IsFishing && temp.ConsoleDelayRand == 0) ||
 
                 (IsRockSmash && temp.SmashTable == null) ||
 
@@ -713,7 +714,7 @@ namespace TinyFinder
                 Flute1.Location = new Point(313, 42);
                 SyncBox.Location = new Point(53, 148);
                 Slots_Label.Enabled = SlotsComboBox.Enabled = SyncBox.Enabled = true;
-                
+
                 if (IsHorde)
                 {
                     Flute1_Label.Location = new Point(257, 55);
@@ -774,11 +775,11 @@ namespace TinyFinder
             DoubleBuffered(Generator);
         }
 
-        
+
         #endregion
 
         #region ManageDataGridviews
-        
+
         private void ManageColumns(DataGridView dgv, EncounterType choice)
         {
             string L = dgv == Generator ? "G" : "S";
@@ -793,7 +794,7 @@ namespace TinyFinder
             dgv.Columns[L + "_Type"].Visible = IsDexNavMov;
 
             dgv.Columns[L + "_Ratio"].Visible = choice.ShowsRatio || MovingHordeOption;
-            dgv.Columns[L + "_SpeciesInfo"].Visible = dgv.Columns[L + "_Sync"].Visible = 
+            dgv.Columns[L + "_SpeciesInfo"].Visible = dgv.Columns[L + "_Sync"].Visible =
                 dgv.Columns[L + "_Item"].Visible = dgv.Columns[L + "_Level"].Visible = choice.ShowsSpecies && !IsRadar1;
             dgv.Columns[L + "_Slot"].Visible = choice.ShowsSlots && !IsRadar1;
 
@@ -1013,9 +1014,9 @@ namespace TinyFinder
                 if (AdvancesRequired < 0)
                 {
                     int EarliestIndex = (int)min.Value + BagAdvances;
-                    MessageBox.Show("Index " + Target + " is too close." + "\n" + 
+                    MessageBox.Show("Index " + Target + " is too close." + "\n" +
                         "The earliest you can aim for is " + EarliestIndex + ".", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                } 
+                }
                 else if (AdvancesRequired == 0)
                 {
                     MessageBox.Show("No advances required!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -1062,7 +1063,7 @@ namespace TinyFinder
             {
                 Calibrated = false;
                 //if (!Working)
-                    //MainButton.Text = "Calibrate and Search";
+                //MainButton.Text = "Calibrate and Search";
             }
         }
         private void t3_TextChanged(object sender, EventArgs e)
@@ -1139,13 +1140,13 @@ namespace TinyFinder
                 case "RadarChain":
                     var chainRadar = (uint[])info;
                     try
-                        {
-                            CurrentChain.Value = chainRadar[0];
-                        }
-                        catch
-                        {
-                            CurrentChain.Value = 255;
-                        }
+                    {
+                        CurrentChain.Value = chainRadar[0];
+                    }
+                    catch
+                    {
+                        CurrentChain.Value = 255;
+                    }
                     Chain_Info.Visible = true;
                     Chain_Info.Location = new Point(25, 118);
                     Chain_Info.Text = "Chain Length   =   " + chainRadar[0].ToString();

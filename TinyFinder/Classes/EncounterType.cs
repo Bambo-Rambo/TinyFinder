@@ -106,9 +106,9 @@ namespace TinyFinder.Controls
                     InteractMT = 140,   // Actual activation at 144
                 },
 
-                new EncounterType 
-                { 
-                    Key = EnctrKey.RockSmash, 
+                new EncounterType
+                {
+                    Key = EnctrKey.RockSmash,
                     Name = "Rock Smash",
 
                     ShowsParty = false,
@@ -122,9 +122,9 @@ namespace TinyFinder.Controls
                     InteractMT = 300,   // Actual activation at 316
                 },
 
-                new EncounterType 
-                { 
-                    Key = EnctrKey.Horde, 
+                new EncounterType
+                {
+                    Key = EnctrKey.Horde,
                     Name = "Horde",
 
                     ShowsHordeInfo = true,
@@ -132,17 +132,17 @@ namespace TinyFinder.Controls
                     ShowsMultiFlutes = ORAS,
                 },
 
-                new EncounterType 
-                { 
-                    Key = EnctrKey.Honey, Name = "Honey Wild", ShowsFlute = ORAS, 
+                new EncounterType
+                {
+                    Key = EnctrKey.Honey, Name = "Honey Wild", ShowsFlute = ORAS,
                 },
             };
 
             if (ORAS)
             {
-                list.Add(new EncounterType 
-                { 
-                    Key = EnctrKey.DexNavMov, 
+                list.Add(new EncounterType
+                {
+                    Key = EnctrKey.DexNavMov,
                     Name = "DexNav - Moving",
 
                     ShowsChain = true,
@@ -152,9 +152,9 @@ namespace TinyFinder.Controls
                     ShowsDexNavInfo = true,
                 });
 
-                list.Add(new EncounterType 
-                { 
-                    Key = EnctrKey.DexNavSrch, 
+                list.Add(new EncounterType
+                {
+                    Key = EnctrKey.DexNavSrch,
                     Name = "DexNav - Searching",
 
                     ShowsTriggerMTFrame = true,
@@ -175,9 +175,9 @@ namespace TinyFinder.Controls
             }
             else
             {
-                list.Add(new EncounterType 
-                { 
-                    Key = EnctrKey.Radar, 
+                list.Add(new EncounterType
+                {
+                    Key = EnctrKey.Radar,
                     Name = "Poké Radar",
                     ShowsRadarInfo = true,
                     ShowsUseBag = true,
@@ -185,18 +185,18 @@ namespace TinyFinder.Controls
                     ShowsChain = true,
                 });
 
-                list.Add(new EncounterType 
-                { 
-                    Key = EnctrKey.FS, 
+                list.Add(new EncounterType
+                {
+                    Key = EnctrKey.FS,
                     Name = "Friend Safari",
 
                     ShowsLocations = false,
                     ShowsRatio = true,
                 });
 
-                list.Add(new EncounterType 
-                { 
-                    Key = EnctrKey.Ambush, 
+                list.Add(new EncounterType
+                {
+                    Key = EnctrKey.Ambush,
                     Name = "Ambush Encounter",
                     ShowsSettings = false,
                 });

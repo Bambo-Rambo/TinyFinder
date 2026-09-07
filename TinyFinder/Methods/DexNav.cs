@@ -68,12 +68,12 @@ namespace TinyFinder
             {
                 AdvanceOnce();
                 Advance(current.calibration);
-                
+
                 trigger = RandCall(100) < 50;
                 if (!trigger && current.triggerOnly)
                     return;
             }
-            
+
             switch (RandCall(4))
             {
                 case 0:
@@ -111,7 +111,7 @@ namespace TinyFinder
                 if (slot == 0)
                     slot++;
             }
-                
+
             LevelRand = RandU32();
 
             LevelBoost = current.chain / 5 + (Boost ? 10 : 0);
@@ -133,7 +133,7 @@ namespace TinyFinder
             {
                 tmp -= HeldItemRate[current.Grade * 2 + index];
                 //if (CompoundEyes)
-                    //tmp -= 5;
+                //tmp -= 5;
                 if (tmp < 0)
                     break;
             }

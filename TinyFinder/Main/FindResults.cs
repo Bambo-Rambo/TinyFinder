@@ -7,9 +7,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using TinyFinder.Main;
 using TinyFinder.Controls;
-using System.Diagnostics.PerformanceData;
-using System.Data.SqlTypes;
-using TinyFinder.Properties;
 
 namespace TinyFinder
 {
@@ -98,12 +95,12 @@ namespace TinyFinder
                     settings.searchLevel = (ushort)SearchLvl.Value;
                     settings.Wants_Sync = NavFilters.CheckBoxItems[5].Checked;
                     settings.Wants_Exclusives = AddExclusiveSlots();
-                    settings.Show_Alt_EggMove = AltEggMove.Checked;
+                    settings.Show_Alt_EggMove = AltEggMove.Checked && IsDexNavMov;
                     settings.specialSlots = GetNavTable;
                     settings.dexNavLevel = CurrentLocation.DexNavLevel;
 
-                    if (IsDexNavSrch && AddExclusiveSlots())
-                        settings.exclusives = true;
+                    if (IsDexNavSrch)
+                        settings.exclusives = AddExclusiveSlots();
                     else
                         settings.exclusives = HasExclusives && (!Surfing || (GetWildTable == null && GetCaveTable == null && GetLongTable == null));
 
@@ -126,6 +123,8 @@ namespace TinyFinder
                     }
                     if (settings.Show_Alt_EggMove)
                         settings.maxEggRand += 2;
+
+                    //MessageBox.Show("" + settings.exclusives);
 
                 }
                 else if (IsFriendSafari)
@@ -296,17 +295,17 @@ namespace TinyFinder
                 case EnctrKey.Fishing:
 
                     settings.sType = 3;
-                  //settings.advances = (int)(party.Value * 3 + getBagAdvances() - 1);     // When use rod from bag
 
-                    // Route 12 is excluded for now since NPC affects in different spot than wild
+                  //settings.advances = (int)(party.Value * 3 + getBagAdvances() - 1);     // When use rod from bag
                     settings.advances = (int)(party.Value * 3 + CurrentLocation.NPC);
 
                     break;
 
-                /*case EnctrKey.RockSmash:
+                case EnctrKey.RockSmash:
+                    settings.sType = 4;
                     //settings.advances = getBagAdvances();
                     //settings.advances = CurrentLocation.NPC;  // Route 12 and Route 18 only but in different spots than wild
-                    break;*/
+                    break;
 
                 case EnctrKey.Horde:
                 case EnctrKey.Honey:
@@ -325,18 +324,13 @@ namespace TinyFinder
                         }
                         else
                         {
-                            // 114 in XY retail connection cave
-                            // 120 in XY retail route 5?
-                            // 122 in XY retail route 7
-                            // 112-114 in Azure Bay?
-
                             if (getBagAdvances() == 3)
                             {
-                                settings.honeyDelay = ORAS ? 120 : 110;     // ORAS 120, 120, 120, 
+                                settings.honeyDelay = ORAS ? 120 : 110;
                             }
                             else
                             {
-                                settings.honeyDelay = ORAS ? 126 : 112;     // 114, 110, 112, 112,  ORAS 126, 122, 126, 126, 128?
+                                settings.honeyDelay = ORAS ? 126 : 112;
                             }
 
                         }
@@ -366,7 +360,7 @@ namespace TinyFinder
                     break;
             }
 
-            if (DateSearcher)//
+            if (DateSearcher)
             {
                 for (int i = 0; i < ThreadsUsed; i++)
                 {
@@ -392,7 +386,7 @@ namespace TinyFinder
 
         private void StartResearch(uint[] CurrentState, uint Jump)
         {
-            TinyMT tiny = new TinyMT();
+            TinyMT tiny = new TinyMT();                     // A separate object is required for each thread
             Index index;
             uint[] StoreSeed = new uint[4];
             uint TotalSeconds = seconds, TinySeed = tinyInitSeed;
@@ -431,7 +425,7 @@ namespace TinyFinder
                             break;
 
                         case EnctrKey.Wild:
-                        //case EnctrKey.Fishing:
+                        case EnctrKey.Fishing:
                         case EnctrKey.RockSmash:
                         case EnctrKey.FS:
 
@@ -440,10 +434,11 @@ namespace TinyFinder
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
-                        case EnctrKey.Fishing:
+                        case EnctrKey.Honey:
+                        case EnctrKey.Ambush:
 
                             index = new Wild(CurrentState, settings);
-                            if (settings.CheckCommon(index, true) || NoFilters)
+                            if (settings.CheckCommon(index, false) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
@@ -451,13 +446,6 @@ namespace TinyFinder
 
                             index = new Horde(CurrentState, settings);
                             if (settings.CheckHorde(index, settings.moving, settings.oras) || NoFilters)
-                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
-                            break;
-
-                        case EnctrKey.Honey:
-
-                            index = new Wild(CurrentState, settings);
-                            if (settings.CheckCommon(index, false) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
@@ -476,16 +464,10 @@ namespace TinyFinder
                             break;
 
                         case EnctrKey.DexNavSrch:
+
                             index = new DexNav(CurrentState, settings);
                             if (settings.CheckDexNav(index) || NoFilters)
                                 AddtoList(TinySeed, index, i, StoreSeed, tiny.NextState(CurrentState.ToArray()), calc.secondsToDate(TotalSeconds, Year));
-                            break;
-
-                        case EnctrKey.Ambush:
-
-                            index = new Wild(CurrentState, settings);
-                            if (settings.CheckCommon(index, false) || NoFilters)
-                                AddtoList(TinySeed, index, i, StoreSeed, CurrentState, calc.secondsToDate(TotalSeconds, Year));
                             break;
 
                     }

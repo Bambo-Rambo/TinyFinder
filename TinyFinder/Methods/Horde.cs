@@ -31,7 +31,7 @@ namespace TinyFinder
 
             encounter = RandCall(100);
 
-            trigger =  rand100 < 5 && encounter < ratio;
+            trigger = rand100 < 5 && encounter < ratio;
 
             if (!trigger && Trigger_only)
                 return;
@@ -46,7 +46,7 @@ namespace TinyFinder
         public void HordeHoney(UISettings current)
         {
             rand100 = Current(100);
-                                                // 3 if Cave / ORAS underwater
+            // 3 if Cave / ORAS underwater
             Advance(current.advances);          // 27 if XY
                                                 // 15 if ORAS
 

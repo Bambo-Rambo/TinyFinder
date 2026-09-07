@@ -45,7 +45,7 @@ namespace TinyFinder
                     {
                         System.Diagnostics.Process.Start(GuideList[g, 1]);
                     }
-                    catch 
+                    catch
                     {
                         System.Windows.Forms.MessageBox.Show
                             ("An error has occurred", "Error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
@@ -53,36 +53,36 @@ namespace TinyFinder
                 }
             }
         }
-       
+
 
         public string[] GetNatures() => Natures;
 
-        private readonly static string[] Natures = 
-        { 
+        private readonly static string[] Natures =
+        {
             "Hardy",
             "Lonely",
             "Brave",
             "Adamant",
-            "Naughty", 
-            "Bold", 
-            "Docile", 
-            "Relaxed", 
-            "Impish", 
-            "Lax", 
-            "Timid", 
-            "Hasty", 
+            "Naughty",
+            "Bold",
+            "Docile",
+            "Relaxed",
+            "Impish",
+            "Lax",
+            "Timid",
+            "Hasty",
             "Serious",
-            "Jolly", 
-            "Naive", 
-            "Modest", 
-            "Mild", 
-            "Quiet", 
-            "Bashful", 
-            "Rash", 
-            "Calm", 
-            "Gentle", 
-            "Sassy", 
-            "Careful", 
+            "Jolly",
+            "Naive",
+            "Modest",
+            "Mild",
+            "Quiet",
+            "Bashful",
+            "Rash",
+            "Calm",
+            "Gentle",
+            "Sassy",
+            "Careful",
             "Quirky",
         };
 

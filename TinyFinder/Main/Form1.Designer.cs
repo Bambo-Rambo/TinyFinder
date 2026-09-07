@@ -261,8 +261,8 @@ namespace TinyFinder
             this.Searcher.AllowUserToAddRows = false;
             this.Searcher.AllowUserToDeleteRows = false;
             this.Searcher.AllowUserToResizeRows = false;
-            this.Searcher.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.Searcher.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Searcher.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Searcher.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1651,8 +1651,8 @@ namespace TinyFinder
             this.Generator.AllowUserToAddRows = false;
             this.Generator.AllowUserToDeleteRows = false;
             this.Generator.AllowUserToResizeRows = false;
-            this.Generator.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.Generator.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Generator.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.Generator.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -2039,8 +2039,8 @@ namespace TinyFinder
             // 
             // SearchGen
             // 
-            this.SearchGen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.SearchGen.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.SearchGen.Controls.Add(this.Srch);
             this.SearchGen.Controls.Add(this.Gen);

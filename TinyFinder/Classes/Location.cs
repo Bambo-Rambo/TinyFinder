@@ -11,60 +11,60 @@ namespace TinyFinder
         public int FirstLongBlinkRand;
         public int FirstLongBlinkRand_Emu;
 
-        public ushort   [] GrassTable;
-        public ushort   [] LongTable;
-        public ushort   [] CaveTable;
-        public ushort   [] RideTable;
-        public int      [] WildLevel;
+        public ushort[] GrassTable;
+        public ushort[] LongTable;
+        public ushort[] CaveTable;
+        public ushort[] RideTable;
+        public int[] WildLevel;
 
-        public ushort   [] RedTable;
-        public int      [] RedLevel;
-        public ushort   [] YellowTable;
-        public int      [] YellowLevel;
-        public ushort   [] PurpleTable;
-        public int      [] PurpleLevel;
+        public ushort[] RedTable;
+        public int[] RedLevel;
+        public ushort[] YellowTable;
+        public int[] YellowLevel;
+        public ushort[] PurpleTable;
+        public int[] PurpleLevel;
 
-        public ushort   [] SwampTable;
-        public int      [] SwampLevel;
+        public ushort[] SwampTable;
+        public int[] SwampLevel;
 
-        public ushort   [] HordeTable1;
-        public ushort   [] HordeTable2;
-        public ushort   [] HordeTable3;
-        public int      [] HordeLevel;
+        public ushort[] HordeTable1;
+        public ushort[] HordeTable2;
+        public ushort[] HordeTable3;
+        public int[] HordeLevel;
 
-        public ushort   [] SurfTable;
-        public int      [] SurfLevel;
+        public ushort[] SurfTable;
+        public int[] SurfLevel;
 
-        public ushort   [] OldTable;
-        public int      [] OldLevel;
+        public ushort[] OldTable;
+        public int[] OldLevel;
 
-        public ushort   [] GoodTable;
-        public int      [] GoodLevel;
+        public ushort[] GoodTable;
+        public int[] GoodLevel;
 
-        public ushort   [] SuperTable;
-        public int      [] SuperLevel;
+        public ushort[] SuperTable;
+        public int[] SuperLevel;
 
-        public ushort   [] SmashTable;
-        public int      [] SmashLevel;
+        public ushort[] SmashTable;
+        public int[] SmashLevel;
 
-        public ushort   [] DexNavTable;
-        public int         DexNavLevel;
+        public ushort[] DexNavTable;
+        public int DexNavLevel;
 
-        public ushort   [] AmbushTable;
-        public int      [] AmbushLevel;
+        public ushort[] AmbushTable;
+        public int[] AmbushLevel;
 
 
         public bool HasNormalWild()
         {
             return !(
-                GrassTable == null && 
-                LongTable == null && 
-                CaveTable == null && 
-                RedTable == null && 
+                GrassTable == null &&
+                LongTable == null &&
+                CaveTable == null &&
+                RedTable == null &&
                 YellowTable == null &&
                 PurpleTable == null &&
-                SwampTable == null && 
-                RideTable == null && 
+                SwampTable == null &&
+                RideTable == null &&
                 SurfTable == null);
         }
 
@@ -99,7 +99,7 @@ namespace TinyFinder
 
         public bool HasFishing()
         {
-            return OldTable != null && GoodTable != null && SuperTable != null && 
+            return OldTable != null && GoodTable != null && SuperTable != null &&
                 FirstLongBlinkRand != 0 && FirstLongBlinkRand_Emu != 0;
         }
 
@@ -111,9 +111,9 @@ namespace TinyFinder
         public bool HasRadar()
         {
             return !(
-                GrassTable == null  && 
-                RedTable == null && 
-                YellowTable == null && 
+                GrassTable == null &&
+                RedTable == null &&
+                YellowTable == null &&
                 PurpleTable == null);
         }
 

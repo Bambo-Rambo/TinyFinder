@@ -60,7 +60,7 @@ namespace TinyFinder
         public string Level { get; set; }
         public int itemSlot { get; set; }
         public string item { get; set; }
-        
+
         public int HordeHA { get; set; }
         public int[] flutes = new int[5];
         public string HordeFlutes { get; set; }
@@ -79,7 +79,7 @@ namespace TinyFinder
         public string eggMove { get; set; }
         public bool Boost { get; set; }
         public int potential { get; set; }
-        
+
         public string SpeciesName { get; set; }
 
         public bool goodEggMove { get; set; }

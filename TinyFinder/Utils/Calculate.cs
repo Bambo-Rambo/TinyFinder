@@ -70,7 +70,7 @@ namespace TinyFinder
 
             if (TimeZoneInfo.Local.IsDaylightSavingTime(date1) && !TimeZoneInfo.Local.IsDaylightSavingTime(date2))
                 return date2.AddSeconds(-3600).ToString("yyyy-MM-ddTHH:mm:ss");
-            
+
             return date2.ToString("yyyy-MM-ddTHH:mm:ss");
         }
     }

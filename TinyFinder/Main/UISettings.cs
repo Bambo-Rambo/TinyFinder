@@ -47,7 +47,7 @@ namespace TinyFinder.Main
 
         public bool CheckHorde(Index index, bool triggerCheck, bool oras)
         {
-      //if (CheckCommon(index, triggerCheck))     <- Not good because it causes problems with the 1st flute check
+            //if (CheckCommon(index, triggerCheck))     <- Not good because it causes problems with the 1st flute check
             if (index.trigger || !triggerCheck)
                 if (Target_Slots[index.slot] == true)
                     if ((Target_Horde_HA == index.HordeHA && Target_Horde_HA != 0) || (Target_Horde_HA == 0 && index.HordeHA != 0) || Target_Horde_HA == -1)

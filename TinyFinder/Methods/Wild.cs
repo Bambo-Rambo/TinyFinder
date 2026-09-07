@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Windows.Forms;
-using TinyFinder.Controls;
+﻿using TinyFinder.Controls;
 using TinyFinder.Main;
 
 namespace TinyFinder
@@ -49,7 +45,7 @@ namespace TinyFinder
 
             rand100 = RandCall(100);                                //If (rand100 < 5) -> Horde
 
-            if (current.possibleHorde)                               //+1 to avoid using the same rand100 for Horde trigger and Sync
+            if (current.possibleHorde)                              //+1 to avoid using the same rand100 for Horde trigger and Sync
                 AdvanceOnce();                                      //Every horde, triggered by step, would be synced otherwise
 
             Sync = Current(100) < 50;
@@ -60,13 +56,7 @@ namespace TinyFinder
             if (current.radarGrass)
                 AdvanceOnce();
 
-            slot = data.getSlot(RandCall(100), current.sType);
-
-            if (current.oras)
-                flute = Findflute();
-
-            AdvanceOnce();
-            itemSlot = FindWildItem();
+            Finalize(current);
         }
 
         public void FishingWild(UISettings current)
@@ -91,20 +81,14 @@ namespace TinyFinder
 
             Sync = RandCall(100) < 50;
 
-            slot = data.getSlot(RandCall(100), 4);
-
-            if (current.oras)
-                flute = Findflute();
-
-            AdvanceOnce();
-            itemSlot = FindWildItem();
+            Finalize(current);
         }
 
         public void HoneyWild(UISettings current)
         {
             rand100 = Current(100);
 
-                                                            // 3 if Cave / ORAS underwater
+            // 3 if Cave / ORAS underwater
             for (int i = 0; i < current.advances; i++)      // 27 if XY
                 AdvanceOnce();                              // 15 if ORAS
                                                             // 6 if ORAS Magma/Aqua Hideout
@@ -114,13 +98,7 @@ namespace TinyFinder
 
             Sync = RandCall(100) < 50;
 
-            slot = data.getSlot(RandCall(100), current.sType);
-
-            if (current.oras)
-                flute = Findflute();
-
-            AdvanceOnce();
-            itemSlot = FindWildItem();
+            Finalize(current);
         }
 
         public void Ambush()
@@ -132,6 +110,17 @@ namespace TinyFinder
             rand100 = Current(100);     // Show the slot rand (for testing)
 
             Sync = RandCall(100) < 50;
+
+            AdvanceOnce();
+            itemSlot = FindWildItem();
+        }
+
+        public void Finalize(UISettings current)
+        {
+            slot = data.getSlot(RandCall(100), current.sType);
+
+            if (current.oras)
+                flute = Findflute();
 
             AdvanceOnce();
             itemSlot = FindWildItem();

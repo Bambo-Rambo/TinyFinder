@@ -177,7 +177,7 @@ namespace TinyFinder.Controls
                 // If exit the bag using B, countdown begins 16 frames earlier
                 // if exit the bag using X, countdown begins 4 frames earlier instead
 
-                int MTAdvances = current.longBlinkRand  + LongCooldown(CurrentU32) - 4;     // The first long blink cycle just passed
+                int MTAdvances = current.longBlinkRand + LongCooldown(CurrentU32) - 4;     // The first long blink cycle just passed
                 ShortBlinkHappened = false;                         // so the next one can be short
                 Timeline.Add(MTAdvances);
 
