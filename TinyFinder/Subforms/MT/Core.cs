@@ -58,7 +58,7 @@ namespace TinyFinder.Subforms.MT
                         UnownLetter2 = FindUnown((byte)rand(PIDList[frame + 2], 28));
                         UnownLetter1 = FindUnown((byte)rand(PIDList[frame + 3], 28));
                     }
-                    
+
                     return true;
                 }
             }
@@ -73,17 +73,17 @@ namespace TinyFinder.Subforms.MT
         }
         private bool CheckIVs(int[] IVs)
         {
-            return IVs[0] >= Min_hp 
-                && IVs[1] >= Min_atk 
-                && IVs[2] >= Min_def 
-                && IVs[3] >= Min_spA 
-                && IVs[4] >= Min_spD 
-                && IVs[5] >= Min_spe 
-                && IVs[0] <= Max_hp 
-                && IVs[1] <= Max_atk 
-                && IVs[2] <= Max_def 
-                && IVs[3] <= Max_spA 
-                && IVs[4] <= Max_spD 
+            return IVs[0] >= Min_hp
+                && IVs[1] >= Min_atk
+                && IVs[2] >= Min_def
+                && IVs[3] >= Min_spA
+                && IVs[4] >= Min_spD
+                && IVs[5] >= Min_spe
+                && IVs[0] <= Max_hp
+                && IVs[1] <= Max_atk
+                && IVs[2] <= Max_def
+                && IVs[3] <= Max_spA
+                && IVs[4] <= Max_spD
                 && IVs[5] <= Max_spe;
         }
 
@@ -112,7 +112,7 @@ namespace TinyFinder.Subforms.MT
             uint[] PIDList = new uint[Max + 20];
             string Nature = "";
             byte Ability = 0;
-            
+
 
             while (IVSeed < EndSeed)
             {
@@ -148,7 +148,7 @@ namespace TinyFinder.Subforms.MT
                         if (FindIVsNature(IVs = new int[6], ref Nature, ref Ability, PIDList, frame))
                             AddToListPID(IVSeed, frame, PIDList[frame], Current_PSV, GetPRV(PIDList[frame]), IVs, Nature, Ability, UnownLetter1, UnownLetter2, UnownLetter3);
                     }
-                        
+
                 }
                 IVSeed += step;
             }
@@ -189,7 +189,7 @@ namespace TinyFinder.Subforms.MT
                         {
                             SelectedNatures.Clear();
                             int[] IVs2 = new int[6];
-                            if (FindIVsNature(IVs1, ref Nature, ref Ability, PIDList, ActualFrame) | FindIVsNature(IVs2, ref Nature , ref Ability, PIDList, ActualFrame + 2))  //Both IVs should be calculated even if the first matches
+                            if (FindIVsNature(IVs1, ref Nature, ref Ability, PIDList, ActualFrame) | FindIVsNature(IVs2, ref Nature, ref Ability, PIDList, ActualFrame + 2))  //Both IVs should be calculated even if the first matches
                                 AddToListEC(PIDSeed, ActualFrame, PIDList[frame], IVs1, IVs2);
                         }
                     }
@@ -368,7 +368,7 @@ namespace TinyFinder.Subforms.MT
 
                     if (Counter >= ShinyCount)
                     {
-                                                                    //Genderless, Carbink, 3IVs
+                        //Genderless, Carbink, 3IVs
                         if (CheckAll(Seed, Frame, PSVList[Frame], PIDList, false, false, false))        //Any species is top priority
                             continue;
 
@@ -417,7 +417,7 @@ namespace TinyFinder.Subforms.MT
 
                     if (PSVList[Frame] == TSV)
                     {
-                                                                    //Genderless, Carbink, 3IVs
+                        //Genderless, Carbink, 3IVs
                         if (CheckAll(Seed, Frame, PSVList[Frame], PIDList, false, false, false))        //Any species is top priority
                             continue;
 
@@ -566,7 +566,7 @@ namespace TinyFinder.Subforms.MT
                             {
                                 Seed_DGV.Rows.Add(null, hex(Frame300Seed), frame - SaveDelay, hex(CurrentSavePar), calc.Check_DST(Finaldate, (RequiredSavePar - CurrentSavePar) / 1000));
                             }));
-                        } 
+                        }
                     }
 
                 }
@@ -597,7 +597,7 @@ namespace TinyFinder.Subforms.MT
             }
         }
 
-        
+
         #endregion
 
 

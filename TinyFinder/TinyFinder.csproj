@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>TinyFinder</RootNamespace>
     <AssemblyName>TinyFinder</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -27,7 +27,6 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -65,30 +64,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Utils\Calculate.cs" />
+    <Compile Include="Classes\EncounterType.cs" />
     <Compile Include="Utils\BlinkSystem.cs" />
-    <Compile Include="UI Controls\CheckBoxComboBox\CheckBoxComboBox.cs">
+    <Compile Include="Utils\Calculate.cs" />
+    <Compile Include="UIControls\CheckBoxComboBox\CheckBoxComboBox.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UI Controls\CheckBoxComboBox\CheckBoxComboBox.Designer.cs">
+    <Compile Include="UIControls\CheckBoxComboBox\CheckBoxComboBox.Designer.cs">
       <DependentUpon>CheckBoxComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI Controls\CheckBoxComboBox\GripBounds.cs" />
-    <Compile Include="UI Controls\CheckBoxComboBox\NativeMethods.cs" />
-    <Compile Include="UI Controls\CheckBoxComboBox\Popup.cs">
+    <Compile Include="UIControls\CheckBoxComboBox\GripBounds.cs" />
+    <Compile Include="UIControls\CheckBoxComboBox\NativeMethods.cs" />
+    <Compile Include="UIControls\CheckBoxComboBox\Popup.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI Controls\CheckBoxComboBox\Popup.Designer.cs">
+    <Compile Include="UIControls\CheckBoxComboBox\Popup.Designer.cs">
       <DependentUpon>Popup.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI Controls\CheckBoxComboBox\PopupComboBox.cs">
+    <Compile Include="UIControls\CheckBoxComboBox\PopupComboBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="UI Controls\CheckBoxComboBox\PopupComboBox.Designer.cs">
+    <Compile Include="UIControls\CheckBoxComboBox\PopupComboBox.Designer.cs">
       <DependentUpon>PopupComboBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="Classes\EncounterType.cs" />
-    <Compile Include="UI Controls\HexBox.cs">
+    <Compile Include="UIControls\HexBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Classes\Index.cs" />
@@ -146,6 +145,25 @@
     <Compile Include="RNG\TinyMT.cs" />
     <Compile Include="Methods\Wild.cs" />
     <Compile Include="Database\Data.cs" />
+    <Compile Include="Subforms\Profiles\Calibrator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Calibrator.Designer.cs">
+      <DependentUpon>Calibrator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Editor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Editor.Designer.cs">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Manager.Designer.cs">
+      <DependentUpon>Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Subforms\Profiles\Profile.cs" />
     <EmbeddedResource Include="Main\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -163,8 +181,16 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Subforms\Profiles\Calibrator.resx">
+      <DependentUpon>Calibrator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subforms\Profiles\Editor.resx">
+      <DependentUpon>Editor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Subforms\Profiles\Manager.resx">
+      <DependentUpon>Manager.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

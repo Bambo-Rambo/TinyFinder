@@ -111,7 +111,6 @@ namespace TinyFinder.Controls
                     Key = EnctrKey.RockSmash,
                     Name = "Rock Smash",
 
-                    ShowsParty = false,
                     ShowsTriggerMTFrame = true,
                     ShowsEmulator = true,
                     ShowsFlute = ORAS,

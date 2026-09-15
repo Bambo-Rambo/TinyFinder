@@ -124,8 +124,6 @@ namespace TinyFinder
                     if (settings.Show_Alt_EggMove)
                         settings.maxEggRand += 2;
 
-                    //MessageBox.Show("" + settings.exclusives);
-
                 }
                 else if (IsFriendSafari)
                 {

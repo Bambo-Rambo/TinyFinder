@@ -8,7 +8,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TinyFinder.Properties {
+namespace TinyFinder.Properties
+{
 
 
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
