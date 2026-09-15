@@ -9,45 +9,40 @@ Also provides a MT seed searcher for various things (specific PID/EC search, mul
 ### Features
 
 * Index search by date (Emulator only - mainly useful for ID, DexNav and possibly Radar RNG)
-* Index filtering
 * Mapped wild encounter slots and held items
-* DexNav RNG support with egg move prediction
+* Full DexNav RNG support with egg move prediction
 * Complete Normal Wild RNG support for every location. The NPC influence is already accounted for
 * Complete Horde RNG support
 Hordes can be triggered either by using honey or by moving (stable delay unlike Honey/Sweet Scent - in ORAS only possible at Long grass)
-* Fishing RNG with predicted delay and rod usage from bag calculating the upcoming character blinks
+* Fishing RNG with predicted delay and calculation of the upcoming character blinks
 * Honey Wild RNG support for places that don't have hordes
-* Poke Radar usage from the bag instead of the Y menu
+* Poke Radar usage from bag instead of the Y menu
 * XY Victory Road swooping encounters
 
 Note that TinyMT Timeline calibration is not implemented at all.
-While it is required for XY ID RNG, nature sync for stationaries, and rock smash, other methods including: 
+While it is required for XY ID RNG and nature sync for stationaries, other methods including: 
 wild, hordes, dexnav, radar, fishing etc, can be done way faster using the bag method (see [RNG Guides](https://github.com/Bambo-Rambo/RNG-Guides)).
-
-Rock Smash RNG is currently possible only with 3DS RNG Tool. 
-Tiny Finder only shows the existing reults for a given seed, not how to hit them.
-In the future you can expect full support though since it's possible to use it from the party.
 
 ### Step 1 - Calibration (Emulator only)
 
 If using the Date Searcher, you need to set your Emulator's RTC to 20xx-01-01 13:00:00 (Fixed Mode) and use PokeReader to read the initial TinyMT seed.
-**The date must be 20xx-01-01 13:00:00 no matter what.** You can calibrate using a year of your choice but the month must be **JANUARY.** Not to be confused with the month selection in *Settings* which searches for results in the selected month.
+**The date must be 20xx-01-01 13:00:00 no matter what.** You can calibrate using a year of your choice but the month must be **JANUARY.** Not to be confused with the month selection in *Settings* which searches for results in the selected month and onwards.
 
 ![](https://raw.githubusercontent.com/Bambo-Rambo/TinyFinder/refs/heads/main/Images/Tiny1.png)
 
 ### Step 2 - Settings
 
-As explained above, if you are using the Date Searcher, the month selection is only for searching results within the desired month or later. 
+As explained above, if you are using the Date Searcher, the month selection is only for searching results within the desired month and onwards.
 
-If you are doing Normal Wild or moving Horde RNG, it's important to choose your location. 
-The encounter ratio changes depending on the location and it's not recommended to mess with at all.
+For most encounter types, it's important to choose your location. 
+The encounter ratio for wild, fishing and Friend Safari changes depending on the location and it's not recommended to mess with at all.
 
-For Pokeradar, if your current chain length is 0, the tool will search for the desired slot and sync. 
+For Poke Radar, if your current chain length is 0, the tool will search for the desired slot and sync. 
 If > 0, it will search for shiny patches since the slot is the one you have been chaining for while sync is decided when you step into the patch. 
-(It's not possible to generate shiny patches if current chain = 0). 
+(It's not possible to generate shiny patches if current chain = 0).
 Check the Boost box only if the radar-exclusive music currently plays in the background. 
 
-It's essential that your party's Pokemon number is accurate otherwise the tool will give you wrong instructions.
+It's essential that your party's Pokemon number is accurate otherwise the tool will give wrong results/instructions.
 
 ### Step 3 - Preferences
 
