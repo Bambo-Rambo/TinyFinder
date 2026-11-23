@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Security.Claims;
+using System.Threading;
 using System.Windows.Forms;
 using TinyFinder.Controls;
 using TinyFinder.Main;
@@ -131,11 +132,26 @@ namespace TinyFinder
         }
         private void Finished()
         {
-            if (DateSearcher)
-                for (uint i = 0; i < ThreadsUsed; i++)
-                    jobs[i].Abort();
+            Working = false;
+            if (DateSearcher && jobs != null)
+            {
+                foreach (Thread job in jobs)
+                {
+                    if (job == null || job == Thread.CurrentThread || !job.IsAlive)
+                        continue;
 
-            StopButton.Enabled = Working = false;
+                    try
+                    {
+                        job.Abort();
+                    }
+                    catch (ThreadStateException)
+                    {
+                        // The worker can finish between IsAlive and Abort.
+                    }
+                }
+            }
+
+            StopButton.Enabled = false;
             MainButton.Enabled = IgnoreFiltersButton.Enabled = true;
             MainButton.Text = SearchGen.SelectedIndex == 0 ? "Search" : "Generate";
         }
