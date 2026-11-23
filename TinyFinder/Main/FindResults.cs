@@ -4,7 +4,6 @@ using System.Data;
 using System.Linq;
 using System.Windows.Forms;
 using System.Threading;
-using System.Threading.Tasks;
 using TinyFinder.Main;
 using TinyFinder.Controls;
 
@@ -20,7 +19,9 @@ namespace TinyFinder
         bool DateSearcher, fastID;
         int bootAdvances;
 
-        bool Calibrated = false, Working, NoFilters, Radar1;
+        volatile bool Calibrated = false;
+        volatile bool Working;
+        bool NoFilters, Radar1;
 
         TinyMT tiny = new TinyMT();
         EncounterType Choice = new EncounterType();
@@ -146,21 +147,25 @@ namespace TinyFinder
 
             }
         }
-        public async void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
+        public void FindTinySeed(uint Seed, uint Jump, uint[] CurrentState)
         {
-            await Task.Run(() =>
+            TinyMT calibrationTiny = new TinyMT();
+            while (Working && !Calibrated)
             {
-                while (!Calibrated)
+                uint[] candidateState = calibrationTiny.init(Seed, bootAdvances);
+                if (candidateState[3] == CurrentState[3] && candidateState[2] == CurrentState[2])
                 {
-                    if (tiny.init(Seed, bootAdvances)[3] == CurrentState[3])
-                        if (tiny.init(Seed, bootAdvances)[2] == CurrentState[2])
+                    lock (_searchLock)
+                    {
+                        if (Working && !Calibrated)
                         {
                             initial = Seed;
                             Calibrated = true;
                         }
-                    Seed += Jump;
+                    }
                 }
-            });
+                Seed += Jump;
+            }
         }
 
         public void Prepare()
@@ -213,6 +218,7 @@ namespace TinyFinder
             if (DateSearcher)       //Calibrating the TinyMT seed depending on the user's current state at 13:00:00
             {
                 Working = true;
+                StopButton.Enabled = true;
                 if (!Calibrated && !ReaderBTN.Checked)
                 {
                     MainButton.Text = "Calibrating...";
@@ -221,16 +227,30 @@ namespace TinyFinder
                     uint start_seed = calc.startingPoint(Year);
                     for (int i = 0; i < jobs.Length; i++)
                     {
-                        jobs[i] = new Thread(() => FindTinySeed(start_seed, (uint)jobs.Length, state)); jobs[i].Start();
+                        uint seed = start_seed;
+                        uint[] calibrationState = (uint[])state.Clone();
+                        uint threadCount = (uint)jobs.Length;
+                        jobs[i] = new Thread(() => FindTinySeed(seed, threadCount, calibrationState));
+                        jobs[i].Start();
                         Thread.Sleep(100);
                         start_seed++;
                     }
 
-                    //Bad Solution
-                    while (!Calibrated)
+                    while (Working && !Calibrated)
                     {
                         Application.DoEvents();
                     }
+
+                    // Wait for calibration workers before reusing their slots for the search.
+                    for (int i = 0; i < jobs.Length; i++)
+                    {
+                        Thread job = jobs[i];
+                        if (job != null && job != Thread.CurrentThread && job.IsAlive)
+                            job.Join();
+                    }
+
+                    if (!Working)
+                        return;
                 }
 
                 MainButton.Text = "Searching...";
